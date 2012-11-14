@@ -1,0 +1,22 @@
+\mbox{}
+\clearpage
+\setstretch{1.3}  % Reset the line-spacing to 1.3 for body text (if it has changed)
+
+% The Acknowledgements page, for thanking everyone
+\acknowledgements{
+\addtocontents{toc}{\vspace{1em}}  % Add a gap in the Contents, for aesthetics
+
+First and foremost, I would like to thank my advisor \supname, for their invaluable guidance. I feel deeply indebted to their strong advises, encouragements and instructions. They have not only assisted me in completing this thesis, they have also helped me to broaden my attitude towards research, and to develop my personality. 
+
+A special note of thanks to Prof. Gerhard Weikum for giving me the
+opportunity to pursue this thesis under his supervision and for his valuable inputs. I am very grateful to work with his group in the Max-Planck Institute for Informatics. It is a priceless experience to me.
+
+I am grateful to Dr. Martin Theobald to review my master thesis.
+
+I am also very grateful to my friends and classmates for their company and moral support. I learnt a lot from them in last 2 years which is a very important factor for successful completion of my thesis. Special thanks are sent to the colleague students in the lab room 4.11 for the memorable time working with them.
+
+Finally, I would like to thank IMPRS-CS for the assistance and financial support that I received from them. It gives me total freedom to work on my master thesis.
+
+}
+\clearpage
+% End of the Acknowledgements

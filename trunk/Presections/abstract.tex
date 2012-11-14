@@ -1,0 +1,17 @@
+\mbox{}
+\clearpage
+\setstretch{1.3}  % Reset the line-spacing to 1.3 for body text (if it has changed)
+
+% The Abstract Page
+\addtotoc{Abstract}  % Add the "Abstract" page entry to the Contents
+\abstract{
+\addtocontents{toc}{\vspace{1em}}  % Add a gap in the Contents, for aesthetics
+
+With millions of articles in multiple languages, Wikipedia has become the de-facto source of reference on the Internet today. Each article on Wikipedia contains encyclopedic information about various topics (people, events, inventions, etc.) and implicitly represents an entity. Extracting the most important facts about such entity will help users to find desired information more quickly and effectively. However, this task is challenging due to the incomplete and noisy nature of Wikipedia articles. This calls for a mechanism to detect and summarize the most important information about an entity on Wikipedia.
+
+This thesis proposes and implements CATE (\textbf{C}ontext-\textbf{A}ware \textbf{T}imeline for \textbf{E}ntity Exploration), a framework that utilizes Wikipedia to summarize and visualize the important aspects of entities in a timeline fashion. Such a system will help users to draw quickly an informative picture of an entity (e.g. life of a person, or evolution of a research topic, etc.). The novelty of CATE lies in seeing the entity in different contexts, synchronous with contemporaneous events. In addition, CATE puts the entity in a relationship with other entities, and thus offers a broader portrait about it. In order to efficiently query and visualize the events related to the entity, a number of techniques have been developed, combining information extraction and information retrieval with a novel ranking model. The thesis also discusses several experiments and evaluation results to show the effectiveness of the methods proposed.
+
+%In this work, our aim is to \emph{efficiently identify interesting time points} in Web archives with an assumption that we receive a result list for a given query in standard relevance-order from an existing retrieval system. We consider two forms of Web archives: (i) one where documents have a publication time-stamp and never change (such as news archives), and (ii) the archives where documents undergo revisions, and are thus versioned. In both settings, we define interestingness as the change in top-k result set of two consecutive time-points. The key step in our solution is the maintenance of top-k results valid at each time-point of the archive, which can then be used to compute the interestingness scores for the time-points. We propose two techniques to realize efficient identification of interesting time points: (i) For the case when documents once published never change, we have a simple but effective technique. (ii) For the more general case with versioned documents, we develop an extension to the segment tree which makes it rank-aware and dynamic. To further improve efficiency, we propose an early termination technique which is proven to be very effective. Our methods are shown to be effective in efficiently finding interesting time points in a set of experiments using the New York Times news archive and the Wikipedia versioned archive.
+}
+
+\clearpage  % Abstract ended, start a new page
