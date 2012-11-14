@@ -1,0 +1,127 @@
+\contentsline {chapter}{Abstract}{vi}{dummy.2}
+\vspace {1em}
+\contentsline {chapter}{Acknowledgements}{viii}{dummy.3}
+\vspace {1em}
+\vspace {2em}
+\contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.5}
+\contentsline {section}{\numberline {1.1}Motivation}{1}{section.6}
+\contentsline {section}{\numberline {1.2}Our Approach}{2}{section.12}
+\contentsline {section}{\numberline {1.3}Problem statement}{3}{section.16}
+\contentsline {section}{\numberline {1.4}Contributions}{3}{section.20}
+\contentsline {section}{\numberline {1.5}Outline}{4}{section.26}
+\contentsline {chapter}{\numberline {2}Related Work}{5}{chapter.27}
+\contentsline {section}{\numberline {2.1}Wikipedia-based Information Extraction}{5}{section.28}
+\contentsline {section}{\numberline {2.2}Event and Temporal Fact Extraction}{7}{section.32}
+\contentsline {section}{\numberline {2.3}Knowledge Visualization}{8}{section.33}
+\contentsline {subsection}{\numberline {2.3.1}Yahoo! Correlator Timeline}{8}{subsection.34}
+\contentsline {subsection}{\numberline {2.3.2}E-Culture}{10}{subsection.37}
+\contentsline {section}{\numberline {2.4}Entity Ranking}{10}{section.39}
+\contentsline {paragraph}{Language-model-based Ranking.}{11}{section*.42}
+\contentsline {chapter}{\numberline {3}Data Model}{13}{chapter.43}
+\contentsline {section}{\numberline {3.1}Resource Description Framework - RDF}{13}{section.44}
+\contentsline {paragraph}{Class, Individual, Literal.}{14}{section*.45}
+\contentsline {paragraph}{RDFS.}{14}{section*.46}
+\contentsline {section}{\numberline {3.2}The YAGO Model}{14}{section.47}
+\contentsline {subsection}{\numberline {3.2.1}Introduction}{14}{subsection.48}
+\contentsline {subsection}{\numberline {3.2.2}The YAGO Model}{15}{subsection.49}
+\contentsline {paragraph}{Basics.}{15}{section*.50}
+\contentsline {paragraph}{Data type.}{15}{section*.52}
+\contentsline {subsection}{\numberline {3.2.3}YAGO2}{16}{subsection.54}
+\contentsline {paragraph}{Introduction.}{16}{section*.55}
+\contentsline {paragraph}{SPOTLX model.}{16}{section*.58}
+\contentsline {paragraph}{Location in YAGO2.}{17}{section*.61}
+\contentsline {section}{\numberline {3.3}Extension in CATE}{17}{section.62}
+\contentsline {paragraph}{Entity set.}{17}{section*.63}
+\contentsline {subsection}{\numberline {3.3.1}Context}{17}{subsection.64}
+\contentsline {paragraph}{Introduction.}{17}{section*.65}
+\contentsline {paragraph}{The data model.}{18}{section*.67}
+\contentsline {subsection}{\numberline {3.3.2}Relation Names}{18}{subsection.69}
+\contentsline {subsubsection}{\numberline {3.3.2.1}Context Relation names}{18}{subsubsection.70}
+\contentsline {paragraph}{hasContext: $E\DOTSB \mapstochar \rightarrow $ \texttt {context}}{18}{section*.71}
+\contentsline {paragraph}{hasTime: \texttt {context} $\DOTSB \mapstochar \rightarrow TimeInterval$}{18}{section*.72}
+\contentsline {paragraph}{hasLocation: \texttt {context} $\DOTSB \mapstochar \rightarrow $ \texttt {locations}}{19}{section*.73}
+\contentsline {paragraph}{hasTopic: \texttt {context} $\DOTSB \mapstochar \rightarrow \overline {E}$}{19}{section*.74}
+\contentsline {subsubsection}{\numberline {3.3.2.2}Relationships between contexts}{19}{subsubsection.76}
+\contentsline {paragraph}{subClassOf: $\overline {E}\DOTSB \mapstochar \rightarrow \overline {E}$}{19}{section*.77}
+\contentsline {paragraph}{isLocatedIn: \texttt {locations} $\DOTSB \mapstochar \rightarrow $ \texttt {locations}}{19}{section*.78}
+\contentsline {subsection}{\numberline {3.3.3}Entities and Articles}{19}{subsection.80}
+\contentsline {subsection}{\numberline {3.3.4}Event model}{20}{subsection.83}
+\contentsline {chapter}{\numberline {4}System Architecture}{21}{chapter.86}
+\contentsline {section}{\numberline {4.1}The Graphical User Interface}{21}{section.88}
+\contentsline {section}{\numberline {4.2}The Retrieval Engine}{22}{section.90}
+\contentsline {paragraph}{Example 1.}{23}{section*.94}
+\contentsline {section}{\numberline {4.3}Event-Description Extractor}{24}{section.96}
+\contentsline {subsection}{\numberline {4.3.1}Converting Groups of Facts to Events}{25}{subsection.97}
+\contentsline {subsection}{\numberline {4.3.2}Extracting Additional Events}{25}{subsection.98}
+\contentsline {section}{\numberline {4.4}Information-Extraction Tool}{25}{section.99}
+\contentsline {section}{\numberline {4.5}Data Store}{26}{section.100}
+\contentsline {chapter}{\numberline {5}Information Extraction}{27}{chapter.104}
+\contentsline {section}{\numberline {5.1}Extracting Attribute Vocabularies}{28}{section.106}
+\contentsline {subsection}{\numberline {5.1.1}Time Value Extraction}{28}{subsection.107}
+\contentsline {subsection}{\numberline {5.1.2}Location and Topic Values Extraction}{28}{subsection.108}
+\contentsline {subsubsection}{\numberline {5.1.2.1}Preliminaries}{29}{subsubsection.109}
+\contentsline {paragraph}{Token.}{29}{section*.110}
+\contentsline {paragraph}{Positioned token.}{29}{section*.111}
+\contentsline {paragraph}{Pattern.}{29}{section*.112}
+\contentsline {subsubsection}{\numberline {5.1.2.2}Pattern Learning Algorithm}{29}{subsubsection.115}
+\contentsline {subsubsection}{\numberline {5.1.2.3}Extracting candidates for locations and topics}{30}{subsubsection.138}
+\contentsline {subsection}{\numberline {5.1.3}YAGO Entity Mapping}{32}{subsection.141}
+\contentsline {paragraph}{Mapping location values to YAGO entities.}{32}{section*.142}
+\contentsline {paragraph}{Mapping topic values to YAGO entities.}{33}{section*.144}
+\contentsline {section}{\numberline {5.2}Constructing Context Objects from Wikipedia Categories}{33}{section.145}
+\contentsline {section}{\numberline {5.3}Assigning Entities to Contexts}{33}{section.148}
+\contentsline {subsection}{\numberline {5.3.1}Assigning Entities to Contexts Based on Categories}{33}{subsection.149}
+\contentsline {subsection}{\numberline {5.3.2}Assigning Entities to Contexts Based on Links}{34}{subsection.150}
+\contentsline {subsection}{\numberline {5.3.3}Constructing Context Objects From Attributes}{35}{subsection.152}
+\contentsline {section}{\numberline {5.4}Summary}{35}{section.153}
+\contentsline {chapter}{\numberline {6}Entity Ranking Model}{37}{chapter.154}
+\contentsline {section}{\numberline {6.1}Statistical Language Model in IR}{37}{section.155}
+\contentsline {subsection}{\numberline {6.1.1}Introduction}{37}{subsection.156}
+\contentsline {subsection}{\numberline {6.1.2}Query Likelihood Model}{38}{subsection.159}
+\contentsline {subsection}{\numberline {6.1.3}Smoothing}{38}{subsection.163}
+\contentsline {section}{\numberline {6.2}Statistical Language Model for Entity Retrieval}{39}{section.166}
+\contentsline {subsection}{\numberline {6.2.1}Language Model for an Entity}{39}{subsection.167}
+\contentsline {subsection}{\numberline {6.2.2}Language Model for a Context}{40}{subsection.171}
+\contentsline {section}{\numberline {6.3}Entity Ranking Model}{41}{section.173}
+\contentsline {subsection}{\numberline {6.3.1}Ranking Contexts}{41}{subsection.174}
+\contentsline {subsection}{\numberline {6.3.2}Ranking Entities Relevant to a Given Entity within a Context}{41}{subsection.177}
+\contentsline {subsection}{\numberline {6.3.3}Ranking Entities within a Context}{42}{subsection.179}
+\contentsline {chapter}{\numberline {7}Implementation}{43}{chapter.180}
+\contentsline {section}{\numberline {7.1}CATE Client-server Framework}{43}{section.181}
+\contentsline {section}{\numberline {7.2}Data Store}{45}{section.183}
+\contentsline {subsection}{\numberline {7.2.1}Text Database}{45}{subsection.184}
+\contentsline {subsection}{\numberline {7.2.2}CATE Database}{46}{subsection.189}
+\contentsline {section}{\numberline {7.3}Implementation of Context Extraction}{47}{section.192}
+\contentsline {section}{\numberline {7.4}Implementation of Event Description Extraction}{48}{section.193}
+\contentsline {section}{\numberline {7.5}Summary}{49}{section.195}
+\contentsline {chapter}{\numberline {8}Experiments and Results}{51}{chapter.196}
+\contentsline {section}{\numberline {8.1}Data Collection}{51}{section.197}
+\contentsline {section}{\numberline {8.2}Evaluation Measurements}{52}{section.199}
+\contentsline {subsection}{\numberline {8.2.1}Precision and Recall}{52}{subsection.200}
+\contentsline {subsection}{\numberline {8.2.2}Discounted Cumulative Gain (DCG)}{53}{subsection.207}
+\contentsline {paragraph}{Example 1.}{53}{section*.210}
+\contentsline {subsection}{\numberline {8.2.3}Significance Tests}{54}{subsection.213}
+\contentsline {paragraph}{Example 2.}{55}{section*.216}
+\contentsline {section}{\numberline {8.3}Experiments on Context Extraction}{56}{section.219}
+\contentsline {subsection}{\numberline {8.3.1}Category-based attribute and context extraction}{56}{subsection.220}
+\contentsline {paragraph}{Result.}{56}{section*.222}
+\contentsline {subsection}{\numberline {8.3.2}Context Assignment}{57}{subsection.224}
+\contentsline {paragraph}{Estimation.}{58}{section*.226}
+\contentsline {paragraph}{Evaluation.}{58}{section*.229}
+\contentsline {section}{\numberline {8.4}Experiments on Entity Retrieval}{59}{section.230}
+\contentsline {paragraph}{Experiment setting.}{59}{section*.231}
+\contentsline {paragraph}{Experiment 1.}{59}{section*.232}
+\contentsline {paragraph}{Result.}{59}{section*.234}
+\contentsline {paragraph}{Experiment 2.}{61}{section*.237}
+\contentsline {paragraph}{Experiment 3.}{62}{section*.240}
+\contentsline {section}{\numberline {8.5}Experiments on Event Description Extraction}{63}{section.243}
+\contentsline {paragraph}{Result.}{65}{section*.245}
+\contentsline {section}{\numberline {8.6}Demonstration Scenarios}{66}{section.248}
+\contentsline {chapter}{\numberline {9}Conclusion and Future Work}{69}{chapter.251}
+\contentsline {section}{\numberline {9.1}Conclusion}{69}{section.252}
+\contentsline {section}{\numberline {9.2}Future Work}{69}{section.253}
+\vspace {2em}
+\contentsline {chapter}{List of Figures}{71}{dummy.255}
+\contentsline {chapter}{List of Tables}{75}{dummy.257}
+\vspace {2em}
+\contentsline {chapter}{Bibliography}{77}{dummy.259}

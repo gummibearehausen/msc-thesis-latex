@@ -1,0 +1,326 @@
+\begin{thebibliography}{47}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Song and Croft(1999)]{song@sigir1999}
+F.~Song and W.~B. Croft.
+\newblock A general language model for information retrieval.
+\newblock In \emph{SIGIR}, 1999.
+
+\bibitem[Suchanek et~al.(2007)Suchanek, Kasneci, and Weikum]{suchanek2007WWW}
+Fabian~M. Suchanek, Gjergji Kasneci, and Gerhard Weikum.
+\newblock {Yago: A Core of Semantic Knowledge}.
+\newblock In \emph{16th international World Wide Web conference (WWW 2007)},
+  New York, NY, USA, 2007. ACM Press.
+
+\bibitem[Preda et~al.(2009)Preda, Suchanek, Kasneci, Neumann, Ramanath, and
+  Weikum]{Preda:2009:AAK:1687553.1687594}
+Nicoleta Preda, Fabian~M. Suchanek, Gjergji Kasneci, Thomas Neumann, Maya
+  Ramanath, and Gerhard Weikum.
+\newblock Angie: active knowledge for interactive exploration.
+\newblock \emph{Proc. VLDB Endow.}, 2, August 2009.
+
+\bibitem[Hildebrand et~al.(2006)Hildebrand, van Ossenbruggen, and
+  Hardman]{iswc2006:facet}
+Michiel Hildebrand, Jacco van Ossenbruggen, and Lynda Hardman.
+\newblock /facet: {A} {B}rowser for {H}eterogeneous {S}emantic {W}eb
+  {R}epositories.
+\newblock In \emph{ISWC}, 2006.
+
+\bibitem[Auer et~al.(2007)Auer, Bizer, Kobilarov, Lehmann, Cyganiak, and
+  Ives]{Auer:2007:DNW:1785162.1785216}
+S\"{o}ren Auer, Christian Bizer, Georgi Kobilarov, Jens Lehmann, Richard
+  Cyganiak, and Zachary Ives.
+\newblock Dbpedia: a nucleus for a web of open data.
+\newblock In \emph{Proceedings of the 6th international The semantic web and
+  2nd Asian conference on Asian semantic web conference}, ISWC'07/ASWC'07,
+  Berlin, Heidelberg, 2007. Springer-Verlag.
+
+\bibitem[Wu and Weld(2008)]{Wu:2008:ARW:1367497.1367583}
+Fei Wu and Daniel~S. Weld.
+\newblock Automatically refining the wikipedia infobox ontology.
+\newblock In \emph{Proceeding of the 17th international conference on World
+  Wide Web}, WWW '08, pages 635--644, New York, NY, USA, 2008. ACM.
+\newblock ISBN 978-1-60558-085-2.
+
+\bibitem[Fellbaum(1998)]{fellbaum98wordnet}
+Christiane Fellbaum, editor.
+\newblock \emph{{WordNet: an electronic lexical database}}.
+\newblock MIT Press, 1998.
+
+\bibitem[Nastase and Strube(2008)]{NastaseS08}
+Vivi Nastase and Michael Strube.
+\newblock Decoding wikipedia categories for knowledge acquisition.
+\newblock In \emph{AAAI}, 2008.
+
+\bibitem[Schonhofen(2006)]{Schonhofen:2006:IDT:1248823.1249180}
+Peter Schonhofen.
+\newblock Identifying document topics using the wikipedia category network.
+\newblock In \emph{Proceedings of the 2006 IEEE/WIC/ACM International
+  Conference on Web Intelligence}, WI '06, Washington, DC, USA, 2006. IEEE
+  Computer Society.
+
+\bibitem[Zhang et~al.(2008)Zhang, Suchanek, Yue, and Weikum]{qi@webdb2008}
+Qi~Zhang, Fabian~M. Suchanek, Lihua Yue, and Gerhard Weikum.
+\newblock {TOB: Timely Ontologies for Business Relations}.
+\newblock In \emph{11th International Workshop on Web and Databases 2008 (WebDB
+  2008)}. ACM, 2008.
+
+\bibitem[Pustejovsky et~al.(2003)Pustejovsky, Castano, Ingria, Sauri,
+  Gauzauskas, Setzer, and Katz]{citeulike:3287763}
+J.~Pustejovsky, J.~Castano, R.~Ingria, R.~Sauri, R.~Gauzauskas, A.~Setzer, and
+  G.~Katz.
+\newblock Timeml: Robust specification of event and temporal expression in
+  text.
+\newblock \emph{IWCS-5, Fifth International Workshop on Computational
+  Semantics.}, 2003.
+
+\bibitem[Wang et~al.(2010)Wang, Zhu, Qu, Spaniol, and
+  Weikum]{Wang:2010:TYH:1739041.1739130}
+Yafang Wang, Mingjie Zhu, Lizhen Qu, Marc Spaniol, and Gerhard Weikum.
+\newblock Timely yago: harvesting, querying, and visualizing temporal knowledge
+  from wikipedia.
+\newblock In \emph{Proceedings of the 13th International Conference on
+  Extending Database Technology}, EDBT '10, pages 697--700, New York, NY, USA,
+  2010. ACM.
+\newblock ISBN 978-1-60558-945-9.
+
+\bibitem[Zaragoza et~al.(2007)Zaragoza, Rode, Mika, Atserias, Ciaramita, and
+  Attardi]{Zaragoza:2007:RVM:1321440.1321599}
+Hugo Zaragoza, Henning Rode, Peter Mika, Jordi Atserias, Massimiliano
+  Ciaramita, and Giuseppe Attardi.
+\newblock Ranking very many typed entities on wikipedia.
+\newblock In \emph{Proceedings of the sixteenth ACM conference on Conference on
+  information and knowledge management}, CIKM '07, pages 1015--1018, New York,
+  NY, USA, 2007. ACM.
+\newblock ISBN 978-1-59593-803-9.
+
+\bibitem[Schreiber et~al.(2006)Schreiber, Amin, van Assem, de~Boer, Hardman,
+  Hildebrand, Hollink, Huang, van Kersen, de~Niet, Omelayenko, van
+  Ossenbruggen, Siebes, Taekema, Wielemaker, and
+  Wielinga]{Schreiber06multimediane-culture}
+Guus Schreiber, Alia Amin, Mark van Assem, Victor de~Boer, Lynda Hardman,
+  Michiel Hildebrand, Laura Hollink, Zhisheng Huang, Janneke van Kersen, Marco
+  de~Niet, Borys Omelayenko, Jacco van Ossenbruggen, Ronny Siebes, Jos Taekema,
+  Jan Wielemaker, and Bob Wielinga.
+\newblock Multimedian e-culture demonstrator.
+\newblock In \emph{In the Semantic Web Challenge at the 5th International
+  Semantic Web Conference}, 2006.
+
+\bibitem[Demartini et~al.(2009)Demartini, Iofciu, and
+  de~Vries]{DBLP:conf/inex/DemartiniIV09}
+Gianluca Demartini, Tereza Iofciu, and Arjen~P. de~Vries.
+\newblock Overview of the inex 2009 entity ranking track.
+\newblock In \emph{INEX}, pages 254--264, 2009.
+
+\bibitem[Vercoustre et~al.(2008)Vercoustre, Thom, and
+  Pehcevski]{Vercoustre:2008:ERW:1363686.1363943}
+Anne-Marie Vercoustre, James~A. Thom, and Jovan Pehcevski.
+\newblock Entity ranking in wikipedia.
+\newblock In \emph{Proceedings of the 2008 ACM symposium on Applied computing},
+  SAC '08, pages 1101--1106, New York, NY, USA, 2008. ACM.
+\newblock ISBN 978-1-59593-753-7.
+
+\bibitem[Elbassuoni et~al.(2009)Elbassuoni, Ramanath, Schenkel, Sydow, and
+  Weikum]{ElbassuoniRSSW09}
+Shady Elbassuoni, Maya Ramanath, Ralf Schenkel, Marcin Sydow, and Gerhard
+  Weikum.
+\newblock Language-model-based ranking for queries on rdf-graphs.
+\newblock In Wesley Chu, Xiaohua Hu, and Jimmy Lin, editors, \emph{Proceedings
+  of the 18th ACM Conference on Information and Knowledge Management (CIKM
+  2009)}, page~., Hongkong, China, 2009. ACM.
+
+\bibitem[Kasneci et~al.(2008)Kasneci, Suchanek, Ifrim, Ramanath, and
+  Weikum]{10.1109/ICDE.2008.4497504}
+Gjergji Kasneci, Fabian~M. Suchanek, Georgiana Ifrim, Maya Ramanath, and
+  Gerhard Weikum.
+\newblock Naga: Searching and ranking knowledge.
+\newblock \emph{Data Engineering, International Conference on}, 0, 2008.
+
+\bibitem[Nie et~al.(2007)Nie, Ma, Shi, Wen, and
+  Ma]{Nie:2007:WOR:1242572.1242584}
+Zaiqing Nie, Yunxiao Ma, Shuming Shi, Ji-Rong Wen, and Wei-Ying Ma.
+\newblock Web object retrieval.
+\newblock In \emph{Proceedings of the 16th international conference on World
+  Wide Web}, WWW '07, New York, NY, USA, 2007. ACM.
+
+\bibitem[Klyne and Carroll(2004)]{rdfconcepts}
+Graham Klyne and Jeremy~J. Carroll.
+\newblock Resource description framework ({RDF}): Concepts and abstract syntax.
+\newblock World Wide Web Consortium, Recommendation, February 2004.
+\newblock URL \url{http://www.w3.org/TR/2004/REC-rdf-concepts-20040210}.
+
+\bibitem[Suchanek(2009)]{suchanek@phd}
+Fabian~M. Suchanek.
+\newblock \emph{Automated Construction and Growth of a Large Ontology}.
+\newblock PhD thesis, Saarland University, 2009.
+
+\bibitem[Berners-Lee et~al.(1998)Berners-Lee, Fielding, and
+  Masinter]{Berners-Lee:1998:URI:RFC2396}
+T.~Berners-Lee, R.~Fielding, and L.~Masinter.
+\newblock Uniform resource identifiers (uri): Generic syntax, 1998.
+
+\bibitem[RDFS()]{RDFS}
+RDFS.
+\newblock {RDF Vocabulary Description Language 1.0: RDF Schema}, February 2004.
+
+\bibitem[Suchanek et~al.(2008)Suchanek, Kasneci, and Weikum]{suchanek@jws2008}
+Fabian~M. Suchanek, Gjergji Kasneci, and Gerhard Weikum.
+\newblock {YAGO: A Large Ontology from Wikipedia and WordNet}.
+\newblock \emph{Elsevier Journal of Web Semantics}, 2008.
+
+\bibitem[Biron and Malhotra(2001)]{Biron:2001}
+Paul~V. Biron and Ashok Malhotra.
+\newblock {XML Schema Part 2: Datatypes}.
+\newblock Recommendation, {World Wide Web Consortium}, May 2001.
+\newblock See \url{http://www.w3.org/TR/xmlschema-2/}.
+
+\bibitem[Hoffart et~al.(2010)Hoffart, Suchanek, Berberich, and
+  Weikum]{HoffartSuchanekBerberichWeikum2010}
+Johannes Hoffart, Fabian~M. Suchanek, Klaus Berberich, and Gerhard Weikum.
+\newblock {YAGO2: A Spatially and Temporally Enhanced Knowledge Base from
+  Wikipedia}.
+\newblock Research Report MPI-I-2010-5-007, Max-Planck-Institut f{\"u}r
+  Informatik, Stuhlsatzenhausweg 85, 66123 Saarbr{\"u}cken, Germany, November
+  2010.
+
+\bibitem[Elbassuoni et~al.(2010)Elbassuoni, Hose, Metzger, and
+  Schenkel]{Elbassuoni:2010:RRW:1920841.1921046}
+Shady Elbassuoni, Katja Hose, Steffen Metzger, and Ralf Schenkel.
+\newblock Roxxi: Reviving witness documents to explore extracted information.
+\newblock \emph{Proc. VLDB Endow.}, 3, September 2010.
+
+\bibitem[Taneva et~al.(2010)Taneva, Kacimi, and
+  Weikum]{Taneva:2010:GRP:1718487.1718541}
+Bilyana Taneva, Mouna Kacimi, and Gerhard Weikum.
+\newblock Gathering and ranking photos of named entities with high precision,
+  high recall, and diversity.
+\newblock In \emph{Proceedings of the third ACM international conference on Web
+  search and data mining}, WSDM '10, New York, NY, USA, 2010. ACM.
+
+\bibitem[Gabrilovich and
+  Markovitch(2006)]{Gabrilovich:2006:OBB:1597348.1597395}
+Evgeniy Gabrilovich and Shaul Markovitch.
+\newblock Overcoming the brittleness bottleneck using wikipedia: enhancing text
+  categorization with encyclopedic knowledge.
+\newblock In \emph{proceedings of the 21st national conference on Artificial
+  intelligence - Volume 2}, pages 1301--1306. AAAI Press, 2006.
+\newblock ISBN 978-1-57735-281-5.
+
+\bibitem[{ISO}(1988)]{ISO:1988:IDE}
+{ISO}.
+\newblock \emph{{ISO 8601:1988. Data elements and interchange formats ---
+  Information interchange --- Representation of dates and times}}.
+\newblock 1988.
+\newblock URL \url{http://www.iso.ch/cate/d26780.html}.
+
+\bibitem[Gusfield(1997)]{Gusfield:1997:AST:262228}
+Dan Gusfield.
+\newblock \emph{Algorithms on strings, trees, and sequences: computer science
+  and computational biology}.
+\newblock Cambridge University Press, New York, NY, USA, 1997.
+\newblock ISBN 0-521-58519-8.
+
+\bibitem[Prud'hommeaux and Seaborne(2007)]{prudhommeaux2006-1}
+Eric Prud'hommeaux and Andy Seaborne.
+\newblock Sparql query language for rdf (working draft).
+\newblock Technical report, W3C, March 2007.
+\newblock URL \url{http://www.w3.org/TR/2007/WD-rdf-sparql-query-20070326/}.
+
+\bibitem[Suchanek et~al.(2006)Suchanek, Ifrim, and Weikum]{Suchanek2006OLP}
+Fabian~M. Suchanek, Georgiana Ifrim, and Gerhard Weikum.
+\newblock Leila: Learning to extract information by linguistic analysis.
+\newblock In \emph{Second Workshop on Ontology Population (OLP2) at
+  ACL/COLING}, 2006.
+
+\bibitem[Chernov et~al.(2006)Chernov, Iofciu, Nejdl, and
+  Zhou]{DBLP:conf/semwiki/ChernovINZ06}
+Sergey Chernov, Tereza Iofciu, Wolfgang Nejdl, and Xuan Zhou.
+\newblock Extracting semantics relationships between wikipedia categories.
+\newblock In Max V{\"o}lkel and Sebastian Schaffert, editors, \emph{SemWiki},
+  volume 206 of \emph{CEUR Workshop Proceedings}. CEUR-WS.org, 2006.
+
+\bibitem[Hiemstra(2009)]{DBLP:reference/db/Hiemstra09}
+Djoerd Hiemstra.
+\newblock Language models.
+\newblock In \emph{Encyclopedia of Database Systems}, pages 1591--1594. 2009.
+
+\bibitem[Manning et~al.(2008)Manning, Raghavan, and
+  Schtze]{Manning:2008:IIR:1394399}
+Christopher~D. Manning, Prabhakar Raghavan, and Hinrich Schtze.
+\newblock \emph{Introduction to Information Retrieval}.
+\newblock Cambridge University Press, New York, NY, USA, 2008.
+\newblock ISBN 0521865719, 9780521865715.
+
+\bibitem[Wasserman(2004)]{Wasserman:2004:IIR:1394399}
+Larry Wasserman.
+\newblock \emph{All of statistics}.
+\newblock Springer, Berlin, Heidelberg, 2004.
+\newblock ISBN 0387402721, 9780387402727.
+
+\bibitem[Zhai and Lafferty(2004)]{Zhai:2004:SSM:984321.984322}
+Chengxiang Zhai and John Lafferty.
+\newblock A study of smoothing methods for language models applied to
+  information retrieval.
+\newblock \emph{ACM Trans. Inf. Syst.}, 22:\penalty0 179--214, April 2004.
+\newblock ISSN 1046-8188.
+
+\bibitem[Inc.(2011)]{website:gwt}
+Google Inc.
+\newblock Google web toolkit framework.
+\newblock Google Code Directory, 2011.
+\newblock URL \url{http://code.google.com/webtoolkit/}.
+
+\bibitem[Huynh(2011)]{website:simile-timeline}
+David Huynh.
+\newblock Simile timeline, web widget for visualizing temporal data.
+\newblock SIMILE Widgets project, 2011.
+\newblock URL \url{http://www.simile-widgets.org/timeline/}.
+
+\bibitem[Huynh(2009)]{website:jetty}
+David Huynh.
+\newblock Apache jetty framework, 2009.
+\newblock URL \url{http://jetty.codehaus.org/jetty/}.
+
+\bibitem[Tomaz~Solc(2010)]{website:wikiprep}
+Evgeniy~Gabrilovich Tomaz~Solc, Chris~Jordan.
+\newblock Wikipedia preprocessor, 2010.
+\newblock URL \url{http://sourceforge.net/projects/wikiprep/}.
+
+\bibitem[White(2009)]{White:2009:HDG:1717298}
+Tom White.
+\newblock \emph{Hadoop: The Definitive Guide}.
+\newblock O'Reilly Media, Inc., 1st edition, 2009.
+\newblock ISBN 0596521979, 9780596521974.
+
+\bibitem[Foundation(2011)]{website:hadoop}
+Apache~Software Foundation.
+\newblock Apache hadoop, 2011.
+\newblock URL \url{http://hadoop.apache.org/}.
+
+\bibitem[Inc.(2009)]{website:google-api}
+Google Inc.
+\newblock The images java api, 2009.
+\newblock URL \url{http://code.google.com/appengine/docs/java/images/}.
+
+\bibitem[J\"{a}rvelin and
+  Kek\"{a}l\"{a}inen(2000)]{Jarvelin:2000:IEM:345508.345545}
+Kalervo J\"{a}rvelin and Jaana Kek\"{a}l\"{a}inen.
+\newblock Ir evaluation methods for retrieving highly relevant documents.
+\newblock In \emph{Proceedings of the 23rd annual international ACM SIGIR
+  conference on Research and development in information retrieval}, SIGIR '00,
+  New York, NY, USA, 2000. ACM.
+
+\bibitem[Teevan et~al.(2005)Teevan, Dumais, and
+  Horvitz]{Teevan:2005:PSV:1076034.1076111}
+Jaime Teevan, Susan~T. Dumais, and Eric Horvitz.
+\newblock Personalizing search via automated analysis of interests and
+  activities.
+\newblock In \emph{Proceedings of the 28th annual international ACM SIGIR
+  conference on Research and development in information retrieval}, SIGIR '05,
+  New York, NY, USA, 2005. ACM.
+
+\end{thebibliography}

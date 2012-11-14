@@ -1,0 +1,31 @@
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Relations inferred from [$X$ {\sf {\relax \fontsize {10}{12}\selectfont \abovedisplayskip 10\p@ plus2\p@ minus5\p@ \abovedisplayshortskip \z@ plus3\p@ \belowdisplayshortskip 6\p@ plus3\p@ minus3\p@ \def \leftmargin \leftmargini \parsep 4.5\p@ plus2\p@ minus\p@ \topsep 9\p@ plus3\p@ minus5\p@ \itemsep 4.5\p@ plus2\p@ minus\p@ {\leftmargin \leftmargini \topsep 6\p@ plus2\p@ minus2\p@ \parsep 3\p@ plus2\p@ minus\p@ \itemsep \parsep }\belowdisplayskip \abovedisplayskip by}} $Y$]-patterned categories, from\nobreakspace {}\cite {NastaseS08}\relax }}{7}{figure.caption.31}
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Snapshot of Yahoo! Correlator for the query ``Carl Friedrich Gauss'' in named entities view\relax }}{9}{figure.caption.35}
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Snapshot of Yahoo! Correlator for the query ``Carl Friedrich Gauss'' in events view\relax }}{9}{figure.caption.36}
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Example of entity containment graph, from\nobreakspace {}\cite {Zaragoza:2007:RVM:1321440.1321599}\relax }}{11}{figure.caption.41}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Excerpt of YAGO RDF Graph, from \cite {Preda:2009:AAK:1687553.1687594}\relax }}{15}{figure.caption.51}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Data types of YAGO literal, from \cite {suchanek@phd}\relax }}{16}{figure.caption.53}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1}{\ignorespaces System Architecture \relax }}{22}{figure.caption.87}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces GUI Snapshot \relax }}{23}{figure.caption.89}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Retrieval Engine Work-flow \relax }}{24}{figure.caption.95}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Example of a category with the pattern [{\sf {\relax \fontsize {10}{12}\selectfont \abovedisplayskip 10\p@ plus2\p@ minus5\p@ \abovedisplayshortskip \z@ plus3\p@ \belowdisplayshortskip 6\p@ plus3\p@ minus3\p@ \def \leftmargin \leftmargini \parsep 4.5\p@ plus2\p@ minus\p@ \topsep 9\p@ plus3\p@ minus5\p@ \itemsep 4.5\p@ plus2\p@ minus\p@ {\leftmargin \leftmargini \topsep 6\p@ plus2\p@ minus2\p@ \parsep 3\p@ plus2\p@ minus\p@ \itemsep \parsep }\belowdisplayskip \abovedisplayskip X\_by\_Y}}]\relax }}{30}{figure.caption.116}
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Candidates Extraction Work-flow \relax }}{31}{figure.caption.140}
+\contentsline {figure}{\numberline {5.3}{\ignorespaces SPARQL statement for mapping location candidate X into a YAGO entity\nobreakspace {}\relax }}{32}{figure.caption.143}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {7.1}{\ignorespaces CATE's 3-tier Architecture\relax }}{44}{figure.caption.182}
+\contentsline {figure}{\numberline {7.2}{\ignorespaces Excerpt of the text database schema\relax }}{46}{figure.caption.188}
+\contentsline {figure}{\numberline {7.3}{\ignorespaces Excerpt of the CATE database schema\relax }}{46}{figure.caption.190}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {8.1}{\ignorespaces Average NDCG for statistical-language-model ranking versus random ranking\relax }}{60}{figure.caption.235}
+\contentsline {figure}{\numberline {8.2}{\ignorespaces Changes of average NDCG for the statistical-language-model rankings with different smoothing weights\relax }}{61}{figure.caption.238}
+\contentsline {figure}{\numberline {8.3}{\ignorespaces Comparison between precision of non context-aware ranking and context-aware ranking\relax }}{63}{figure.caption.242}
+\contentsline {figure}{\numberline {8.4}{\ignorespaces Comparison between precision of non context-aware ranking and context-aware ranking\relax }}{65}{figure.caption.246}
+\contentsline {figure}{\numberline {8.5}{\ignorespaces Snapshot of the Timeline Illustrator when the user explores ``Albert Einstein''\relax }}{67}{figure.caption.249}
+\contentsline {figure}{\numberline {8.6}{\ignorespaces Snapshot of the Timeline Illustrator when the user explores ``Albert Einstein'' within the context ``Germany, physicists''\relax }}{68}{figure.caption.250}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {9.1}{\ignorespaces Image results of the entity {\sf {\relax \fontsize {10}{12}\selectfont \abovedisplayskip 10\p@ plus2\p@ minus5\p@ \abovedisplayshortskip \z@ plus3\p@ \belowdisplayshortskip 6\p@ plus3\p@ minus3\p@ \def \leftmargin \leftmargini \parsep 4.5\p@ plus2\p@ minus\p@ \topsep 9\p@ plus3\p@ minus5\p@ \itemsep 4.5\p@ plus2\p@ minus\p@ {\leftmargin \leftmargini \topsep 6\p@ plus2\p@ minus2\p@ \parsep 3\p@ plus2\p@ minus\p@ \itemsep \parsep }\belowdisplayskip \abovedisplayskip Trocadero}} with and without the timepoint (1900)\relax }}{71}{figure.caption.254}
