@@ -1,120 +1,49 @@
 \chapter{Introduction}
 \label{ch:intro}
 
-Public archives preserve the collective memory of societies. Their importance
-in recording history, documenting the progress of civilization and
-preserving cultural heritage are well established now. The practice of
-archiving predates the era of digital technology and archives are known to have
-existed for many centuries. Such archives have been maintained by different
-institutions like universities, libraries, governments, or corporations. Of the
-many ways in which the printing press changed the ways of our societies, the
-ease with which archiving could be done can be considered one. Because printed
-material could be produced frequently and in large numbers, archives began to
-grow in size and nature. 
+In the last years, the volume of semantic data available, in particular RDF, has dramatically increased. Initiatives like the W3C Semantic Web, which provides a common standard that allows data to be shared and reused across different applications, and the Linked Open Data, which provides linkages between different datasets that were not originally interconnected, have great contribution in such development. Moreover, advances in information extraction have also made strong contribution, by crawling multiple non-structured resources in the Web and extracting RDF facts.
 
-The development of the World Wide Web towards the end of the previous century
-can be considered another landmark event, whose ramifications on different
-aspects of human civilization are still unfolding. The possibilities offered by
-the World Wide Web are being incorporated by the society in a variety of
-ways, as both continue to evolve. As a result, the process of publishing and
-archiving have also undergone a transformation. The process of publication,
-revision, storage, and distribution has become a lot easier and quicker. While
-decreasing storage costs have resulted in an explosive growth in the number of
-documents in the World Wide Web, these documents change rapidly and may
-disappear altogether after some time. On the other hand, because of the same
-reasons, digitally produced material is also easier to save and store for a
-long time. Thus despite being highly volatile, digital material is easy to
-preserve. 
+Nevertheless, information extraction still has its limitations and many of sources might contain contradictory or uncertain information. Therefore, many of the extracted datasets suffer from incompleteness, noise and uncertainty.
 
-An increased awareness for the need to preserve born-digital content has resulted in
-initiatives to archive the Web. Similarly, documents produced outside the
-internet are also being digitized and archived. The oldest archive of web-born
-content, the Internet Archive was founded in 1996. It has collected over 150
-billion web pages. Other specialized web archives are also maintained by
-governmental agencies, libraries, and corporations. There are about 13 million
-documents with the earliest one from 1851 in the archive of the New York Times.
-The archive of the Gale NewsVault~\cite{Gale}, which provides access to the archives of 
-British publications like The Times, The Economist and the Financial Times
-contains over 10 million pages and 400 years of content. The last two examples
-are of documents that were published originally in analog form, but were
-subsequently converted to and archived in digital format.
+In order to reduce such problems, one can apply to the knowledge base a set of inference rules that describes its domain. With that, it's possible to resolve contradictions or strengthen or weaken their confidence values. It's also possible to derive new facts that are originally not existent due to incompleteness. Such inference rules can be of two types:
 
-In this work, we consider both of the above mentioned types of archives as
-\emph{web archives}. Additionally, our work deals only with the text documents
-in the archives.
+\begin{enumerate}
 
-The volume of data in a typical web archive is huge and it keeps increasing.
-Through successive addition of resources, the archives gather new documents or
-newer versions of existing documents. Merely preserving all the documents ever
-seen is not enough for the different purposes a web archive is supposed to
-serve. Take for example, the different use-case scenarios proposed by the
-International Internet Preservation Consortium (IIPC) \cite{IIPC:2006}. Some of
-these use cases require further processing of the archive data to facilitate
-advanced search and analysis. 
+ \item \emph{Hard Rules}: Consistency constraints which represent which might represent functional dependencies, functional or inverse-functional properties of predicates or Mutual exclusion. For example:
+    \begin{center}
+      \emph{marriedTo(x,y) :- marriedTo(y,x)}
+      \emph{grandChildOf(x,y) :- childOf(x,z)childOf(z,y)}
+    \end{center}
 
-A web archive may contain many redundant documents. Redundancy is present in
-archives for various reasons including partial or complete copying of
-content, change of address or mirroring. Some documents could be duplicates of
-others. Additionally, other forms of redundancies may exist because of the
-evolution of the content in a document. Documents on the Web keep changing
-because of minor modifications like spelling and grammatical corrections or
-because of more significant changes in the content. After a document is created,
-it may undergo a series of modifications resulting in newer versions. Thus,
-many versions of a document may be stored in a web archive and some of them
-might be redundant. 
+ \item \emph{Soft Rules}: Weighted rules that frequently, but not always hold in the real world. As they might also produce incorrect information, each rule itself must have a confidence value which should be applied to derived facts, for example married people live in the same place as their partner has confidence 0.8:
+    \begin{center}
+      \emph{livesIn(x,y) :- marriedTo(x,z)livesIn(z,y)} [0.8]
+    \end{center}
+\end{enumerate}
 
-Redundant content wastes storage and makes the processing of the collection
-difficult and inefficient. For instance, a keyword search on a collection with low redundancy
-would produce results from more diverse sources than on a collection with high
-redundancy. If a web archive cannot be processed and searched efficiently or if
-the search results are not useful to the user, not only will the usability of
-the archive be low, society will not be able to benefit from the treasured
-information. For these reasons, merely creating a web archive is not sufficient.
-The task of making them more usable for the users is of equal importance.  If
-redundant documents could be removed from the collection, the size of the
-document collection would decrease, making the processing of the collection
-easier.
+So, if we have an incomplete knowledge base, which lacks information about where \emph{Michelle Obama}l lives, but we know that she's married to \emph{Barack Obama} and he lives in \emph{Washington, D.C.}, both with confidence 1, we could then apply this soft rule to derive the fact \emph{livesIn(MichelleObama, WashingtonDC)} with confidence 0.9.
+
+Such rules are rarely known beforehand, or are too expensive to be manually extracted. Nevertheless, the data itself can be used to mine these rules using \emph{Inductive Logic Programming (ILP)}. 
+
+http://people.csail.mit.edu/kersting/profile/PROFILE_ilp.html
+
+ILP is a well-established framework for inductively learning relational descriptions (in the form of logic programs) from examples and background knowledge. Given a logical database of facts, an ILP system will generate hypothesis in a pre-determined order and test them against the examples. However in a large knowledge base, ILP becomes too expensive as the search space grows combinatorially with the knowledge base size and the larger the number of examples, the more expensive it is to test each of the hypothesis.
+
+rules with constants might be really interesting.
+
+
+Moreover, testing hypothesis with constants increases the search space dramatically, making it unfeasible to test all possible hypothesis with constants in a large knowledge base. In such case, it's necessary to arbitrarily reduce the search by restricting the set of constants to be included in ...
+
+data mining, rule mining, datalog rules
+
+
+
+talk a bit about ilp
 
 \section{Motivation}
+Given the huge size of search space and the great interestingness of rules with constants, we need to smartly prune constants or combinations of constants that  , learning datalog rules can be already extremely costly.
 
-Consider the following use cases as a motivation for the work presented in the
-following chapters:
-
-\paragraph{Use Case \#1:} A historian wants to gather references for her study. She
-wants to study the documents related to \emph{parliamentary affairs}. Many of the
-documents are no longer available online and she needs to use a web archive to
-find the documents. Upon searching for documents in the archive, she is
-presented with a large number of documents present in the archive. The archive
-has several versions of each document. It is necessary to identify the documents
-whose content is redundant and present diverse results to the user.
-
-\paragraph{Use Case \#2:} A journalist wants a group of representative documents from
-the archive based on his needs. While working on a story, he wants to find all
-documents from the BBC that mention ``London Olympics'' and were published in
-2010. The archive has many redundant documents and there is a need to generate a
-set of representative documents matching the journalist's needs. However, a
-typical duplicate detection system may mark all documents from 2010 as redundant
-because of documents in 2011 or 2012 containing similar content. This is not
-what the user wants as he is interested only in representative documents from
-2010. There is a need to provide a solution suitable to the user's needs.
-
-\paragraph{Use Case \#3:} A researcher working in an archiving agency has to
-regularly run analytical jobs on the content of the archives. The nature of most
-of the jobs is to find out what topics, time period, or content are covered by
-the documents of the archive. Because of a lot of redundant documents, these
-analytical jobs take a lot of time to complete. The archivist could produce
-reports quickly if his jobs didn't have to spend time on documents that are
-redundant. To get an overview of the nature of the archive, removal of redundant
-documents would be a desired functionality.
-
-For these reasons, it is important to control redundancy in web archives. For
-many use cases, it is not enough to merely apply a duplicate detection system as
-the user requirements are varied. The definition of redundancy may change from
-one user to another and depends on the specific task at hand. We aim to decouple
-the definition of redundancy from the actual method used to control it. Allowing
-the users to define redundancy in their own terms and employing the user-defined
-redundancy measure is the main aim of our work. In this work, we closely inspect
-the nature of web archives and the challenges in processing them. 
+Numerical constants are a special case. They 
 
 \section{Contributions}
 In order to make a web archive serve its many purposes, it is imperative to
