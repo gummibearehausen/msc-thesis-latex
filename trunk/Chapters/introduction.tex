@@ -43,37 +43,32 @@ talk a bit about ilp
 \section{Motivation}
 Given the huge size of search space and the great interestingness of rules with constants, we need to smartly prune constants or combinations of constants that  , learning datalog rules can be already extremely costly.
 
-Numerical constants are a special case. They 
+Numerical constants are a special case, and they need to be treated differently. Depending on the numerical attribute domain, in case of a continuous real number domain for example, setting a numerical constant as an individual value will very likely have a very low support and also that would result and extremely large number of possible constants. Therefore, we split the attribute's domain into \emph{k} buckets and then check if any of the buckets present any gain in comparison with its correspondent numerical constant-free hypothesis.
+
+For example if we test the hypothesis and we find support=100 and confidence=0.4:
+
+isMarriedTo(x,y) :- hasAge(x,z)
+
+and then we split z into three buckets:
+
+k=1: z in [0,20]
+k=2: z in [21,40]
+k=3: z in [40,inf]
+
+we then test the hypothesis for each of the three buckets and we obtain
+
+isMarriedTo(x,y) :- hasAge(x,z)z in [0,20]	support=40, confidence=0.1
+isMarriedTo(x,y) :- hasAge(x,z)z in [21,40]	support=40, confidence=0.5
+isMarriedTo(x,y) :- hasAge(x,z)z in [40,inf]	support=20, confidence=0.8
+
+as we see, for k=2 and k=3, the hypothesis 
 
 \section{Contributions}
-In order to make a web archive serve its many purposes, it is imperative to
-find efficient ways to control redundancy. This work makes the following
-contributions towards making this possible:
+In this Thesis, we propose a pre-processing step to build what we call an Influence Graph for each numerical property. In each graph, that has a numerical property as root, we first query the frequency distribution on the numerical attribute, then split them in \emph{k} buckets. Then we pick a set of \emph{c} categorical properties that can be joined with the root, and analyze how the distribution of sub-population created by joining them with the root is affected. Afterwards we try to combine each of the categories and see if they still produce interesting sub-populations.
 
-\begin{enumerate}
+In a hypothesis containing a numerical attribute in the body, we can obtain a support and confidence value for each of the buckets, and 
 
-  \item a framework that allows users to define redundancy based on (mutual)
-    containment of document contents and meta data constraints,
-  \item an approach that determines for a user-defined notion of redundancy a
-    small set of documents representative for the collection,
-  \item efficient algorithms to implement the approach on top of modern
-    platforms for distributed data processing and management, specifically,
-    Hadoop and HBase,
-  \item a end-to-end system prototype that can take a web archive document
-    collection as input and produce a collection with redundancy removed.
-
-    \begin{comment}
-\item use existing measures and methods to define if a document is ``redundant"
-  or ``covered."
-\item propose an efficient method to find the set of all redundant documents
-  and the set of all representative documents in a collection.
-\item use existing frameworks to run the method proposed above in a distributed
-  computing environment.
-\item propose an end-to-end system prototype that can take a web archive
-  document collection and produce a collection with redundancies removed.
-
-  \end{comment}
-\end{enumerate}
+With that, during the ILP algorithm, once we add one of the root properties, we can then search for the most interesting categorical properties that could result in different accuracy distributions.
 
 \section{Outline}
 
