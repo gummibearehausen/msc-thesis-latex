@@ -147,7 +147,7 @@
 
 \input{./Chapters/introduction} % Introduction
 
-%\input{./Chapters/Chapter2} % Related Work
+\input{./Chapters/relatedwork} % Related Work
 
 %\input{./Chapters/Chapter3} % Data Model
 
