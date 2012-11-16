@@ -11,13 +11,13 @@ In order to reduce such problems, one can apply to the knowledge base a set of i
 
  \item \emph{Hard Rules}: Consistency constraints which represent which might represent functional dependencies, functional or inverse-functional properties of predicates or Mutual exclusion. For example:
     \begin{center}
-      \emph{marriedTo(x,y) :- marriedTo(y,x)}
-      \emph{grandChildOf(x,y) :- childOf(x,z)childOf(z,y)}
+      \begin{math} marriedTo(x,y) \leftarrow marriedTo(y,x)\end{math}
+      \begin{math} grandChildOf(x,y) \leftarrow childOf(x,z)childOf(z,y)\end{math}
     \end{center}
 
  \item \emph{Soft Rules}: Weighted rules that frequently, but not always hold in the real world. As they might also produce incorrect information, each rule itself must have a confidence value which should be applied to derived facts, for example married people live in the same place as their partner has confidence 0.8:
     \begin{center}
-      \emph{livesIn(x,y) :- marriedTo(x,z)livesIn(z,y)} [0.8]
+      \begin{math} livesIn(x,y) \leftarrow marriedTo(x,z)livesIn(z,y)\end{math} [0.8]
     \end{center}
 \end{enumerate}
 
@@ -25,7 +25,7 @@ So, if we have an incomplete knowledge base, which lacks information about where
 
 Such rules are rarely known beforehand, or are too expensive to be manually extracted. Nevertheless, the data itself can be used to mine these rules using \emph{Inductive Logic Programming (ILP)}. 
 
-http://people.csail.mit.edu/kersting/profile/PROFILE_ilp.html
+%http://people.csail.mit.edu/kersting/profile/PROFILE_ilp.html
 
 ILP is a well-established framework for inductively learning relational descriptions (in the form of logic programs) from examples and background knowledge. Given a logical database of facts, an ILP system will generate hypothesis in a pre-determined order and test them against the examples. However in a large knowledge base, ILP becomes too expensive as the search space grows combinatorially with the knowledge base size and the larger the number of examples, the more expensive it is to test each of the hypothesis.
 
@@ -47,28 +47,49 @@ Numerical constants are a special case, and they need to be treated differently.
 
 For example if we test the hypothesis and we find support=100 and confidence=0.4:
 
-isMarriedTo(x,y) :- hasAge(x,z)
+\begin{center}
+ \begin{math}isMarriedTo(x,y) \leftarrow hasAge(x,z)\end{math} 
+\end{center}
 
 and then we split z into three buckets:
 
-k=1: z in [0,20]
-k=2: z in [21,40]
-k=3: z in [40,inf]
+\begin{itemize}
+ \item \begin{math} k=1: z\in[0,20]\end{math}
+ \item \begin{math} k=2: z\in(20,40]\end{math}
+ \item \begin{math} k=3: z\in(40,\infty]\end{math}
+\end{itemize}
+
+
 
 we then test the hypothesis for each of the three buckets and we obtain
 
-isMarriedTo(x,y) :- hasAge(x,z)z in [0,20]	support=40, confidence=0.1
-isMarriedTo(x,y) :- hasAge(x,z)z in [21,40]	support=40, confidence=0.5
-isMarriedTo(x,y) :- hasAge(x,z)z in [40,inf]	support=20, confidence=0.8
+\begin{itemize}
+ \item \begin{math}isMarriedTo(x,y) \leftarrow hasAge(x,z)z\in[0,20]\end{math}	support=40, confidence=0.1
+ \item \begin{math}isMarriedTo(x,y) \leftarrow hasAge(x,z)z\in(20,40]\end{math}	support=40, confidence=0.5
+ \item \begin{math}isMarriedTo(x,y) \leftarrow hasAge(x,z)z\in(40,\infty]\end{math}	support=20, confidence=0.8
+\end{itemize}
 
-as we see, for k=2 and k=3, the hypothesis 
+as we see, for k=2 and k=3, the hypothesis we have significant gain by specifying numerical constants. Adding a relation to the body might produce totally different confidence support and confidence distributions along the buckets. For example, if we add the relation hasChild(x,a), we could obtain other interesting rules:
+\begin{itemize}
+ \item \begin{math}isMarriedTo(x,y) \leftarrow hasAge(x,z)hasChild(x,a)\end{math}			support=50 	confidence=0.625
+ \item \begin{math}isMarriedTo(x,y) \leftarrow hasAge(x,z)hasChild(x,a)z\in[0,20]\end{math}		support=2 	confidence=0.5
+ \item \begin{math}isMarriedTo(x,y) \leftarrow hasAge(x,z)hasChild(x,a)z\in(20,40]\end{math}	support=30 	confidence=0.7
+ \item \begin{math}isMarriedTo(x,y) \leftarrow hasAge(x,z)hasChild(x,a)z\in(40,\infty]\end{math}	support=18 	confidence=0.9
+\end{itemize}
+
+adding some relations might not bring any gain or even loss in confidence, but when bucketing per age, present a different distribution, 
+
+nevertheless, adding some relations might not generate any interesting rules, like 
+
 
 \section{Contributions}
-In this Thesis, we propose a pre-processing step to build what we call an Influence Graph for each numerical property. In each graph, that has a numerical property as root, we first query the frequency distribution on the numerical attribute, then split them in \emph{k} buckets. Then we pick a set of \emph{c} categorical properties that can be joined with the root, and analyze how the distribution of sub-population created by joining them with the root is affected. Afterwards we try to combine each of the categories and see if they still produce interesting sub-populations.
+In this Thesis, we propose a pre-processing step to build what we call an Influence Graph for each numerical property. In each graph, that has a numerical property as root, we first query the frequency distribution on the numerical attribute, then split them in \emph{k} buckets. Then we pick a set of \emph{c} categorical properties that can be joined with the root, and analyze how the distribution of sub-population created by joining them with the root is affected. Afterwards we try to combine each of the categories and see if they still produce interesting sub-populations, like in frequent set mining.
+
+We also evaluate different heuristics and interestingness measures.
 
 In a hypothesis containing a numerical attribute in the body, we can obtain a support and confidence value for each of the buckets, and 
 
-With that, during the ILP algorithm, once we add one of the root properties, we can then search for the most interesting categorical properties that could result in different accuracy distributions.
+With that, during the ILP algorithm, once we add one of the root properties, we can then search for the most interesting categorical properties that could result in different accuracy distributions. For every categorical property we can also suggest the most interesting constants and other categorical properties to be combined in a subcategory of both.
 
 \section{Outline}
 
