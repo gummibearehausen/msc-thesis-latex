@@ -16,15 +16,49 @@ In this step, we focus on creating for each of the four join patterns between tw
  \item Argument 2 on Argument 2: e.g. hasIncome(x,y)hasPopulation(x,z)
 \end{itemset}
 
-A knowledge base is expected to have an ontology representing 
+
 
 \subsubsection{Exploiting Relation Range and Domain Types}
 
+A knowledge base is expected to have an ontology defining the structure of the stored data (the types of entitties and their relationships). Additionally, every relation's range (type of 1st argument) and domain (type of 2nd argument) should be defined. These information can help us identify the allowed joining relations for each join pattern.
 
+For every possible pair of relations, 
+
+The algorithm is shown in the pseudo-code bellow:
+
+% with algorithmicx: \usepackage{algorithmicx}
+\begin{algorithm}
+ \Function{checkIfJoinable}{$r_i,$r_j,$arg_i,$arg_j}
+	 \If{r_i.arg_i = r_j.arg_j \or subsumes(r_i.arg_i,r_j.arg_j) \or subsumes(r_j.arg_j,r_i.arg_i)}
+		\Return true 
+	 \Else
+		\Return false
+	 \EndIf
+ \EndFunction
+ 
+\end{algorithm}
 
 \subsubsection{Exploiting Support Monotonicity}
 
-As seen in (???), support is the only monotonically decreasing measure in top-down ILP. So we know that by adding any literals to the hypothesis, we can only get a smaller or equal support. 
+As seen in (???), support is the only monotonically decreasing measure in top-down ILP. So we know that by adding any literals to the hypothesis, we can only get a smaller or equal support. Therefore, for each pair of joinable realtions in each of the join patterns, we can query the knowledge base and check whether they reach the minimum support threshold.
+
+Thus, if any pair of relations doesn't reach the minimum support for a given join pattern, we know that any hypothesis containing such join will therefore fail the support test as well, so we don't need to test such hypothesis in the core ILP algorithm.
+
+
+
+\begin{algorithm}
+ \Function{checkJoinSupport}{$r_i,$r_j,$arg_i,$arg_j,$supportThreshold}
+	 \If{r_i.arg_i = r_j.arg_j \or subsumes(r_i.arg_i,r_j.arg_j) \or subsumes(r_j.arg_j,r_i.arg_i)}
+		\Return true 
+	 \Else
+		\Return false
+	 \EndIf
+ \EndFunction
+ 
+\end{algorithm}
+
+The relation preprocessing will result in 4 maps, one for each join pattern. Each map will a relation as key and a set of joinable relations as value. The refinement step at the ILP algorithm, will then access this map when choosing a new literal to be added.
+
 
 \subsection{Influence Graph}
 
