@@ -1,0 +1,33 @@
+\chapter{Algorithmic Framework}
+\label{ch:intro}
+
+\section{Preprocessing}
+
+In this section, we will present the preprocessing steps required by our proposed algorithm. It basically consists of building a joinable repations map for each of the four join patterns, according to relations domain and range types as well as support threshold. Afterwards, we search the available categorical properties for each numerical relation that will be used in the Influence Graphs. At last we describe an Influence Graph and the algorithm to build it.
+
+\subsection{Relation Preprocessing}
+
+In this step, we focus on creating for each of the four join patterns between two relations:
+
+\begin{itemset}
+ \item Argument 1 on Argument 1: e.g. hasIncome(x,y)hasAge(x,z)
+ \item Argument 1 on Argument 2: e.g. hasIncome(x,y)isMarriedTo(z,x)
+ \item Argument 2 on Argument 1: e.g. hasIncome(x,y)hasPopulation(x,z)
+ \item Argument 2 on Argument 2: e.g. hasIncome(x,y)hasPopulation(x,z)
+\end{itemset}
+
+A knowledge base is expected to have an ontology representing 
+
+\subsubsection{Exploiting Relation Range and Domain Types}
+
+
+
+\subsubsection{Exploiting Support Monotonicity}
+
+As seen in (???), support is the only monotonically decreasing measure in top-down ILP. So we know that by adding any literals to the hypothesis, we can only get a smaller or equal support. 
+
+\subsection{Influence Graph}
+
+\section{ILP Core Algorithm}
+
+
