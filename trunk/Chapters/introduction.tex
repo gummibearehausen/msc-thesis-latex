@@ -10,10 +10,12 @@ In order to reduce such problems, one can apply to the knowledge base a set of i
 \begin{enumerate}
 
  \item \emph{Hard Rules}: Consistency constraints which represent which might represent functional dependencies, functional or inverse-functional properties of predicates or Mutual exclusion. For example:
-    \begin{center}
-      \begin{math} marriedTo(x,y) \leftarrow marriedTo(y,x)\end{math}
-      \begin{math} grandChildOf(x,y) \leftarrow childOf(x,z)childOf(z,y)\end{math}
-    \end{center}
+    \begin{itemize}
+      \item \begin{math} marriedTo(x,y) \leftarrow marriedTo(y,x),(x \neq y)\end{math}
+      \item \begin{math} grandChildOf(x,y) \leftarrow childOf(x,z),childOf(z,y)\end{math}
+      \item \begin{math} parentOf(x,y) \leftarrow childOf(y,x)\end{math}
+      \item \begin{math} (z=y) \leftarrow wasBornIn(x,z),wasBornIn(x,y)\end{math}
+    \end{itemize}
 
  \item \emph{Soft Rules}: Weighted rules that frequently, but not always hold in the real world. As they might also produce incorrect information, each rule itself must have a confidence value which should be applied to derived facts, for example married people live in the same place as their partner has confidence 0.8:
     \begin{center}
@@ -59,31 +61,38 @@ and then we split z into three buckets:
  \item \begin{math} k=3: z\in(40,\infty]\end{math}
 \end{itemize}
 
-
-
 we then test the hypothesis for each of the three buckets and we obtain
 
 \begin{itemize}
- \item \begin{math}isMarriedTo(x,y) \leftarrow hasAge(x,z)z\in[0,20]\end{math}	support=40, confidence=0.1
- \item \begin{math}isMarriedTo(x,y) \leftarrow hasAge(x,z)z\in(20,40]\end{math}	support=40, confidence=0.5
- \item \begin{math}isMarriedTo(x,y) \leftarrow hasAge(x,z)z\in(40,\infty]\end{math}	support=20, confidence=0.8
+
+ \item \begin{math}isMarriedTo(x,y) \leftarrow hasAge(x,z), z\in[0,20]\end{math}	
+    \newline support=40, confidence=0.1
+ \item \begin{math}isMarriedTo(x,y) \leftarrow hasAge(x,z), z\in(20,40]\end{math}	
+    \newline support=40, confidence=0.5
+ \item \begin{math}isMarriedTo(x,y) \leftarrow hasAge(x,z), z\in(40,\infty]\end{math}
+    \newline support=20, confidence=0.8
+
 \end{itemize}
 
 as we see, for k=2 and k=3, the hypothesis we have significant gain by specifying numerical constants. Adding a relation to the body might produce totally different confidence support and confidence distributions along the buckets. For example, if we add the relation hasChild(x,a), we could obtain other interesting rules:
 \begin{itemize}
- \item \begin{math}isMarriedTo(x,y) \leftarrow hasAge(x,z)hasChild(x,a)\end{math}			support=50 	confidence=0.625
- \item \begin{math}isMarriedTo(x,y) \leftarrow hasAge(x,z)hasChild(x,a)z\in[0,20]\end{math}		support=2 	confidence=0.5
- \item \begin{math}isMarriedTo(x,y) \leftarrow hasAge(x,z)hasChild(x,a)z\in(20,40]\end{math}	support=30 	confidence=0.7
- \item \begin{math}isMarriedTo(x,y) \leftarrow hasAge(x,z)hasChild(x,a)z\in(40,\infty]\end{math}	support=18 	confidence=0.9
+ \item \begin{math}isMarriedTo(x,y) \leftarrow hasAge(x,z)hasChild(x,a)\end{math}	
+    \newline support=50, confidence=0.625
+ \item \begin{math}isMarriedTo(x,y) \leftarrow hasAge(x,z)hasChild(x,a), z\in[0,20]\end{math}	
+    \newline support=2, confidence=0.5
+ \item \begin{math}isMarriedTo(x,y) \leftarrow hasAge(x,z)hasChild(x,a), z\in(20,40]\end{math}	
+    \newline support=30, confidence=0.7
+ \item \begin{math}isMarriedTo(x,y) \leftarrow hasAge(x,z)hasChild(x,a), z\in(40,\infty]\end{math}	
+    \newline support=18, confidence=0.9
 \end{itemize}
 
 adding some relations might not bring any gain or even loss in confidence, but when bucketing per age, present a different distribution, 
 
 nevertheless, adding some relations might not generate any interesting rules, like 
 
-
+d
 \section{Contributions}
-In this Thesis, we propose a pre-processing step to build what we call an Influence Graph for each numerical property. In each graph, that has a numerical property as root, we first query the frequency distribution on the numerical attribute, then split them in \emph{k} buckets. Then we pick a set of \emph{c} categorical properties that can be joined with the root, and analyze how the distribution of sub-population created by joining them with the root is affected. Afterwards we try to combine each of the categories and see if they still produce interesting sub-populations, like in frequent set mining.
+In this Thesis, we propose a pre-processing step to build a graph we call \graphname for each numerical property. In each graph, that has a numerical property as root, we first query the frequency distribution on the numerical attribute, then split them in \emph{k} buckets. Then we pick a set of \emph{c} categorical properties that can be joined with the root, and analyze how the distribution of sub-population created by joining them with the root is affected. Afterwards we try to combine each of the categories and see if they still produce interesting sub-populations, like in frequent set mining.
 
 We also evaluate different heuristics and interestingness measures.
 
@@ -103,43 +112,3 @@ Chapter~\ref{ch:redundancy_control}. In Chapter~\ref{ch:mapreduce_impl}, we
 describe an implementation of our solution using the MapReduce framework. In
 Chapter~\ref{ch:experiments}, we present our experimental results. We conclude
 this thesis and outline directions of future research in Chapter~\ref{ch:future_work}.
-
-%Plan:
-
-%1. \\
-%- web archives, what are they, who maintains them \\
-%- Volume of data (stats) \\
-%- Crawls \\
-%- Duplicates \\
-%- Redundancies \\
-
-%2.  \\
-%- Use cases \\
-%- save storage \\
-%- search diversity \\
-%- processing of smaller vs original collection \\
-%- a hostname, timestamp, topic or meta data based redundancy control \\
-%- updates \\
-%- re-crawl freq \\
-
-%3. \\
-%- Problems with general and specific approaches \\
-%- scale, big data \\
-
-%4. \\
-%- previous work (cite) shows 25\% of all content is redundant \\
-%- duplicate detection \\
-%- in web archives, redundancies are not duplicates alone (give examples, how?) \\
-
-%5. \\
-%- pairwise computation, quadratic \\
-%- distributed framework \\
-
-%6. \\
-%not possible to do on a single machine \\
-%- we use coverage relation \\
-%- we construct document graph \\
-%- we partition document graph \\
-%- we formulate Set Cover problem \\
-%- we test keyword search and show that our methods are effective \\
-
