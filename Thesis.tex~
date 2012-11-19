@@ -10,8 +10,11 @@
 \usepackage[square, numbers, comma, sort&compress]{natbib}  % Use the "Natbib" style for the references in the Bibliography
 \usepackage{verbatim}  % Needed for the "comment" environment to make LaTeX comments
 \usepackage{vector}  % Allows "\bvec{}" and "\buvec{}" for "blackboard" style bold vectors in maths
-\usepackage{algorithm}
-\usepackage{algorithmic}
+%\usepackage{algorithm}
+%\usepackage{algorithmic}
+%\usepackage{algorithmicx}
+\usepackage{algorithm2e}
+\usepackage{algpseudocode}
 \usepackage[T1]{fontenc}
 \usepackage{subfigure} 
 \usepackage{venturis2}
@@ -35,7 +38,7 @@
 
 
 \allsectionsfont{\sffamily}
-\numberwithin{algorithm}{chapter}
+%\numberwithin{algorithm}{chapter}
 \setcounter{secnumdepth}{3}
 \setcounter{tocdepth}{2}
 \renewcommand{\captionlabelfont}{\sffamily\bfseries}
@@ -149,7 +152,9 @@
 
 \input{./Chapters/relatedwork} % Related Work
 
-%\input{./Chapters/Chapter3} % Data Model
+\input{./Chapters/correlation-lattice}
+
+\input{./Chapters/algorithmic-framework} % Data Model
 
 %\input{./Chapters/Chapter4} % CATE Framework
 

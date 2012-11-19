@@ -9,12 +9,12 @@ In this section, we will present the preprocessing steps required by our propose
 
 In this step, we focus on creating for each of the four join patterns between two relations:
 
-\begin{itemset}
- \item Argument 1 on Argument 1: e.g. hasIncome(x,y)hasAge(x,z)
- \item Argument 1 on Argument 2: e.g. hasIncome(x,y)isMarriedTo(z,x)
- \item Argument 2 on Argument 1: e.g. hasIncome(x,y)hasPopulation(x,z)
- \item Argument 2 on Argument 2: e.g. hasIncome(x,y)hasPopulation(x,z)
-\end{itemset}
+\begin{itemize}
+ \item Argument 1 on Argument 1: e.g. hasIncome(\textbf{x},y)hasAge(\textbf{x},z)
+ \item Argument 1 on Argument 2: e.g. hasIncome(\textbf{x},y)isMarriedTo(z,\textbf{x})
+ \item Argument 2 on Argument 1: e.g. livesIn(y,\textbf{x})isLocatedIn(\textbf{x},z)
+ \item Argument 2 on Argument 2: e.g. livesIn(y,\textbf{x})wasBornIn(z,\textbf{x})
+\end{itemize}
 
 
 
@@ -26,16 +26,33 @@ For every possible pair of relations,
 
 The algorithm is shown in the pseudo-code bellow:
 
-% with algorithmicx: \usepackage{algorithmicx}
-\begin{algorithm}
- \Function{checkIfJoinable}{$r_i,$r_j,$arg_i,$arg_j}
-	 \If{r_i.arg_i = r_j.arg_j \or subsumes(r_i.arg_i,r_j.arg_j) \or subsumes(r_j.arg_j,r_i.arg_i)}
-		\Return true 
-	 \Else
-		\Return false
-	 \EndIf
- \EndFunction
- 
+\begin{algorithm}[5]
+  %\caption{Checks valid join pairs for a given join patterns}
+  %\begin{algorithmic}
+
+  %\Function {checkIfJoinable}{$r_i$,$r_j$,$arg_i$,$arg_j$}
+  %    \If{r_i.arg_i = r_j.arg_j \or subsumes(r_i.arg_i,r_j.arg_j) \or subsumes(r_j.arg_j,r_i.arg_i)}
+	%  \Return true 
+      %\Else
+	%  \Return false
+      %\EndIf
+  %\EndFunction
+  
+  %\end{algorithmic}
+%\SetAlgoLined
+ \KwData{this text}
+ \KwResult{how to write algorithm with \LaTeX2e }
+ initialization\;
+ \While{not at end of this document}{
+  read current\;
+  \eIf{understand}{
+   go to next section\;
+   current section becomes this one\;
+   }{
+   go back to the beginning of current section\;
+  }
+ }
+ \caption{How to write algorithms}
 \end{algorithm}
 
 \subsubsection{Exploiting Support Monotonicity}
@@ -45,16 +62,18 @@ As seen in (???), support is the only monotonically decreasing measure in top-do
 Thus, if any pair of relations doesn't reach the minimum support for a given join pattern, we know that any hypothesis containing such join will therefore fail the support test as well, so we don't need to test such hypothesis in the core ILP algorithm.
 
 
-
 \begin{algorithm}
- \Function{checkJoinSupport}{$r_i,$r_j,$arg_i,$arg_j,$supportThreshold}
-	 \If{r_i.arg_i = r_j.arg_j \or subsumes(r_i.arg_i,r_j.arg_j) \or subsumes(r_j.arg_j,r_i.arg_i)}
-		\Return true 
-	 \Else
-		\Return false
-	 \EndIf
- \EndFunction
- 
+  \caption{Checks valid join pairs for a given join patterns}
+  %\begin{algorithmic}
+ % \Function {checkJoinSupport}{r_i,r_j,arg_i,arg_j,supportThreshold}
+ %     \If{r_i.arg_i = r_j.arg_j \or subsumes(r_i.arg_i,r_j.arg_j) \or subsumes(r_j.arg_j,r_i.arg_i)}
+%	  \Return true 
+ %     \Else
+%	  \Return false
+ %     \EndIf
+  %\EndFunction
+  
+  %\end{algorithmic}
 \end{algorithm}
 
 The relation preprocessing will result in 4 maps, one for each join pattern. Each map will a relation as key and a set of joinable relations as value. The refinement step at the ILP algorithm, will then access this map when choosing a new literal to be added.

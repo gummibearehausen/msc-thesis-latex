@@ -54,6 +54,8 @@
   Juli\or August\or September\or Oktober\or November\or Dezember\fi
   \space}
 
+\def\graphname{Correlation Lattice}
+
 \usepackage{setspace}
 \onehalfspacing
 \setlength{\parindent}{0pt}
