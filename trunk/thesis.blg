@@ -1,16 +1,5 @@
-This is BibTeX, Version 0.99dThe top-level auxiliary file: D:\user\tuanta\Places\Saarland\thesis\thesis\thesis.aux
+This is BibTeX, Version 0.99dThe top-level auxiliary file: Thesis.aux
 The style file: unsrtnat.bst
+I found no \citation commands---while reading file Thesis.aux
 Database file #1: Bibliography.bib
-Warning--entry type for "Berners-Lee:1998:URI:RFC2396" isn't style-file defined
---line 69 of file Bibliography.bib
-Repeated entry---line 386 of file Bibliography.bib
- : @book{fellbaum98wordnet
- :                        ,
-I'm skipping whatever remains of this entry
-Warning--string name "pub-iso" is undefined
---line 507 of file Bibliography.bib
-Warning--string name "pub-iso:adr" is undefined
---line 508 of file Bibliography.bib
-Warning--empty publisher in ISO:1988:IDE
-Warning--empty publisher in DBLP:reference/db/Hiemstra09
 (There was 1 error message)

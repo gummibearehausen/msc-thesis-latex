@@ -56,6 +56,29 @@
 
 \def\graphname{Correlation Lattice}
 
+\def\ord#1{\begingroup
+        \count@=#1\relax
+        \the\count@
+        \ifnum\count@>99
+                \count0\count@
+                \divide\count0 by100
+                \multiply\count0 by100
+                \advance\count@ by-\count0
+        \fi
+        \ifnum\count@>19
+                \count0\count@
+                \divide\count0 by10
+                \multiply\count0 by10
+                \advance\count@ by-\count0
+        \fi
+        \ifcase\count@ \textsuperscript{th}%
+                \or \textsuperscript{st}%
+                \or \textsuperscript{nd}%
+                \or \textsuperscript{rd}%
+                \else \textsuperscript{th}%
+        \fi
+\endgroup}
+
 \usepackage{setspace}
 \onehalfspacing
 \setlength{\parindent}{0pt}
