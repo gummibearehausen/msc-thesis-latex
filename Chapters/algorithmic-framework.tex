@@ -20,44 +20,28 @@ In this step, we focus on creating for each of the four join patterns between tw
 
 \subsubsection{Exploiting Relation Range and Domain Types}
 
-A knowledge base is expected to have an ontology defining the structure of the stored data (the types of entitties and their relationships). Additionally, every relation's range (type of 1st argument) and domain (type of 2nd argument) should be defined. These information can help us identify the allowed joining relations for each join pattern.
+A knowledge base is expected to have an ontology defining the structure of the stored data (the types of entities and their relationships). Additionally, every relation's range (type of \ord{1} argument) and domain (type of \ord{2} argument) should be defined. These information can help us identify the allowed joining relations for each join pattern.
 
 For every possible pair of relations, 
 
 The algorithm is shown in the pseudo-code bellow:
 
 \begin{algorithm}[5]
-  %\caption{Checks valid join pairs for a given join patterns}
-  %\begin{algorithmic}
-
-  %\Function {checkIfJoinable}{$r_i$,$r_j$,$arg_i$,$arg_j$}
-  %    \If{r_i.arg_i = r_j.arg_j \or subsumes(r_i.arg_i,r_j.arg_j) \or subsumes(r_j.arg_j,r_i.arg_i)}
-	%  \Return true 
-      %\Else
-	%  \Return false
-      %\EndIf
-  %\EndFunction
-  
-  %\end{algorithmic}
-%\SetAlgoLined
- \KwData{this text}
- \KwResult{how to write algorithm with \LaTeX2e }
- initialization\;
- \While{not at end of this document}{
-  read current\;
-  \eIf{understand}{
-   go to next section\;
-   current section becomes this one\;
+ \caption{Checks whether two relations are joinable for a given join pattern}
+ \SetKwFunction{subsumes}
+ \KwIn{Relation $r_i$, $r_j$, Argument $arg_i$, $arg_j$}
+ \KwOut{True if $arg_i$ from $r_i$ joins with $arg_j$ from $r_j$, False otherwise}
+ 
+  \eIf{$r_i.arg_i = r_j.arg_j$ {\bf or} \FuncSty{subsumes(}$r_i.arg_i$,$r_j.arg_j$\FuncSty{)} {\bf or} \FuncSty{subsumes(}$r_j.arg_j$,$r_i.arg_i$\FuncSty{)}}{
+      \Return true\;
    }{
-   go back to the beginning of current section\;
+    \Return false\;
   }
- }
- \caption{How to write algorithms}
 \end{algorithm}
 
 \subsubsection{Exploiting Support Monotonicity}
 
-As seen in (???), support is the only monotonically decreasing measure in top-down ILP. So we know that by adding any literals to the hypothesis, we can only get a smaller or equal support. Therefore, for each pair of joinable realtions in each of the join patterns, we can query the knowledge base and check whether they reach the minimum support threshold.
+As seen in (???), support is the only monotonically decreasing measure in top-down ILP. So we know that by adding any literals to the hypothesis, we can only get a smaller or equal support. Therefore, for each pair of joinable relations in each of the join patterns, we can query the knowledge base and check whether they reach the minimum support threshold.
 
 Thus, if any pair of relations doesn't reach the minimum support for a given join pattern, we know that any hypothesis containing such join will therefore fail the support test as well, so we don't need to test such hypothesis in the core ILP algorithm.
 
@@ -76,10 +60,29 @@ Thus, if any pair of relations doesn't reach the minimum support for a given joi
   %\end{algorithmic}
 \end{algorithm}
 
+
 The relation preprocessing will result in 4 maps, one for each join pattern. Each map will a relation as key and a set of joinable relations as value. The refinement step at the ILP algorithm, will then access this map when choosing a new literal to be added.
 
 
-\subsection{Influence Graph}
+\subsection{\graphname}
+
+\subsubsection{Graph Node}
+
+Every node essentially contains the following attributes:
+
+\begin{itemize}
+ \item Set of pointers to parent nodes
+ \item Set of pointers to child nodes
+ \item Set of pointers to constant nodes
+ \item Histogram with facts distribution over root numerical property
+ \item 
+ 
+\end{itemize}
+
+
+\subsubsection{Builing the \graphname}
+
+For building the \graphname, we start with the root node, which has a numerical property as literal and no constants assigned, e.g. \emph{hasIncome(x,y)}. We s
 
 \section{ILP Core Algorithm}
 
