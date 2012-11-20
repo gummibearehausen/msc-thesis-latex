@@ -7,7 +7,7 @@ Let's assume that for the property \emph{wasBornInMonth(x,y)} we have the 12 mon
 
 It's expected that the income distribution will be roughly the same for people born in any of the months, whereas for different education levels, e.g. Elementary School and Doctoral Degree, their income distribution are expected to be different between them and different from the overall income distribution.
 
-In a further step, we try to join every possible pair of categorical properties and including the constants. For the given example with the properties \emph{hasEducation} and \emph{wasBornInMonth} we would 
+In a further step, we try to join every possible pair of categorical properties and including the constants. For the given example with the properties \emph{hasEducation} and \emph{wasBornIU}
 
 Based on this idea, we basically check how different categorical properties affect a numerical distribution. Such information, together with other measures like support, provides valuable cues on what categorical attributes and what categorical constants might be the most interesting to be added to the hypothesis in the core ILP algorithm.
 
