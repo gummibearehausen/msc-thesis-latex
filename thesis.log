@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.11.20)  20 NOV 2012 12:10
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.11.20)  20 NOV 2012 16:44
 entering extended mode
 **Thesis.tex
 (C:\Users\ande01\Documents\Thesis\dissertation\Thesis.tex
@@ -1078,16 +1078,22 @@ Chapter 3.
 LaTeX Font Info:    Try loading font information for T1+lmtt on input line 37.
  (C:\Users\ande01\MikTex\tex\latex\lm\t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-))
+) [10]
+Overfull \hbox (34.39864pt too wide) in paragraph at lines 97--98
+[]\T1/lmr/m/n/10.95 (-20) With such query, it's pos-si-ble to ex-tract a his-to
+gram for the node \T1/lmr/m/it/10.95 (-20) has-In-come(x,y)hasEducation(x,z)
+ []
+
+)
 ------------------------------------------------------------------------------
  List of Figures
 ------------------------------------------------------------------------------
-[10] [11] [12] (C:\Users\ande01\Documents\Thesis\dissertation\Thesis.lof)
+[11] [12] (C:\Users\ande01\Documents\Thesis\dissertation\Thesis.lof)
 \tf@lof=\write5
+ [13
 
-[13
-
-] [14
+]
+[14
 
 ]
 ------------------------------------------------------------------------------
@@ -1263,8 +1269,14 @@ Presections/acknowledgement.tex
  ***********
 
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 199.
-Package rerunfilecheck Info: File `Thesis.out' has not changed.
-(rerunfilecheck)             Checksum: AE6EBEFDCEAB353C392B627800B5F2B4;2228.
+
+Package rerunfilecheck Warning: File `Thesis.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `Thesis.out':
+(rerunfilecheck)             Before: AE6EBEFDCEAB353C392B627800B5F2B4;2228
+(rerunfilecheck)             After:  CBF9898B5BFAB285A64C2FFF99E83C81;2451.
 
 LaTeX Warning: There were undefined references.
 
@@ -1274,29 +1286,54 @@ LaTeX Warning: There were multiply-defined labels.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 199.
  ) 
 Here is how much of TeX's memory you used:
- 15784 strings out of 494045
- 229470 string characters out of 3150398
+ 15804 strings out of 494045
+ 229718 string characters out of 3150398
  370786 words of memory out of 3000000
- 18589 multiletter control sequences out of 15000+200000
- 83406 words of font info for 102 fonts, out of 3000000 for 9000
+ 18591 multiletter control sequences out of 15000+200000
+ 88067 words of font info for 106 fonts, out of 3000000 for 9000
  715 hyphenation exceptions out of 8191
  49i,12n,45p,1411b,486s stack positions out of 5000i,500n,10000p,200000b,50000s
-{C:/Users/ande01/MikTex/fonts/enc/dvips/lm/lm-ec.enc}{C:/Users/ande01/MikTex/
-fonts/enc/dvips/lm/lm-mathit.enc}{C:/Users/ande01/MikTex/fonts/enc/dvips/lm/lm-
-mathsy.enc}{C:/Users/ande01/MikTex/fonts/enc/dvips/lm/lm-rm.enc}{C:/Users/ande0
-1/MikTex/fonts/enc/dvips/lm/lm-ts1.enc}<C:/Users/ande01/MikTex/fonts/type1/publ
-ic/lm/lmbx10.pfb><C:/Users/ande01/MikTex/fonts/type1/public/lm/lmbx12.pfb><C:/U
-sers/ande01/MikTex/fonts/type1/public/lm/lmmi10.pfb><C:/Users/ande01/MikTex/fon
-ts/type1/public/lm/lmmi8.pfb><C:/Users/ande01/MikTex/fonts/type1/public/lm/lmr1
-0.pfb><C:/Users/ande01/MikTex/fonts/type1/public/lm/lmr12.pfb><C:/Users/ande01/
-MikTex/fonts/type1/public/lm/lmr17.pfb><C:/Users/ande01/MikTex/fonts/type1/publ
-ic/lm/lmr8.pfb><C:/Users/ande01/MikTex/fonts/type1/public/lm/lmri10.pfb><C:/Use
-rs/ande01/MikTex/fonts/type1/public/lm/lmri12.pfb><C:/Users/ande01/MikTex/fonts
-/type1/public/lm/lmssbx10.pfb><C:/Users/ande01/MikTex/fonts/type1/public/lm/lms
-y10.pfb><C:/Users/ande01/MikTex/fonts/type1/public/lm/lmtt10.pfb>
-Output written on Thesis.pdf (27 pages, 335313 bytes).
+pdfTeX warning (dest): name{dummy.32} has been referenced but does not exist,
+ replaced by a fixed one
+
+pdfTeX warning (dest): name{dummy.30} has been referenced but does not exist, r
+eplaced by a fixed one
+
+pdfTeX warning (dest): name{dummy.28} has been referenced but does not exist, r
+eplaced by a fixed one
+
+pdfTeX warning (dest): name{section.27} has been referenced but does not exist,
+ replaced by a fixed one
+
+pdfTeX warning (dest): name{subsection.24} has been referenced but does not exi
+st, replaced by a fixed one
+
+pdfTeX warning (dest): name{subsection.15} has been referenced but does not exi
+st, replaced by a fixed one
+
+pdfTeX warning (dest): name{section.14} has been referenced but does not exist,
+ replaced by a fixed one
+
+pdfTeX warning (dest): name{chapter.13} has been referenced but does not exist,
+ replaced by a fixed one
+
+{C:/Users/ande01/MikTex/fonts/enc/dvips/lm/lm-ec.enc}{C:/Users/ande01/MikTex/fo
+nts/enc/dvips/lm/lm-mathit.enc}{C:/Users/ande01/MikTex/fonts/enc/dvips/lm/lm-ma
+thsy.enc}{C:/Users/ande01/MikTex/fonts/enc/dvips/lm/lm-rm.enc}{C:/Users/ande01/
+MikTex/fonts/enc/dvips/lm/lm-ts1.enc}<C:/Users/ande01/MikTex/fonts/type1/public
+/lm/lmbx10.pfb><C:/Users/ande01/MikTex/fonts/type1/public/lm/lmbx12.pfb><C:/Use
+rs/ande01/MikTex/fonts/type1/public/lm/lmbxi10.pfb><C:/Users/ande01/MikTex/font
+s/type1/public/lm/lmmi10.pfb><C:/Users/ande01/MikTex/fonts/type1/public/lm/lmmi
+8.pfb><C:/Users/ande01/MikTex/fonts/type1/public/lm/lmr10.pfb><C:/Users/ande01/
+MikTex/fonts/type1/public/lm/lmr12.pfb><C:/Users/ande01/MikTex/fonts/type1/publ
+ic/lm/lmr17.pfb><C:/Users/ande01/MikTex/fonts/type1/public/lm/lmr8.pfb><C:/User
+s/ande01/MikTex/fonts/type1/public/lm/lmri10.pfb><C:/Users/ande01/MikTex/fonts/
+type1/public/lm/lmri12.pfb><C:/Users/ande01/MikTex/fonts/type1/public/lm/lmssbx
+10.pfb><C:/Users/ande01/MikTex/fonts/type1/public/lm/lmsy10.pfb><C:/Users/ande0
+1/MikTex/fonts/type1/public/lm/lmtt10.pfb>
+Output written on Thesis.pdf (27 pages, 345645 bytes).
 PDF statistics:
- 299 PDF objects out of 1000 (max. 8388607)
- 61 named destinations out of 1000 (max. 500000)
- 20619 words of extra memory for PDF output out of 20736 (max. 10000000)
+ 315 PDF objects out of 1000 (max. 8388607)
+ 72 named destinations out of 1000 (max. 500000)
+ 21131 words of extra memory for PDF output out of 24883 (max. 10000000)
 

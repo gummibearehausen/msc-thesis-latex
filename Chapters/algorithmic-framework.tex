@@ -3,17 +3,17 @@
 
 \section{Preprocessing}
 
-In this section, we will present the preprocessing steps required by our proposed algorithm. It basically consists of building a joinable repations map for each of the four join patterns, according to relations domain and range types as well as support threshold. Afterwards, we search the available categorical properties for each numerical relation that will be used in the Influence Graphs. At last we describe an Influence Graph and the algorithm to build it.
+In this section, we will present the preprocessing steps required by our proposed algorithm. It basically consists of building a joinable relations map for each of the four join patterns, according to relations domain and range types as well as support threshold. Afterwards, we search the available categorical properties for each numerical relation that will be used in the \graphname. At last we describe the \graphname structure and the algorithm to build it.
 
 \subsection{Relation Preprocessing}
 
 In this step, we focus on creating for each of the four join patterns between two relations:
 
 \begin{itemize}
- \item Argument 1 on Argument 1: e.g. hasIncome(\textbf{x},y)hasAge(\textbf{x},z)
- \item Argument 1 on Argument 2: e.g. hasIncome(\textbf{x},y)isMarriedTo(z,\textbf{x})
- \item Argument 2 on Argument 1: e.g. livesIn(y,\textbf{x})isLocatedIn(\textbf{x},z)
- \item Argument 2 on Argument 2: e.g. livesIn(y,\textbf{x})wasBornIn(z,\textbf{x})
+ \item Argument 1 on Argument 1: e.g. \emph{hasIncome(\textbf{x},y)hasAge(\textbf{x},z)}
+ \item Argument 1 on Argument 2: e.g. \emph{hasIncome(\textbf{x},y)isMarriedTo(z,\textbf{x})}
+ \item Argument 2 on Argument 1: e.g. \emph{livesIn(y,\textbf{x})isLocatedIn(\textbf{x},z)}
+ \item Argument 2 on Argument 2: e.g. \emph{livesIn(y,\textbf{x})wasBornIn(z,\textbf{x})}
 \end{itemize}
 
 
@@ -75,14 +75,32 @@ Every node essentially contains the following attributes:
  \item Set of pointers to child nodes
  \item Set of pointers to constant nodes
  \item Histogram with facts distribution over root numerical property
- \item 
- 
 \end{itemize}
 
 
-\subsubsection{Builing the \graphname}
+\subsubsection{Building the \graphname}
 
-For building the \graphname, we start with the root node, which has a numerical property as literal and no constants assigned, e.g. \emph{hasIncome(x,y)}. We s
+For building the \graphname, we start with the root node, which has a numerical property as literal and no constants assigned, e.g. \emph{hasIncome(x,y)}. We then query the  distribution of positive examples over the property in the whole Knowledge Base.
+
+\begin{center}
+ \emph{SELECT COUNT ?y WHERE \{ ?x <hasIncome> ?y \} GROUP BY (?y)}
+\end{center}
+
+It's also necessary to specify the bucketing technique and the number of buckets in order to extract the histogram from the obtained query results. These buckets are used to build the histograms of all nodes in the graph.
+
+Afterwards, we select the the categorical properties that will be used in the lattice. For each of the selected properties, we join them with the root numerical property (for simplicity we'll assume all the categorical properties are joined with both \ord{1} arguments) and we query the distribution again. In the first level, it's necessary to extract a histogram for each of the categorical constants in the selected properties. Therefore, it's a good strategy to group the results also by these categorical constants so If we select \emph{hasEducation} for example, we would then fire the following SPARQL query:
+
+\begin{center}
+ \emph{SELECT COUNT ?z ?y WHERE \{ ?x <hasIncome> ?y . ?x <hasEducation> ?z \} GROUP BY (?z,?y)}
+\end{center}
+
+With such query, it's possible to extract a histogram for the node \emph{hasIncome(x,y)hasEducation(x,z)} and its correspondent constants 
+
+\subsubsection{Searching Rules in \graphname}
+
+\subsubsection{}
+
+
 
 \section{ILP Core Algorithm}
 
