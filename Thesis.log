@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.5.22)  19 NOV 2012 18:37
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.5.22)  21 NOV 2012 18:56
 entering extended mode
  %&-line parsing enabled.
 **Thesis.tex
@@ -645,10 +645,6 @@ LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
 (Font)                  OT1/cmtt/m/n --> OT1/lmtt/m/n on input line 38.
 )
-(/usr/share/texmf-texlive/tex/latex/jknapltx/mathrsfs.sty
-Package: mathrsfs 1996/01/01 Math RSFS package v1.0 (jk)
-\symrsfs=\mathgroup6
-)
 (/usr/share/texmf-texlive/tex/latex/microtype/microtype.sty
 Package: microtype 2009/03/27 v2.3d Micro-typography with pdfTeX (RS)
 \MT@toks=\toks33
@@ -834,7 +830,7 @@ File: ucsencs.def 2003/11/29 Fixes to fontencodings LGR, T3
 ------------------------------------------------------------------------------
  Title Page
 ------------------------------------------------------------------------------
-<minerva.pdf, id=91, 146.5475pt x 146.5475pt>
+<minerva.pdf, id=103, 146.5475pt x 146.5475pt>
 File: minerva.pdf Graphic file (type pdf)
  <use minerva.pdf>
 LaTeX Font Info:    Try loading font information for OT1+lmr on input line 71.
@@ -881,16 +877,11 @@ File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 (/usr/share/texmf-texlive/tex/latex/microtype/mt-msb.cfg
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
-LaTeX Font Info:    Try loading font information for U+rsfs on input line 71.
-
-(/usr/share/texmf-texlive/tex/latex/jknapltx/ursfs.fd
-File: ursfs.fd 1998/03/24 rsfs font definition file (jk)
-)
 Overfull \hbox (12.49623pt too wide) in paragraph at lines 71--71
  [][] 
  []
 
-<eule-rz.pdf, id=92, 85.31876pt x 85.31876pt>
+<eule-rz.pdf, id=104, 85.31876pt x 85.31876pt>
 File: eule-rz.pdf Graphic file (type pdf)
  <use eule-rz.pdf> [1
 
@@ -948,9 +939,7 @@ File: t1lmss.fd 2009/10/30 v1.6 Font defs for Latin Modern
  [9
 
 
-] [10
-
-] (./Chapters/introduction.tex
+] [10] (./Chapters/introduction.tex
 Chapter 1.
 ------------------------------------------------------------------------------
  1 Introduction
@@ -959,6 +948,7 @@ LaTeX Font Info:    Try loading font information for TS1+lmr on input line 14.
 (/usr/share/texmf/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 ) [1
+
 
 
 
@@ -1001,32 +991,61 @@ Chapter 3.
 ------------------------------------------------------------------------------
  3 Correlation Lattice
 ------------------------------------------------------------------------------
-) (./Chapters/algorithmic-framework.tex [9] [10
 
-]
+Underfull \hbox (badness 10000) in paragraph at lines 12--16
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 17--21
+
+ []
+
+[9]
+Underfull \hbox (badness 10000) in paragraph at lines 22--23
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 24--28
+
+ []
+
+[10] [11]) (./Chapters/algorithmic-framework.tex [12]
 Chapter 4.
 ------------------------------------------------------------------------------
  4 Algorithmic Framework
 ------------------------------------------------------------------------------
-[11]
-Package hyperref Info: bookmark level for unknown algocf defaults to 0 on input
- line 55.
+[13
 
-Underfull \hbox (badness 10000) detected at line 77
+]
+Package hyperref Info: bookmark level for unknown algocf defaults to 0 on input
+ line 30.
+LaTeX Font Info:    Try loading font information for T1+lmtt on input line 37.
+ (/usr/share/texmf/tex/latex/lm/t1lmtt.fd
+File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
+)
+Underfull \hbox (badness 10000) detected at line 61
 [][]
+ []
+
+[14]
+Overfull \hbox (34.39864pt too wide) in paragraph at lines 97--98
+[]\T1/lmr/m/n/10.95 (-20) With such query, it's pos-si-ble to ex-tract a his-to
+gram for the node \T1/lmr/m/it/10.95 (-20) has-In-come(x,y)hasEducation(x,z)
  []
 
 )
 ------------------------------------------------------------------------------
  List of Figures
 ------------------------------------------------------------------------------
-[12] [13] [14
-
-] (./Thesis.lof)
+[15] [16] (./Thesis.lof)
 \tf@lof=\write5
 \openout5 = `Thesis.lof'.
 
- [15] [16
+ [17
+
+] [18
 
 ]
 ------------------------------------------------------------------------------
@@ -1036,9 +1055,9 @@ Underfull \hbox (badness 10000) detected at line 77
 \tf@lot=\write6
 \openout6 = `Thesis.lot'.
 
- [17
+ [19
 
-] [18
+] [20
 
 ]
 ------------------------------------------------------------------------------
@@ -1048,7 +1067,7 @@ Underfull \hbox (badness 10000) detected at line 77
 
 Package natbib Warning: Empty `thebibliography' environment on input line 8.
 
-) [19
+) [21
 
 
 ]
@@ -1140,7 +1159,6 @@ textcomp.sty    2005/09/27 v1.99g Standard LaTeX package
 nfssext-cfr.sty    2008/11/08 specially mangled by cfr; based on 2003/03/14 v1.
 2 Experimental NFSS Extensions
  lmodern.sty    2009/10/30 v1.6 Latin Modern Fonts
-mathrsfs.sty    1996/01/01 Math RSFS package v1.0 (jk)
 microtype.sty    2009/03/27 v2.3d Micro-typography with pdfTeX (RS)
 microtype.cfg    2009/03/27 v2.3d microtype main configuration file (RS)
   ps4pdf.sty    2005/02/11 v0.6i PS code for pdfTeX (RN/HO)
@@ -1175,7 +1193,6 @@ refcount.sty    2008/08/11 v3.1 Data extraction from references (HO)
   mt-msa.cfg    2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
     umsb.fd    2009/06/22 v3.00 AMS symbols B
   mt-msb.cfg    2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
-   ursfs.fd    1998/03/24 rsfs font definition file (jk)
  eule-rz.pdf    Graphic file (type pdf)
 ./Presections/declaration.tex
   t1lmss.fd    2009/10/30 v1.6 Font defs for Latin Modern
@@ -1187,6 +1204,7 @@ Presections/acknowledgement.tex
 ./Chapters/relatedwork.tex
 ./Chapters/correlation-lattice.tex
 ./Chapters/algorithmic-framework.tex
+  t1lmtt.fd    2009/10/30 v1.6 Font defs for Latin Modern
   Thesis.bbl
  ***********
 
@@ -1198,27 +1216,55 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 14765 strings out of 493848
- 210745 string characters out of 1152823
- 354878 words of memory out of 3000000
- 17544 multiletter control sequences out of 15000+50000
- 83087 words of font info for 101 fonts, out of 3000000 for 9000
+ 14821 strings out of 493848
+ 211293 string characters out of 1152823
+ 355955 words of memory out of 3000000
+ 17573 multiletter control sequences out of 15000+50000
+ 87739 words of font info for 105 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
- 48i,12n,45p,1410b,457s stack positions out of 5000i,500n,10000p,200000b,50000s
-{/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc}{/usr/share/texmf/fonts/enc/dv
-ips/lm/lm-mathsy.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share
-/texmf/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm
--ts1.enc}</usr/share/texmf/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf/f
-onts/type1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi10.
-pfb></usr/share/texmf/fonts/type1/public/lm/lmr10.pfb></usr/share/texmf/fonts/t
-ype1/public/lm/lmr12.pfb></usr/share/texmf/fonts/type1/public/lm/lmr17.pfb></us
-r/share/texmf/fonts/type1/public/lm/lmr8.pfb></usr/share/texmf/fonts/type1/publ
-ic/lm/lmri10.pfb></usr/share/texmf/fonts/type1/public/lm/lmri12.pfb></usr/share
-/texmf/fonts/type1/public/lm/lmssbx10.pfb></usr/share/texmf/fonts/type1/public/
-lm/lmsy10.pfb>
-Output written on Thesis.pdf (29 pages, 310331 bytes).
+ 48i,16n,45p,1410b,457s stack positions out of 5000i,500n,10000p,200000b,50000s
+pdfTeX warning (dest): name{dummy.44} has been referenced but does not exist,
+ replaced by a fixed one
+
+pdfTeX warning (dest): name{dummy.42} has been referenced but does not exist, r
+eplaced by a fixed one
+
+pdfTeX warning (dest): name{dummy.40} has been referenced but does not exist, r
+eplaced by a fixed one
+
+pdfTeX warning (dest): name{section.39} has been referenced but does not exist,
+ replaced by a fixed one
+
+pdfTeX warning (dest): name{subsection.34} has been referenced but does not exi
+st, replaced by a fixed one
+
+pdfTeX warning (dest): name{subsection.27} has been referenced but does not exi
+st, replaced by a fixed one
+
+pdfTeX warning (dest): name{section.26} has been referenced but does not exist,
+ replaced by a fixed one
+
+pdfTeX warning (dest): name{chapter.25} has been referenced but does not exist,
+ replaced by a fixed one
+
+{/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc}{/usr/share/texmf/fonts/enc/dvip
+s/lm/lm-mathsy.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/t
+exmf/fonts/enc/dvips/lm/lm-mathex.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-m
+athit.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-ts1.enc}</usr/share/texmf/fon
+ts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/type1/public/lm/lmbx12.pf
+b></usr/share/texmf/fonts/type1/public/lm/lmbxi10.pfb></usr/share/texmf/fonts/t
+ype1/public/lm/lmex10.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi10.pfb></
+usr/share/texmf/fonts/type1/public/lm/lmmi8.pfb></usr/share/texmf/fonts/type1/p
+ublic/lm/lmr10.pfb></usr/share/texmf/fonts/type1/public/lm/lmr12.pfb></usr/shar
+e/texmf/fonts/type1/public/lm/lmr17.pfb></usr/share/texmf/fonts/type1/public/lm
+/lmr8.pfb></usr/share/texmf/fonts/type1/public/lm/lmri10.pfb></usr/share/texmf/
+fonts/type1/public/lm/lmri12.pfb></usr/share/texmf/fonts/type1/public/lm/lmssbx
+10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fon
+ts/type1/public/lm/lmsy8.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt10.pfb
+></usr/share/texmf-texlive/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on Thesis.pdf (31 pages, 382622 bytes).
 PDF statistics:
- 325 PDF objects out of 1000 (max. 8388607)
- 65 named destinations out of 1000 (max. 500000)
- 20155 words of extra memory for PDF output out of 20736 (max. 10000000)
+ 397 PDF objects out of 1000 (max. 8388607)
+ 86 named destinations out of 1000 (max. 500000)
+ 21203 words of extra memory for PDF output out of 24883 (max. 10000000)
 

@@ -1,17 +1,122 @@
 \chapter{\graphname}
 \label{ch:intro}
 
-The idea is to build during preprocessing a graph inspired in the Itemset Lattice that describes the influence of different categorical properties on a given numerical attribute's distribution. We call such graph a \graphname.  To illustrate the idea, let's analyze a simple real-world example with the \emph{hasIncome} property. If we have two categorical properties, one strongly correlated to income, for example \emph{hasEducation}, and one uncorrelated (or very weakly correlated), for example \emph{wasBornInMonth}.
+The idea is to build during preprocessing a graph inspired in the Itemset Lattice that describes the influence of different categorical relations on a given numerical attribute's distribution. We call such graph a \graphname.  To illustrate the idea, let's analyze a simple real-world example with the \emph{hasIncome} relation. If we have two categorical relations, one strongly correlated to income, e.g. \emph{hasEducation}, and one uncorrelated (or very weakly correlated), e.g. \emph{wasBornInMonth}.
 
-Let's assume that for the property \emph{wasBornInMonth(x,y)} we have the 12 months from the Gregorian Calendar as constants and for \emph{hasEducation(x,y)} we can have 10 different categorical constants for \emph{y}: Preschool, Kindergarten, ElementarySchool, MiddleSchool, Highschool, Professional School, Associate's degree, Bachelor's degree, Master's degree and Doctorate degree. 
+Let's assume that for the relation \emph{wasBornInMonth(x,y)} we have the 12 months from the Gregorian Calendar as constants and for \emph{hasEducation(x,y)} we can have 10 different categorical constants for \emph{y}: ``Preschool, ``Kindergarten, ``ElementarySchool'', ``MiddleSchool'', ``Highschool'', ``Professional School'', ``Associate's degree'', ``Bachelor's degree'', ``Master's degree'' and ``Doctorate degree''. 
 
 It's expected that the income distribution will be roughly the same for people born in any of the months, whereas for different education levels, e.g. Elementary School and Doctoral Degree, their income distribution are expected to be different between them and different from the overall income distribution.
 
-In a further step, we try to join every possible pair of categorical properties and including the constants. For the given example with the properties \emph{hasEducation} and \emph{wasBornInMonth} we would 
+In a further step, we try to join every possible pair of categorical relations and including the constants. For the given example with the relations \emph{hasEducation} and \emph{wasBornInMonth} we would then create the nodes:
 
-Based on this idea, we basically check how different categorical properties affect a numerical distribution. Such information, together with other measures like support, provides valuable cues on what categorical attributes and what categorical constants might be the most interesting to be added to the hypothesis in the core ILP algorithm.
+  \emph{hasIncome(x,y)wasBornInMonth(x,``January''),hasEducation(x,``Preschool'')} \newline
+  \emph{hasIncome(x,y)wasBornInMonth(x,``January''),hasEducation(x,``Kindergarten'')} \newline
+  \dots \newline
+  \emph{hasIncome(x,y)wasBornInMonth(x,``January''),hasEducation(x,``Doctorate Degree'')} \newline
 
-\section{Preprocessing}
+  \emph{hasIncome(x,y)wasBornInMonth(x,``February''),hasEducation(x,``Preschool'')} \newline
+  \emph{hasIncome(x,y)wasBornInMonth(x,``February''),hasEducation(x,``Kindergarten'')} \newline
+  \dots \newline
+  \emph{hasIncome(x,y)wasBornInMonth(x,``February''),hasEducation(x,``Doctorate Degree'')} \newline
+ 
+  \dots \newline
+
+  \emph{hasIncome(x,y)wasBornInMonth(x,``December''),hasEducation(x,``Preschool'')} \newline
+  \emph{hasIncome(x,y)wasBornInMonth(x,``December''),hasEducation(x,``Kindergarten'')} \newline
+  \dots \newline
+  \emph{hasIncome(x,y)wasBornInMonth(x,``December''),hasEducation(x,``Doctorate Degree'')} \newline
+
+
+Based on this idea, we basically check how different categorical relations affect a numerical distribution. Such information, together with other measures like support, provides valuable cues on what categorical attributes and what categorical constants might be the most interesting to be added to the hypothesis in the core ILP algorithm.
+
+\section{Categorical Relation Definition}
+
+In this section, we formally define a categorical relation as used in the \graphname. 
+
+First of all, a candidate relation must be joined with root relation's \ord{1} argument (assuming that the numerical attribute is in the \ord{2} argument). 
+
+A candidate categorical relation $r(x,y)$, should be equivalent a non-injective function:
+
+$r(x,y) \equiv f : X \rightarrow Y ,\, s.t. |Y|<|X| $ and $  |Y|=n ,\, n>1 \newline $
+$\nexists \, g : Y \rightarrow X ,\, s.t. f(g(x))=x ,\, \forall x \in X$
+
+We can define subsets of $X_i \in X$, with which of them belonging to one category $y_i \in Y$:
+
+$X_i \subset X ,\, s.t. X_i = \{x \in X \,|\, f(x)=y_i ,\, y_i \in Y\} \newline $
+$X = \bigcup_{i=1}^{n} X_i $ and $ X_i \cap X_j = \emptyset ,\, \forall i,j \in [1,n] ,\, i \neq j$
+
+We can also broaden this definition by composing functional relations to a categorical or multiple categorical relations:
+
+If we have:
+
+$r_1(x,y) \equiv f_1 : X \rightarrow Y$ (categorical or not) \newline
+$r_2(y,z) \equiv f_2 : Y \rightarrow Z$ (categorical relation)
+
+Then,
+
+$r'(x,z) \equiv f : X \rightarrow Z$, where $r'(x,z)=r_2(f_1(x),z)$ is also categorical
+
+
+Numerical relations can also be turned into a categorical, by simply applying a bucketing function that maps a numerical domain into a finite set of $k$ buckets:
+
+$b: \mathbb{N} \rightarrow B$, where $B=\{b_1,b_2,\dots ,b_k \}$
+
+So a numerical relation:
+
+$r(x,y) \equiv f : X \rightarrow \mathbb{N}$ 
+
+combined with a bucketing function $b$, $r'(x,b(y))$ would be categorical
+
+(Then talk about non-categorical relations as categorical by considering its presence/absence)
+
+\section{Support}
+
+As described in (ILP-book), in top-down ILP every refinement causes the support to decrease, therefore we know that for every node in the \graphname, its support will be greater or equal than any of its children, so support is a monotonically decreasing measure so we can safely prune a node that doesn't reach the minimum support threshold.
+
 
 \subsection{Independece between Nodes}
 
+By simplicity, we assume that every possible pair of categorical relations are independent and we search for evidence to prove the contrary.
+
+\subsubsection{Joining Nodes}
+
+For 2 nodes to be joined, they must have a common parent, i.e. two nodes at level $l$ (with $l+1$ literals) are joinable if they share $l$ literals. Therefore, it's straightforward to calculate the conditional probabilities of each of the joining nodes given the common parent, and estimate the frequency distribution for the conditional independence case.
+
+If we are joining hasEducation()...
+
+For every bucket $b_i$ in the frequency histogram, we can calculate the conditional probability $p_i(n_1|p)$ and $p_i(n_2|p)$ assuming conditional independence given $p$ in order to estimate $\hat{h_i}(n1,n2)$:
+
+\begin{equation}
+\begin{split}
+ p_i(n_1|n_2,p) &= p_i(n_1|p) \\ 
+ &= \cfrac{h_i(n_1)}{h_i(p)} \\ 
+ p_i(n_2|n_1,p) &= p_i(n_2|p) \\ 
+ &= \cfrac{h_i(n_2)}{h_i(p)} \\ \\ 
+ \hat{h_i}(n_1,n_2) &= p_i(n_1|n_2,p)*p_i(n_2|p)*h_i(p) \\ 
+ &= p_i(n_1|p)*h_i(n_2) \\ 
+ \hat{h_i}(n_1,n_2) &= p_i(n_2|n_1,p)*p_i(n_1|p)*h_i(p) \\ 
+ &= p_i(n_2|p)*h_i(n_1) 
+\end{split}
+\end{equation}
+
+After that, we query the actual frequency distribution on the Knowledge Base and do an Pearson's chi-squared independence test. As null hypothesis we have:
+
+\begin{center}
+  $H_0$ = \emph{$n_1$ and $n_2$ are conditionally independent given their common parent $p$} 
+\end{center}
+
+Number of degrees of freedom is the number of buckets minus one:
+
+\begin{center}
+ $df=k-1$
+\end{center}
+
+We calculate the $\chi^2$ value:
+
+\begin{equation}
+ \chi^2=\sum_{i=1}^{k} \cfrac{(h_i - \hat{h_i})^2}{\hat{h_i}}
+\end{equation}
+
+\section{Heuristics}
+
+As we are interested in obtaining categories' subsets with different character
