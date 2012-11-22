@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.5.22)  21 NOV 2012 18:56
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.5.22)  22 NOV 2012 17:04
 entering extended mode
  %&-line parsing enabled.
 **Thesis.tex
@@ -714,7 +714,7 @@ File: babel.def 2008/07/06 v3.8l Babel common definitions
 \l@newzealand = a dialect from \language\l@british 
 ))
 \c@thm=\count154
-Package hyperref Info: Option `colorlinks' set `true' on input line 49.
+Package hyperref Info: Option `colorlinks' set `true' on input line 50.
  (./Thesis.aux
 
 LaTeX Warning: Label `ch:intro' multiply defined.
@@ -728,29 +728,29 @@ LaTeX Warning: Label `ch:intro' multiply defined.
 )
 \openout1 = `Thesis.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 56.
-LaTeX Font Info:    ... okay on input line 56.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 56.
-LaTeX Font Info:    ... okay on input line 56.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 56.
-LaTeX Font Info:    ... okay on input line 56.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 56.
-LaTeX Font Info:    ... okay on input line 56.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 56.
-LaTeX Font Info:    ... okay on input line 56.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 56.
-LaTeX Font Info:    ... okay on input line 56.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 56.
-LaTeX Font Info:    ... okay on input line 56.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 56.
-LaTeX Font Info:    ... okay on input line 56.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 56.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 56.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 57.
+LaTeX Font Info:    ... okay on input line 57.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 57.
+LaTeX Font Info:    ... okay on input line 57.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 57.
+LaTeX Font Info:    ... okay on input line 57.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 57.
+LaTeX Font Info:    ... okay on input line 57.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 57.
+LaTeX Font Info:    ... okay on input line 57.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 57.
+LaTeX Font Info:    ... okay on input line 57.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 57.
+LaTeX Font Info:    ... okay on input line 57.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 57.
+LaTeX Font Info:    ... okay on input line 57.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 57.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 57.
  (/usr/share/texmf-texlive/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 56.
-LaTeX Font Info:    Try loading font information for T1+lmr on input line 56.
+LaTeX Font Info:    ... okay on input line 57.
+LaTeX Font Info:    Try loading font information for T1+lmr on input line 57.
 
 (/usr/share/texmf/tex/latex/lm/t1lmr.fd
 File: t1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
@@ -789,7 +789,7 @@ File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
 )
 Package color Info: Driver file: pdftex.def on input line 130.
 )
-Package hyperref Info: Link coloring ON on input line 56.
+Package hyperref Info: Link coloring ON on input line 57.
 
 (/usr/share/texmf-texlive/tex/latex/hyperref/nameref.sty
 Package: nameref 2007/05/29 v2.31 Cross-referencing by name of section
@@ -799,15 +799,15 @@ Package: refcount 2008/08/11 v3.1 Data extraction from references (HO)
 )
 \c@section@level=\count161
 )
-LaTeX Info: Redefining \ref on input line 56.
-LaTeX Info: Redefining \pageref on input line 56.
+LaTeX Info: Redefining \ref on input line 57.
+LaTeX Info: Redefining \pageref on input line 57.
  (./Thesis.out)
 (./Thesis.out)
 \@outlinefile=\write3
 \openout3 = `Thesis.out'.
 
 \AtBeginShipoutBox=\box42
-LaTeX Info: Redefining \microtypecontext on input line 56.
+LaTeX Info: Redefining \microtypecontext on input line 57.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
@@ -830,38 +830,38 @@ File: ucsencs.def 2003/11/29 Fixes to fontencodings LGR, T3
 ------------------------------------------------------------------------------
  Title Page
 ------------------------------------------------------------------------------
-<minerva.pdf, id=103, 146.5475pt x 146.5475pt>
+<minerva.pdf, id=111, 146.5475pt x 146.5475pt>
 File: minerva.pdf Graphic file (type pdf)
  <use minerva.pdf>
-LaTeX Font Info:    Try loading font information for OT1+lmr on input line 71.
+LaTeX Font Info:    Try loading font information for OT1+lmr on input line 72.
 
 (/usr/share/texmf/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OML+lmm on input line 71.
+LaTeX Font Info:    Try loading font information for OML+lmm on input line 72.
 
 (/usr/share/texmf/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OMS+lmsy on input line 71.
+LaTeX Font Info:    Try loading font information for OMS+lmsy on input line 72.
 
 
 (/usr/share/texmf/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OMX+lmex on input line 71.
+LaTeX Font Info:    Try loading font information for OMX+lmex on input line 72.
 
 
 (/usr/share/texmf/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10.95> on input line 71.
+(Font)              <10.95> on input line 72.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 71.
+(Font)              <8> on input line 72.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 71.
-LaTeX Font Info:    Try loading font information for U+msa on input line 71.
+(Font)              <6> on input line 72.
+LaTeX Font Info:    Try loading font information for U+msa on input line 72.
 
 (/usr/share/texmf-texlive/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2009/06/22 v3.00 AMS symbols A
@@ -869,7 +869,7 @@ File: umsa.fd 2009/06/22 v3.00 AMS symbols A
 (/usr/share/texmf-texlive/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 71.
+LaTeX Font Info:    Try loading font information for U+msb on input line 72.
 
 (/usr/share/texmf-texlive/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2009/06/22 v3.00 AMS symbols B
@@ -877,11 +877,11 @@ File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 (/usr/share/texmf-texlive/tex/latex/microtype/mt-msb.cfg
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
-Overfull \hbox (12.49623pt too wide) in paragraph at lines 71--71
+Overfull \hbox (12.49623pt too wide) in paragraph at lines 72--72
  [][] 
  []
 
-<eule-rz.pdf, id=104, 85.31876pt x 85.31876pt>
+<eule-rz.pdf, id=112, 85.31876pt x 85.31876pt>
 File: eule-rz.pdf Graphic file (type pdf)
  <use eule-rz.pdf> [1
 
@@ -932,14 +932,14 @@ File: t1lmss.fd 2009/10/30 v1.6 Font defs for Latin Modern
 ------------------------------------------------------------------------------
  Table of Contents
 ------------------------------------------------------------------------------
-(./Thesis.toc)
+(./Thesis.toc [9
+
+
+])
 \tf@toc=\write4
 \openout4 = `Thesis.toc'.
 
- [9
-
-
-] [10] (./Chapters/introduction.tex
+ [10] (./Chapters/introduction.tex
 Chapter 1.
 ------------------------------------------------------------------------------
  1 Introduction
@@ -984,6 +984,10 @@ Chapter 2.
 ------------------------------------------------------------------------------
  2 Related Work
 ------------------------------------------------------------------------------
+
+Package natbib Warning: Citation `DBLP:conf/sac/CaldersGPR09' on page 7 undefin
+ed on input line 12.
+
 ) (./Chapters/correlation-lattice.tex [7] [8
 
 ]
@@ -1020,17 +1024,17 @@ Chapter 4.
 
 ]
 Package hyperref Info: bookmark level for unknown algocf defaults to 0 on input
- line 30.
-LaTeX Font Info:    Try loading font information for T1+lmtt on input line 37.
+ line 34.
+LaTeX Font Info:    Try loading font information for T1+lmtt on input line 41.
  (/usr/share/texmf/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-Underfull \hbox (badness 10000) detected at line 61
+Underfull \hbox (badness 10000) detected at line 65
 [][]
  []
 
 [14]
-Overfull \hbox (34.39864pt too wide) in paragraph at lines 97--98
+Overfull \hbox (34.39864pt too wide) in paragraph at lines 101--102
 []\T1/lmr/m/n/10.95 (-20) With such query, it's pos-si-ble to ex-tract a his-to
 gram for the node \T1/lmr/m/it/10.95 (-20) has-In-come(x,y)hasEducation(x,z)
  []
@@ -1063,18 +1067,22 @@ gram for the node \T1/lmr/m/it/10.95 (-20) has-In-come(x,y)hasEducation(x,z)
 ------------------------------------------------------------------------------
  Bibliography
 ------------------------------------------------------------------------------
-(./Thesis.bbl
-
-Package natbib Warning: Empty `thebibliography' environment on input line 8.
-
-) [21
+(./Thesis.bbl) [21
 
 
 ]
 
+Package natbib Warning: There were undefined citations.
+
+
 Package ps4pdf Warning: `Thesis-pics.pdf' is no more valid.
 
-(./Thesis.aux)
+(./Thesis.aux
+
+Package natbib Warning: Citation(s) may have changed.
+(natbib)                Rerun to get citations correct.
+
+)
 
  *File List*
   Thesis.cls    2007/22/02 v1.0 LaTeX document class
@@ -1216,55 +1224,31 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 14821 strings out of 493848
- 211293 string characters out of 1152823
- 355955 words of memory out of 3000000
- 17573 multiletter control sequences out of 15000+50000
- 87739 words of font info for 105 fonts, out of 3000000 for 9000
+ 14837 strings out of 493848
+ 211872 string characters out of 1152823
+ 356955 words of memory out of 3000000
+ 17590 multiletter control sequences out of 15000+50000
+ 87869 words of font info for 106 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
  48i,16n,45p,1410b,457s stack positions out of 5000i,500n,10000p,200000b,50000s
-pdfTeX warning (dest): name{dummy.44} has been referenced but does not exist,
- replaced by a fixed one
-
-pdfTeX warning (dest): name{dummy.42} has been referenced but does not exist, r
-eplaced by a fixed one
-
-pdfTeX warning (dest): name{dummy.40} has been referenced but does not exist, r
-eplaced by a fixed one
-
-pdfTeX warning (dest): name{section.39} has been referenced but does not exist,
- replaced by a fixed one
-
-pdfTeX warning (dest): name{subsection.34} has been referenced but does not exi
-st, replaced by a fixed one
-
-pdfTeX warning (dest): name{subsection.27} has been referenced but does not exi
-st, replaced by a fixed one
-
-pdfTeX warning (dest): name{section.26} has been referenced but does not exist,
- replaced by a fixed one
-
-pdfTeX warning (dest): name{chapter.25} has been referenced but does not exist,
- replaced by a fixed one
-
-{/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc}{/usr/share/texmf/fonts/enc/dvip
-s/lm/lm-mathsy.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/t
-exmf/fonts/enc/dvips/lm/lm-mathex.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-m
-athit.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-ts1.enc}</usr/share/texmf/fon
-ts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/type1/public/lm/lmbx12.pf
-b></usr/share/texmf/fonts/type1/public/lm/lmbxi10.pfb></usr/share/texmf/fonts/t
-ype1/public/lm/lmex10.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi10.pfb></
-usr/share/texmf/fonts/type1/public/lm/lmmi8.pfb></usr/share/texmf/fonts/type1/p
-ublic/lm/lmr10.pfb></usr/share/texmf/fonts/type1/public/lm/lmr12.pfb></usr/shar
-e/texmf/fonts/type1/public/lm/lmr17.pfb></usr/share/texmf/fonts/type1/public/lm
-/lmr8.pfb></usr/share/texmf/fonts/type1/public/lm/lmri10.pfb></usr/share/texmf/
-fonts/type1/public/lm/lmri12.pfb></usr/share/texmf/fonts/type1/public/lm/lmssbx
-10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fon
-ts/type1/public/lm/lmsy8.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt10.pfb
-></usr/share/texmf-texlive/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on Thesis.pdf (31 pages, 382622 bytes).
+{/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc}{/usr/share/texmf/fonts/enc/dv
+ips/lm/lm-mathsy.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share
+/texmf/fonts/enc/dvips/lm/lm-mathex.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm
+-mathit.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-ts1.enc}</usr/share/texmf/f
+onts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/type1/public/lm/lmbx12.
+pfb></usr/share/texmf/fonts/type1/public/lm/lmbxi10.pfb></usr/share/texmf/fonts
+/type1/public/lm/lmex10.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi10.pfb>
+</usr/share/texmf/fonts/type1/public/lm/lmmi8.pfb></usr/share/texmf/fonts/type1
+/public/lm/lmr10.pfb></usr/share/texmf/fonts/type1/public/lm/lmr12.pfb></usr/sh
+are/texmf/fonts/type1/public/lm/lmr17.pfb></usr/share/texmf/fonts/type1/public/
+lm/lmr8.pfb></usr/share/texmf/fonts/type1/public/lm/lmri10.pfb></usr/share/texm
+f/fonts/type1/public/lm/lmri12.pfb></usr/share/texmf/fonts/type1/public/lm/lmss
+bx10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/f
+onts/type1/public/lm/lmsy8.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt10.p
+fb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on Thesis.pdf (31 pages, 394844 bytes).
 PDF statistics:
- 397 PDF objects out of 1000 (max. 8388607)
- 86 named destinations out of 1000 (max. 500000)
- 21203 words of extra memory for PDF output out of 24883 (max. 10000000)
+ 408 PDF objects out of 1000 (max. 8388607)
+ 83 named destinations out of 1000 (max. 500000)
+ 21219 words of extra memory for PDF output out of 24883 (max. 10000000)
 

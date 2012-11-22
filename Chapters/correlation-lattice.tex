@@ -71,14 +71,12 @@ combined with a bucketing function $b$, $r'(x,b(y))$ would be categorical
 
 \section{Support}
 
-As described in (ILP-book), in top-down ILP every refinement causes the support to decrease, therefore we know that for every node in the \graphname, its support will be greater or equal than any of its children, so support is a monotonically decreasing measure so we can safely prune a node that doesn't reach the minimum support threshold.
+As described in (\cite{LavracDz94}), in top-down ILP every refinement causes the support to decrease, therefore we know that for every node in the \graphname, its support will be greater or equal than any of its children, so support is a monotonically decreasing measure so we can safely prune a node that doesn't reach the minimum support threshold.
 
 
 \subsection{Independece between Nodes}
 
 By simplicity, we assume that every possible pair of categorical relations are independent and we search for evidence to prove the contrary.
-
-\subsubsection{Joining Nodes}
 
 For 2 nodes to be joined, they must have a common parent, i.e. two nodes at level $l$ (with $l+1$ literals) are joinable if they share $l$ literals. Therefore, it's straightforward to calculate the conditional probabilities of each of the joining nodes given the common parent, and estimate the frequency distribution for the conditional independence case.
 
@@ -99,10 +97,11 @@ For every bucket $b_i$ in the frequency histogram, we can calculate the conditio
 \end{split}
 \end{equation}
 
-After that, we query the actual frequency distribution on the Knowledge Base and do an Pearson's chi-squared independence test. As null hypothesis we have:
+After that, we query the actual frequency distribution on the Knowledge Base and do an Pearson's chi-squared independence test. As null hypothesis and alternative hypothesis we have:
 
 \begin{center}
   $H_0$ = \emph{$n_1$ and $n_2$ are conditionally independent given their common parent $p$} 
+  $H_1$ = \emph{$n_1$ and $n_2$ are conditionally dependent given their common parent $p$} 
 \end{center}
 
 Number of degrees of freedom is the number of buckets minus one:
@@ -117,6 +116,9 @@ We calculate the $\chi^2$ value:
  \chi^2=\sum_{i=1}^{k} \cfrac{(h_i - \hat{h_i})^2}{\hat{h_i}}
 \end{equation}
 
+\cite{Jaroszewicz02pruningredundant}
+
 \section{Heuristics}
 
-As we are interested in obtaining categories' subsets with different character
+Then it's possible to obtain the p-value and check whether there's enough confidence to reject the null hypothesis $H_0$.
+
