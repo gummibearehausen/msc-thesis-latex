@@ -1,4 +1,4 @@
-\begin{thebibliography}{5}
+\begin{thebibliography}{7}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -28,6 +28,18 @@ Szymon Jaroszewicz and Dan~A. Simovici.
 \newblock Pruning redundant association rules using maximum entropy principle.
 \newblock In \emph{In Advances in Knowledge Discovery and Data Mining, 6th
   Pacific-Asia Conference, PAKDD?02}, pages 135--147, 2002.
+
+\bibitem[Kullback and Leibler(1951)]{Kullback51klDivergence}
+S.~Kullback and R.~A. Leibler.
+\newblock On information and sufficiency.
+\newblock \emph{Ann. Math. Statist.}, 22\penalty0 (1):\penalty0 79--86, 1951.
+
+\bibitem[Briet and Harremos(2009)]{17795}
+J.~Briet and P.~Harremos.
+\newblock Properties of classical and quantum jensen-shannon divergence.
+\newblock \emph{Physical Review A: Atomic, Molecular and Optical Physics},
+  79\penalty0 (5), May 2009.
+\newblock ISSN 1050-2947.
 
 \bibitem[Neumann and Weikum(2010)]{Neumann:2010:RES:1731351.1731354}
 Thomas Neumann and Gerhard Weikum.

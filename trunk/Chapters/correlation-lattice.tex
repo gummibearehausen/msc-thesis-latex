@@ -52,9 +52,7 @@ If we have:
 $r_1(x,y) \equiv f_1 : X \rightarrow Y$ (categorical or not) \newline
 $r_2(y,z) \equiv f_2 : Y \rightarrow Z$ (categorical relation)
 
-Then,
-
-$r'(x,z) \equiv f : X \rightarrow Z$, where $r'(x,z)=r_2(f_1(x),z)$ is also categorical
+Then, $r'(x,z) \equiv f : X \rightarrow Z$, where $r'(x,z)=r_2(f_1(x),z)$ is also categorical
 
 
 Numerical relations can also be turned into a categorical, by simply applying a bucketing function that maps a numerical domain into a finite set of $k$ buckets:
@@ -118,7 +116,45 @@ We calculate the $\chi^2$ value:
 
 \cite{Jaroszewicz02pruningredundant}
 
+Then it's possible to obtain the p-value and check whether there's enough confidence to reject the null hypothesis $H_0$. In level 1 from \graphname, nodes can be directly pruned, on the other hand, for further levels, for a node to be pruned by independence, all the possible joins resulting the node must be independent. In level 2, for example, in order to prune the node $r a_1 b_1 c_1$, given that in level 1 the nodes $r a1 b1$, $r a1 c1$ and $r b1 c1$ were not pruned. All the three possible join combinations should fail the independence test, i.e.:
+
+\begin{equation}
+\begin{split} 
+  freq(r a_1 b_1 c_1) &\approx freq(r a_1)*p(r b_1|r a_1)*p(r c_1|r a_1) \\ 
+  &\approx  freq(r b_1)*p(r a_1|r b_1)*p(r c_1|r b_1) \\ 
+  &\approx  freq(r c_1)*p(r a_1|r c_1)*p(r b_1|r c_1)  
+\end{split}
+\end{equation}
+
+This applies to nodes at any level $l$, with $p \leq l$ parents and $C_{2}^{p}$ possible join pairs.
+
 \section{Heuristics}
 
-Then it's possible to obtain the p-value and check whether there's enough confidence to reject the null hypothesis $H_0$.
+As seen in the previous sections, the number of nodes in \graphname grow exponentially with the number of categorical relations and its constants. For $n$ categorical relations, each with $m$ constants, the total number of nodes is $2^{n*m}$. Frequently, pruning by support and independence is not sufficient to make it feasible and it's necessary to apply heuristics to prune more aggressively.
+
+As we are interested in categories that produces a subsets with a distribution different from the root and its super-categories (parent nodes, for the case of joining multiple categories), distribution divergence measures are a good option. Some of the state-of-the-art measures we can use are the following:
+
+\begin{itemize}
+ \item Kullback-Leibler \cite{Kullback51klDivergence}: 
+    \begin{equation}
+      D_{KL}(P||Q)=\sum_{\substack{i}}\ln\left(\cfrac{P(i)}{Q(i)}\right)*P(i)
+    \end{equation}
+ \item Chi-squared ($\chi^2$):
+    \begin{equation}
+      D_{\chi^2}(P||Q)=\sum_{\substack{i}}\cfrac{(P(i)-Q(i))^2}{P(i)}
+    \end{equation}
+ \item Jensen-Shannon \cite{17795}:
+    \begin{equation}
+      D_{JS}(P||Q)=\cfrac{1}{2}D_{KL}(P||M)+\cfrac{1}{2}D_{KL}(Q||M), 
+    \end{equation}
+\end{itemize}
+
+Where $P$ and $Q$ are the distributions to be compared and $M=\cfrac{1}{2}(P+Q)$
+
+As discussed in \cite{17795}, although Jensen-Shannon is computationally more expensivee, it has the advantage of being a symmetric and smoothed version of the Kullback-Leibler measure.
+
+Nevertheless, using a divergence measure alone might also be problematic. Nodes with low support are very likely to present high divergence and when 
+
+
+
 
