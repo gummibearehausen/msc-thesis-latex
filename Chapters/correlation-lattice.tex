@@ -80,27 +80,54 @@ For 2 nodes to be joined, they must have a common parent, i.e. two nodes at leve
 
 If we are joining hasEducation()...
 
-For every bucket $b_i$ in the frequency histogram, we can calculate the conditional probability $p_i(n_1|p)$ and $p_i(n_2|p)$ assuming conditional independence given $p$ in order to estimate $\hat{h_i}(n1,n2)$:
+Let's say we have the following join case:
+
+\begin{center}
+  \begin{tikzpicture}
+  [scale=1,auto=center,every node/.style={minimum size=1cm}]
+    \node (p)  [circle,fill=black!20] at (4,10) {$p$};
+    \node (n1) [circle,fill=black!20] at (3,8)  {$p x$};
+    \node (n2) [circle,fill=black!20] at (5,8)  {$p y$};
+    \node (n12)[circle,fill=black!20] at (4,6)  {$p x y$};
+
+
+    \foreach \from/\to in {p/n1,p/n2,n1/n12,n2/n12}
+      \draw (\from) -- (\to);
+
+    \draw[dashed] (2,9) -- (8,9);
+    \draw[dashed] (2,7) -- (8,7);
+
+    \node (level0)[font=\small] at (7,10) {level $l-1$};
+    \node (level1)[font=\small] at (7,8)  {level $l$};
+    \node (level2)[font=\small] at (7,6)  {level $l+1$};
+  \end{tikzpicture}
+\end{center}
+
+
+
+For every bucket $b_i$, there's a frequency $h_i$ in the histogram, we can calculate the conditional probability $p_i(x|p)$ and $p_i(y|p)$ assuming conditional independence given common parent $p$ in order to estimate $\hat{h_i}(p x y)$:
 
 \begin{equation}
 \begin{split}
- p_i(n_1|n_2,p) &= p_i(n_1|p) \\ 
- &= \cfrac{h_i(n_1)}{h_i(p)} \\ 
- p_i(n_2|n_1,p) &= p_i(n_2|p) \\ 
- &= \cfrac{h_i(n_2)}{h_i(p)} \\ \\ 
- \hat{h_i}(n_1,n_2) &= p_i(n_1|n_2,p)*p_i(n_2|p)*h_i(p) \\ 
- &= p_i(n_1|p)*h_i(n_2) \\ 
- \hat{h_i}(n_1,n_2) &= p_i(n_2|n_1,p)*p_i(n_1|p)*h_i(p) \\ 
- &= p_i(n_2|p)*h_i(n_1) 
+ p_i(x|py) &= p_i(x|p) \\ 
+ &= \cfrac{h_i(x)}{h_i(p)} \\ 
+ p_i(y|px) &= p_i(y|p) \\ 
+ &= \cfrac{h_i(y)}{h_i(p)} \\ \\ 
+ \hat{h_i}(pxy) &= p_i(x|py)p_i(y|p)*h_i(p) \\ 
+ &= p_i(x|p)h_i(y) \\ 
+ \hat{h_i}(pxy) &= p_i(y|px)p_i(x|p)*h_i(p) \\ 
+ &= p_i(y|p)h_i(x) 
 \end{split}
 \end{equation}
 
 After that, we query the actual frequency distribution on the Knowledge Base and do an Pearson's chi-squared independence test. As null hypothesis and alternative hypothesis we have:
 
-\begin{center}
-  $H_0$ = \emph{$n_1$ and $n_2$ are conditionally independent given their common parent $p$} 
-  $H_1$ = \emph{$n_1$ and $n_2$ are conditionally dependent given their common parent $p$} 
-\end{center}
+\begin{itemize}
+ \item $H_0$ = \emph{$x$ and $y$ are conditionally independent given their common parent $p$}
+ \item $H_1$ = \emph{$x$ and $y$ are conditionally dependent given their common parent $p$} 
+\end{itemize}
+
+  
 
 Number of degrees of freedom is the number of buckets minus one:
 
@@ -120,9 +147,9 @@ Then it's possible to obtain the p-value and check whether there's enough confid
 
 \begin{equation}
 \begin{split} 
-  freq(r a_1 b_1 c_1) &\approx freq(r a_1)*p(r b_1|r a_1)*p(r c_1|r a_1) \\ 
-  &\approx  freq(r b_1)*p(r a_1|r b_1)*p(r c_1|r b_1) \\ 
-  &\approx  freq(r c_1)*p(r a_1|r c_1)*p(r b_1|r c_1)  
+  freq(r a_1 b_1 c_1) &\approx freq(r a_1)p (r b_1|r a_1) p(r c_1|r a_1) \\ 
+  &\approx  freq(r b_1) p(r a_1|r b_1) p(r c_1|r b_1) \\ 
+  &\approx  freq(r c_1) p(r a_1|r c_1) p(r b_1|r c_1)  
 \end{split}
 \end{equation}
 
