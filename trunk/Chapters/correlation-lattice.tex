@@ -143,7 +143,7 @@ We calculate the $\chi^2$ value:
 
 \cite{Jaroszewicz02pruningredundant}
 
-Then it's possible to obtain the p-value and check whether there's enough confidence to reject the null hypothesis $H_0$. In level 1 from \graphname, nodes can be directly pruned, on the other hand, for further levels, for a node to be pruned by independence, all the possible joins resulting the node must be independent. In level 2, for example, in order to prune the node $r a_1 b_1 c_1$, given that in level 1 the nodes $r a1 b1$, $r a1 c1$ and $r b1 c1$ were not pruned. All the three possible join combinations should fail the independence test, i.e.:
+Then it's possible to obtain the p-value and check whether there's enough confidence to reject the null hypothesis $H_0$. In level 1 from \graphname, nodes can be directly pruned, on the other hand, for further levels, for a node to be pruned by independence, all the possible joins resulting the node must be independent. In level 2, for example, in order to prune the node $r a_1 b_1 c_1$, given that in level 1 the nodes $r a_1 b_1$, $r a_1 c_1$ and $r b_1 c_1$ were not pruned. All the three possible join combinations should fail the independence test, i.e.:
 
 \begin{equation}
 \begin{split} 
@@ -155,9 +155,11 @@ Then it's possible to obtain the p-value and check whether there's enough confid
 
 This applies to nodes at any level $l$, with $p \leq l$ parents and $C_{2}^{p}$ possible join pairs.
 
+If any of the join pairs has enough evidence of being dependent, then 2 edges are created connecting each of the joined nodes to the result of their join
+
 \section{Heuristics}
 
-As seen in the previous sections, the number of nodes in \graphname grow exponentially with the number of categorical relations and its constants. For $n$ categorical relations, each with $m$ constants, the total number of nodes is $2^{n*m}$. Frequently, pruning by support and independence is not sufficient to make it feasible and it's necessary to apply heuristics to prune more aggressively.
+As seen in the previous sections, the number of nodes in \graphname grow exponentially with the number of categorical relations and its constants. For $n$ categorical relations, each with $m$ constants, the total number of nodes is $2^{nm}$. Frequently, pruning by support and independence is not sufficient to make it feasible and it's necessary to apply heuristics to prune more aggressively.
 
 As we are interested in categories that produces a subsets with a distribution different from the root and its super-categories (parent nodes, for the case of joining multiple categories), distribution divergence measures are a good option. Some of the state-of-the-art measures we can use are the following:
 
@@ -180,7 +182,14 @@ Where $P$ and $Q$ are the distributions to be compared and $M=\cfrac{1}{2}(P+Q)$
 
 As discussed in \cite{17795}, although Jensen-Shannon is computationally more expensivee, it has the advantage of being a symmetric and smoothed version of the Kullback-Leibler measure.
 
-Nevertheless, using a divergence measure alone might also be problematic. Nodes with low support are very likely to present high divergence and when 
+Pruning by divergence is clearly not safe. Let's suppose we have a root numerical relation $r(x,y)$, and two categorical relations $a(x,z)$ with constants $A_1$ and $A_2$ and $b(x,w)$ with constants $B_1$ and $B_2$. For simplicity, let's assume y is divided in two buckets and root has an uniform distribution ${0.5,0.5}$. It's possible to have $r(x,y)a(x,A_1)$ and $r(x,y)a(x,A_2)$ both also with 
+% Draw example instead to explain better
+
+Nevertheless, using a divergence measure alone might also be problematic. Nodes with low support are more likely to present high divergence and then nodes with high support, supposing that they were drawn under the same distribution. Therefore, it's important to use divergence combined with support as pruning heuristics.
+
+Moreover, we are interested not only in rules with high confidence, but also rules with high support so more facts can be derived.
+
+Talk about how to use such measure? (Threshold, Top-k, Cost-Benefit)
 
 
 

@@ -51,17 +51,30 @@ Thus, if any pair of relations doesn't reach the minimum support for a given joi
 
 
 \begin{algorithm}
-  \caption{Checks valid join pairs for a given join patterns}
-  %\begin{algorithmic}
- % \Function {checkJoinSupport}{r_i,r_j,arg_i,arg_j,supportThreshold}
- %     \If{r_i.arg_i = r_j.arg_j \or subsumes(r_i.arg_i,r_j.arg_j) \or subsumes(r_j.arg_j,r_i.arg_i)}
-%	  \Return true 
- %     \Else
-%	  \Return false
- %     \EndIf
-  %\EndFunction
-  
-  %\end{algorithmic}
+  \caption{Checks whether join support exceeds threshold}
+  \SetKwFunction{executeQuery}
+  \KwIn{Relation $r_i$, $r_j$, Argument $arg_i$, $arg_j$, Float $supportThreshold$}
+  \KwOut{True if join support exceeds threshold, False otherwise}
+    \Switch{$(arg_i,arg_j)$} {
+      \Case{$(1,1)$}{
+	$query \leftarrow$ select count distinct $?x$ where \{ $?x$ <$r_i$> $?y$ . $?x$ <$r_j$> $?z$ \} \;
+      }
+      \Case{$(1,2)$}{
+	$query \leftarrow$ select count distinct $?x$ where \{ $?x$ <$r_i$> $?y$ . $?z$ <$r_j$> $?x$ \} \;
+      }
+      \Case{$(2,1)$}{
+	$query \leftarrow$ select count distinct $?x$ where \{ $?y$ <$r_i$> $?x$ . $?x$ <$r_j$> $?z$ \} \;
+      }
+      \Case{$(2,2)$}{
+	$query \leftarrow$ select count distinct $?x$ where \{ $?y$ <$r_i$> $?x$ . $?z$ <$r_j$> $?x$ \} \;
+      }
+    }
+    $joinSupport \leftarrow$ executeQuery($query$)\;
+     \eIf{$joinSupport \ge supportThreshold$} {
+      \Return true\;
+    }{
+      \Return false\;
+    }
 \end{algorithm}
 
 
@@ -101,6 +114,29 @@ Afterwards, we select the the categorical properties that will be used in the la
 With such query, it's possible to extract a histogram for the node \emph{hasIncome(x,y)hasEducation(x,z)} and its correspondent constants 
 
 \subsubsection{Searching Rules in \graphname}
+
+In the \graphname itself, it's possible to extract valuable rules. Given its characteristic of all the relations being joined on the same root argument, those rules represent how different categories are related along root's numberical constants.
+
+For every non-root node in the \graphname, any of its parents can be seen as rule's body and the missing literal as head, e.g.:
+
+Let's denote $a_i$ as a relation $a(x,y)$ with constants $A_i$ for $y$, so for example $a_1 \equiv a(x,A_1)$:
+
+For the node $r a_1 b_1 c_1$ with parents $r a_1 b_1$, $r a_1 c_1$ and $r b_1 c_1$, we can extract and easily evaluate three rules:
+
+\begin{math}
+Rule_1 : a_1 \leftarrow b_1 c_1 r \\
+\; supp_i(Rule_1) = h_i(r a_1 b_1 c_1) \\
+\; conf_i(Rule_1) = \frac{h_i(r a_1 b_1 c_1)}{h_i(r b_1 c_1)} \\ \\
+Rule_2 : b_1 \leftarrow a_1 c_1 r \\
+\; supp_i(Rule_2) = h_i(r a_1 b_1 c_1) \\
+\; conf_i(Rule_2) = \frac{h_i(r a_1 b_1 c_1)}{h_i(r a_1 c_1)} \\ \\
+Rule_3 : c_1 \leftarrow a_1 b_1 r \\
+\; supp_i(Rule_3) = h_i(r a_1 b_1 c_1) \\
+\; conf_i(Rule_3) = \frac{h_i(r a_1 b_1 c_1)}{h_i(r a_1 b_1)} \\
+\end{math}
+
+Subsequently we can analyze the frequency and confidence distributions and determine whether any of the rules are interesting, using any of the techniques discussed in [???] and find possible interesting intervals.
+
 
 \subsubsection{}
 

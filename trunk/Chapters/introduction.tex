@@ -61,7 +61,7 @@ and then we split z into three buckets:
  \item \begin{math} k=3: z\in(40,\infty]\end{math}
 \end{itemize}
 
-we then test the hypothesis for each of the three buckets and we obtain
+we then test the hypothesis for each of the three buckets and obtain
 
 \begin{itemize}
 
@@ -74,7 +74,7 @@ we then test the hypothesis for each of the three buckets and we obtain
 
 \end{itemize}
 
-as we see, for k=2 and k=3, the hypothesis we have significant gain by specifying numerical constants. Adding a relation to the body might produce totally different confidence support and confidence distributions along the buckets. For example, if we add the relation hasChild(x,a), we could obtain other interesting rules:
+for k=2 and k=3, the hypothesis has significant gain by specifying numerical constants. Adding a relation to the body might produce totally different support and confidence distributions along the buckets. For example, if we add the relation hasChild(x,a), we could obtain other interesting rules:
 \begin{itemize}
  \item \begin{math}isMarriedTo(x,y) \leftarrow hasAge(x,z)hasChild(x,a)\end{math}	
     \newline support=50, confidence=0.625
@@ -88,9 +88,8 @@ as we see, for k=2 and k=3, the hypothesis we have significant gain by specifyin
 
 adding some relations might not bring any gain or even loss in confidence, but when bucketing per age, present a different distribution, 
 
-nevertheless, adding some relations might not generate any interesting rules, like 
+Nevertheless, adding some relations with no correlation to the rule might not generate any interesting rules if  
 
-d
 \section{Contributions}
 In this Thesis, we propose a pre-processing step to build a graph we call \graphname for each numerical property. In each graph, that has a numerical property as root, we first query the frequency distribution on the numerical attribute, then split them in \emph{k} buckets. Then we pick a set of \emph{c} categorical properties that can be joined with the root, and analyze how the distribution of sub-population created by joining them with the root is affected. Afterwards we try to combine each of the categories and see if they still produce interesting sub-populations, like in frequent set mining.
 
@@ -102,7 +101,8 @@ With that, during the ILP algorithm, once we add one of the root properties, we 
 
 \section{Outline}
 
-The remainder of this thesis is structured as follows. In
+\begin{comment}
+ The remainder of this thesis is structured as follows. In
 Chapter~\ref{ch:technical_background}, we provide technical background on
 MapReduce and BigTable. In Chapter~\ref{ch:related_work}, we present a
 summary of previous work in the areas of duplicate and near-duplicate detection,
@@ -112,3 +112,4 @@ Chapter~\ref{ch:redundancy_control}. In Chapter~\ref{ch:mapreduce_impl}, we
 describe an implementation of our solution using the MapReduce framework. In
 Chapter~\ref{ch:experiments}, we present our experimental results. We conclude
 this thesis and outline directions of future research in Chapter~\ref{ch:future_work}.
+\end{comment}
