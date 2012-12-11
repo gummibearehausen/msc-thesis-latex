@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.11.20)  10 DEC 2012 14:11
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.11.20)  11 DEC 2012 13:57
 entering extended mode
 **Thesis.tex
 (C:\Users\ande01\Documents\Thesis\dissertation\Thesis.tex
@@ -1313,58 +1313,65 @@ Package natbib Warning: Citation `LavracDz94' on page 9 undefined on input line
  72.
 
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 100.
+(Font)              <10> on input line 103.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 100.
+(Font)              <7> on input line 103.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 100.
+(Font)              <5> on input line 103.
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+LaTeX Warning: Reference `fig:joinIndepExample' on page 9 undefined on input li
+ne 111.
+
 [9] [10]
 
 Package natbib Warning: Citation `Jaroszewicz02pruningredundant' on page 11 und
-efined on input line 144.
+efined on input line 147.
 
 
 Package natbib Warning: Citation `Kullback51klDivergence' on page 11 undefined 
-on input line 167.
+on input line 170.
 
 [11]
 
-Package natbib Warning: Citation `17795' on page 12 undefined on input line 175
+Package natbib Warning: Citation `17795' on page 12 undefined on input line 178
 .
 
 
-Package natbib Warning: Citation `17795' on page 12 undefined on input line 183
+Package natbib Warning: Citation `17795' on page 12 undefined on input line 186
 .
 
 )
 (C:\Users\ande01\Documents\Thesis\dissertation\Chapters\algorithmic-framework.t
-ex [12]
+ex [12] [13] [14
+
+]
 Chapter 4.
 ------------------------------------------------------------------------------
  4 Algorithmic Framework
 ------------------------------------------------------------------------------
 
-Package natbib Warning: Citation `Neumann:2010:RES:1731351.1731354' on page 13 
+Package natbib Warning: Citation `Neumann:2010:RES:1731351.1731354' on page 15 
 undefined on input line 6.
 
-[13
-
-]
+[15]
 LaTeX Font Info:    Try loading font information for T1+lmtt on input line 41.
  (C:\Users\ande01\MikTex\tex\latex\lm\t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-) [14]
-Overfull \hbox (34.39864pt too wide) in paragraph at lines 114--115
+) [16]
+Overfull \hbox (34.39864pt too wide) in paragraph at lines 113--114
 []\T1/lmr/m/n/10.95 (-20) With such query, it's pos-si-ble to ex-tract a his-to
 gram for the node \T1/lmr/m/it/10.95 (-20) has-In-come(x,y)hasEducation(x,z)
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 126--137
+Underfull \hbox (badness 10000) in paragraph at lines 125--136
 
  []
 
-[15]) (C:\Users\ande01\Documents\Thesis\dissertation\Chapters\graph1.tex)
+[17]) (C:\Users\ande01\Documents\Thesis\dissertation\Chapters\graph1.tex)
 Overfull \hbox (17.14337pt too wide) in paragraph at lines 64--162
 []
  []
@@ -1377,12 +1384,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 64--162
 ------------------------------------------------------------------------------
  List of Figures
 ------------------------------------------------------------------------------
-[16] [17] [18] (C:\Users\ande01\Documents\Thesis\dissertation\Thesis.lof)
+[18] [19] [20] (C:\Users\ande01\Documents\Thesis\dissertation\Thesis.lof)
 \tf@lof=\write6
 
-[19
+[21
 
-] [20
+] [22
 
 ]
 ------------------------------------------------------------------------------
@@ -1390,9 +1397,9 @@ Underfull \hbox (badness 10000) in paragraph at lines 64--162
 ------------------------------------------------------------------------------
 (C:\Users\ande01\Documents\Thesis\dissertation\Thesis.lot)
 \tf@lot=\write7
- [21
+ [23
 
-] [22
+] [24
 
 ]
 ------------------------------------------------------------------------------
@@ -1410,7 +1417,7 @@ Package natbib Warning: There were undefined citations.
 Package ps4pdf Warning: `Thesis-pics.pdf' is no more valid.
 
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 203.
-[23
+[25
 
 
 ]
@@ -1580,20 +1587,23 @@ Presections/acknowledgement.tex
 
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 203.
 Package rerunfilecheck Info: File `Thesis.out' has not changed.
-(rerunfilecheck)             Checksum: 7F49CE7255BE21DA142B9B660C406890;4335.
+(rerunfilecheck)             Checksum: D79B33E6865FCAA7CC484D7C051500A7;4335.
+
+LaTeX Warning: There were undefined references.
+
 
 LaTeX Warning: There were multiply-defined labels.
 
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 203.
  ) 
 Here is how much of TeX's memory you used:
- 24439 strings out of 494045
- 401593 string characters out of 3150398
- 540270 words of memory out of 3000000
- 26990 multiletter control sequences out of 15000+200000
- 106578 words of font info for 132 fonts, out of 3000000 for 9000
+ 24458 strings out of 494045
+ 401848 string characters out of 3150398
+ 540524 words of memory out of 3000000
+ 26996 multiletter control sequences out of 15000+200000
+ 112520 words of font info for 139 fonts, out of 3000000 for 9000
  715 hyphenation exceptions out of 8191
- 56i,16n,68p,1411b,609s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 56i,16n,68p,1411b,701s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Users/ande01/MikTex/fonts/enc/dvips/lm/lm-ec.enc}{C:/Users/ande01/MikTex/
 fonts/enc/dvips/lm/lm-rm.enc}{C:/Users/ande01/MikTex/fonts/enc/dvips/lm/lm-math
 it.enc}{C:/Users/ande01/MikTex/fonts/enc/dvips/lm/lm-mathsy.enc}{C:/Users/ande0
@@ -1613,9 +1623,9 @@ rs/ande01/MikTex/fonts/type1/public/lm/lmssbx10.pfb><C:/Users/ande01/MikTex/fon
 ts/type1/public/lm/lmsy10.pfb><C:/Users/ande01/MikTex/fonts/type1/public/lm/lms
 y8.pfb><C:/Users/ande01/MikTex/fonts/type1/public/lm/lmtt10.pfb><C:/Users/ande0
 1/MikTex/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on Thesis.pdf (33 pages, 446943 bytes).
+Output written on Thesis.pdf (35 pages, 449329 bytes).
 PDF statistics:
- 426 PDF objects out of 1000 (max. 8388607)
- 86 named destinations out of 1000 (max. 500000)
- 26863 words of extra memory for PDF output out of 29859 (max. 10000000)
+ 436 PDF objects out of 1000 (max. 8388607)
+ 89 named destinations out of 1000 (max. 500000)
+ 29423 words of extra memory for PDF output out of 29859 (max. 10000000)
 
