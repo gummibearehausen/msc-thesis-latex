@@ -5,6 +5,8 @@
 
 For storing and retrieving RDF data we use RDF3X \cite{Neumann:2010:RES:1731351.1731354}. It has the advantage of being specialized and optimized for RDF data, using a strong indexing approach with compressed B$^+$-Tree indices for each of six permutations of \emph{subject (S)}, \emph{predicate (P)} and \emph{object (O)}: \emph{SPO},\emph{SOP},\emph{OSP},\emph{OPS},\emph{PSO} and \emph{POS}.
 
+
+
 \section{Preprocessing}
 
 In this section, we will present the preprocessing steps required by our proposed algorithm. It basically consists of building a joinable relations map for each of the four join patterns, according to relations domain and range types as well as support threshold. Afterwards, we search the available categorical properties for each numerical relation that will be used in the \graphname. At last we describe the \graphname structure and the algorithm to build it.
@@ -20,8 +22,6 @@ In this step, we focus on creating for each of the four join patterns between tw
  \item Argument 2 on Argument 2: e.g. \emph{livesIn(y,\textbf{x})wasBornIn(z,\textbf{x})}
 \end{itemize}
 
-
-
 \subsubsection{Exploiting Relation Range and Domain Types}
 
 A knowledge base is expected to have an ontology defining the structure of the stored data (the types of entities and their relationships). Additionally, every relation's range (type of \ord{1} argument) and domain (type of \ord{2} argument) should be defined. These information can help us identify the allowed joining relations for each join pattern.
@@ -31,9 +31,10 @@ For every possible pair of relations,
 The algorithm is shown in the pseudo-code bellow:
 
 \begin{algorithm}[5]
+ \label{alg1}
  \caption{Checks whether two relations are joinable for a given join pattern}
  \SetKwFunction{subsumes}
- \KwIn{Relation $r_i$, $r_j$, Argument $arg_i$, $arg_j$}
+ \KwIn{\textbf{Input:} Relation $r_i$, $r_j$, Argument $arg_i$, $arg_j$ \\}
  \KwOut{True if $arg_i$ from $r_i$ joins with $arg_j$ from $r_j$, False otherwise}
  
   \eIf{$r_i.arg_i = r_j.arg_j$ {\bf or} \FuncSty{subsumes(}$r_i.arg_i$,$r_j.arg_j$\FuncSty{)} {\bf or} \FuncSty{subsumes(}$r_j.arg_j$,$r_i.arg_i$\FuncSty{)}}{
@@ -45,28 +46,29 @@ The algorithm is shown in the pseudo-code bellow:
 
 \subsubsection{Exploiting Support Monotonicity}
 
-As seen in (???), support is the only monotonically decreasing measure in top-down ILP. So we know that by adding any literals to the hypothesis, we can only get a smaller or equal support. Therefore, for each pair of joinable relations in each of the join patterns, we can query the knowledge base and check whether they reach the minimum support threshold.
+As seen in (???), support is the only monotonically decreasing measure in top-down ILP. So we know that by adding any literals to the hypothesis, we can only get a smaller or equal support. Therefore, for each pair of joinable relations in each of the join patterns, we can query the knowledge base and check whether they have enough supporting facts.
 
 Thus, if any pair of relations doesn't reach the minimum support for a given join pattern, we know that any hypothesis containing such join will therefore fail the support test as well, so we don't need to test such hypothesis in the core ILP algorithm.
 
 
 \begin{algorithm}
+  \label{alg2}
   \caption{Checks whether join support exceeds threshold}
   \SetKwFunction{executeQuery}
-  \KwIn{Relation $r_i$, $r_j$, Argument $arg_i$, $arg_j$, Float $supportThreshold$}
+  \KwIn{\textbf{Input:} Relation $r_i$, $r_j$, Argument $arg_i$, $arg_j$, Float $supportThreshold$ \\ }
   \KwOut{True if join support exceeds threshold, False otherwise}
     \Switch{$(arg_i,arg_j)$} {
       \Case{$(1,1)$}{
-	$query \leftarrow$ select count distinct $?x$ where \{ $?x$ <$r_i$> $?y$ . $?x$ <$r_j$> $?z$ \} \;
+	$query \leftarrow$ ``select count distinct $?x$ where \{ $?x$ <$r_i$> $?y$ . $?x$ <$r_j$> $?z$ \}'' \;
       }
       \Case{$(1,2)$}{
-	$query \leftarrow$ select count distinct $?x$ where \{ $?x$ <$r_i$> $?y$ . $?z$ <$r_j$> $?x$ \} \;
+	$query \leftarrow$ ``select count distinct $?x$ where \{ $?x$ <$r_i$> $?y$ . $?z$ <$r_j$> $?x$ \}'' \;
       }
       \Case{$(2,1)$}{
-	$query \leftarrow$ select count distinct $?x$ where \{ $?y$ <$r_i$> $?x$ . $?x$ <$r_j$> $?z$ \} \;
+	$query \leftarrow$ ``select count distinct $?x$ where \{ $?y$ <$r_i$> $?x$ . $?x$ <$r_j$> $?z$ \}'' \;
       }
       \Case{$(2,2)$}{
-	$query \leftarrow$ select count distinct $?x$ where \{ $?y$ <$r_i$> $?x$ . $?z$ <$r_j$> $?x$ \} \;
+	$query \leftarrow$ ``select count distinct $?x$ where \{ $?y$ <$r_i$> $?x$ . $?z$ <$r_j$> $?x$ \}'' \;
       }
     }
     $joinSupport \leftarrow$ executeQuery($query$)\;
@@ -78,8 +80,7 @@ Thus, if any pair of relations doesn't reach the minimum support for a given joi
 \end{algorithm}
 
 
-The relation preprocessing will result in 4 maps, one for each join pattern. Each map will a relation as key and a set of joinable relations as value. The refinement step at the ILP algorithm, will then access this map when choosing a new literal to be added.
-
+Applying \ref{alg1} and \ref{alg2} on all the possible join combinations and extracting the valid ones, we can build 4 maps joining maps, one for each join pattern. Each map has relations as keys and a set of joinable relations as value. In the refinement step at the ILP algorithm, these maps will be queried in order to obtain the eligible literals to be added.
 
 \subsection{\graphname}
 
@@ -117,20 +118,20 @@ With such query, it's possible to extract a histogram for the node \emph{hasInco
 
 In the \graphname itself, it's possible to extract valuable rules. Given its characteristic of all the relations being joined on the same root argument, those rules represent how different categories are related along root's numberical constants.
 
-For every non-root node in the \graphname, any of its parents can be seen as rule's body and the missing literal as head, e.g.:
+For every non-root node in the \graphname, any of its parents can be seen as rule's body and the remaining literal as head, e.g.:
 
 Let's denote $a_i$ as a relation $a(x,y)$ with constants $A_i$ for $y$, so for example $a_1 \equiv a(x,A_1)$:
 
 For the node $r a_1 b_1 c_1$ with parents $r a_1 b_1$, $r a_1 c_1$ and $r b_1 c_1$, we can extract and easily evaluate three rules:
 
 \begin{math}
-Rule_1 : a_1 \leftarrow b_1 c_1 r \\
-\; supp_i(Rule_1) = h_i(r a_1 b_1 c_1) \\
-\; conf_i(Rule_1) = \frac{h_i(r a_1 b_1 c_1)}{h_i(r b_1 c_1)} \\ \\
-Rule_2 : b_1 \leftarrow a_1 c_1 r \\
+Rule_1 : \quad a_1 \leftarrow b_1 c_1 r \\ 
+\quad supp_i(Rule_1) = h_i(r a_1 b_1 c_1) \\
+\quad \quad conf_i(Rule_1) = \frac{h_i(r a_1 b_1 c_1)}{h_i(r b_1 c_1)} \\ \\
+Rule_2 : \quad b_1 \leftarrow a_1 c_1 r \\
 \; supp_i(Rule_2) = h_i(r a_1 b_1 c_1) \\
 \; conf_i(Rule_2) = \frac{h_i(r a_1 b_1 c_1)}{h_i(r a_1 c_1)} \\ \\
-Rule_3 : c_1 \leftarrow a_1 b_1 r \\
+Rule_3 : \quad c_1 \leftarrow a_1 b_1 r \\
 \; supp_i(Rule_3) = h_i(r a_1 b_1 c_1) \\
 \; conf_i(Rule_3) = \frac{h_i(r a_1 b_1 c_1)}{h_i(r a_1 b_1)} \\
 \end{math}

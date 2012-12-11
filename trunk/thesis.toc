@@ -19,21 +19,21 @@
 \contentsline {section}{\numberline {3.1}Categorical Relation Definition}{8}{section.19}
 \contentsline {section}{\numberline {3.2}Support}{9}{section.20}
 \contentsline {subsection}{\numberline {3.2.1}Independece between Nodes}{9}{subsection.21}
-\contentsline {section}{\numberline {3.3}Heuristics}{11}{section.25}
-\contentsline {chapter}{\numberline {4}Algorithmic Framework}{13}{chapter.29}
-\contentsline {section}{\numberline {4.1}Knowledge Base Backend}{13}{section.30}
-\contentsline {section}{\numberline {4.2}Preprocessing}{13}{section.31}
-\contentsline {subsection}{\numberline {4.2.1}Relation Preprocessing}{13}{subsection.32}
-\contentsline {subsubsection}{\numberline {4.2.1.1}Exploiting Relation Range and Domain Types}{14}{subsubsection.33}
-\contentsline {subsubsection}{\numberline {4.2.1.2}Exploiting Support Monotonicity}{14}{subsubsection.37}
-\contentsline {subsection}{\numberline {4.2.2}Correlation Lattice}{14}{subsection.41}
-\contentsline {subsubsection}{\numberline {4.2.2.1}Graph Node}{14}{subsubsection.42}
-\contentsline {subsubsection}{\numberline {4.2.2.2}Building the Correlation Lattice}{15}{subsubsection.43}
-\contentsline {subsubsection}{\numberline {4.2.2.3}Searching Rules in Correlation Lattice}{15}{subsubsection.44}
-\contentsline {subsubsection}{\numberline {4.2.2.4}}{17}{subsubsection.45}
-\contentsline {section}{\numberline {4.3}ILP Core Algorithm}{17}{section.46}
+\contentsline {section}{\numberline {3.3}Heuristics}{11}{section.26}
+\contentsline {chapter}{\numberline {4}Algorithmic Framework}{15}{chapter.30}
+\contentsline {section}{\numberline {4.1}Knowledge Base Backend}{15}{section.31}
+\contentsline {section}{\numberline {4.2}Preprocessing}{15}{section.32}
+\contentsline {subsection}{\numberline {4.2.1}Relation Preprocessing}{15}{subsection.33}
+\contentsline {subsubsection}{\numberline {4.2.1.1}Exploiting Relation Range and Domain Types}{16}{subsubsection.34}
+\contentsline {subsubsection}{\numberline {4.2.1.2}Exploiting Support Monotonicity}{16}{subsubsection.38}
+\contentsline {subsection}{\numberline {4.2.2}Correlation Lattice}{16}{subsection.42}
+\contentsline {subsubsection}{\numberline {4.2.2.1}Graph Node}{16}{subsubsection.43}
+\contentsline {subsubsection}{\numberline {4.2.2.2}Building the Correlation Lattice}{17}{subsubsection.44}
+\contentsline {subsubsection}{\numberline {4.2.2.3}Searching Rules in Correlation Lattice}{17}{subsubsection.45}
+\contentsline {subsubsection}{\numberline {4.2.2.4}}{19}{subsubsection.46}
+\contentsline {section}{\numberline {4.3}ILP Core Algorithm}{19}{section.47}
 \vspace {2em}
-\contentsline {chapter}{List of Figures}{17}{dummy.47}
-\contentsline {chapter}{List of Tables}{21}{dummy.49}
+\contentsline {chapter}{List of Figures}{19}{dummy.48}
+\contentsline {chapter}{List of Tables}{23}{dummy.50}
 \vspace {2em}
-\contentsline {chapter}{Bibliography}{23}{dummy.51}
+\contentsline {chapter}{Bibliography}{25}{dummy.52}

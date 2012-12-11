@@ -17,7 +17,7 @@ In order to reduce such problems, one can apply to the knowledge base a set of i
       \item \begin{math} (z=y) \leftarrow wasBornIn(x,z),wasBornIn(x,y)\end{math}
     \end{itemize}
 
- \item \emph{Soft Rules}: Weighted rules that frequently, but not always hold in the real world. As they might also produce incorrect information, each rule itself must have a confidence value which should be applied to derived facts, for example married people live in the same place as their partner has confidence 0.8:
+ \item \emph{Soft Rules}: Weighted Datalog rules that frequently, but not always hold in the real world. As they might also produce incorrect information, each rule itself must have a confidence value which should be applied to derived facts, for example married people live in the same place as their partner has confidence 0.8:
     \begin{center}
       \begin{math} livesIn(x,y) \leftarrow marriedTo(x,z)livesIn(z,y)\end{math} [0.8]
     \end{center}
