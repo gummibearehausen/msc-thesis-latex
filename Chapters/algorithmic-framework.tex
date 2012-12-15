@@ -1,11 +1,11 @@
 \chapter{Algorithmic Framework}
-\label{ch:intro}
+\label{af:intro}
 
 \section{Knowledge Base Backend}
 
 For storing and retrieving RDF data we use RDF3X \cite{Neumann:2010:RES:1731351.1731354}. It has the advantage of being specialized and optimized for RDF data, using a strong indexing approach with compressed B$^+$-Tree indices for each of six permutations of \emph{subject (S)}, \emph{predicate (P)} and \emph{object (O)}: \emph{SPO},\emph{SOP},\emph{OSP},\emph{OPS},\emph{PSO} and \emph{POS}.
 
-
+RDF3X particularities...
 
 \section{Preprocessing}
 
@@ -30,14 +30,29 @@ For every possible pair of relations,
 
 The algorithm is shown in the pseudo-code bellow:
 
-\begin{algorithm}[5]
- \label{alg1}
+\begin{algorithm}[!h]
  \caption{Checks whether two relations are joinable for a given join pattern}
+ \label{alg1}
  \SetKwFunction{subsumes}
  \KwIn{\textbf{Input:} Relation $r_i$, $r_j$, Argument $arg_i$, $arg_j$ \\}
  \KwOut{True if $arg_i$ from $r_i$ joins with $arg_j$ from $r_j$, False otherwise}
- 
-  \eIf{$r_i.arg_i = r_j.arg_j$ {\bf or} \FuncSty{subsumes(}$r_i.arg_i$,$r_j.arg_j$\FuncSty{)} {\bf or} \FuncSty{subsumes(}$r_j.arg_j$,$r_i.arg_i$\FuncSty{)}}{
+  \Switch{$arg_i$} {
+      \Case{$1$}{
+	$type_i \leftarrow r_i.domain$ \;
+      }
+      \Case{$2$}{
+	$type_i \leftarrow r_i.range$ \;
+      }
+  }
+  \Switch{$arg_j$} {
+      \Case{$1$}{
+	$type_j \leftarrow r_j.domain$ \;
+      }
+      \Case{$2$}{
+	$type_j \leftarrow r_j.range$ \;
+      }
+  }
+  \eIf{$type_i = type_j$ {\bf or} \FuncSty{subsumes(}$type_i$,$type_j$\FuncSty{)} {\bf or} \FuncSty{subsumes(}$type_j$,$type_i$\FuncSty{)}}{
       \Return true\;
    }{
     \Return false\;
@@ -51,9 +66,9 @@ As seen in (???), support is the only monotonically decreasing measure in top-do
 Thus, if any pair of relations doesn't reach the minimum support for a given join pattern, we know that any hypothesis containing such join will therefore fail the support test as well, so we don't need to test such hypothesis in the core ILP algorithm.
 
 
-\begin{algorithm}
-  \label{alg2}
+\begin{algorithm}[!h]
   \caption{Checks whether join support exceeds threshold}
+  \label{alg2}
   \SetKwFunction{executeQuery}
   \KwIn{\textbf{Input:} Relation $r_i$, $r_j$, Argument $arg_i$, $arg_j$, Float $supportThreshold$ \\ }
   \KwOut{True if join support exceeds threshold, False otherwise}
@@ -112,7 +127,7 @@ Afterwards, we select the the categorical properties that will be used in the la
  \emph{SELECT COUNT ?z ?y WHERE \{ ?x <hasIncome> ?y . ?x <hasEducation> ?z \} GROUP BY (?z,?y)}
 \end{center}
 
-With such query, it's possible to extract a histogram for the node \emph{hasIncome(x,y)hasEducation(x,z)} and its correspondent constants 
+With such query, it's possible to extract a histogram for the node \emph{hasIncome(x,y)hasEducation(x,z)} and its correspondent constants. 
 
 \subsubsection{Searching Rules in \graphname}
 
