@@ -167,6 +167,7 @@
    \let\\\space
 }
 \newcommand*{\supervisor}[1]{\def\supname{#1}}
+\newcommand*{\reviewer}[1]{\def\revname{#1}}
 \newcommand*{\examiner}[1]{\def\examname{#1}}
 \newcommand*{\degree}[1]{\def\degreename{#1}}
 \newcommand*{\authors}[1]{\def\authornames{#1}}
@@ -182,6 +183,7 @@
 \newcommand*{\subject}[1]{\def\subjectname{#1}}
 \newcommand*{\keywords}[1]{\def\keywordnames{#1}}
 \supervisor  {Dr. Martin Theobald}
+\reviewer    {Prof. Dr. Max Mustermann}
 \examiner    {}
 \degree      {}
 \authors     {Andr\'e de Oliveira Melo}
@@ -277,20 +279,18 @@
       \bigskip
       \bigskip
       {\large angefertigt unter der Leitung von / supervised by \par}
-      {\LARGE Prof. Dr. Gerhard Weikum \par}
+      {\LARGE \supname \par}
  
       \bigskip
       \bigskip
-      \bigskip 
-      {\large betreut von / advised by \par}
-      {\LARGE \supname \par}
+
       
       \bigskip
       \bigskip
       \bigskip 
       {\large begutachtet von / reviewers \par}
-      {\LARGE Dr. Max Mustermann \par}
-      {\LARGE Prof. Dr. Gerhard Weikum \par}
+      {\LARGE \supname \par}
+      {\LARGE \revname \par}
       {\LARGE \par}
       
       %\vfill
@@ -302,6 +302,8 @@
       %{\large \facname \par}
       %{\large \deptname \par}
       \bigskip
+      \bigskip
+      \bigskip 
       \bigskip
       \bigskip
       \bigskip
