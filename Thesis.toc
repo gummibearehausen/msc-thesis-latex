@@ -11,30 +11,38 @@
 \contentsline {chapter}{\numberline {2}Related Work}{5}{chapter.11}
 \contentsline {section}{\numberline {2.1}Logic Programming}{5}{section.12}
 \contentsline {section}{\numberline {2.2}Inductive Logic Programming}{5}{section.13}
-\contentsline {section}{\numberline {2.3}Mining Opimized Rules for Numberic Attributes}{5}{section.14}
-\contentsline {section}{\numberline {2.4}Minimum Description Length}{5}{section.15}
-\contentsline {section}{\numberline {2.5}Semamtic Web}{5}{section.16}
-\contentsline {section}{\numberline {2.6}Linked Open Data}{5}{section.17}
-\contentsline {chapter}{\numberline {3}Correlation Lattice}{7}{chapter.18}
-\contentsline {section}{\numberline {3.1}Categorical Relation Definition}{8}{section.20}
-\contentsline {subsection}{\numberline {3.1.1}Absence or Presence of a Relation as Categories}{10}{subsection.21}
-\contentsline {section}{\numberline {3.2}Support}{10}{section.23}
-\contentsline {subsection}{\numberline {3.2.1}Independece between Nodes}{11}{subsection.24}
-\contentsline {section}{\numberline {3.3}Heuristics}{13}{section.29}
-\contentsline {chapter}{\numberline {4}Algorithmic Framework}{15}{chapter.33}
-\contentsline {section}{\numberline {4.1}Knowledge Base Backend}{15}{section.34}
-\contentsline {section}{\numberline {4.2}Preprocessing}{15}{section.35}
-\contentsline {subsection}{\numberline {4.2.1}Relation Preprocessing}{15}{subsection.36}
-\contentsline {subsubsection}{\numberline {4.2.1.1}Exploiting Relation Range and Domain Types}{16}{subsubsection.37}
-\contentsline {subsubsection}{\numberline {4.2.1.2}Exploiting Support Monotonicity}{16}{subsubsection.40}
-\contentsline {subsection}{\numberline {4.2.2}Correlation Lattice}{17}{subsection.43}
-\contentsline {subsubsection}{\numberline {4.2.2.1}Graph Node}{17}{subsubsection.44}
-\contentsline {subsubsection}{\numberline {4.2.2.2}Building the Correlation Lattice}{17}{subsubsection.45}
-\contentsline {subsubsection}{\numberline {4.2.2.3}Searching Rules in Correlation Lattice}{18}{subsubsection.46}
-\contentsline {subsubsection}{\numberline {4.2.2.4}}{19}{subsubsection.47}
-\contentsline {section}{\numberline {4.3}ILP Core Algorithm}{19}{section.48}
+\contentsline {section}{\numberline {2.3}First Order Inductive Learning}{5}{section.14}
+\contentsline {section}{\numberline {2.4}Mining Optimized Rules for Numeric Attributes}{5}{section.15}
+\contentsline {section}{\numberline {2.5}Minimum Description Length}{5}{section.16}
+\contentsline {section}{\numberline {2.6}Semamtic Web}{5}{section.17}
+\contentsline {section}{\numberline {2.7}Linked Open Data}{5}{section.18}
+\contentsline {chapter}{\numberline {3}Learning Rules With Numerical and Categorical Attributes}{7}{chapter.19}
+\contentsline {section}{\numberline {3.1}Interesting Rules}{7}{section.20}
+\contentsline {section}{\numberline {3.2}Preprocessing}{7}{section.21}
+\contentsline {subsection}{\numberline {3.2.1}Relation Preprocessing}{7}{subsection.22}
+\contentsline {subsubsection}{\numberline {3.2.1.1}Exploiting Relation Range and Domain Types}{8}{subsubsection.23}
+\contentsline {subsubsection}{\numberline {3.2.1.2}Exploiting Support Monotonicity}{9}{subsubsection.26}
+\contentsline {subsection}{\numberline {3.2.2}}{9}{subsection.29}
+\contentsline {section}{\numberline {3.3}Correlation Lattice}{9}{section.30}
+\contentsline {subsection}{\numberline {3.3.1}Categorical Relation Definition}{11}{subsection.32}
+\contentsline {subsubsection}{\numberline {3.3.1.1}Absence or Presence of a Relation as Categories}{12}{subsubsection.33}
+\contentsline {subsection}{\numberline {3.3.2}Pruning Opportunities}{14}{subsection.35}
+\contentsline {subsubsection}{\numberline {3.3.2.1}Support}{14}{subsubsection.36}
+\contentsline {subsubsection}{\numberline {3.3.2.2}Independence Checks}{14}{subsubsection.37}
+\contentsline {subsection}{\numberline {3.3.3}Heuristics}{16}{subsection.42}
+\contentsline {section}{\numberline {3.4}Incorporating Correlation Latticeinto Core ILP Algorithm}{17}{section.46}
+\contentsline {chapter}{\numberline {4}Algorithmic Framework}{19}{chapter.47}
+\contentsline {section}{\numberline {4.1}Knowledge Base Backend}{19}{section.48}
+\contentsline {section}{\numberline {4.2}Preprocessing}{19}{section.49}
+\contentsline {subsection}{\numberline {4.2.1}Correlation Lattice}{19}{subsection.50}
+\contentsline {subsubsection}{\numberline {4.2.1.1}Graph Node}{19}{subsubsection.51}
+\contentsline {subsubsection}{\numberline {4.2.1.2}Building the Correlation Lattice}{20}{subsubsection.52}
+\contentsline {subsubsection}{\numberline {4.2.1.3}Searching Rules in Correlation Lattice}{20}{subsubsection.53}
+\contentsline {subsubsection}{\numberline {4.2.1.4}}{21}{subsubsection.54}
+\contentsline {section}{\numberline {4.3}ILP Core Algorithm}{21}{section.55}
+\contentsline {chapter}{\numberline {5}Experiments}{23}{chapter.56}
 \vspace {2em}
-\contentsline {chapter}{List of Figures}{19}{dummy.49}
-\contentsline {chapter}{List of Tables}{23}{dummy.51}
+\contentsline {chapter}{List of Figures}{23}{dummy.57}
+\contentsline {chapter}{List of Tables}{27}{dummy.59}
 \vspace {2em}
-\contentsline {chapter}{Bibliography}{25}{dummy.53}
+\contentsline {chapter}{Bibliography}{29}{dummy.61}
