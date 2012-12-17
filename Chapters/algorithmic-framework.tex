@@ -160,4 +160,24 @@ Subsequently we can analyze the frequency and confidence distributions and deter
 
 \section{ILP Core Algorithm}
 
+The ILP core learning algorithm requires some modifications in order to support the \graphname. As stated before, we use the top-down search, starting from the most general clauses then further refining them by introducing new substitutions or literals until stopping criterea is reached. 
+
+First we need to introduce a new refinement operator that extracts the support and accuracy distributions along a chosen numerical property and searches for interesting ranges. With that there are
+
+if (clause constains numerical property) {
+  n = numerical property;
+  Lattice l = getLattice(n);
+  if (no range set to n) {
+    supp = querySuppDistribution;
+    acc  = queryAccDistribution;
+  }
+}
+
+In the specialization step, we can detect whether the clause contains any numerical property, which is root of a \graphname. If so, it can search for interesting ranges numerical ranges, 
+
+% Substitution for constants only in categorical relations, query by support
+% When categorical joined to numerical property (without range) existent in \graphname query graph for constants
+% 
+
+
 
