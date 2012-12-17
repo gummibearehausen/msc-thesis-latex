@@ -62,14 +62,19 @@ If we have:
 $r_1(x,y) \equiv f_1 : X \rightarrow Y$ (categorical or not) \newline
 $r_2(y,z) \equiv f_2 : Y \rightarrow Z$ (categorical relation)
 
+or
+
+$r_1(x,y) \equiv f_1 : X \rightarrow Y$ (categorical relation) \newline
+$r_2(y,z) \equiv f_2 : Y \rightarrow Z$ (categorical or not)
+
 Then, $r'(x,z) \equiv f : X \rightarrow Z$, where $r'(x,z)=r_2(f_1(x),z)$ is also categorical
 
 
-Numerical relations can also be turned into a categorical, by simply applying a bucketing function that maps a numerical domain into a finite set of $k$ buckets:
+Numerical properties can also be turned into a categorical, by simply applying a bucketing function that maps a numerical domain into a finite set of $k$ buckets:
 
 $b: \mathbb{N} \rightarrow B$, where $B=\{1,2,\dots ,k \}$
 
-So a numerical relation:
+So a numerical property:
 
 $r(x,y) \equiv f : X \rightarrow \mathbb{N}$ 
 
@@ -210,7 +215,7 @@ Where $P$ and $Q$ are the distributions to be compared and $M=\cfrac{1}{2}(P+Q)$
 
 As discussed in \cite{17795}, although Jensen-Shannon is computationally more expensivee, it has the advantage of being a symmetric and smoothed version of the Kullback-Leibler measure.
 
-Pruning by divergence is clearly not safe. Let's suppose we have a root numerical relation $r(x,y)$, and two categorical relations $a(x,z)$ with constants $A_1$ and $A_2$ and $b(x,w)$ with constants $B_1$ and $B_2$. For simplicity, let's assume y is divided in two buckets and root $r$ has an uniform distribution $[0.5 \, 0.5]$ from frequencies $[2 \, 2]$. It's possible to have $r a_1$ and $r a_2$ as well as $r b_1$ and $r b_2$ with the same uniform distribution with frequencies $[1 \, 1]$. Nevertheless when combined we can have the following:
+Pruning by divergence is clearly not safe. Let's suppose we have a root numerical property $r(x,y)$, and two categorical relations $a(x,z)$ with constants $A_1$ and $A_2$ and $b(x,w)$ with constants $B_1$ and $B_2$. For simplicity, let's assume y is divided in two buckets and root $r$ has an uniform distribution $[0.5 \, 0.5]$ from frequencies $[2 \, 2]$. It's possible to have $r a_1$ and $r a_2$ as well as $r b_1$ and $r b_2$ with the same uniform distribution with frequencies $[1 \, 1]$. Nevertheless when combined we can have the following:
 
 $r a_1 b_1 : [1.0 \, 0.0] \\$
 $r a_1 b_2 : [0.0 \, 1.0] \\$
