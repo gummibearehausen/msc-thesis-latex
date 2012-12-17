@@ -9,94 +9,6 @@ RDF3X particularities...
 
 \section{Preprocessing}
 
-In this section, we will present the preprocessing steps required by our proposed algorithm. It basically consists of building a joinable relations map for each of the four join patterns, according to relations domain and range types as well as support threshold. Afterwards, we search the available categorical properties for each numerical relation that will be used in the \graphname. At last we describe the \graphname structure and the algorithm to build it.
-
-\subsection{Relation Preprocessing}
-
-In this step, we focus on creating for each of the four join patterns between two relations:
-
-\begin{itemize}
- \item Argument 1 on Argument 1: e.g. \emph{hasIncome(\textbf{x},y)hasAge(\textbf{x},z)}
- \item Argument 1 on Argument 2: e.g. \emph{hasIncome(\textbf{x},y)isMarriedTo(z,\textbf{x})}
- \item Argument 2 on Argument 1: e.g. \emph{livesIn(y,\textbf{x})isLocatedIn(\textbf{x},z)}
- \item Argument 2 on Argument 2: e.g. \emph{livesIn(y,\textbf{x})wasBornIn(z,\textbf{x})}
-\end{itemize}
-
-\subsubsection{Exploiting Relation Range and Domain Types}
-
-A knowledge base is expected to have an ontology defining the structure of the stored data (the types of entities and their relationships). Additionally, every relation's range (type of \ord{1} argument) and domain (type of \ord{2} argument) should be defined. These information can help us identify the allowed joining relations for each join pattern.
-
-For every possible pair of relations, 
-
-The algorithm is shown in the pseudo-code bellow:
-
-\begin{algorithm}[!h]
- \caption{Checks whether two relations are joinable for a given join pattern}
- \label{alg1}
- \SetKwFunction{subsumes}
- \KwIn{\textbf{Input:} Relation $r_i$, $r_j$, Argument $arg_i$, $arg_j$ \\}
- \KwOut{True if $arg_i$ from $r_i$ joins with $arg_j$ from $r_j$, False otherwise}
-  \Switch{$arg_i$} {
-      \Case{$1$}{
-	$type_i \leftarrow r_i.domain$ \;
-      }
-      \Case{$2$}{
-	$type_i \leftarrow r_i.range$ \;
-      }
-  }
-  \Switch{$arg_j$} {
-      \Case{$1$}{
-	$type_j \leftarrow r_j.domain$ \;
-      }
-      \Case{$2$}{
-	$type_j \leftarrow r_j.range$ \;
-      }
-  }
-  \eIf{$type_i = type_j$ {\bf or} \FuncSty{subsumes(}$type_i$,$type_j$\FuncSty{)} {\bf or} \FuncSty{subsumes(}$type_j$,$type_i$\FuncSty{)}}{
-      \Return true\;
-   }{
-    \Return false\;
-  }
-\end{algorithm}
-
-\subsubsection{Exploiting Support Monotonicity}
-
-As seen in (???), support is the only monotonically decreasing measure in top-down ILP. So we know that by adding any literals to the hypothesis, we can only get a smaller or equal support. Therefore, for each pair of joinable relations in each of the join patterns, we can query the knowledge base and check whether they have enough supporting facts.
-
-Thus, if any pair of relations doesn't reach the minimum support for a given join pattern, we know that any hypothesis containing such join will therefore fail the support test as well, so we don't need to test such hypothesis in the core ILP algorithm.
-
-
-\begin{algorithm}[!h]
-  \caption{Checks whether join support exceeds threshold}
-  \label{alg2}
-  \SetKwFunction{executeQuery}
-  \KwIn{\textbf{Input:} Relation $r_i$, $r_j$, Argument $arg_i$, $arg_j$, Float $supportThreshold$ \\ }
-  \KwOut{True if join support exceeds threshold, False otherwise}
-    \Switch{$(arg_i,arg_j)$} {
-      \Case{$(1,1)$}{
-	$query \leftarrow$ ``select count distinct $?x$ where \{ $?x$ <$r_i$> $?y$ . $?x$ <$r_j$> $?z$ \}'' \;
-      }
-      \Case{$(1,2)$}{
-	$query \leftarrow$ ``select count distinct $?x$ where \{ $?x$ <$r_i$> $?y$ . $?z$ <$r_j$> $?x$ \}'' \;
-      }
-      \Case{$(2,1)$}{
-	$query \leftarrow$ ``select count distinct $?x$ where \{ $?y$ <$r_i$> $?x$ . $?x$ <$r_j$> $?z$ \}'' \;
-      }
-      \Case{$(2,2)$}{
-	$query \leftarrow$ ``select count distinct $?x$ where \{ $?y$ <$r_i$> $?x$ . $?z$ <$r_j$> $?x$ \}'' \;
-      }
-    }
-    $joinSupport \leftarrow$ executeQuery($query$)\;
-     \eIf{$joinSupport \ge supportThreshold$} {
-      \Return true\;
-    }{
-      \Return false\;
-    }
-\end{algorithm}
-
-
-Applying \ref{alg1} and \ref{alg2} on all the possible join combinations and extracting the valid ones, we can build 4 maps joining maps, one for each join pattern. Each map has relations as keys and a set of joinable relations as value. In the refinement step at the ILP algorithm, these maps will be queried in order to obtain the eligible literals to be added.
-
 \subsection{\graphname}
 
 \subsubsection{Graph Node}
@@ -142,13 +54,13 @@ For the node $r a_1 b_1 c_1$ with parents $r a_1 b_1$, $r a_1 c_1$ and $r b_1 c_
 \begin{math}
 Rule_1 : \quad a_1 \leftarrow b_1 c_1 r \\ 
 \quad supp_i(Rule_1) = h_i(r a_1 b_1 c_1) \\
-\quad \quad conf_i(Rule_1) = \frac{h_i(r a_1 b_1 c_1)}{h_i(r b_1 c_1)} \\ \\
+\quad \quad acc_i(Rule_1) = \frac{h_i(r a_1 b_1 c_1)}{h_i(r b_1 c_1)} \\ \\
 Rule_2 : \quad b_1 \leftarrow a_1 c_1 r \\
 \; supp_i(Rule_2) = h_i(r a_1 b_1 c_1) \\
-\; conf_i(Rule_2) = \frac{h_i(r a_1 b_1 c_1)}{h_i(r a_1 c_1)} \\ \\
+\; acc_i(Rule_2) = \frac{h_i(r a_1 b_1 c_1)}{h_i(r a_1 c_1)} \\ \\
 Rule_3 : \quad c_1 \leftarrow a_1 b_1 r \\
 \; supp_i(Rule_3) = h_i(r a_1 b_1 c_1) \\
-\; conf_i(Rule_3) = \frac{h_i(r a_1 b_1 c_1)}{h_i(r a_1 b_1)} \\
+\; acc_i(Rule_3) = \frac{h_i(r a_1 b_1 c_1)}{h_i(r a_1 b_1)} \\
 \end{math}
 
 Subsequently we can analyze the frequency and confidence distributions and determine whether any of the rules are interesting, using any of the techniques discussed in [???] and find possible interesting intervals.
