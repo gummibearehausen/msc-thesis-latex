@@ -1,8 +1,53 @@
-\begin{thebibliography}{0}
+\begin{thebibliography}{7}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
   \providecommand{\doi}[1]{doi: #1}\else
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Brin et~al.(1999)Brin, Rastogi, and Shim]{Brin99miningoptimized}
+Sergey Brin, Rajeev Rastogi, and Kyuseok Shim.
+\newblock Mining optimized gain rules for numeric attributes.
+\newblock In \emph{Proceedings of the Fifth ACM SIGKDD International Conference
+  on Knowledge Discovery and Data Mining}, pages 135--144. ACM Press, 1999.
+
+\bibitem[Calders et~al.(2009)Calders, G{\"u}nther, Pechenizkiy, and
+  Rozinat]{DBLP:conf/sac/CaldersGPR09}
+Toon Calders, Christian~W. G{\"u}nther, Mykola Pechenizkiy, and Anne Rozinat.
+\newblock Using minimum description length for process mining.
+\newblock In \emph{SAC}, pages 1451--1455, 2009.
+
+\bibitem[Lavrac and Dzeroski(1994)]{LavracDz94}
+Nada Lavrac and Saso Dzeroski.
+\newblock \emph{Inductive Logic Programming: Techniques and Applications}.
+\newblock Ellis Horwood, New York, 1994.
+\newblock URL \url{http://www-ai.ijs.si/SasoDzeroski/ILPBook/}.
+
+\bibitem[Jaroszewicz and Simovici(2002)]{Jaroszewicz02pruningredundant}
+Szymon Jaroszewicz and Dan~A. Simovici.
+\newblock Pruning redundant association rules using maximum entropy principle.
+\newblock In \emph{In Advances in Knowledge Discovery and Data Mining, 6th
+  Pacific-Asia Conference, PAKDD?02}, pages 135--147, 2002.
+
+\bibitem[Kullback and Leibler(1951)]{Kullback51klDivergence}
+S.~Kullback and R.~A. Leibler.
+\newblock On information and sufficiency.
+\newblock \emph{Ann. Math. Statist.}, 22\penalty0 (1):\penalty0 79--86, 1951.
+
+\bibitem[Briet and Harremos(2009)]{17795}
+J.~Briet and P.~Harremos.
+\newblock Properties of classical and quantum jensen-shannon divergence.
+\newblock \emph{Physical Review A: Atomic, Molecular and Optical Physics},
+  79\penalty0 (5), May 2009.
+\newblock ISSN 1050-2947.
+
+\bibitem[Neumann and Weikum(2010)]{Neumann:2010:RES:1731351.1731354}
+Thomas Neumann and Gerhard Weikum.
+\newblock The rdf-3x engine for scalable management of rdf data.
+\newblock \emph{The VLDB Journal}, 19\penalty0 (1):\penalty0 91--113, February
+  2010.
+\newblock ISSN 1066-8888.
+\newblock \doi{10.1007/s00778-009-0165-y}.
+\newblock URL \url{http://dx.doi.org/10.1007/s00778-009-0165-y}.
 
 \end{thebibliography}
