@@ -4,7 +4,71 @@
 \section{Interesting Rules}
 
 In this section we formally define what kind of rules we are interested in obtaining with the algorithm proposed in
-this thesis. As briefly explained in the introduction, we focus on learning 
+this thesis. As briefly explained in the introduction, the objective learning with numerical attributes, focusing on searching ranges in the numerical domain that satisfy support and accuracy thresholds.
+
+Trying to learn numerical ranges for a base-rule that already satisfies accuracy threshold is considered uninteresting, as the gain would be probably small
+
+\section{Categorical Relation Definition}
+
+In this section, we formally define a categorical relation as used in the \graphname. 
+
+First of all, a candidate relation must be joined with root relation's \ord{1} argument (assuming that the numerical
+attribute is in the \ord{2} argument). 
+
+A candidate categorical relation $r(x,y)$, should be equivalent a non-injective function:
+
+$r(x,y) \equiv f : X \rightarrow Y , \quad s.t. \, |Y|<|X| $ and $ |Y|>1 \newline $
+$\nexists \, g : Y \rightarrow X , \quad s.t. \, f(g(x))=x , \quad \forall x \in X$
+
+We can define subsets of $X_i \in X$, with which of them belonging to one category $y_i \in Y$:
+
+$X_i \subset X \quad s.t. \, X_i = \{x \in X \,|\, f(x)=y_i ,\, y_i \in Y\} \newline $
+$X = \bigcup_{i=1}^{n} X_i $ and $ X_i \cap X_j = \emptyset ,\quad \forall i,j \in [1,n] ,\, i \neq j$
+
+We can also broaden this definition by composing functional relations to a categorical or multiple categorical
+relations:
+
+If we have:
+
+$r_1(x,y) \equiv f_1 : X \rightarrow Y$ \newline
+$r_2(y,z) \equiv f_2 : Y \rightarrow Z$ 
+
+Where at least one of them is categorical, then $r'(x,z) \equiv f : X \rightarrow Z$, where $r'(x,z)=r_2(f_1(x),z)$ is also categorical
+
+
+Numerical properties can also be turned into a categorical, by simply applying a bucketing function that maps a
+numerical domain into a finite set of $k$ buckets:
+
+$b: \mathbb{N} \rightarrow B$, where $B=\{1,2,\dots ,k \}$
+
+So a numerical property:
+
+$r(x,y) \equiv f : X \rightarrow \mathbb{N}$ 
+
+combined with a bucketing function $b$, $r'(x,b(y))$ would be discretized and applicable in the \graphname.
+
+(Then talk about non-categorical relations as categorical by considering its presence/absence)
+
+Types are also covered by this definition. If we consider $r = rdf:type$ we see that $r$ which maps entities into
+types satisfies the definition presented before.
+
+\subsection{Absence or Presence of a Relation as Categories}
+
+Another possibility is to define categories for presence or absence of relations. With this approach, one can also
+include non-categorical relations into the \graphname and have insight about how the presence or absence of such
+relation affects the distribution of root's numerical attribute.
+
+As in this thesis we are under open world assumption and we don't consider negated literals in the hypothesis, we ignore
+the absence and just include the presence of relations in the lattice.
+
+
+%\subsection{Notation Used}
+%
+%As we will see in the next sections, in the \graphname all the relations are joined by a single variable $x$. So we will denote:
+%
+%$r(x,y)$ as $r$
+%
+%$r(x,C_i) or r(C)$ as $r_i$
 
 \section{Preprocessing}
 

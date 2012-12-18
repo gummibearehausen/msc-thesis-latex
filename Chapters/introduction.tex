@@ -43,9 +43,9 @@ data mining, rule mining, datalog rules
 talk a bit about ilp
 
 \section{Motivation}
-Given the huge size of search space and the great interestingness of rules with constants, we need to smartly prune constants or combinations of constants that  , learning datalog rules can be already extremely costly.
+Given the huge size of search space and the great interestingness of rules with constants, we need to smartly prune constants or combinations of constants that , learning datalog rules can be already extremely costly.
 
-Numerical constants are a special case, and they need to be treated differently. Depending on the numerical attribute domain, in case of a continuous real number domain for example, setting a numerical constant as an individual value will very likely have a very low support and also that would result and extremely large number of possible constants. Therefore, we split the attribute's domain into \emph{k} buckets and then check if any of the buckets present any gain in comparison with its correspondent numerical constant-free hypothesis.
+Numerical constants are a special case, and they need to be treated differently. Depending on the numerical attribute domain, in case of a continuous real number domain for example, setting a numerical constant as an individual value will very likely have a very low support and also that would result and extremely large number of possible constants. Therefore, we split the attribute's domain into \emph{k} buckets and then check if any of the buckets present any gain in comparison with its correspondent numerical constant-free rule (which we will call base-rule).
 
 For example if we test the hypothesis and we find support=100 and confidence=0.4:
 
@@ -86,7 +86,42 @@ for k=2 and k=3, the hypothesis has significant gain by specifying numerical con
     \newline support=18, confidence=0.9
 \end{itemize}
 
-adding some relations might not bring any gain or even loss in confidence, but when bucketing per age, present a different distribution, 
+\begin{tikzpicture}[scale=0.8]
+\begin{axis}[
+    ybar,
+    enlargelimits=0.10,
+    legend style={at={(0.5,-0.15)},
+      anchor=north,legend columns=-1},
+    ylabel={Accuracy},
+    symbolic x coords={b1,b2,b3},
+    xtick=data,
+    nodes near coords,
+    nodes near coords align={vertical},
+    ]
+\addplot coordinates {(b1,0.1) (b2,0.5) (b3,0.8)};
+\addplot coordinates {(b1,0.5) (b2,0.7) (b3,0.9)};
+\legend{isMarriedTo(x,y):-hasAge(x,z) , isMarriedTo(x,y):-hasAge(x,z)hasChild(x,a)}
+\end{axis}
+\end{tikzpicture}
+\begin{tikzpicture}[scale=0.8]
+\begin{axis}[
+    ybar,
+    enlargelimits=0.15,
+    legend style={at={(0.5,-0.15)},
+      anchor=north,legend columns=-1},
+    ylabel={Confidence},
+    symbolic x coords={b1,b2,b3},
+    xtick=data,
+    nodes near coords,
+    nodes near coords align={vertical},
+    ]
+\addplot coordinates {(b1,40) (b2,40) (b3,20)};
+\addplot coordinates {(b1, 2) (b2,30) (b3,18)};
+\legend{isMarriedTo(x,y):-hasAge(x,z) , isMarriedTo(x,y):-hasAge(x,z)hasChild(x,a)}
+\end{axis}
+\end{tikzpicture}
+
+Adding some literals might not bring any gain or even loss in confidence, but when bucketing per age, present a different distribution, so we consider them interesting as well. An uninteresting rule would be a rule that 
 
 Nevertheless, adding some relations with no correlation to the rule might not generate any interesting rules if  
 

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.11.20)  11 DEC 2012 13:57
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.11.20)  18 DEC 2012 17:09
 entering extended mode
 **Thesis.tex
 (C:\Users\ande01\Documents\Thesis\dissertation\Thesis.tex
@@ -733,16 +733,141 @@ File: pgfmodulematrix.code.tex 2010/08/24  (rcs-revision 1.4)
 (C:\Users\ande01\MikTex\tex\generic\pgf\frontendlayer\tikz\libraries\tikzlibrar
 ytopaths.code.tex
 File: tikzlibrarytopaths.code.tex 2008/06/17 v2.10 (rcs-revision 1.2)
+))) (C:\Users\ande01\MikTex\tex\latex\pgfplots\pgfplots.sty
+(C:\Users\ande01\MikTex\tex\generic\pgfplots\pgfplots.revision.tex)
+Package: pgfplots 2012/10/26 v1.7 Data Visualization (1.7-2-ge24fff4)
+
+(C:\Users\ande01\MikTex\tex\generic\pgfplots\pgfplots.code.tex
+(C:\Users\ande01\MikTex\tex\generic\pgfplots\pgfplotscore.code.tex
+\t@pgfplots@toka=\toks41
+\t@pgfplots@tokb=\toks42
+\t@pgfplots@tokc=\toks43
+\pgfplots@tmpa=\dimen193
+\c@pgfplots@coordindex=\count161
+\c@pgfplots@scanlineindex=\count162
+
+(C:\Users\ande01\MikTex\tex\generic\pgfplots\sys\pgfplotssysgeneric.code.tex))
+(C:\Users\ande01\MikTex\tex\generic\pgfplots\libs\pgfplotslibrary.code.tex)
+(C:\Users\ande01\MikTex\tex\generic\pgfplots\oldpgfcompatib\pgfplotsoldpgfsupp_
+loader.code.tex
+Package pgfplots: loading complementary code for your PGF version...
+
+(C:\Users\ande01\MikTex\tex\generic\pgfplots\oldpgfcompatib\pgfplotsoldpgfsupp_
+misc.code.tex)
+(C:\Users\ande01\MikTex\tex\generic\pgfplots\oldpgfcompatib\pgfplotsoldpgfsupp_
+pgfkeys.code.tex
+\pgfkeys@pathtoks=\toks44
+\pgfkeys@temptoks=\toks45
+
+(C:\Users\ande01\MikTex\tex\generic\pgfplots\oldpgfcompatib\pgfplotsoldpgfsupp_
+pgfkeysfiltered.code.tex
+\pgfkeys@tmptoks=\toks46
+))
+(C:\Users\ande01\MikTex\tex\generic\pgfplots\oldpgfcompatib\pgfplotsoldpgfsupp_
+pgfmathfloat.code.tex
+\c@pgfmathroundto@lastzeros=\count163
+)
+(C:\Users\ande01\MikTex\tex\generic\pgfplots\oldpgfcompatib\pgfplotsoldpgfsupp_
+pgflibraryplothandlers.code.tex
+File: pgflibraryplothandlers.code.tex 2012/09/11 v2.10 (rcs-revision 1.17)
+\pgf@plot@mark@count=\count164
+\pgfplotmarksize=\dimen194
+)
+(C:\Users\ande01\MikTex\tex\generic\pgfplots\oldpgfcompatib\pgfplotsoldpgfsupp_
+pgflibraryfpu.code.tex)
+(C:\Users\ande01\MikTex\tex\generic\pgfplots\oldpgfcompatib\pgfplotsoldpgfsupp_
+pgfcorescopes.code.tex
+File: pgfcorescopes.code.tex 2011/10/01  (rcs-revision 1.37)
+\pgfpic=\box44
+\pgf@hbox=\box45
+\pgf@layerbox@main=\box46
+\pgf@picture@serial@count=\count165
+)
+(C:\Users\ande01\MikTex\tex\generic\pgfplots\oldpgfcompatib\pgfplotsoldpgfsupp_
+pgfcorelayers.code.tex
+File: pgfcorelayers.code.tex 2011/10/02  (rcs-revision 1.4)
+))
+(C:\Users\ande01\MikTex\tex\generic\pgfplots\util\pgfplotsutil.code.tex
+(C:\Users\ande01\MikTex\tex\generic\pgfplots\liststructure\pgfplotsliststructur
+e.code.tex)
+(C:\Users\ande01\MikTex\tex\generic\pgfplots\liststructure\pgfplotsliststructur
+eext.code.tex)
+(C:\Users\ande01\MikTex\tex\generic\pgfplots\liststructure\pgfplotsarray.code.t
+ex
+\c@pgfplotsarray@tmp=\count166
+)
+(C:\Users\ande01\MikTex\tex\generic\pgfplots\liststructure\pgfplotsmatrix.code.
+tex)
+(C:\Users\ande01\MikTex\tex\generic\pgfplots\numtable\pgfplotstableshared.code.
+tex
+\c@pgfplotstable@counta=\count167
+\t@pgfplotstable@a=\toks47
+)
+(C:\Users\ande01\MikTex\tex\generic\pgfplots\liststructure\pgfplotsdeque.code.t
+ex) (C:\Users\ande01\MikTex\tex\generic\pgfplots\util\pgfplotsbinary.code.tex
+(C:\Users\ande01\MikTex\tex\generic\pgfplots\util\pgfplotsbinary.data.code.tex)
+) (C:\Users\ande01\MikTex\tex\generic\pgfplots\util\pgfplotsutil.verb.code.tex)
+
+(C:\Users\ande01\MikTex\tex\generic\pgfplots\libs\pgflibrarypgfplots.surfshadin
+g.code.tex
+\c@pgfplotslibrarysurf@no=\count168
+
+(C:\Users\ande01\MikTex\tex\generic\pgfplots\sys\pgflibrarypgfplots.surfshading
+.pgfsys-pdftex.def)))
+(C:\Users\ande01\MikTex\tex\generic\pgfplots\util\pgfplotscolormap.code.tex)
+(C:\Users\ande01\MikTex\tex\generic\pgfplots\pgfplotsstackedplots.code.tex)
+(C:\Users\ande01\MikTex\tex\generic\pgfplots\pgfplotsplothandlers.code.tex
+(C:\Users\ande01\MikTex\tex\generic\pgfplots\pgfplotsmeshplothandler.code.tex))
+(C:\Users\ande01\MikTex\tex\generic\pgfplots\pgfplots.scaling.code.tex)
+(C:\Users\ande01\MikTex\tex\generic\pgfplots\pgfplotscoordprocessing.code.tex)
+(C:\Users\ande01\MikTex\tex\generic\pgfplots\pgfplotsticks.code.tex)
+(C:\Users\ande01\MikTex\tex\generic\pgfplots\pgfplots.paths.code.tex)
+(C:\Users\ande01\MikTex\tex\generic\pgf\frontendlayer\tikz\libraries\tikzlibrar
+ydecorations.code.tex
+(C:\Users\ande01\MikTex\tex\generic\pgf\modules\pgfmoduledecorations.code.tex
+\pgfdecoratedcompleteddistance=\dimen195
+\pgfdecoratedremainingdistance=\dimen196
+\pgfdecoratedinputsegmentcompleteddistance=\dimen197
+\pgfdecoratedinputsegmentremainingdistance=\dimen198
+\pgf@decorate@distancetomove=\dimen199
+\pgf@decorate@repeatstate=\count169
+\pgfdecorationsegmentamplitude=\dimen200
+\pgfdecorationsegmentlength=\dimen201
+)
+\tikz@lib@dec@box=\box47
+)
+(C:\Users\ande01\MikTex\tex\generic\pgf\frontendlayer\tikz\libraries\tikzlibrar
+ydecorations.pathmorphing.code.tex
+(C:\Users\ande01\MikTex\tex\generic\pgf\libraries\decorations\pgflibrarydecorat
+ions.pathmorphing.code.tex))
+(C:\Users\ande01\MikTex\tex\generic\pgf\frontendlayer\tikz\libraries\tikzlibrar
+ydecorations.pathreplacing.code.tex
+(C:\Users\ande01\MikTex\tex\generic\pgf\libraries\decorations\pgflibrarydecorat
+ions.pathreplacing.code.tex))
+\pgfplots@numplots=\count170
+\pgfplots@xmin@reg=\dimen202
+\pgfplots@xmax@reg=\dimen203
+\pgfplots@ymin@reg=\dimen204
+\pgfplots@ymax@reg=\dimen205
+\pgfplots@zmin@reg=\dimen206
+\pgfplots@zmax@reg=\dimen207
+)
+(C:\Users\ande01\MikTex\tex\generic\pgf\frontendlayer\tikz\libraries\tikzlibrar
+yplotmarks.code.tex
+File: tikzlibraryplotmarks.code.tex 2008/01/09 v2.10 (rcs-revision 1.1)
+
+(C:\Users\ande01\MikTex\tex\generic\pgf\libraries\pgflibraryplotmarks.code.tex
+File: pgflibraryplotmarks.code.tex 2010/10/15 v2.10 (rcs-revision 1.12)
 )))
 (C:\Users\ande01\MikTex\tex\generic\pgf\frontendlayer\tikz\libraries\tikzlibrar
 ybackgrounds.code.tex
 File: tikzlibrarybackgrounds.code.tex 2010/02/08 v2.10 (rcs-revision 1.2)
-\pgf@layerbox@background=\box44
-\pgf@layerboxsaved@background=\box45
+\pgf@layerbox@background=\box48
+\pgf@layerboxsaved@background=\box49
 )
 (C:\Users\ande01\MikTex\tex\latex\algorithm2e\algorithm2e.sty
 Package: algorithm2e 2008/00/00 v3.10 algorithms environments
-\c@AlgoLine=\count161
+\c@AlgoLine=\count171
 
 (C:\Users\ande01\MikTex\tex\latex\ltxmisc\relsize.sty
 Package: relsize 2003/07/04 ver 3.1
@@ -762,28 +887,28 @@ subscribe by emailing sympa@lirmm.fr with 'subscribe <list> <firstname name>'
 \skiplength=\skip81
 \algomargin=\skip82
 \skipalgocfslide=\skip83
-\algowidth=\dimen193
-\inoutsize=\dimen194
-\inoutline=\dimen195
-\interspacetitleruled=\dimen196
-\interspacealgoruled=\dimen197
-\interspacetitleboxruled=\dimen198
-\algocf@inoutbox=\box46
-\algocf@inputbox=\box47
+\algowidth=\dimen208
+\inoutsize=\dimen209
+\inoutline=\dimen210
+\interspacetitleruled=\dimen211
+\interspacealgoruled=\dimen212
+\interspacetitleboxruled=\dimen213
+\algocf@inoutbox=\box50
+\algocf@inputbox=\box51
 \AlCapSkip=\skip84
 \AlCapHSkip=\skip85
-\algocf@nlbox=\box48
-\algocf@hangingbox=\box49
-\algocf@capbox=\box50
+\algocf@nlbox=\box52
+\algocf@hangingbox=\box53
+\algocf@capbox=\box54
 \algoheightruledefault=\skip86
 \algoheightrule=\skip87
 \algotitleheightruledefault=\skip88
 \algotitleheightrule=\skip89
-\c@algocfline=\count162
-\c@algocfproc=\count163
-\c@algocf=\count164
-\algocf@algoframe=\box51
-\algocf@algobox=\box52
+\c@algocfline=\count172
+\c@algocfproc=\count173
+\c@algocf=\count174
+\algocf@algoframe=\box55
+\algocf@algobox=\box56
 ) (C:\Users\ande01\MikTex\tex\latex\algorithmicx\algpseudocode.sty
 Package: algpseudocode 
 
@@ -791,15 +916,15 @@ Package: algpseudocode
 Package: algorithmicx 2005/04/27 v1.2 Algorithmicx
 
 Document Style algorithmicx 1.2 - a greatly improved `algorithmic' style
-\c@ALG@line=\count165
-\c@ALG@rem=\count166
-\c@ALG@nested=\count167
+\c@ALG@line=\count175
+\c@ALG@rem=\count176
+\c@ALG@nested=\count177
 \ALG@tlm=\skip90
 \ALG@thistlm=\skip91
-\c@ALG@Lnr=\count168
-\c@ALG@blocknr=\count169
-\c@ALG@storecount=\count170
-\c@ALG@tmpcounter=\count171
+\c@ALG@Lnr=\count178
+\c@ALG@blocknr=\count179
+\c@ALG@storecount=\count180
+\c@ALG@tmpcounter=\count181
 \ALG@tmplength=\skip92
 )
 Document Style - pseudocode environments for use with the `algorithmicx' style
@@ -904,7 +1029,7 @@ Package textcomp Info: Setting ptmj sub-encoding to TS1/4 on input line 340.
 (C:\Users\ande01\Documents\Thesis\dissertation\nfssext-cfr.sty
 Package: nfssext-cfr 2008/11/08 specially mangled by cfr; based on 2003/03/14 v
 1.2 Experimental NFSS Extensions
-\c@taken=\count172
+\c@taken=\count182
 LaTeX Info: Redefining \itshape on input line 503.
 LaTeX Info: Redefining \scshape on input line 511.
 LaTeX Info: Redefining \upshape on input line 525.
@@ -946,13 +1071,13 @@ LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
 )
 (C:\Users\ande01\MikTex\tex\latex\microtype\microtype.sty
 Package: microtype 2010/01/10 v2.4 Micro-typography with pdfTeX (RS)
-\MT@toks=\toks41
-\MT@count=\count173
+\MT@toks=\toks48
+\MT@count=\count183
 LaTeX Info: Redefining \lsstyle on input line 1597.
 LaTeX Info: Redefining \lslig on input line 1597.
 \MT@outer@space=\skip93
 LaTeX Info: Redefining \textls on input line 1605.
-\MT@outer@kern=\dimen199
+\MT@outer@kern=\dimen214
 LaTeX Info: Redefining \textmicrotypecontext on input line 2156.
 Package microtype Info: Loading configuration file microtype.cfg.
 
@@ -961,19 +1086,19 @@ File: microtype.cfg 2010/01/10 v2.4 microtype main configuration file (RS)
 ))
 (C:\Users\ande01\Documents\Thesis\dissertation\ps4pdf.sty
 Package: ps4pdf 2005/02/11 v0.6i PS code for pdfTeX (RN/HO)
-\c@PSforPDF=\count174
+\c@PSforPDF=\count184
 )
 (C:\Users\ande01\MikTex\tex\latex\titlesec\titlesec.sty
 Package: titlesec 2011/12/15 v2.10.0 Sectioning titles
-\ttl@box=\box53
+\ttl@box=\box57
 \beforetitleunit=\skip94
 \aftertitleunit=\skip95
-\ttl@plus=\dimen200
-\ttl@minus=\dimen201
-\ttl@toksa=\toks42
-\titlewidth=\dimen202
-\titlewidthlast=\dimen203
-\titlewidthfirst=\dimen204
+\ttl@plus=\dimen215
+\ttl@minus=\dimen216
+\ttl@toksa=\toks49
+\titlewidth=\dimen217
+\titlewidthlast=\dimen218
+\titlewidthfirst=\dimen219
 )
 (C:\Users\ande01\MikTex\tex\latex\sectsty\sectsty.sty
 Package: sectsty 2002/02/25 v2.0.2 Commands to change all sectional heading sty
@@ -981,8 +1106,8 @@ les
 )
 (C:\Users\ande01\MikTex\tex\latex\base\inputenc.sty
 Package: inputenc 2008/03/30 v1.1d Input encoding file
-\inpenc@prehook=\toks43
-\inpenc@posthook=\toks44
+\inpenc@prehook=\toks50
+\inpenc@posthook=\toks51
 
 (C:\Users\ande01\MikTex\tex\latex\ucs\utf8x.def
 File: utf8x.def 2004/10/17 UCS: Input encoding UTF-8
@@ -993,10 +1118,10 @@ Package: ucs 2004/10/17 UCS: Unicode input support
 (C:\Users\ande01\MikTex\tex\latex\ucs\uni-global.def
 File: uni-global.def 2012/08/28 UCS: Unicode global data
 )
-\uc@secondtry=\count175
-\uc@combtoks=\toks45
-\uc@combtoksb=\toks46
-\uc@temptokena=\toks47
+\uc@secondtry=\count185
+\uc@combtoks=\toks52
+\uc@combtoksb=\toks53
+\uc@temptokena=\toks54
 )
 (C:\Users\ande01\MikTex\tex\generic\babel\babel.sty
 Package: babel 2008/07/08 v3.8m The Babel package
@@ -1012,50 +1137,44 @@ Language: english 2005/03/30 v3.3o English support from the babel system
 
 (C:\Users\ande01\MikTex\tex\generic\babel\babel.def
 File: babel.def 2008/07/08 v3.8m Babel common definitions
-\babel@savecnt=\count176
-\U@D=\dimen205
+\babel@savecnt=\count186
+\U@D=\dimen220
 )
 \l@canadian = a dialect from \language\l@american 
 \l@australian = a dialect from \language\l@british 
 \l@newzealand = a dialect from \language\l@british 
 ))
-\c@thm=\count177
-Package hyperref Info: Option `colorlinks' set `true' on input line 53.
+\c@thm=\count187
+Package hyperref Info: Option `colorlinks' set `true' on input line 54.
 
 (C:\Users\ande01\Documents\Thesis\dissertation\Thesis.aux
 
 LaTeX Warning: Label `ch:intro' multiply defined.
 
-
-LaTeX Warning: Label `ch:intro' multiply defined.
-
-
-LaTeX Warning: Label `ch:intro' multiply defined.
-
 )
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 60.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 60.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 61.
+LaTeX Font Info:    ... okay on input line 61.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 61.
+LaTeX Font Info:    ... okay on input line 61.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 61.
+LaTeX Font Info:    ... okay on input line 61.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 61.
+LaTeX Font Info:    ... okay on input line 61.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 61.
+LaTeX Font Info:    ... okay on input line 61.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 61.
+LaTeX Font Info:    ... okay on input line 61.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 61.
+LaTeX Font Info:    ... okay on input line 61.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 61.
+LaTeX Font Info:    ... okay on input line 61.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 61.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 61.
  (C:\Users\ande01\MikTex\tex\latex\base\ts1cmr.fd
 File: ts1cmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Try loading font information for T1+lmr on input line 60.
+LaTeX Font Info:    ... okay on input line 61.
+LaTeX Font Info:    Try loading font information for T1+lmr on input line 61.
 
 (C:\Users\ande01\MikTex\tex\latex\lm\t1lmr.fd
 File: t1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
@@ -1074,39 +1193,43 @@ Package caption Info: End \AtBeginDocument code.
 
 (C:\Users\ande01\MikTex\tex\context\base\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count178
-\scratchdimen=\dimen206
-\scratchbox=\box54
-\nofMPsegments=\count179
-\nofMParguments=\count180
-\everyMPshowfont=\toks48
-\MPscratchCnt=\count181
-\MPscratchDim=\dimen207
-\MPnumerator=\count182
-\makeMPintoPDFobject=\count183
-\everyMPtoPDFconversion=\toks49
+\scratchcounter=\count188
+\scratchdimen=\dimen221
+\scratchbox=\box58
+\nofMPsegments=\count189
+\nofMParguments=\count190
+\everyMPshowfont=\toks55
+\MPscratchCnt=\count191
+\MPscratchDim=\dimen222
+\MPnumerator=\count192
+\makeMPintoPDFobject=\count193
+\everyMPtoPDFconversion=\toks56
 )
-\c@lstlisting=\count184
-\AtBeginShipoutBox=\box55
-Package hyperref Info: Link coloring ON on input line 60.
+\c@lstlisting=\count194
+\AtBeginShipoutBox=\box59
+Package hyperref Info: Link coloring ON on input line 61.
  (C:\Users\ande01\MikTex\tex\latex\hyperref\nameref.sty
 Package: nameref 2010/04/30 v2.40 Cross-referencing by name of section
 
 (C:\Users\ande01\MikTex\tex\generic\oberdiek\gettitlestring.sty
 Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
-\c@section@level=\count185
+\c@section@level=\count195
 )
-LaTeX Info: Redefining \ref on input line 60.
-LaTeX Info: Redefining \pageref on input line 60.
-LaTeX Info: Redefining \nameref on input line 60.
+LaTeX Info: Redefining \ref on input line 61.
+LaTeX Info: Redefining \pageref on input line 61.
+LaTeX Info: Redefining \nameref on input line 61.
 
 (C:\Users\ande01\Documents\Thesis\dissertation\Thesis.out)
 (C:\Users\ande01\Documents\Thesis\dissertation\Thesis.out)
 \@outlinefile=\write4
 
 ABD: EveryShipout initializing macros
-LaTeX Info: Redefining \microtypecontext on input line 60.
+! Package pgfplots Warning: running in backwards compatibility mode (unsuitable
+ tick labels; missing features). Consider writing \pgfplotsset{compat=1.7} into
+ your preamble.
+
+LaTeX Info: Redefining \microtypecontext on input line 61.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
@@ -1116,7 +1239,6 @@ Package microtype Info: Using default expansion set `basictext'.
 Package microtype Info: No tracking.
 Package microtype Info: No adjustment of interword spacing.
 Package microtype Info: No adjustment of character kerning.
-
 (C:\Users\ande01\MikTex\tex\latex\microtype\mt-cmr.cfg
 File: mt-cmr.cfg 2009/11/09 v2.0 microtype config. file: Computer Modern Roman 
 (RS)
@@ -1130,40 +1252,40 @@ File: ucsencs.def 2011/01/21 Fixes to fontencodings LGR, T3
 ------------------------------------------------------------------------------
  Title Page
 ------------------------------------------------------------------------------
-<minerva.pdf, id=114, 146.5475pt x 146.5475pt>
+<minerva.pdf, id=142, 146.5475pt x 146.5475pt>
 File: minerva.pdf Graphic file (type pdf)
  <use minerva.pdf>
-Package pdftex.def Info: minerva.pdf used on input line 75.
+Package pdftex.def Info: minerva.pdf used on input line 76.
 (pdftex.def)             Requested size: 71.13188pt x 71.13133pt.
-LaTeX Font Info:    Try loading font information for OT1+lmr on input line 75.
+LaTeX Font Info:    Try loading font information for OT1+lmr on input line 76.
 
 (C:\Users\ande01\MikTex\tex\latex\lm\ot1lmr.fd
 File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OML+lmm on input line 75.
+LaTeX Font Info:    Try loading font information for OML+lmm on input line 76.
 
 (C:\Users\ande01\MikTex\tex\latex\lm\omllmm.fd
 File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OMS+lmsy on input line 75.
+LaTeX Font Info:    Try loading font information for OMS+lmsy on input line 76.
 
 
 (C:\Users\ande01\MikTex\tex\latex\lm\omslmsy.fd
 File: omslmsy.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OMX+lmex on input line 75.
+LaTeX Font Info:    Try loading font information for OMX+lmex on input line 76.
 
 
 (C:\Users\ande01\MikTex\tex\latex\lm\omxlmex.fd
 File: omxlmex.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10.95> on input line 75.
+(Font)              <10.95> on input line 76.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 75.
+(Font)              <8> on input line 76.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 75.
-LaTeX Font Info:    Try loading font information for U+msa on input line 75.
+(Font)              <6> on input line 76.
+LaTeX Font Info:    Try loading font information for U+msa on input line 76.
 
 (C:\Users\ande01\MikTex\tex\latex\amsfonts\umsa.fd
 File: umsa.fd 2009/06/22 v3.00 AMS symbols A
@@ -1171,7 +1293,7 @@ File: umsa.fd 2009/06/22 v3.00 AMS symbols A
 (C:\Users\ande01\MikTex\tex\latex\microtype\mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 75.
+LaTeX Font Info:    Try loading font information for U+msb on input line 76.
 
 (C:\Users\ande01\MikTex\tex\latex\amsfonts\umsb.fd
 File: umsb.fd 2009/06/22 v3.00 AMS symbols B
@@ -1179,14 +1301,14 @@ File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 (C:\Users\ande01\MikTex\tex\latex\microtype\mt-msb.cfg
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
-Overfull \hbox (12.49623pt too wide) in paragraph at lines 75--75
+Overfull \hbox (12.49623pt too wide) in paragraph at lines 76--76
  [][] 
  []
 
-<eule-rz.pdf, id=115, 85.31876pt x 85.31876pt>
+<eule-rz.pdf, id=143, 85.31876pt x 85.31876pt>
 File: eule-rz.pdf Graphic file (type pdf)
  <use eule-rz.pdf>
-Package pdftex.def Info: eule-rz.pdf used on input line 75.
+Package pdftex.def Info: eule-rz.pdf used on input line 76.
 (pdftex.def)             Requested size: 71.13188pt x 71.13608pt.
  [1
 
@@ -1263,133 +1385,523 @@ File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 
 ] [2] [3])
 (C:\Users\ande01\Documents\Thesis\dissertation\Chapters\relatedwork.tex
-[4]
+[4] [5] [6
+
+]
 Chapter 2.
 ------------------------------------------------------------------------------
  2 Related Work
 ------------------------------------------------------------------------------
-
-Package natbib Warning: Citation `Brin99miningoptimized' on page 5 undefined on
- input line 8.
-
-
-Package natbib Warning: Citation `DBLP:conf/sac/CaldersGPR09' on page 5 undefin
-ed on input line 12.
-
-)
-(C:\Users\ande01\Documents\Thesis\dissertation\Chapters\correlation-lattice.tex
-[5
-
-] [6
+) (C:\Users\ande01\Documents\Thesis\dissertation\Chapters\main.tex [7] [8
 
 ]
 Chapter 3.
 ------------------------------------------------------------------------------
- 3 Correlation Lattice
+ 3 Learning Rules With Numerical and Categorical Attributes
 ------------------------------------------------------------------------------
+[9] [10]
+LaTeX Font Info:    Try loading font information for T1+lmtt on input line 131.
 
-Underfull \hbox (badness 10000) in paragraph at lines 12--16
+ (C:\Users\ande01\MikTex\tex\latex\lm\t1lmtt.fd
+File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
+)
 
- []
+LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 17--21
-
- []
-
-[7]
-Underfull \hbox (badness 10000) in paragraph at lines 22--23
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 24--28
-
- []
-
-[8]
-
-Package natbib Warning: Citation `LavracDz94' on page 9 undefined on input line
- 72.
-
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 103.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 103.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 103.
+[11]
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
-LaTeX Warning: Reference `fig:joinIndepExample' on page 9 undefined on input li
-ne 111.
+(C:\Users\ande01\Documents\Thesis\dissertation\Chapters\correlation-lattice.tex
+[12]
+Underfull \hbox (badness 10000) in paragraph at lines 17--21
 
-[9] [10]
+ []
 
-Package natbib Warning: Citation `Jaroszewicz02pruningredundant' on page 11 und
-efined on input line 147.
+[13]
+Underfull \hbox (badness 10000) in paragraph at lines 22--26
 
-
-Package natbib Warning: Citation `Kullback51klDivergence' on page 11 undefined 
-on input line 170.
-
-[11]
-
-Package natbib Warning: Citation `17795' on page 12 undefined on input line 178
-.
+ []
 
 
-Package natbib Warning: Citation `17795' on page 12 undefined on input line 186
-.
+Underfull \hbox (badness 10000) in paragraph at lines 27--28
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 29--33
+
+ []
+
+(C:\Users\ande01\Documents\Thesis\dissertation\Chapters\graph1.tex
+
+! Package pgfkeys Error: I do not know the key '/tikz/minimum' and I am going t
+o ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.3   \node (
+             n0) at (4,10) {$r$};
+This error message was generated by an \errmessage
+command, so I can't give any explicit help.
+Pretend that you're Hercule Poirot: Examine all clues,
+and deduce the truth by order and method.
+
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <5> on input line 3.
+
+! Package pgfkeys Error: I do not know the key '/tikz/minimum' and I am going t
+o ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.4   \node (
+             na) at (0,8)  {$r a$};
+(That was another \errmessage.)
+
+
+! Package pgfkeys Error: I do not know the key '/tikz/minimum' and I am going t
+o ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.5   \node (
+             na1)%[fill=blue!20]
+(That was another \errmessage.)
+
+
+! Package pgfkeys Error: I do not know the key '/tikz/minimum' and I am going t
+o ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.7   \node (
+             na2)%[fill=blue!20]
+(That was another \errmessage.)
+
+
+! Package pgfkeys Error: I do not know the key '/tikz/minimum' and I am going t
+o ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.9   \node (
+             nb) at (3,8)  {$r b$};
+(That was another \errmessage.)
+
+
+! Package pgfkeys Error: I do not know the key '/tikz/minimum' and I am going t
+o ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.10   \node (
+              nb1)%[fill=red!20]
+(That was another \errmessage.)
+
+
+! Package pgfkeys Error: I do not know the key '/tikz/minimum' and I am going t
+o ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.12   \node (
+              nb2)%[fill=red!20]
+(That was another \errmessage.)
+
+
+! Package pgfkeys Error: I do not know the key '/tikz/minimum' and I am going t
+o ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.14   \node (
+              nc) at (6,8)  {$r c$};
+(That was another \errmessage.)
+
+
+! Package pgfkeys Error: I do not know the key '/tikz/minimum' and I am going t
+o ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.15   \node (
+              nc1)%[fill=green!20]
+(That was another \errmessage.)
+
+
+! Package pgfkeys Error: I do not know the key '/tikz/minimum' and I am going t
+o ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.17   \node (
+              nc2)%[fill=green!20]
+(That was another \errmessage.)
+
+
+! Package pgfkeys Error: I do not know the key '/tikz/minimum' and I am going t
+o ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.19   \node (
+              nab) at (0,5)  {$r a b$};
+(That was another \errmessage.)
+
+
+! Package pgfkeys Error: I do not know the key '/tikz/minimum' and I am going t
+o ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.20   \node (
+              na1b1)%[fill=magenta!20]
+(That was another \errmessage.)
+
+
+! Package pgfkeys Error: I do not know the key '/tikz/minimum' and I am going t
+o ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.22   \node (
+              na1b2)%[fill=magenta!20]
+(That was another \errmessage.)
+
+
+! Package pgfkeys Error: I do not know the key '/tikz/minimum' and I am going t
+o ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.24   \node (
+              na2b1)%[fill=magenta!20]
+(That was another \errmessage.)
+
+
+! Package pgfkeys Error: I do not know the key '/tikz/minimum' and I am going t
+o ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.26   \node (
+              na2b2)%[fill=magenta!20]
+(That was another \errmessage.)
+
+
+! Package pgfkeys Error: I do not know the key '/tikz/minimum' and I am going t
+o ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.28   \node (
+              nac) at (3,5)  {$r a c$};
+(That was another \errmessage.)
+
+
+! Package pgfkeys Error: I do not know the key '/tikz/minimum' and I am going t
+o ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.29   \node (
+              na1c1)%[fill=cyan!20]
+(That was another \errmessage.)
+
+
+! Package pgfkeys Error: I do not know the key '/tikz/minimum' and I am going t
+o ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.31   \node (
+              na1c2)%[fill=cyan!20]
+(That was another \errmessage.)
+
+
+! Package pgfkeys Error: I do not know the key '/tikz/minimum' and I am going t
+o ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.33   \node (
+              na2c1)%[fill=cyan!20]
+(That was another \errmessage.)
+
+
+! Package pgfkeys Error: I do not know the key '/tikz/minimum' and I am going t
+o ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.35   \node (
+              na2c2)%[fill=cyan!20]
+(That was another \errmessage.)
+
+
+! Package pgfkeys Error: I do not know the key '/tikz/minimum' and I am going t
+o ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.37   \node (
+              nbc) at (6,5)  {$r b c$};
+(That was another \errmessage.)
+
+
+! Package pgfkeys Error: I do not know the key '/tikz/minimum' and I am going t
+o ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.38   \node (
+              nb1c1)%[fill=yellow!50]
+(That was another \errmessage.)
+
+
+! Package pgfkeys Error: I do not know the key '/tikz/minimum' and I am going t
+o ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.40   \node (
+              nb1c2)%[fill=yellow!50]
+(That was another \errmessage.)
+
+
+! Package pgfkeys Error: I do not know the key '/tikz/minimum' and I am going t
+o ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.42   \node (
+              nb2c1)%[fill=yellow!50]
+(That was another \errmessage.)
+
+
+! Package pgfkeys Error: I do not know the key '/tikz/minimum' and I am going t
+o ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.44   \node (
+              nb2c2)%[fill=yellow!50]
+(That was another \errmessage.)
+
+
+! Package pgfkeys Error: I do not know the key '/tikz/minimum' and I am going t
+o ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.46   \node (
+              nabc) at (2,2)  {$r a b c$};
+(That was another \errmessage.)
+
+
+! Package pgfkeys Error: I do not know the key '/tikz/minimum' and I am going t
+o ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.47   \node (
+              na1b1c1)%[fill=black!10]
+(That was another \errmessage.)
+
+
+! Package pgfkeys Error: I do not know the key '/tikz/minimum' and I am going t
+o ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.49   \node (
+              na1b1c2)%[fill=black!10]
+(That was another \errmessage.)
+
+
+! Package pgfkeys Error: I do not know the key '/tikz/minimum' and I am going t
+o ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.51   \node (
+              na1b2c1)%[fill=black!10]
+(That was another \errmessage.)
+
+
+! Package pgfkeys Error: I do not know the key '/tikz/minimum' and I am going t
+o ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.53   \node (
+              na1b2c2)%[fill=black!10]
+(That was another \errmessage.)
+
+
+! Package pgfkeys Error: I do not know the key '/tikz/minimum' and I am going t
+o ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.55   \node (
+              na2b1c1)%[fill=black!10]
+(That was another \errmessage.)
+
+
+! Package pgfkeys Error: I do not know the key '/tikz/minimum' and I am going t
+o ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.57   \node (
+              na2b1c2)%[fill=black!10]
+(That was another \errmessage.)
+
+
+! Package pgfkeys Error: I do not know the key '/tikz/minimum' and I am going t
+o ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.59   \node (
+              na2b2c1)%[fill=black!10]
+(That was another \errmessage.)
+
+
+! Package pgfkeys Error: I do not know the key '/tikz/minimum' and I am going t
+o ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.61   \node (
+              na2b2c2)%[fill=black!10]
+(That was another \errmessage.)
 
 )
+Overfull \hbox (14.1111pt too wide) in paragraph at lines 90--44
+ [][] 
+ []
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[14]
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <10> on input line 91.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <7> on input line 91.
+ [15] [16] [17]))
 (C:\Users\ande01\Documents\Thesis\dissertation\Chapters\algorithmic-framework.t
-ex [12] [13] [14
+ex [18] [19] [20
 
 ]
 Chapter 4.
 ------------------------------------------------------------------------------
  4 Algorithmic Framework
 ------------------------------------------------------------------------------
-
-Package natbib Warning: Citation `Neumann:2010:RES:1731351.1731354' on page 15 
-undefined on input line 6.
-
-[15]
-LaTeX Font Info:    Try loading font information for T1+lmtt on input line 41.
- (C:\Users\ande01\MikTex\tex\latex\lm\t1lmtt.fd
-File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-) [16]
-Overfull \hbox (34.39864pt too wide) in paragraph at lines 113--114
+[21]
+Overfull \hbox (34.39864pt too wide) in paragraph at lines 42--43
 []\T1/lmr/m/n/10.95 (-20) With such query, it's pos-si-ble to ex-tract a his-to
 gram for the node \T1/lmr/m/it/10.95 (-20) has-In-come(x,y)hasEducation(x,z)
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 125--136
+Underfull \hbox (badness 10000) in paragraph at lines 54--65
 
  []
 
-[17]) (C:\Users\ande01\Documents\Thesis\dissertation\Chapters\graph1.tex)
-Overfull \hbox (17.14337pt too wide) in paragraph at lines 64--162
-[]
- []
+[22]) (C:\Users\ande01\Documents\Thesis\dissertation\Chapters\experiments.tex
+[23] [24
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 64--162
-
- []
-
+]
+Chapter 5.
+------------------------------------------------------------------------------
+ 5 Experiments
+------------------------------------------------------------------------------
+Package microtype Info: Character `029' is missing
+(microtype)             in font `T1/lmr/m/sc/10.95'.
+(microtype)             Ignoring protrusion settings for this character.
+)
 ------------------------------------------------------------------------------
  List of Figures
 ------------------------------------------------------------------------------
-[18] [19] [20] (C:\Users\ande01\Documents\Thesis\dissertation\Thesis.lof)
+[25] [26
+
+] (C:\Users\ande01\Documents\Thesis\dissertation\Thesis.lof)
 \tf@lof=\write6
-
-[21
-
-] [22
+ [27]
+[28
 
 ]
 ------------------------------------------------------------------------------
@@ -1397,33 +1909,26 @@ Underfull \hbox (badness 10000) in paragraph at lines 64--162
 ------------------------------------------------------------------------------
 (C:\Users\ande01\Documents\Thesis\dissertation\Thesis.lot)
 \tf@lot=\write7
- [23
+ [29
 
-] [24
+] [30
 
 ]
 ------------------------------------------------------------------------------
  Bibliography
 ------------------------------------------------------------------------------
-(C:\Users\ande01\Documents\Thesis\dissertation\Thesis.bbl
-
-Package natbib Warning: Empty `thebibliography' environment on input line 8.
-
-)
-
-Package natbib Warning: There were undefined citations.
-
+(C:\Users\ande01\Documents\Thesis\dissertation\Thesis.bbl)
 
 Package ps4pdf Warning: `Thesis-pics.pdf' is no more valid.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 203.
-[25
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 202.
+[31
 
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 203.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 202.
  (C:\Users\ande01\Documents\Thesis\dissertation\Thesis.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 203.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 202.
 
 
  *File List*
@@ -1522,6 +2027,7 @@ pgfcomp-version-1-18.sty    2007/07/23 v2.10 (rcs-revision 1.1)
  pgfkeys.code.tex
   pgffor.code.tex
     tikz.code.tex
+pgfplots.sty    2012/10/26 v1.7 Data Visualization (1.7-2-ge24fff4)
 algorithm2e.sty    2008/00/00 v3.10 algorithms environments
  relsize.sty    2003/07/04 ver 3.1
 algpseudocode.sty    
@@ -1578,54 +2084,120 @@ Presections/acknowledgement.tex
 ./Chapters/introduction.tex
   ts1lmr.fd    2009/10/30 v1.6 Font defs for Latin Modern
 ./Chapters/relatedwork.tex
-./Chapters/correlation-lattice.tex
-./Chapters/algorithmic-framework.tex
+./Chapters/main.tex
   t1lmtt.fd    2009/10/30 v1.6 Font defs for Latin Modern
+./Chapters/correlation-lattice.tex
 ./Chapters/graph1.tex
+./Chapters/algorithmic-framework.tex
+./Chapters/experiments.tex
   Thesis.bbl
  ***********
 
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 203.
-Package rerunfilecheck Info: File `Thesis.out' has not changed.
-(rerunfilecheck)             Checksum: D79B33E6865FCAA7CC484D7C051500A7;4335.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 202.
 
-LaTeX Warning: There were undefined references.
+Package rerunfilecheck Warning: File `Thesis.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
 
+Package rerunfilecheck Info: Checksums for `Thesis.out':
+(rerunfilecheck)             Before: 41F44247E9226FDE0A14797EA67D5ED5;6065
+(rerunfilecheck)             After:  AF2CF49EEF0047065141CB3E058A92EA;6065.
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 203.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 202.
  ) 
 Here is how much of TeX's memory you used:
- 24458 strings out of 494045
- 401848 string characters out of 3150398
- 540524 words of memory out of 3000000
- 26996 multiletter control sequences out of 15000+200000
- 112520 words of font info for 139 fonts, out of 3000000 for 9000
+ 32014 strings out of 494045
+ 635131 string characters out of 3150398
+ 826204 words of memory out of 3000000
+ 34359 multiletter control sequences out of 15000+200000
+ 115611 words of font info for 142 fonts, out of 3000000 for 9000
  715 hyphenation exceptions out of 8191
- 56i,16n,68p,1411b,701s stack positions out of 5000i,500n,10000p,200000b,50000s
-{C:/Users/ande01/MikTex/fonts/enc/dvips/lm/lm-ec.enc}{C:/Users/ande01/MikTex/
-fonts/enc/dvips/lm/lm-rm.enc}{C:/Users/ande01/MikTex/fonts/enc/dvips/lm/lm-math
-it.enc}{C:/Users/ande01/MikTex/fonts/enc/dvips/lm/lm-mathsy.enc}{C:/Users/ande0
-1/MikTex/fonts/enc/dvips/lm/lm-mathex.enc}{C:/Users/ande01/MikTex/fonts/enc/dvi
-ps/lm/lm-ts1.enc}<C:/Users/ande01/MikTex/fonts/type1/public/lm/lmbx10.pfb><C:/U
-sers/ande01/MikTex/fonts/type1/public/lm/lmbx12.pfb><C:/Users/ande01/MikTex/fon
-ts/type1/public/lm/lmbxi10.pfb><C:/Users/ande01/MikTex/fonts/type1/public/lm/lm
-ex10.pfb><C:/Users/ande01/MikTex/fonts/type1/public/lm/lmmi10.pfb><C:/Users/and
-e01/MikTex/fonts/type1/public/lm/lmmi6.pfb><C:/Users/ande01/MikTex/fonts/type1/
-public/lm/lmmi8.pfb><C:/Users/ande01/MikTex/fonts/type1/public/lm/lmr10.pfb><C:
-/Users/ande01/MikTex/fonts/type1/public/lm/lmr12.pfb><C:/Users/ande01/MikTex/fo
-nts/type1/public/lm/lmr17.pfb><C:/Users/ande01/MikTex/fonts/type1/public/lm/lmr
-5.pfb><C:/Users/ande01/MikTex/fonts/type1/public/lm/lmr6.pfb><C:/Users/ande01/M
-ikTex/fonts/type1/public/lm/lmr8.pfb><C:/Users/ande01/MikTex/fonts/type1/public
-/lm/lmri10.pfb><C:/Users/ande01/MikTex/fonts/type1/public/lm/lmri12.pfb><C:/Use
-rs/ande01/MikTex/fonts/type1/public/lm/lmssbx10.pfb><C:/Users/ande01/MikTex/fon
-ts/type1/public/lm/lmsy10.pfb><C:/Users/ande01/MikTex/fonts/type1/public/lm/lms
-y8.pfb><C:/Users/ande01/MikTex/fonts/type1/public/lm/lmtt10.pfb><C:/Users/ande0
-1/MikTex/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on Thesis.pdf (35 pages, 449329 bytes).
+ 56i,18n,93p,799b,1999s stack positions out of 5000i,500n,10000p,200000b,50000s
+pdfTeX warning (dest): name{figure.caption.23} has been referenced but does n
+ot exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{figure.caption.40} has been referenced but does not
+ exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{figure.caption.36} has been referenced but does not
+ exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{algocf.33} has been referenced but does not exist, 
+replaced by a fixed one
+
+pdfTeX warning (dest): name{algocf.29} has been referenced but does not exist, 
+replaced by a fixed one
+
+pdfTeX warning (dest): name{dummy.63} has been referenced but does not exist, r
+eplaced by a fixed one
+
+pdfTeX warning (dest): name{dummy.61} has been referenced but does not exist, r
+eplaced by a fixed one
+
+pdfTeX warning (dest): name{dummy.59} has been referenced but does not exist, r
+eplaced by a fixed one
+
+pdfTeX warning (dest): name{chapter.58} has been referenced but does not exist,
+ replaced by a fixed one
+
+pdfTeX warning (dest): name{section.57} has been referenced but does not exist,
+ replaced by a fixed one
+
+pdfTeX warning (dest): name{subsection.52} has been referenced but does not exi
+st, replaced by a fixed one
+
+pdfTeX warning (dest): name{section.51} has been referenced but does not exist,
+ replaced by a fixed one
+
+pdfTeX warning (dest): name{chapter.49} has been referenced but does not exist,
+ replaced by a fixed one
+
+pdfTeX warning (dest): name{section.48} has been referenced but does not exist,
+ replaced by a fixed one
+
+pdfTeX warning (dest): name{subsection.44} has been referenced but does not exi
+st, replaced by a fixed one
+
+pdfTeX warning (dest): name{subsection.37} has been referenced but does not exi
+st, replaced by a fixed one
+
+pdfTeX warning (dest): name{section.35} has been referenced but does not exist,
+ replaced by a fixed one
+
+pdfTeX warning (dest): name{subsection.34} has been referenced but does not exi
+st, replaced by a fixed one
+
+pdfTeX warning (dest): name{subsection.25} has been referenced but does not exi
+st, replaced by a fixed one
+
+pdfTeX warning (dest): name{section.24} has been referenced but does not exist,
+ replaced by a fixed one
+
+{C:/Users/ande01/MikTex/fonts/enc/dvips/lm/lm-ec.enc}{C:/Users/ande01/MikTex/fo
+nts/enc/dvips/lm/lm-rm.enc}{C:/Users/ande01/MikTex/fonts/enc/dvips/lm/lm-mathit
+.enc}{C:/Users/ande01/MikTex/fonts/enc/dvips/lm/lm-mathsy.enc}{C:/Users/ande01/
+MikTex/fonts/enc/dvips/lm/lm-mathex.enc}{C:/Users/ande01/MikTex/fonts/enc/dvips
+/lm/lm-ts1.enc}<C:/Users/ande01/MikTex/fonts/type1/public/lm/lmbx10.pfb><C:/Use
+rs/ande01/MikTex/fonts/type1/public/lm/lmbx12.pfb><C:/Users/ande01/MikTex/fonts
+/type1/public/lm/lmbxi10.pfb><C:/Users/ande01/MikTex/fonts/type1/public/lm/lmcs
+c10.pfb><C:/Users/ande01/MikTex/fonts/type1/public/lm/lmex10.pfb><C:/Users/ande
+01/MikTex/fonts/type1/public/lm/lmmi10.pfb><C:/Users/ande01/MikTex/fonts/type1/
+public/lm/lmmi6.pfb><C:/Users/ande01/MikTex/fonts/type1/public/lm/lmmi8.pfb><C:
+/Users/ande01/MikTex/fonts/type1/public/lm/lmr10.pfb><C:/Users/ande01/MikTex/fo
+nts/type1/public/lm/lmr12.pfb><C:/Users/ande01/MikTex/fonts/type1/public/lm/lmr
+17.pfb><C:/Users/ande01/MikTex/fonts/type1/public/lm/lmr5.pfb><C:/Users/ande01/
+MikTex/fonts/type1/public/lm/lmr6.pfb><C:/Users/ande01/MikTex/fonts/type1/publi
+c/lm/lmr8.pfb><C:/Users/ande01/MikTex/fonts/type1/public/lm/lmri10.pfb><C:/User
+s/ande01/MikTex/fonts/type1/public/lm/lmri12.pfb><C:/Users/ande01/MikTex/fonts/
+type1/public/lm/lmssbx10.pfb><C:/Users/ande01/MikTex/fonts/type1/public/lm/lmsy
+10.pfb><C:/Users/ande01/MikTex/fonts/type1/public/lm/lmsy8.pfb><C:/Users/ande01
+/MikTex/fonts/type1/public/lm/lmtt10.pfb><C:/Users/ande01/MikTex/fonts/type1/pu
+blic/amsfonts/symbols/msbm10.pfb>
+Output written on Thesis.pdf (41 pages, 508102 bytes).
 PDF statistics:
- 436 PDF objects out of 1000 (max. 8388607)
- 89 named destinations out of 1000 (max. 500000)
- 29423 words of extra memory for PDF output out of 29859 (max. 10000000)
+ 558 PDF objects out of 1000 (max. 8388607)
+ 132 named destinations out of 1000 (max. 500000)
+ 31527 words of extra memory for PDF output out of 35830 (max. 10000000)
 

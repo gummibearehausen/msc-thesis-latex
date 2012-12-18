@@ -1,39 +1,65 @@
 \begin{tikzpicture}
- [scale=1.8,auto=left,every node/.style={circle,fill=black!20,font=\tiny}]
+ [scale=1.8,auto=center,every node/.style={minimum, font=\tiny}]
   \node (n0) at (4,10) {$r$};
   \node (na) at (0,8)  {$r a$};
-  \node (na1)[fill=blue!20] at (1,7.5)  {$r a_1$};
-  \node (na2)[fill=blue!20] at (2,7.5) {$r a_2$};
+  \node (na1)%[fill=blue!20] 
+  at (1,7.5)  {$r a_1$};
+  \node (na2)%[fill=blue!20] 
+  at (2,7.5) {$r a_2$};
   \node (nb) at (3,8)  {$r b$};
-  \node (nb1)[fill=red!20] at (4,7.5)  {$r b_1$};
-  \node (nb2)[fill=red!20] at (5,7.5)  {$r b_1$};
+  \node (nb1)%[fill=red!20] 
+  at (4,7.5)  {$r b_1$};
+  \node (nb2)%[fill=red!20] 
+  at (5,7.5)  {$r b_1$};
   \node (nc) at (6,8)  {$r c$};
-  \node (nc1)[fill=green!20] at (7,7.5)  {$r c_1$};
-  \node (nc2)[fill=green!20] at (8,7.5)  {$r c_1$};
+  \node (nc1)%[fill=green!20] 
+  at (7,7.5)  {$r c_1$};
+  \node (nc2)%[fill=green!20] 
+  at (8,7.5)  {$r c_1$};
   \node (nab) at (0,5)  {$r a b$};
-  \node (na1b1)[fill=magenta!20] at (0.5,4.5)  {$r a_1 b_1$};
-  \node (na1b2)[fill=magenta!20] at (1.0,4.5)  {$r a_1 b_2$};
-  \node (na2b1)[fill=magenta!20] at (1.5,4.5)  {$r a_2 b_1$};
-  \node (na2b2)[fill=magenta!20] at (2.0,4.5)  {$r a_2 b_2$};
+  \node (na1b1)%[fill=magenta!20] 
+  at (0.5,4.5)  {$r a_1 b_1$};
+  \node (na1b2)%[fill=magenta!20] 
+  at (1.0,4.5)  {$r a_1 b_2$};
+  \node (na2b1)%[fill=magenta!20] 
+  at (1.5,4.5)  {$r a_2 b_1$};
+  \node (na2b2)%[fill=magenta!20] 
+  at (2.0,4.5)  {$r a_2 b_2$};
   \node (nac) at (3,5)  {$r a c$};
-  \node (na1c1)[fill=cyan!20] at (3.5,4.5)  {$r a_1 c_1$};
-  \node (na1c2)[fill=cyan!20] at (4.0,4.5)  {$r a_1 c_2$};
-  \node (na2c1)[fill=cyan!20] at (4.5,4.5)  {$r a_2 c_1$};
-  \node (na2c2)[fill=cyan!20] at (5.0,4.5)  {$r a_2 c_2$};
+  \node (na1c1)%[fill=cyan!20] 
+  at (3.5,4.5)  {$r a_1 c_1$};
+  \node (na1c2)%[fill=cyan!20] 
+  at (4.0,4.5)  {$r a_1 c_2$};
+  \node (na2c1)%[fill=cyan!20] 
+  at (4.5,4.5)  {$r a_2 c_1$};
+  \node (na2c2)%[fill=cyan!20] 
+  at (5.0,4.5)  {$r a_2 c_2$};
   \node (nbc) at (6,5)  {$r b c$};
-  \node (nb1c1)[fill=yellow!50] at (6.5,4.5)  {$r b_1 c_1$};
-  \node (nb1c2)[fill=yellow!50] at (7.0,4.5)  {$r b_1 c_2$};
-  \node (nb2c1)[fill=yellow!50] at (7.5,4.5)  {$r b_2 c_1$};
-  \node (nb2c2)[fill=yellow!50] at (8.0,4.5)  {$r b_2 c_2$};
+  \node (nb1c1)%[fill=yellow!50] 
+  at (6.5,4.5)  {$r b_1 c_1$};
+  \node (nb1c2)%[fill=yellow!50] 
+  at (7.0,4.5)  {$r b_1 c_2$};
+  \node (nb2c1)%[fill=yellow!50] 
+  at (7.5,4.5)  {$r b_2 c_1$};
+  \node (nb2c2)%[fill=yellow!50] 
+  at (8.0,4.5)  {$r b_2 c_2$};
   \node (nabc) at (2,2)  {$r a b c$};
-  \node (na1b1c1)[fill=black!10] at (2.5,1.5)  {$r a_1 b_1 c_1$};
-  \node (na1b1c2)[fill=black!10] at (3.2,1.5)  {$r a_1 b_1 c_2$};
-  \node (na1b2c1)[fill=black!10] at (3.9,1.5)  {$r a_1 b_2 c_1$};  
-  \node (na1b2c2)[fill=black!10] at (4.6,1.5)  {$r a_1 b_2 c_2$};
-  \node (na2b1c1)[fill=black!10] at (5.3,1.5)  {$r a_2 b_1 c_1$};
-  \node (na2b1c2)[fill=black!10] at (6.0,1.5)  {$r a_2 b_1 c_2$};
-  \node (na2b2c1)[fill=black!10] at (6.7,1.5)  {$r a_2 b_2 c_1$};
-  \node (na2b2c2)[fill=black!10] at (7.4,1.5)  {$r a_2 b_2 c_2$};
+  \node (na1b1c1)%[fill=black!10] 
+  at (2.5,1.5)  {$r a_1 b_1 c_1$};
+  \node (na1b1c2)%[fill=black!10] 
+  at (3.2,1.5)  {$r a_1 b_1 c_2$};
+  \node (na1b2c1)%[fill=black!10] 
+  at (3.9,1.5)  {$r a_1 b_2 c_1$};  
+  \node (na1b2c2)%[fill=black!10] 
+  at (4.6,1.5)  {$r a_1 b_2 c_2$};
+  \node (na2b1c1)%[fill=black!10] 
+  at (5.3,1.5)  {$r a_2 b_1 c_1$};
+  \node (na2b1c2)%[fill=black!10] 
+  at (6.0,1.5)  {$r a_2 b_1 c_2$};
+  \node (na2b2c1)%[fill=black!10] 
+  at (6.7,1.5)  {$r a_2 b_2 c_1$};
+  \node (na2b2c2)%[fill=black!10] 
+  at (7.4,1.5)  {$r a_2 b_2 c_2$};
 
   \foreach \from/\to in {na/na1,na/na2,nb/nb1,nb/nb2,nc/nc1,nc/nc2}
     \draw[dashed] (\from) -| (\to);
@@ -58,7 +84,7 @@
     \draw[yellow] (\from) -- (\to);
 
   \foreach \from/\to in {n0/na,n0/nb,n0/nc}
-    \draw (\from) -- (\to);
+    \draw[dashed] (\from) -- (\to);
   \foreach \from/\to in {na/nab,na/nac,nb/nab,nb/nbc,nc/nac,nc/nbc,nab/nabc,nac/nabc,nbc/nabc}
-    \draw (\from) -- (\to);  
+    \draw[dashed] (\from) -- (\to);  
 \end{tikzpicture}
