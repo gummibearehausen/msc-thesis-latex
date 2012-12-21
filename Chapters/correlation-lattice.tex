@@ -60,8 +60,8 @@ In this thesis, we define support as the absolute frequency of supporting facts.
 
 \subsubsection{Independence Checks}
 
-By simplicity, we assume that every possible pair of categorical relations are independent and we search for evidence to
-prove the contrary.
+By simplicity, we assume that every possible pair of categorical relations are independent given their common parent and
+we search for evidence to prove the contrary.
 
 For 2 nodes to be joined, they must have a common parent, i.e. two nodes at level $l$ (with $l+1$ literals) are joinable
 if they share $l$ literals. Therefore, it's straightforward to calculate the conditional probabilities of each of the
@@ -99,6 +99,7 @@ For the example shown in ~\ref{fig:joinIndepExample}, we can calculate the condi
 $p_i(y|p)$ assuming conditional independence given common parent $p$ in order to estimate $\hat{h_i}(p x y)$:
 
 \begin{equation}
+\label{eq:condindep}
 \begin{split}
  p_i(x|py) &= p_i(x|p) \\ 
  &= \cfrac{h_i(x)}{h_i(p)} \\ 
@@ -119,8 +120,6 @@ independence test. As null hypothesis and alternative hypothesis we have:
  \item $H_1$ = \emph{$x$ and $y$ are conditionally dependent given their common parent $p$} 
 \end{itemize}
 
-  
-
 Number of degrees of freedom is the number of buckets minus one:
 
 \begin{center}
@@ -136,7 +135,23 @@ We calculate the $\chi^2$ value:
 \cite{Jaroszewicz02pruningredundant}
 
 Then it's possible to obtain the p-value and check whether there's enough confidence to reject the null hypothesis
-$H_0$. In level 1 from \graphname, nodes can be directly pruned, on the other hand, for further levels, for a node to be
+$H_0$. 
+
+
+In other words if we find out that $x$ and $y$ are conditionally independent given $p$, we could rewrite the equation
+\ref{eq:condindep} as the following rules being equivalents, with similar accuracy distributions:
+
+$x \leftarrow py \equiv x \leftarrow p$
+$y \leftarrow px \equiv y \leftarrow p$
+
+Therefore, we know that if we have $x$ fixed as head of clauses in the core ILP, and we currently have $x \leftarrrow
+p$, joining the node $px$ with $py$ to obtain the rule $x \leftarrow py$ doesn't add any information. The same applies
+for having $y$, and obtaining $y \leftarrow px$ from $y \leftarrow p$ by joining the same pair of nodes. 
+
+Nevertheless cannot be safely pruned from the lattice.  
+
+
+In level 1 from \graphname, nodes can be directly pruned, on the other hand, for further levels, for a node to be
 pruned by independence, all the possible joins resulting the node must be independent. In level 2, for example, in order
 to prune the node $r a_1 b_1 c_1$, given that in level 1 the nodes $r a_1 b_1$, $r a_1 c_1$ and $r b_1 c_1$ were not
 pruned. All the three possible join combinations should fail the independence test, i.e.:
