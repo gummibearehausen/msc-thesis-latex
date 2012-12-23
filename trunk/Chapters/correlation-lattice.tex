@@ -1,5 +1,8 @@
 The idea is to build during preprocessing a graph inspired in the Itemset Lattice that describes the influence of
-different categorical relations on a given numerical attribute's distribution. We call such graph a \graphname. Comparing to a Itemset Lattice, in a \graphname we have a set categorical relations (that are joined with root attribute) instead of items. In addition, Each node in the graph has a associated histogram with the support distribution over the root's numerical attribute.
+different categorical relations on a given numerical attribute's distribution. We call such graph a \graphname.
+Comparing to a Itemset Lattice, in a \graphname we have a set categorical relations (that are joined with root
+attribute) instead of items. In addition, Each node in the graph has a associated histogram with the support
+distribution over the root's numerical attribute.
 
 To illustrate the idea, let's analyze a simple real-world example with the \emph{hasIncome} relation. If we have two
 categorical relations, one strongly correlated to income, e.g. \emph{hasEducation}, and one uncorrelated (or very weakly
@@ -10,9 +13,12 @@ constants and for \emph{hasEducation(x,y)} we can have 10 different categorical 
 ``Kindergarten'', ``ElementarySchool'', ``MiddleSchool'', ``Highschool'', ``Professional School'', ``Associate's
 degree'', ``Bachelor's degree'', ``Master's degree'' and ``Doctorate degree''. 
 
-It's expected that the income distribution will be roughly the same for people born in any of the months, whereas for different education levels, e.g. Elementary School and Doctoral Degree, their income distribution are expected to be different between them and different from the overall income distribution.
+It's expected that the income distribution will be roughly the same for people born in any of the months, whereas
+for different education levels, e.g. Elementary School and Doctoral Degree, their income distribution are expected to be
+different between them and different from the overall income distribution.
 
-In a further step, we try to join every possible pair of categorical relations and including the constants. For the given example with the relations \emph{hasEducation} and \emph{wasBornInMonth} we would then create the nodes:
+In a further step, we try to join every possible pair of categorical relations and including the constants. For the
+given, example with the relations \emph{hasEducation} and \emph{wasBornInMonth} we would then create the nodes:
 
   \emph{hasIncome(x,y)wasBornInMonth(x,``January''),hasEducation(x,``Preschool'')} \newline
   \emph{hasIncome(x,y)wasBornInMonth(x,``January''),hasEducation(x,``Kindergarten'')} \newline
@@ -32,7 +38,9 @@ In a further step, we try to join every possible pair of categorical relations a
   \emph{hasIncome(x,y)wasBornInMonth(x,``December''),hasEducation(x,``Doctorate Degree'')} \newline
 
 
-Based on this idea, we basically check how different categorical relations affect a numerical distribution. Such information, together with other measures like support, provides valuable cues on what categorical attributes and what categorical constants might be the most interesting to be added to the hypothesis in the core ILP algorithm.
+Based on this idea, we basically check how different categorical relations affect a numerical distribution. Such
+information, together with other measures like support, provides valuable cues on what categorical attributes and what
+categorical constants might be the most interesting to be added to the hypothesis in the core ILP algorithm.
 
 \ref{fig:lattice} shows how a \graphname looks like.
 
@@ -146,7 +154,9 @@ $y \leftarrow px \equiv y \leftarrow p$
 
 Therefore, we know that if we have $x$ fixed as head of clauses in the core ILP, and we currently have $x \leftarrrow
 p$, joining the node $px$ with $py$ to obtain the rule $x \leftarrow py$ doesn't add any information. The same applies
-for having $y$, and obtaining $y \leftarrow px$ from $y \leftarrow p$ by joining the same pair of nodes. 
+for having $y$, and obtaining $y \leftarrow px$ from $y \leftarrow p$ by joining the same pair of nodes. This property
+plays an important role in the integration of the correlation lattice into the core ILP as we will explain in more
+details later in Section (???).
 
 Nevertheless cannot be safely pruned from the lattice.  
 
@@ -169,11 +179,15 @@ This applies to nodes at any level $l$, with $p \leq l$ parents and $C_{2}^{p}$ 
 If any of the join pairs has enough evidence of being dependent, then 2 edges are created connecting each of the joined
 nodes to the result of their join
 
-\subsection{Heuristics}
+\subsection{Distribution Divergence Measures}
 
-As seen in the previous sections, the number of nodes in \graphname grow exponentially with the number of categorical relations and its constants. For $n$ categorical relations, each with $m$ constants, the total number of nodes is $2^{nm}$. Frequently, pruning by support and independence is not sufficient to make it feasible and it's necessary to apply heuristics to prune more aggressively.
+As seen in the previous sections, we are interested in rules whose base-rule has accuracy bellow threshold,
+but for one or multiple specific intervals with accuracy above threshold. For this to happen, we need a rule with
+non-uniform accuracy distribution, or in other words, divergent body and positive examples distributions.
 
-As we are interested in categories that produces a subsets with a distribution different from the root and its super-categories (parent nodes, for the case of joining multiple categories), distribution divergence measures are a good option. Some of the state-of-the-art measures we can use are the following:
+Therefore,we are interested in adding categories that produces distributions different from the their
+parent nodes. In other to measure such divergence between distributions, some of the state-of-the-art such as the
+following ones can be used.
 
 \begin{itemize}
  \item Kullback-Leibler \cite{Kullback51klDivergence}: 
@@ -195,7 +209,21 @@ Where $P$ and $Q$ are the distributions to be compared and $M=\cfrac{1}{2}(P+Q)$
 As discussed in \cite{17795}, although Jensen-Shannon is computationally more expensive, it has the advantage of being a
 symmetric and smoothed version of the Kullback-Leibler measure.
 
-Pruning by divergence is clearly not safe. Let's suppose we have a root numerical property $r(x,y)$, and two categorical relations $a(x,z)$ with constants $A_1$ and $A_2$ and $b(x,w)$ with constants $B_1$ and $B_2$. For simplicity, let's assume y is divided in two buckets and root $r$ has an uniform distribution $[0.5 \, 0.5]$ from frequencies $[2 \, 2]$. It's possible to have $r a_1$ and $r a_2$ as well as $r b_1$ and $r b_2$ with the same uniform distribution with frequencies $[1 \, 1]$. Nevertheless when combined we can have the following:
+
+\subsection{Heuristics}
+
+As seen before, the number of nodes in \graphname grow exponentially with the number of categorical relations
+and its constants. For $n$ categorical relations, each with $m$ constants, the total number of nodes is $2^{nm}$.
+Frequently, pruning by support and independence is not sufficient to make it feasible and it's necessary to apply
+heuristics to prune more aggressively.
+
+%%% Divergence
+
+Pruning by divergence is clearly not safe. Let's suppose we have a root numerical property $r(x,y)$, and two categorical
+relations $a(x,z)$ with constants $A_1$ and $A_2$ and $b(x,w)$ with constants $B_1$ and $B_2$. For simplicity, let's
+assume y is divided in two buckets and root $r$ has an uniform distribution $[0.5 \, 0.5]$ from frequencies $[2 \, 2]$.
+It's possible to have $r a_1$ and $r a_2$ as well as $r b_1$ and $r b_2$ with the same uniform distribution with
+frequencies $[1 \, 1]$. Nevertheless when combined we can have the following:
 
 $r a_1 b_1 : [1.0 \, 0.0] \\$
 $r a_1 b_2 : [0.0 \, 1.0] \\$
@@ -206,12 +234,22 @@ As shown above, divergence is not a monotonically decreasing measure, thus it ca
 
 % Draw example instead to explain better
 
-Moreover, using a divergence measure alone might also be problematic. Nodes with low support are more likely to present high divergence and then nodes with high support, supposing that they were drawn under the same distribution. Therefore, it's important to use divergence combined with support as pruning heuristics.
+Moreover, using a divergence measure alone might also be problematic. Nodes with low support are more likely to
+present high divergence and then nodes with high support, supposing that they were drawn under the same distribution.
+Therefore, it's important to use divergence combined with support as pruning heuristics.
 
-Moreover, we are interested not only in rules with high confidence, but also rules with high support so more facts can be derived.
+Moreover, we are interested not only in rules with high confidence, but also rules with high support so more facts can
+be derived.
 
 % Talk about how to use such measure? (Threshold, Top-k, Cost-Benefit)
 
+%%% Independence
+
+As seen seen in Section (???), checking for conditional independence of categories is very insightful and
+can detect equivalent rules like in Figure \ref{fig:joinIndepExample} where we know that $x \leftarrow py \equiv x
+\leftarrow p$ and $y \leftarrow px \equiv y \leftarrow p$. Nevertheless, we cannot prune the node $pxy$ from the
+lattice as we $x$ and $y$ might not be independent given $pz$, and for instance, a rule $x \leftarrow pyz$ might not be
+equivalent to $x \leftarrow py$. 
 
 
 
