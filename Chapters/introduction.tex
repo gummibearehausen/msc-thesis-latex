@@ -1,15 +1,24 @@
 \chapter{Introduction}
 \label{ch:intro}
 
-In the last years, the volume of semantic data available, in particular RDF, has dramatically increased. Initiatives like the W3C Semantic Web, which provides a common standard that allows data to be shared and reused across different applications, and the Linked Open Data, which provides linkages between different datasets that were not originally interconnected, have great contribution in such development. Moreover, advances in information extraction have also made strong contribution, by crawling multiple non-structured resources in the Web and extracting RDF facts.
+In the last years, the volume of semantic data available, in particular RDF, has dramatically increased. Initiatives
+like the W3C Semantic Web, which provides a common standard that allows data to be shared and reused across different
+applications, and the Linked Open Data, which provides linkages between different datasets that were not originally
+interconnected, have great contribution in such development. Moreover, advances in information extraction have also made
+strong contribution, by crawling multiple non-structured resources in the Web and extracting RDF facts.
 
-Nevertheless, information extraction still has its limitations and many of sources might contain contradictory or uncertain information. Therefore, many of the extracted datasets suffer from incompleteness, noise and uncertainty.
+Nevertheless, information extraction still has its limitations and many of sources might contain contradictory
+or uncertain information. Therefore, many of the extracted datasets suffer from incompleteness, noise and uncertainty.
 
-In order to reduce such problems, one can apply to the knowledge base a set of inference rules that describes its domain. With that, it's possible to resolve contradictions or strengthen or weaken their confidence values. It's also possible to derive new facts that are originally not existent due to incompleteness. Such inference rules can be of two types:
+In order to reduce such problems, one can apply to the knowledge base a set of inference rules that describes its
+domain. With that, it's possible to resolve contradictions or strengthen or weaken their confidence values. It's also
+possible to derive new facts that are originally not existent due to incompleteness. Such inference rules can be of two
+types:
 
 \begin{enumerate}
 
- \item \emph{Hard Rules}: Consistency constraints which represent which might represent functional dependencies, functional or inverse-functional properties of predicates or Mutual exclusion. For example:
+ \item \emph{Hard Rules}: Consistency constraints which represent which might represent functional
+dependencies, functional or inverse-functional properties of predicates or Mutual exclusion. For example:
     \begin{itemize}
       \item \begin{math} marriedTo(x,y) \leftarrow marriedTo(y,x),(x \neq y)\end{math}
       \item \begin{math} grandChildOf(x,y) \leftarrow childOf(x,z),childOf(z,y)\end{math}
@@ -17,24 +26,35 @@ In order to reduce such problems, one can apply to the knowledge base a set of i
       \item \begin{math} (z=y) \leftarrow wasBornIn(x,z),wasBornIn(x,y)\end{math}
     \end{itemize}
 
- \item \emph{Soft Rules}: Weighted Datalog rules that frequently, but not always hold in the real world. As they might also produce incorrect information, each rule itself must have a confidence value which should be applied to derived facts, for example married people live in the same place as their partner has confidence 0.8:
+ \item \emph{Soft Rules}: Weighted Datalog rules that frequently, but not always hold in the real world. As they also
+produce incorrect information, each rule itself must have a confidence value which should be applied to derived facts,
+for example married people live in the same place as their partner has confidence 0.8:
     \begin{center}
       \begin{math} livesIn(x,y) \leftarrow marriedTo(x,z)livesIn(z,y)\end{math} [0.8]
     \end{center}
 \end{enumerate}
 
-So, if we have an incomplete knowledge base, which lacks information about where \emph{Michelle Obama}l lives, but we know that she's married to \emph{Barack Obama} and he lives in \emph{Washington, D.C.}, both with confidence 1, we could then apply this soft rule to derive the fact \emph{livesIn(MichelleObama, WashingtonDC)} with confidence 0.9.
+So, if we have an incomplete knowledge base, which lacks information about where \emph{Michelle Obama}l lives, but
+we know that she's married to \emph{Barack Obama} and he lives in \emph{Washington, D.C.}, both with confidence 1, we
+could then apply this soft rule to derive the fact \emph{livesIn(MichelleObama, WashingtonDC)} with confidence 0.9.
 
-Such rules are rarely known beforehand, or are too expensive to be manually extracted. Nevertheless, the data itself can be used to mine these rules using \emph{Inductive Logic Programming (ILP)}. 
+Such rules are rarely known beforehand, or are too expensive to be manually extracted. Nevertheless, the data itself can
+be used to mine these rules using \emph{Inductive Logic Programming (ILP)}. 
 
 %http://people.csail.mit.edu/kersting/profile/PROFILE_ilp.html
 
-ILP is a well-established framework for inductively learning relational descriptions (in the form of logic programs) from examples and background knowledge. Given a logical database of facts, an ILP system will generate hypothesis in a pre-determined order and test them against the examples. However in a large knowledge base, ILP becomes too expensive as the search space grows combinatorially with the knowledge base size and the larger the number of examples, the more expensive it is to test each of the hypothesis.
+ILP is a well-established framework for inductively learning relational descriptions (in the form of logic programs)
+from examples and background knowledge. Given a logical database of facts, an ILP system will generate hypothesis in a
+pre-determined order and test them against the examples. However in a large knowledge base, ILP becomes too expensive as
+the search space grows combinatorially with the knowledge base size and the larger the number of examples, the more
+expensive it is to test each of the hypothesis.
 
 rules with constants might be really interesting.
 
 
-Moreover, testing hypothesis with constants increases the search space dramatically, making it unfeasible to test all possible hypothesis with constants in a large knowledge base. In such case, it's necessary to arbitrarily reduce the search by restricting the set of constants to be included in ...
+Moreover, testing hypothesis with constants increases the search space dramatically, making it unfeasible to test all
+possible hypothesis with constants in a large knowledge base. In such case, it's necessary to arbitrarily reduce the
+search by restricting the set of constants to be included in ...
 
 data mining, rule mining, datalog rules
 
@@ -43,9 +63,14 @@ data mining, rule mining, datalog rules
 talk a bit about ilp
 
 \section{Motivation}
-Given the huge size of search space and the great interestingness of rules with constants, we need to smartly prune constants or combinations of constants that , learning datalog rules can be already extremely costly.
+Given the huge size of search space and the great interestingness of rules with constants, we need to smartly prune
+constants or combinations of constants that , learning datalog rules can be already extremely costly.
 
-Numerical constants are a special case, and they need to be treated differently. Depending on the numerical attribute domain, in case of a continuous real number domain for example, setting a numerical constant as an individual value will very likely have a very low support and also that would result and extremely large number of possible constants. Therefore, we split the attribute's domain into \emph{k} buckets and then check if any of the buckets present any gain in comparison with its correspondent numerical constant-free rule (which we will call base-rule).
+Numerical constants are a special case, and they need to be treated differently. Depending on the numerical attribute
+domain, in case of a continuous real number domain for example, setting a numerical constant as an individual value will
+very likely have a very low support and also that would result and extremely large number of possible constants.
+Therefore, we split the attribute's domain into \emph{k} buckets and then check if any of the buckets present any gain
+in comparison with its correspondent numerical constant-free rule (which we will call base-rule).
 
 For example if we test the hypothesis and we find support=100 and confidence=0.4:
 
@@ -74,7 +99,9 @@ we then test the hypothesis for each of the three buckets and obtain
 
 \end{itemize}
 
-for k=2 and k=3, the hypothesis has significant gain by specifying numerical constants. Adding a relation to the body might produce totally different support and confidence distributions along the buckets. For example, if we add the relation hasChild(x,a), we could obtain other interesting rules:
+for k=2 and k=3, the hypothesis has significant gain by specifying numerical constants. Adding a relation to the
+body might produce totally different support and confidence distributions along the buckets. For example, if we add the
+relation hasChild(x,a), we could obtain other interesting rules:
 \begin{itemize}
  \item \begin{math}isMarriedTo(x,y) \leftarrow hasAge(x,z)hasChild(x,a)\end{math}	
     \newline support=50, confidence=0.625
@@ -121,18 +148,29 @@ for k=2 and k=3, the hypothesis has significant gain by specifying numerical con
 \end{axis}
 \end{tikzpicture}
 
-Adding some literals might not bring any gain or even loss in confidence, but when bucketing per age, present a different distribution, so we consider them interesting as well. An uninteresting rule would be a rule that 
+Adding some literals might not bring any gain or even loss in confidence, but when bucketing per age, present a
+different distribution, so we consider them interesting as well. An uninteresting rule would be a rule that 
 
 Nevertheless, adding some relations with no correlation to the rule might not generate any interesting rules if  
 
 \section{Contributions}
-In this Thesis, we propose a pre-processing step to build a graph we call \graphname for each numerical property. In each graph, that has a numerical property as root, we first query the frequency distribution on the numerical attribute, then split them in \emph{k} buckets. Then we pick a set of \emph{c} categorical properties that can be joined with the root, and analyze how the distribution of sub-population created by joining them with the root is affected. Afterwards we try to combine each of the categories and see if they still produce interesting sub-populations, like in frequent set mining.
+In this Thesis, we propose a pre-processing step to build a graph we call \graphname for each numerical property. In
+each graph, that has a numerical property as root, we first query the frequency distribution on the numerical attribute,
+then split them in \emph{k} buckets. Then we pick a set of \emph{c} categorical properties that can be joined with the
+root, and analyze how the distribution of sub-population created by joining them with the root is affected. Afterwards
+we try to combine each of the categories and see if they still produce interesting sub-populations, like in frequent set
+mining.
 
-We also evaluate different heuristics and interestingness measures.
+We also evaluate different heuristics and interestingness measures and their efficiency in finding rules with
+numerical intervals. 
 
-In a hypothesis containing a numerical attribute in the body, we can obtain a support and confidence value for each of the buckets, and 
+In a clause containing a numerical attribute in the body, we can obtain a support and accuracy as well as support value
+for each of the buckets. Therewith, we can search the most interesting intervals that satisfies the support and accuracy
+thresholds
 
-With that, during the ILP algorithm, once we add one of the root properties, we can then search for the most interesting categorical properties that could result in different accuracy distributions. For every categorical property we can also suggest the most interesting constants and other categorical properties to be combined in a subcategory of both.
+With that, during the ILP algorithm, once we add one of the root properties, we can then search for the most interesting
+categorical properties that could result in different accuracy distributions. For every categorical property we can also
+suggest the most interesting constants and other categorical properties to be combined in a subcategory of both.
 
 \section{Outline}
 
