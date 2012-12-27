@@ -149,16 +149,16 @@ $H_0$.
 In other words if we find out that $x$ and $y$ are conditionally independent given $p$, we could rewrite the equation
 \ref{eq:condindep} as the following rules being equivalents, with similar accuracy distributions:
 
-$x \leftarrow py \equiv x \leftarrow p$
+$x \leftarrow py \equiv x \leftarrow p \\$ 
 $y \leftarrow px \equiv y \leftarrow p$
 
-Therefore, we know that if we have $x$ fixed as head of clauses in the core ILP, and we currently have $x \leftarrrow
-p$, joining the node $px$ with $py$ to obtain the rule $x \leftarrow py$ doesn't add any information. The same applies
+Therefore, we know that if we have $x$ fixed as head of clauses in the core ILP, and we currently have $x \leftarrrow p$
+joining the node $px$ with $py$ to obtain the rule $x \leftarrow py$ doesn't add any information. The same applies
 for having $y$, and obtaining $y \leftarrow px$ from $y \leftarrow p$ by joining the same pair of nodes. This property
 plays an important role in the integration of the correlation lattice into the core ILP as we will explain in more
 details later in Section (???).
 
-Nevertheless cannot be safely pruned from the lattice.  
+Nevertheless it cannot be safely pruned from the lattice.  
 
 
 In level 1 from \graphname, nodes can be directly pruned, on the other hand, for further levels, for a node to be
@@ -246,10 +246,10 @@ be derived.
 %%% Independence
 
 As seen seen in Section (???), checking for conditional independence of categories is very insightful and
-can detect equivalent rules like in Figure \ref{fig:joinIndepExample} where we know that $x \leftarrow py \equiv x
-\leftarrow p$ and $y \leftarrow px \equiv y \leftarrow p$. Nevertheless, we cannot prune the node $pxy$ from the
-lattice as we $x$ and $y$ might not be independent given $pz$, and for instance, a rule $x \leftarrow pyz$ might not be
-equivalent to $x \leftarrow py$. 
+can detect equivalent rules like in Figure \ref{fig:joinIndepExample} where we know that 
+$x \leftarrow py \equiv x \leftarrow p$ and $y \leftarrow px \equiv y \leftarrow p$. Nevertheless, we cannot prune the
+node $pxy$ from the lattice as we $x$ and $y$ might not be independent given $pz$, and for instance, a rule $x
+\leftarrow pyz$ might not be equivalent to $x \leftarrow py$. 
 
 
 
