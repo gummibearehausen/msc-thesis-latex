@@ -56,31 +56,37 @@ types satisfies the definition presented before.
 
 \subsection{Absence or Presence of a Property as Categories}
 
-Another possibility is to define categories for presence or absence of supporting examples for properties. With this approach, one can also
+Another possibility is to define categories for presence or absence of supporting examples for properties. With this
+approach, one can also
 include non-categorical properties into the \graphname and have insight about how the presence or absence of such
 property affects the distribution of root's numerical attribute.
 
-In this case we must consider a property which doesn't have examples for all its domain. For example the property \emph{isParentOf(x,y)} is not categorical but relational, and both its domain and range are from the type Person. If not all the Person isntances of the knowledge base have supporting facts for the relation isMarriedTo, then we can split the instances in two categories: the ones that are covered by the property and the ones that are not. For example, if we have a knowledge base with the following facts:
+In this case we must consider a property which doesn't have examples for all its domain. For example the property
+\emph{isParentOf(x,y)} is not categorical but relational, and both its domain and range are from the type Person. If not
+all the Person instances of the knowledge base have supporting facts for the relation \emph{isParentOf}, then we can
+split the instances in two categories: the ones that are covered by the property and the ones that are not. For example,
+let \emph{hasIncome} be the root property and let's assume we have a knowledge base with the following facts:
 
-type(John,Person)
-type(Mike,Person)
-type(Paul,Person)
-type(Mary,Person)
-type(Anne,Person)
-isParentOf(John,Mary)
-isParentOf(Mike,Paul)
-isParentOf(Anne,Paul)
-isParentOf(Anne,Mary)
+\begin{tabular}{*{3}{l}}
+type(John,Person) & hasIncome(John,20000) & isParentOf(John,Mary) \\
+type(Mike,Person) & hasIncome(Mike,30000) & isParentOf(Mike,Paul) \\
+type(Anne,Person) & hasIncome(Anne,25000) & isParentOf(Anne,Paul) \\
+type(Mary,Person) & hasIncome(Mary, 5000) & isParentOf(Anne,Mary) \\
+type(Lisa,Person) & hasIncome(Lisa,10000) & \\
+type(Paul,Person) & & \\
+\end{tabular}
 
-Then we could split the set $X_{person}={x|type(x,Person)}$ in two groups $X_{person}^1,X_{person}^2 \in X_{person}$:
+Then we could split the root node set $X_{root}=\{x|hasIncome(x,z)\}$ in two categories $X_{root}^1,X_{root}^2 \in
+X_{root}$:
 
-$X_{person}^1={x| x \in X_{person} \land \exists isParentOf(x,y)} \\$
-$X_{person}^2={x| x \in X_{person} \land \nexists isParentOf(x,y)} \\$
+$X_{root}^1=\{x| x \in X_{root} \land \exists isParentOf(x,y)\} \\$
+$X_{root}^2=\{x| x \in X_{root} \land \nexists isParentOf(x,y)\} \\$
 
 Each group would consist of the following instances:
 
-$X_{person}^1={John,Mike,Anne} \\$
-$X_{person}^2={Paul,Mary}$
+$X_{root}=\{John,Mike,Anne,Mary,Lisa\} \\$
+$X_{root}^1=\{John,Mike,Anne\} \\$
+$X_{root}^2=\{Mary,Lisa\}$
 
 As in this thesis we are under open world assumption and we don't consider negated literals in the hypothesis, we ignore
 the absence and just include the presence of relations in the lattice.
@@ -101,7 +107,7 @@ In this section, we will present the preprocessing steps required by our propose
 first building a joinable relations map for each of the four join patterns, according
 to relations domain and range types as well as support threshold. Afterwards, we search the available categorical
 properties for each numerical relation that will be used in the \graphname. At last we build the so called \graphname,
-which belongs to the preprocessing step but will be discussed in the next Section s\ref{ch:lattice}.
+which belongs to the preprocessing step but will be discussed in the next section.
 
 \subsection{Relation Preprocessing}
 
@@ -260,8 +266,8 @@ given, example with the relations \emph{hasEducation} and \emph{wasBornInMonth} 
   \dots \newline
   \emph{hasIncome(x,y)wasBornInMonth(x,``December''),hasEducation(x,``Doctorate Degree'')} \newline
 
-This process works just like in an itemset lattice until a predetermined maximum level or until all the possible combinations are exhausted.
-\ref{fig:lattice} shows how a \graphname looks like.
+This process works just like in an itemset lattice until a predetermined maximum level or until all the
+possible combinations are exhausted. Figure \ref{fig:lattice} shows how a \graphname looks like.
 
 \begin{figure}[!h]
   \caption{Correlation Lattice example}
@@ -320,7 +326,7 @@ Let's say we have the following join case:
   \label{fig:joinIndepExample}
 \end{figure}
 
-For the example shown in ~\ref{fig:joinIndepExample}, we can calculate the conditional probability $p_i(x|p)$ and
+For the example shown in figure \ref{fig:joinIndepExample}, we can calculate the conditional probability $p_i(x|p)$ and
 $p_i(y|p)$ assuming conditional independence given common parent $p$ in order to estimate $\hat{h_i}(p x y)$:
 
 \begin{equation}
@@ -367,8 +373,8 @@ In other words if we find out that $x$ and $y$ are conditionally independent giv
 \ref{eq:condindep} as the following rules being equivalents, with similar accuracy distributions:
 
 \begin{center}
-  $x \leftarrow py \equiv x \leftarrow p \\$ 
-  $y \leftarrow px \equiv y \leftarrow p \\$
+  $x \leftarrow py \equiv x \leftarrow p $ \newline 
+  $y \leftarrow px \equiv y \leftarrow p $
 \end{center}
 
 Therefore, we know that if we have $x$ fixed as head of clauses in the core ILP, and we currently have $x \leftarrow p$
@@ -470,5 +476,106 @@ node $pxy$ from the lattice as we $x$ and $y$ might not be independent given $pz
 
 \section{Incorporating \graphname into Core ILP Algorithm}
 
+The ILP core learning algorithm requires some modifications in order to support the \graphname. As stated before, we use
+the top-down search, starting from the most general clauses then further refining them by introducing new substitutions
+or literals until stopping criteria is reached.
 
+\subsection{Querying the \graphname}
+
+In the ILP there's a fixed head literal and such literal can and should be included in the \graphname. In case it's
+present in the lattice, it plays a key role in the search. Once the root property is added in a clause that doesn't
+exceed the accuracy threshold.
+
+In such case we are interested in searching the most interesting literals to add. First step would be to search in the
+lattice the literals already present in both head and body of the clause that are joined with the root. Nevertheless,
+what we are not really interested in the benefit of adding a literal to the conjunction of rule's head and body, but in
+the benefit of adding the head to a body with a new literal.
+
+For example, if we have the clause $a \leftarrow r$, $r$ is the root of a \graphname and the head $a$ is included in it.
+After searching in the graph for the literals joined with root present in the clause we would come to node
+$ra$. We are not searching for the most interesting child from $ra$, but for the children, which has a parent without
+the head literal that has the has the highest interestingness measure when adding the head.
+
+\begin{figure}[!h]
+  \caption{Node join example for independence test}
+  \centering
+  \begin{tikzpicture}
+  [scale=1,auto=center,every node/.style={minimum size=1cm}]
+    \node (r)  [circle,fill=black!20] at (4,10) {$r$};
+    \node (ra) [circle,fill=black!20] at (1,8)  {\textbf{\emph{ra}}};
+    \node (rb) [circle,fill=black!20] at (3,8)  {$r b$};
+    \node (rc) [circle,fill=black!20] at (5,8)  {$r c$};
+    \node (rd) [circle,fill=black!20] at (7,8)  {$r d$};
+    \node (rab)[circle,fill=black!20] at (3,5)  {$r a b$};
+    \node (rac)[circle,fill=black!20] at (5,5)  {$r a c$};
+    \node (rad)[circle,fill=black!20] at (7,5)  {$r a d$};
+
+    \node (m1)[blue] at (3,7)  {$m_{a,rb}$};
+    \node (m2)[blue] at (5,7)  {$m_{a,rc}$};
+    \node (m3)[blue] at (7,7)  {$m_{a,rd}$};
+    \node (m4)[red] at (2.3,6)  {$m_{b,ra}$};
+    \node (m5)[red] at (3.6,6)  {$m_{c,ra}$};
+    \node (m6)[red] at (5.0,6)  {$m_{d,ra}$};
+
+
+
+    \foreach \from/\to in {r/ra,r/rb,r/rc,r/rd,ra/rab,ra/rac,ra/rad,rb/rab,rc/rac,rd/rad}
+      \draw[black!20] (\from) -- (\to);
+
+    %\draw (ra) -- (rab) -|  \node [bellow,pos=0.25] {$m_1$}(l1);
+  \end{tikzpicture}
+  \label{fig:latticeSuggestion}
+\end{figure}
+
+As shown in Figure \ref{fig:latticeSuggestion}, if we can add $b$, $c$ or $d$ to $ra$, we are interested about the
+measures in blue instead of the ones in red. Nevertheless, searching for values for $m_{a,rb}$, $m_{a,rc}$ and
+$m_{a,rd}$ is a bit tricky. It's necessary to check for all children of $ra$, which ones have parents without head
+literal $a$, then gather all the measures and rank them.
+
+In order to make it simpler, we can create a map during lattice build. This map would contain an entry for all node
+it's joined to, with head as key and literals to add sorted by measure as value. So for example when we are obtaining
+the node $rab$ by joining $ra$ and $rb$, we add to $ra$ an entry with $a$ as key, $b$ as new literal and
+associated measure $m_{a,rb}$ and we also add to $rb$ an entry with $b$ as key, $a$ as new literal ad associated
+measure $m_{b,ra}$. 
+
+In the example of Figure \ref{fig:latticeSuggestion}, $ra$ would contain the following map:
+
+\begin{center}
+  \begin{tabular}{r | l}
+    a & b [$m_{a,rb}$] \\
+      & c [$m_{a,rd}$] \\
+      & d [$m_{a,rc}$]
+  \end{tabular}
+\end{center}
+
+As in this example the node $ra$ has only two literals, and the root $r$ can't be the head, we use the node $ra_1b_1$
+in Figure \ref{fig:lattice} to better illustrate it:
+
+\begin{center}
+  \begin{tabular}{r | l}
+    a1 	& c1 [$m_{a_1,rb_1c_1}$] \\
+	& c2 [$m_{a_1,rb_1c_2}$] \\
+    \hline
+    b1	& c1 [$m_{b_1,ra_1c_1}$] \\
+	& c2 [$m_{b_1,ra_1c_2}$]
+  \end{tabular}
+\end{center}
+
+In a node at level $l$ with $l+1$ literals (one being the root), we can have up to $l$ keys in the map. Therewith, we
+can much more easily find the best suggestions for any possible head literal without having to visit other nodes.
+
+First we need to introduce a new refinement operator that extracts the support and accuracy distributions along a chosen
+numerical property and searches for interesting ranges. With that there are
+
+%if (clause constains numerical property) {
+%  n = numerical property;
+%  Lattice l = getLattice(n);
+%  if (no range set to n) {
+%    supp = querySuppDistribution;
+%    acc  = queryAccDistribution;
+%  }
+%}
+
+In the specialization step, we can detect whether the clause contains any numerical property, which is root of a
+\graphname. If so, it can search for interesting ranges numerical ranges, 
 
