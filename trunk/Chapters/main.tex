@@ -65,22 +65,23 @@ approach, one can also
 include non-categorical properties into the \graphname and have insight about how the presence or absence of such
 property affects the distribution of root's numerical attribute.
 
-In this case we must consider a property which doesn't have examples for all its domain. For example the property
-\emph{isParentOf(x,y)} is not categorical but relational, and both its domain and range are from the type Person. If not
-all the Person instances of the knowledge base have supporting facts for the relation \emph{isParentOf}, then we can
+In this case we must consider a property which doesn't have examples for all its domain. For example, the property
+\emph{isParentOf(x,y)} has as both domain and range type Person. If not all the Person instances of the knowledge base
+have supporting facts for the relation \emph{isParentOf}, then we can
 split the instances in two categories: the ones that are covered by the property and the ones that are not. For example,
 let \emph{hasIncome} be the root property and let's assume we have a knowledge base with the following facts:
 
-\begin{tabular}{*{3}{l}}
-type(John,Person) & hasIncome(John,20000) & isParentOf(John,Mary) \\
-type(Mike,Person) & hasIncome(Mike,30000) & isParentOf(Mike,Paul) \\
-type(Anne,Person) & hasIncome(Anne,25000) & isParentOf(Anne,Paul) \\
-type(Mary,Person) & hasIncome(Mary, 5000) & isParentOf(Anne,Mary) \\
-type(Lisa,Person) & hasIncome(Lisa,10000) & \\
-type(Paul,Person) & & \\
+\begin{tabular}{*{2}{l}}
+  hasIncome(John,20000) & isParentOf(John,Mary) \\
+  hasIncome(Mike,30000) & isParentOf(Mike,Paul) \\
+  hasIncome(Anne,25000) & isParentOf(Anne,Paul) \\
+  hasIncome(Mary,5000) 	& isParentOf(Anne,Mary) \\
+  hasIncome(Lisa,10000) & 			\\
+  hasIncome(Paul,0)	& 			\\
 \end{tabular}
 
-Then we could split the root node set $X_{root}=\{x|hasIncome(x,z)\}$ in two categories $X_{root}^1,X_{root}^2 \in
+Then we could split the root node set $X_{root}=\{x|\exists hasIncome(x,z)\}$ in two categories $X_{root}^1,X_{root}^2
+\in
 X_{root}$:
 
 $X_{root}^1=\{x| x \in X_{root} \land \exists isParentOf(x,y)\} \\$
@@ -88,9 +89,9 @@ $X_{root}^2=\{x| x \in X_{root} \land \nexists isParentOf(x,y)\} \\$
 
 Each group would consist of the following instances:
 
-$X_{root}=\{John,Mike,Anne,Mary,Lisa\} \\$
+$X_{root}=\{John,Mike,Anne,Mary,Lisa,Paul\} \\$
 $X_{root}^1=\{John,Mike,Anne\} \\$
-$X_{root}^2=\{Mary,Lisa\}$
+$X_{root}^2=\{Mary,Lisa,Paul\}$
 
 As in this thesis we are under open world assumption and we don't consider negated literals in the hypothesis, we ignore
 the absence and just include the presence of relations in the lattice.
@@ -98,9 +99,13 @@ the absence and just include the presence of relations in the lattice.
 
 \subsection{Notation Used}
 
-As we will see in the next sections, in the \graphname all the relations are joined by the variable of root's first argument. So we will denote the presence of a property $r(x,y)$ category as simply $r$, where $x$ is the join variable and $y$ is free and not set to any constant. If we have a categorical property $a(x,y)$ with $k$ different categories $A_i \in Y$ $(i=1,..,k)$, we denote each of the $a(x,A_i)$ as $a_i$.
+As we will see in the next sections, in the \graphname all the relations are joined by the variable of root's first
+argument. So we will denote the presence of a property $r(x,y)$ category as simply $r$, where $x$ is the join variable
+and $y$ is free and not set to any constant. If we have a categorical property $a(x,y)$ with $k$ different categories
+$A_i \in Y$ $(i=1,..,k)$, we denote each of the $a(x,A_i)$ as $a_i$.
 
-So if we have a root node $r$ and a node at level 3 called $rab_1c_3$, that means we are considering the examples for the following join:
+So if we have a root node $r$ and a node at level 3 called $rab_1c_3$, that means we are considering the examples for
+the following join:
 
 $r(x,y)a(x,z)b(x,B_1)c(x,B_3)$
 
@@ -124,7 +129,8 @@ In this step, we focus on creating a map of joinable for each of the four join p
  \item Argument 2 on Argument 2: e.g. \emph{livesIn(y,\textbf{x})wasBornIn(z,\textbf{x})}
 \end{itemize}
 
-With that we could easily obtain all the possible pair of joinable relations for each join pattern, avoiding testing hypothesis containing invalid join pairs.
+With that we could easily obtain all the possible pair of joinable relations for each join pattern, avoiding testing
+hypothesis containing invalid join pairs.
 
 \subsubsection{Exploiting Relation Range and Domain Types}
 
@@ -132,19 +138,48 @@ A knowledge base is expected to have an ontology defining the structure of the s
 their relationships). Additionally, every relation's range (type of \ord{1} argument) and domain (type of \ord{2}
 argument) should be defined. These information can help us identify the allowed joining relations for each join pattern.
 
-Assuming that the knowledge base has its type hierarchy described with the relation \emph{rdfs:subClassOf} and both argument
-types from each of the relations declared with \emph{rdfs:domain} and \emph{rdfs:range} it's a really straightforward task.
+\begin{figure}[!h]
+  \caption{Type hierarchy example}
+  \centering
+  \begin{tikzpicture}[<-,draw=black,very thick,level/.style={sibling distance = 6cm/#1,level distance = 1.5cm}]
+    
+    \node{Thing}
+      child{node {Location} 
+	child{node {Country}}
+	child{node {City}}
+      }
+      child{node {Person}
+	child{node {Athlete}
+	  child{node {Marathoner}}
+	  child{node {Swimmer}}
+	}
+	child{node {Scientist}}
+	child{node {Artist}
+	  child{node {Painter}}
+	  child{node {Musician}}
+	  child{node {Poet}}
+	}
+      };
+  \end{tikzpicture}
+
+\label{fig:typeHierarchy}
+\end{figure}
+
+Assuming that the knowledge base has its type hierarchy described with the relation \emph{rdfs:subClassOf} and both
+argument types from each of the relations declared with \emph{rdfs:domain} and \emph{rdfs:range} it's a really
+straightforward task.
 
 For every possible pair of relations, we simply try to match the joining argument types from the 2 joining relations. We
 check whether they are equal or if one can be subsumed by the other. If so, then it's allowed to join the pair of relations
-on the given joining arguments, or in other words, the type hierarchy doesn't prevent them from joining. The pseudo-code for performing such task is
+on the given joining arguments, or in other words, the type hierarchy doesn't prevent them from joining. The pseudo-code
+for performing such task is
 shown in the Algorithm \ref{alg1}:
 
 \begin{algorithm}[!h]
- \caption{Checks whether two relations are joinable for a given join pattern}
+  \caption{Function $checkTypes$ \newline Checks whether two relations are joinable for a given join pattern}
  \label{alg1}
  \SetKwFunction{subsumes}
- \KwIn{\textbf{Input:} Relation $r_i$, $r_j$, Argument $arg_i$, $arg_j$ \\}
+ \KwIn{\textbf{Input:} $r_i$, $r_j$: Joining relations, $arg_i$, $arg_j$: Joining arguments \\}
  \KwOut{True if $arg_i$ from $r_i$ joins with $arg_j$ from $r_j$, False otherwise}
   \Switch{$arg_i$} {
       \Case{$1$}{
@@ -163,7 +198,7 @@ shown in the Algorithm \ref{alg1}:
       }
   }
   \eIf{$type_i = type_j$ {\bf or} \FuncSty{subsumes(}$type_i$,$type_j$\FuncSty{)} {\bf or}
-\FuncSty{subsumes(}$type_j$,$type_i$\FuncSty{)}}{
+       \FuncSty{subsumes(}$type_j$,$type_i$\FuncSty{)}}{
       \Return true\;
    }{
     \Return false\;
@@ -184,10 +219,11 @@ containing such join will therefore fail the support test as well, so we don't n
 ILP algorithm.
 
 \begin{algorithm}[!h]
-  \caption{Checks whether join support exceeds threshold}
+  \caption{Function $checkSupport$ \newline Checks whether join support exceeds threshold}
   \label{alg2}
   \SetKwFunction{executeQuery}
-  \KwIn{\textbf{Input:} Relation $r_i$, $r_j$, Argument $arg_i$, $arg_j$, Float $supportThreshold$ \\ }
+  \KwIn{\textbf{Input:} $r_i$, $r_j$: Joining relations, $arg_i$, $arg_j$: Joining arguments, $supportThreshold$:
+Support threshold \\ }
   \KwOut{True if join support exceeds threshold, False otherwise}
     \Switch{$(arg_i,arg_j)$} {
       \Case{$(1,1)$}{
@@ -212,9 +248,50 @@ ILP algorithm.
 \end{algorithm}
 
 
-Applying algorithms \ref{alg1} and \ref{alg2} on all the possible join combinations and extracting the valid ones, we can build 4 joining maps, one for each join pattern. Each map has relations as keys and a set of joinable relations as value.
-In the refinement step at the ILP algorithm, these maps will be queried in order to obtain suggestions of literals to be
+The preprocessing is done by algorithm \ref{alg3}, which applies \ref{alg1} and \ref{alg2} on all the possible join pair
+combinations and extracting the valid ones, we can build 4 joining maps, one for each join pattern. Each map has
+relations as keys and a set of joinable relations as value. In the refinement step at the ILP algorithm, these maps will
+be queried in order to obtain suggestions of literals to be
 added.
+
+\begin{algorithm}[!h]
+  \caption{Preprocessing algorithm}
+  \label{alg3}
+  \SetKwFunction{executeQuery}
+  \KwIn{\textbf{Input:} $r$: Set of Relations, $supportThreshold$: The support threshold \\ }
+  \KwResult{$L_{m,n}(r_i)$: List of joinable relations, where $m,n \in \{1,2\}, r_i \in r$}
+
+    \tcp{Lists initialization}
+    \ForEach{$r_i \in r$} {
+      $L_{1,1}(r_i) \leftarrow r_i$ \;
+      $L_{2,2}(r_i) \leftarrow r_i$ \;
+      $L_{1,2}(r_i) \leftarrow \emptyset$ \;
+      $L_{2,1}(r_i) \leftarrow \emptyset$ \;
+    }
+    \tcp{For every possible pair of relations}
+    \ForEach{$r_i \in r$} {
+	\ForEach{$r_j \in r$ {\bf and} $j \geq i$} {
+	    \If{$r_i \neq r_j$} {
+		\If{$checkTypes(r_i,r_j,1,1)$ {\bf and} $checkSupport(r_i,r_j,1,1)$} {
+		    $L_{1,1}(r_i) \leftarrow L_{1,1}(r_i) \cup r_j$ \;
+		    $L_{1,1}(r_j) \leftarrow L_{1,1}(r_j) \cup r_i$ \;
+		}
+		\If{$checkTypes(r_i,r_j,2,2)$ {\bf and} $checkSupport(r_i,r_j,2,2)$} {
+		    $L_{2,2}(r_i) \leftarrow L_{2,2}(r_i) \cup r_j$ \;
+		    $L_{2,2}(r_j) \leftarrow L_{2,2}(r_j) \cup r_i$ \;
+		}
+	    }
+	    \If{$checkTypes(r_i,r_j,1,2)$ {\bf and} $checkSupport(r_i,r_j,1,2)$} {
+		$L_{1,2}(r_i) \leftarrow L_{1,2}(r_i) \cup r_j$ \;
+		$L_{2,1}(r_j) \leftarrow L_{2,1}(r_j) \cup r_i$ \;
+	    }
+	    \If{$checkTypes(r_i,r_j,2,1)$ {\bf and} $checkSupport(r_i,r_j,2,1)$} {
+		$L_{2,1}(r_i) \leftarrow L_{2,1}(r_i) \cup r_j$ \;
+		$L_{1,2}(r_j) \leftarrow L_{1,2}(r_j) \cup r_i$ \;
+	    }
+	}
+   }
+\end{algorithm}
 
 \subsection{}
 
@@ -246,9 +323,12 @@ categorical constants might be the most interesting to be added to the hypothesi
 
 \subsection{Building the Lattice}
 
-We first start with the chosen numerical property. We get all the facts existent for this property, define the buckets and count the examples producing a frequency histogram.
+We first start with the chosen numerical property. We get all the facts existent for this property, define the buckets
+and count the examples producing a frequency histogram.
 
-Subsequently, for the chosen set of categorical relations, we do the same with the examples obtained by joining the root with each of the categories. For every category we create a node in the lattice with assiciated frequency histogram. We also each the root as parent node, and add the new nodes as children from the root.
+Subsequently, for the chosen set of categorical relations, we do the same with the examples obtained by joining the root
+with each of the categories. For every category we create a node in the lattice with assiciated frequency histogram. We
+also each the root as parent node, and add the new nodes as children from the root.
 
 In a further step, we try to join every possible pair of categorical relations and including the constants. For the
 given, example with the relations \emph{hasEducation} and \emph{wasBornInMonth} we would then create the nodes:
@@ -404,18 +484,19 @@ pruned. All the three possible join combinations should fail the independence te
 \end{equation}
 \end{comment}
 
-This applies to nodes at any level $l$, with $p \leq l$ parents and $C_{2}^{p}$ possible join pairs. If any of the join pairs has enough evidence of being dependent, then 2 edges are created connecting each of the joined
+This applies to nodes at any level $l$, with $p \leq l$ parents and $C_{2}^{p}$ possible join pairs. If any of the join
+pairs has enough evidence of being dependent, then 2 edges are created connecting each of the joined
 nodes to the result of their join
 
 \subsection{Distribution Divergence Measures}
 
-As seen in the previous sections, we are interested in rules whose base-rule has accuracy bellow threshold,
-but contains one or multiple specific intervals with accuracy above threshold. For this to happen, we need a rule with
-non-uniform accuracy distribution, or in other words, divergent body support and rule positive examples distributions.
+As seen in the previous sections, we are interested in rules whose base-rule has accuracy bellow threshold, but contains
+one or multiple specific intervals with accuracy above threshold. For this to happen, we need a rule with non-uniform
+accuracy distribution, or in other words, divergent body support and rule positive examples distributions.
 
-Therefore, we are interested in adding categories that produces distributions different from their
-parent nodes'. In order to measure such divergence between distributions, some of the state-of-the-art such as the
-following ones can be used.
+Therefore, we are interested in adding categories that produces distributions different from their parent nodes'. In
+order to measure such divergence between distributions, some of the state-of-the-art such as the following ones can be
+used.
 
 \begin{itemize}
  \item Kullback-Leibler \cite{Kullback51klDivergence}: 
@@ -463,7 +544,10 @@ As shown above, divergence is not a monotonically decreasing measure, thus it ca
 % Draw example instead to explain better
 
 Moreover, using a divergence measure alone might also be problematic. Histograms with low support are more likely to
-present a higher divergence than histograms with higher support, supposing that they were drawn from the same original distribution. Consequently, and algorithm using only the divergence as heuristics would end up giving preference to nodes with lower support. Therefore, it's important to use divergence combined with support as pruning heuristics. [Restructure, it's confusing]
+present a higher divergence than histograms with higher support, supposing that they were drawn from the same original
+distribution. Consequently, and algorithm using only the divergence as heuristics would end up giving preference to
+nodes with lower support. Therefore, it's important to use divergence combined with support as pruning heuristics.
+[Restructure, it's confusing]
 
 %Moreover, we are interested not only in rules with high confidence, but also rules with high support so more facts can
 %be derived.
@@ -571,14 +655,46 @@ can much more easily find the best suggestions for any possible head literal wit
 First we need to introduce a new refinement operator that extracts the support and accuracy distributions along a chosen
 numerical property and searches for interesting ranges. With that there are
 
-%if (clause constains numerical property) {
-%  n = numerical property;
-%  Lattice l = getLattice(n);
-%  if (no range set to n) {
-%    supp = querySuppDistribution;
-%    acc  = queryAccDistribution;
-%  }
+\begin{algorithm}[!h]
+ \caption{Refinement step}
+ \label{alg3}
+ \SetKwFunction{getSuggestions}
+ \KwIn{\textbf{Input:} $clause$: Set of literals from the clause, $newLiteral$: Literal to be added to the clause,
+$lattices$: Set of existent Correlation Lattices \\}
+ %\KwOut{True if $arg_i$ from $r_i$ joins with $arg_j$ from $r_j$, False otherwise}
+  $newRelation \leftarrow newLiteral.relation$
+  \eIf{$ \exists lattice for newRelation$} {
+    $lattice \leftarrow $
+  } 
+ 
+\end{algorithm}
+
+%Input: set<Literals>clause, Literal newLit, map<Property,CorrelationLattice> lattices
+%if ((lat=lattices.get(newLit)) != null) {
+%	clause = clause \union newLit
+%	if (clause.supp>=TS && clase.acc<TS) {
+%		LatticeNode node = lat.root;
+%		if (lat.contains(clause.head)) {
+%			node = node.search(head);
+%		}
+%		for (lit: clause.body) {
+%			if (lat.constains(lit)) {
+%				node = node.search(lit);
+%			}
+%		}
+%		SortedSet<Literals> suggestions = node.getSuggestions(head);
+%		for (lit: suggestions) {
+%			
+%	}
 %}
+
+%Input: Literal head, LatticeNode nodes
+%if (headMaps.contains(head)) {
+%	SortedSet<Literals> suggestions = headMaps.getHead;
+%	if (suggestions \neq \empty)
+%		return suggestions;
+%}
+%return children;
 
 In the specialization step, we can detect whether the clause contains any numerical property, which is root of a
 \graphname. If so, it can search for interesting ranges numerical ranges, 
