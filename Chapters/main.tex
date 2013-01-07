@@ -657,44 +657,43 @@ numerical property and searches for interesting ranges. With that there are
 
 \begin{algorithm}[!h]
  \caption{Refinement step}
- \label{alg3}
- \SetKwFunction{getSuggestions}
- \KwIn{\textbf{Input:} $clause$: Set of literals from the clause, $newLiteral$: Literal to be added to the clause,
-$lattices$: Set of existent Correlation Lattices \\}
- %\KwOut{True if $arg_i$ from $r_i$ joins with $arg_j$ from $r_j$, False otherwise}
-  $newRelation \leftarrow newLiteral.relation$
-  \eIf{$ \exists lattice for newRelation$} {
-    $lattice \leftarrow $
-  } 
+ \label{alg4}
+ \SetKwFunction{}
+ \KwIn{\textbf{Input:} $clause$: Set of literals from the clause, $lattice(r_{root})$: Set of existent Correlation Lattices, 
+ $lit_{body}$: Literal in clause that will be joined with new Literal, $lit_{new}$: Literal to be added to the clause,
+ $arg_{body}$: Join argument from body literal, $arg_{new}$: Join argument from new literal \\}
+ \KwOut{True if $arg_i$ from $r_i$ joins with $arg_j$ from $r_j$, False otherwise}
  
+  $r_{new} \leftarrow lit_{new}.relation$ \;
+  \If{$arg_{new} = 1$ \textbf{and} $r_{new}$ is numerical \textbf{and} $\exists$ $lattice(r_{new})$} {
+    $node \leftarrow$ $lattice(r_{new}).root$.\FuncSty{search(}$head$\FuncSty{)} \;
+    \ForEach{$lit_i \in clause.body$} {
+      $node \leftarrow node$.\FuncSty{search(}$lit_i$\FuncSty{)} \;
+    }
+    \FuncSty{checkNumericalRanges(}$clause$,$lit_{new}$,$node$\FuncSty{)} \;
+  }
 \end{algorithm}
 
-%Input: set<Literals>clause, Literal newLit, map<Property,CorrelationLattice> lattices
-%if ((lat=lattices.get(newLit)) != null) {
-%	clause = clause \union newLit
-%	if (clause.supp>=TS && clase.acc<TS) {
-%		LatticeNode node = lat.root;
-%		if (lat.contains(clause.head)) {
-%			node = node.search(head);
-%		}
-%		for (lit: clause.body) {
-%			if (lat.constains(lit)) {
-%				node = node.search(lit);
-%			}
-%		}
-%		SortedSet<Literals> suggestions = node.getSuggestions(head);
-%		for (lit: suggestions) {
-%			
-%	}
-%}
-
-%Input: Literal head, LatticeNode nodes
-%if (headMaps.contains(head)) {
-%	SortedSet<Literals> suggestions = headMaps.getHead;
-%	if (suggestions \neq \empty)
-%		return suggestions;
-%}
-%return children;
+\begin{algorithm}[!h]
+ \caption{checkNumericalRanges}
+ \label{alg4}
+ \SetKwFunction{queryAccuracyDistribution, querySupportDistribution}
+ \KwIn{\textbf{Input:}  \\}
+ \KwOut{}
+  $v \leftarrow $ Numerical variable from $lit_{new}$ \;
+  $acc \leftarrow $ \FuncSty{queryAccuracyDistribution(}$clause$,$v$\FuncSty{)} \;
+  $sup \leftarrow $ \FuncSty{querySupportDistribution(}$clause$, $v$\FuncSty{)} \;
+  $intervals \leftarrow $  \FuncSty{searchInterestingIntervals(}$acc$,$sup$,$accTS$,$supTS$\FuncSty{)} \;
+  \ForEach{$interval_i \in intervals$} {
+     $newClause \leftarrow \{clause \cup lit_{new} \cup \{v \in interval_i\}\}$ \;
+     Add $newClause$ to rule tree \;
+  }
+  $suggestions \leftarrow node.getSuggestions(clause.head)$ \;
+  \ForEach{$lit_i \in suggestions$ \textbf{and} $i \leq k$} {
+    $node_i \leftarrow node$.\FuncSty{search(}$lit_i$\FuncSty{)} \;
+    \FuncSty{checkNumericalRanges(}$clause \cup lit_i$,$lit_{new}$,$node_i$\FuncSty{)} \;
+  }
+\end{algorithm}
 
 In the specialization step, we can detect whether the clause contains any numerical property, which is root of a
 \graphname. If so, it can search for interesting ranges numerical ranges, 
