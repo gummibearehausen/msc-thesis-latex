@@ -1,13 +1,33 @@
 \chapter{Experiments}
 \label{ch:intro}
 
+***Roughly explaining the experiments I did so far, we want to evaluate whether the heuristics are good.
+So we use US Census data to build a lattice (for income property) with the limitation of having up to $n$ nodes at each
+level. So far I compared the KL-divergence*Support with support only as measures. For every level I sort the nodes by
+the measure (nodes with multiple parents will have multiple KL-divergence, in this case I take the maximum one) and try
+to join the nodes with highest measures first until $n$ nodes for the next level is reached. In other words, I greedily
+build the a lattice with limited number of nodes per level.
+
+After that, I try to extract rules with interesting ranges directly from the lattice and test them against a test
+partition. Interesting rules are defined as in \refname{Interesting Rules} with support threshold of 25 examples and
+accuracy threshold of 0.75. After that, I compare the number of interesting rules learned, the time taken to build the
+lattice and the accuracy and accuracy gain compared to the base rule.
+
+Accuracy and accuracy gain seem to depend exclusively on the accuracy threshold, so they are roughly the same for both
+measures. Processing time is much smaller for the KL-divergence as it doesn't simply focus on huge relations and as
+expected, it also presents a greater number of rules with interesting ranges (at least for smaller number of nodes per
+level).
+
+Hopefully I'll soon have results from applying the lattice in the core ILP. I managed to overcome some
+implementation problems I had when creating the lattice in YAGO.
+
 \begin{figure}
-\caption{levels=3}
+\caption{Lattices with 3 levels}
 \centering
 \begin{tikzpicture}[scale=1.0]
  \begin{axis}[
         xlabel=\textsc{\#Nodes per lattice level},
-        ylabel=\textsc{Execution Time ($ms$)}
+        ylabel=\textsc{Time to build lattice ($ms$)}
     ]
 \addplot coordinates {(5,2165) (10,4337) (15,6723) (20,8860) (30,11969) (40,14626) (50,21288) (60,22329) (70,24577)
 (80,25387) (90,27539) (100,30210)};
@@ -29,7 +49,7 @@
 \end{figure}
 
 \begin{figure}
- \caption{levels=4}
+ \caption{Lattice with 4 levels}
  \centering
  \begin{tikzpicture}[scale=1.0]
   \begin{axis}[
@@ -45,7 +65,7 @@
   \begin{tikzpicture}[scale=1.0]
   \begin{axis}[
 	  xlabel=\textsc{\#Nodes per lattice level},
-	  ylabel=\textsc{Execution Time ($ms$)}
+	  ylabel=\textsc{Time to build lattice ($ms$)}
       ]
   \addplot coordinates {(5,3905) (10,8496) (15,13097) (20,16601) (30,24348) (40,31322) (50,38189) (60,44724) (70,51869)
   (80,55981) (90,60382) (100,65622)};
