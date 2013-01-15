@@ -245,9 +245,10 @@ daughter(eve,ann) -	& parent(tom,ian) 	\\
 Important concepts:
   \begin{itemize}
    \item Literal: predicate symbol with bracketed n-tuple, e.g: \\ \quad $L=livesIn(x,y)$
-   \item Clause: a set of literals (negated or not), e.g: \\ \quad $c=\{L_1,L_2,\ldots,\neg L_{m-1}, \neg L_{m}\}$
-   \item Horn Clause: a clause with a single non-negated literal, e.g: \\ \quad$\{L_1,L_2,\neg L_3\} \equiv
-L_3$:-$L1,L2$
+   \item Clause: a disjunction of literals (negated or not), e.g: \\ \quad $c=(L_1 \vee L_2 \vee \ldots \vee \neg
+L_{m-1} \vee \neg L_{m})$
+   \item Horn Clause: a clause with a single non-negated literal, e.g: \\ \quad$\{\neg L_1 \vee \neg L_2 \vee L_3\}
+\equiv L_3$:-$L_1,L_2$
    \item Hypothesis: a set of clauses $H$
    \item Completeness: $H$ covers all positive examples
    \item Consistency: $H$ covers no negative examples
@@ -336,9 +337,10 @@ What property is more interesting to add to the clause body:
    \item Build a lattice similar to an itemset lattice 
    \item Numerical property as root 
    \item The ``items'' would be literals that can be joined with the root's non-numerical variable 
-   \item Each node consists of the joined with a set of literals \\
-  Each node has a frequency histogram with examples distribution over root's numerical attribute to enable divergence 
-  measures 
+   \item Each node consists of the joined with a set of literals
+   \item Root's numerical atribute domain is discritezed in $k$ buckets
+   \item Each node $x$ has a histogram $h(x)$ with examples frequencies $h_i(x)$ for each bucket $i
+\in {1,\ldots,k}$ to enable divergence measures 
    \item Then we can use it to suggest the most interesting literals to be added in the refinement step from core-ILP
    \item Idea is to generate a correlation lattice for each numerical attribute as preprocessing step 
   \end{itemize}
@@ -346,131 +348,148 @@ What property is more interesting to add to the clause body:
 
 \begin{frame}
  \frametitle{Correlation Lattice}
-\begin{figure}[!h]
-  \caption{Correlation Lattice example}
-  \centering
-  \begin{tikzpicture}
-  [scale=0.8,auto=center,every node/.style={circle,fill=black!10,minimum size=1.2cm, font=\tiny}]
-  \input{./Chapters/graph1}
-  \end{tikzpicture}
-  \label{fig:lattice}
-\end{figure}
+ \begin{columns}[c]
+  \column{0.6\textwidth}
+    \begin{figure}
+     \label{lattice}
+      \includegraphics[height=0.7\textheight]{./Figures/lattice}
+    \end{figure}
+  \column{0.4\textwidth}
+    \fontsize{7}{7}
+    $r=hasIncome(x,y)$ \\
+    $a_1=hasSex(x,Male)$ \\
+    $a_2=hasSex(x,Female)$ \\
+    $b_1=employmentStatus(x,Employed)$ \\
+    $b_2=employmentStatus(x,Unemployed)$ \\
+    $c_1=hasDeficiency(x,Yes)$ \\
+    $c_2=hasDeficiency(x,No)$ \\
+ \end{columns}
 \end{frame}
 
 
 \begin{frame}
 \frametitle{Correlation Lattice}
   \begin{itemize}
-     \item Number of nodes in a lattice with $l$ levels $n$ properties and $m$ constants per property:
+     \item Number of nodes in a lattice with $\ell$ levels $n$ properties and $m$ constants per property:
       \begin{equation}
-	\sum_{i=1}^l \dbinom{nm}{i}
+	\sum_{i=1}^{\ell} \dbinom{nm}{i}
       \end{equation}
       \item Too expensive, we need to reduce size 
       \begin{itemize}
 	\item prune by support (safe)
       \end{itemize}
       \item If not sufficient, we can restrict the literals to be added in the lattice in order to reduce $n$ and $m$
-as much as possible
   \end{itemize}
 \end{frame}
 
-%------------------------------------------------
+\begin{frame}
+\frametitle{Correlation Lattice}
+  Literal Restrictions
+  \begin{itemize}
+    \item Lattice literals should directly join with root's non-numerical argument variable
+    \item Other argumets in the literal should either be a free variable or a constant
+    \item Literals that don't directly join with root should be combined with a linking property, e.g.:
+       \begin{center}
+	  $wasBornIn(x,z)hasOfficialLanguage(z,w)$ as a single literal $r(x,w)$
+       \end{center}
+
+    \item This can be used for enable integration with different datasets
+    \begin{center}
+       $owl$:$sameAs(x,z)directed(z,w)$
+    \end{center}
+  \end{itemize}
+\end{frame}
 
 \begin{frame}
-\frametitle{Multiple Columns}
-\begin{columns}[c] % The "c" option specifies centered vertical alignment while the "t" option is used for top vertical alignment
-
-\column{.45\textwidth} % Left column and width
-\textbf{Heading}
-\begin{enumerate}
-\item Statement
-\item Explanation
-\item Example
-\end{enumerate}
-
-\column{.5\textwidth} % Right column and width
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lectus nisl, ultricies in feugiat rutrum, porttitor sit amet augue. Aliquam ut tortor mauris. Sed volutpat ante purus, quis accumsan dolor.
-
-\end{columns}
+\frametitle{Independence checks}
+  Checks if a pair of nodes joining nodes are independent given their common parent
+  \begin{figure}
+  \includegraphics[height=0.3\textheight]{./Figures/indep}
+  \end{figure}
+  \begin{itemize}
+    \item Estimate $\hat{h}(pxy)$ assuming that $x$ and $y$ are independent given $p$
+    \item Query actual $h(pxy)$ and perform a Pearson's chi-squared test
+      \begin{center}
+	  $H_0$ = $x$ and $y$ are independent given $p$ \\
+	  $H_1$ = $x$ and $y$ are dependent given $p$
+      \end{center}
+  \end{itemize}
 \end{frame}
-
-%------------------------------------------------
-\section{Second Section}
-%------------------------------------------------
 
 \begin{frame}
-\frametitle{Table}
-\begin{table}
-\begin{tabular}{l l l}
-\toprule
-\textbf{Treatments} & \textbf{Response 1} & \textbf{Response 2}\\
-\midrule
-Treatment 1 & 0.0003262 & 0.562 \\
-Treatment 2 & 0.0015681 & 0.910 \\
-Treatment 3 & 0.0009271 & 0.296 \\
-\bottomrule
-\end{tabular}
-\caption{Table caption}
-\end{table}
+\frametitle{Independence checks}
+  If there's not enough evidence of dependence, we know that:
+  \begin{center}
+   $x$:-$py \equiv x$:-$p$ \\
+   $y$:-$px \equiv y$:-$p$
+  \end{center}
+  The smaller the \emph{p-value} (or simply the greater the $\chi^2$ value) the greater the evidence that $x$ and
+$y$ are dependent given $p$, therefore the more interesting it is to join both $py$ and $px$
 \end{frame}
-
-%------------------------------------------------
 
 \begin{frame}
-\frametitle{Theorem}
-\begin{theorem}[Mass--energy equivalence]
-$E = mc^2$
-\end{theorem}
+\frametitle{Search in the Lattice}
+  \begin{itemize}
+   \item In the refinement loop from the core-ILP, the clauses have a fixed head and literals are added to the body.
+   \item Assuming that head literal is present in the lattice, we want the interestingness of adding the head to the
+body.
+   \item Searching for the new literals to be attached to the body that gives you best interestingness when adding the
+head is not a very simple task.
+   \item e.g., if we have a literal $a$ fixed as head, and wehave the lattice root literal $r$ as body,
+(i.e., the current clause is $a$:-$r$), we want the new literal $l$ such that interestingness of adding $a$ to $rl$ is
+maximum.
+  \end{itemize}
 \end{frame}
-
-%------------------------------------------------
-
-\begin{frame}[fragile] % Need to use the fragile option when verbatim is used in the slide
-\frametitle{Verbatim}
-\begin{example}[Theorem Slide Code]
-\begin{verbatim}
-\begin{frame}
-\frametitle{Theorem}
-\begin{theorem}[Mass--energy equivalence]
-$E = mc^2$
-\end{theorem}
-\end{frame}\end{verbatim}
-\end{example}
-\end{frame}
-
-%------------------------------------------------
 
 \begin{frame}
-\frametitle{Figure}
-Uncomment the code on this slide to include your own image from the same directory as the template .TeX file.
-%\begin{figure}
-%\includegraphics[width=0.8\linewidth]{test}
-%\end{figure}
+\frametitle{Search in the Lattice}
+  In the following example, we would have $b$, $c$, and $d$ as possible new literals
+  \begin{figure}
+  \includegraphics[height=0.5\textheight]{./Figures/headmap}
+  \end{figure}
 \end{frame}
-
-%------------------------------------------------
-
-\begin{frame}[fragile] % Need to use the fragile option when verbatim is used in the slide
-\frametitle{Citation}
-An example of the \verb|\cite| command to cite within the presentation:\\~
-
-This statement requires citation \cite{p1}.
-\end{frame}
-
-%------------------------------------------------
 
 \begin{frame}
-\frametitle{References}
-\footnotesize{
-\begin{thebibliography}{99} % Beamer does not support BibTeX so references must be inserted manually as below
-\bibitem[Smith, 2012]{p1} John Smith (2012)
-\newblock Title of the publication
-\newblock \emph{Journal Name} 12(3), 45 -- 678.
-\end{thebibliography}
-}
+\frametitle{Search in the Lattice}
+   What has to be done?
+  \begin{itemize}
+   \item Search the node with body literals
+   \item For each child of such node check head literal can be further added, if so collect the new literal and the
+interestingness value of adding the head
+   \item Sort the possible new literals by interestingness
+  \end{itemize}
+  Alternative?
+  \begin{itemize}
+   \item Create mapping in every node with the possible head literals as key and sorted literals to be added to body as
+value, e.g. for the node $r a_1 b_1$ in \ref{lattice}:
+   \begin{center}
+    \begin{tabular}{r | l}
+      $a_1$ 	& $c_1$ [$m_{a_1,rb_1c_1}$] \\
+		& $c_2$ [$m_{a_1,rb_1c_2}$] \\
+      \hline
+      $b_1$	& $c_1$ [$m_{b_1,ra_1c_1}$] \\
+		& $c_2$ [$m_{b_1,ra_1c_2}$]
+    \end{tabular}
+   \end{center}
+   \item Only add entry if head and new literal not independent given body
+  \end{itemize}
 \end{frame}
 
-%------------------------------------------------
+\section{Experiments}
+
+\begin{frame}
+\frametitle{Experiments}
+  Not done yet!
+  Some experiments done with USCensus
+  \begin{itemize}
+   \item All data joined by person only (anonymized)
+   \item All properties categorical (categories as literals)
+   \item Not densely linked to other datasets
+   [talk a bit about interestingness measures evaluation done with USCensus]
+  \end{itemize}
+\end{frame}
+
+
 
 \begin{frame}
 \Huge{\centerline{The End}}
