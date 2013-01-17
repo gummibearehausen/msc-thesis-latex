@@ -5,7 +5,6 @@ In this chapter we will discuss what kind of rules we are interested in, define 
 describe in more details a \graphname, how to build it and integrate it in the core ILP learning algorithm.
 
 \section{Interesting Rule Definition}
-%\label{cl:interestingRules}
 
 In this section we formally define what kind of rules we are interested in obtaining with the algorithm proposed in
 this thesis. As briefly explained in the introduction, the objective is to learn rules with numerical properties,
@@ -31,7 +30,7 @@ As we know that $r_1 \geq TS_{conf}$, then $g_{r_2,r_1}$ is upper-bounded by:
 \end{equation}
 
 More interesting for us would be base rules that satisfy the support threshold but does not satisfy the confidence
-threshold. In such case, if we have a non-uniform confidence distribution along the buckets, it's possible for some
+threshold. In such case, if we have a non-uniform confidence distribution along the buckets, it is possible for some
 intervals, its correspondent refined-rule satisfies both thresholds. Furthermore, the confidence gain is potentially
 much greater than otherwise.
  
@@ -89,7 +88,7 @@ approach, one can also
 include non-categorical properties into the \graphname and have insight about how the presence or absence of such
 property affects the distribution of root's numerical attribute.
 
-In this case we must consider a property which doesn't have examples for all its domain. For example, the property
+In this case we must consider a property which does not have examples for all its domain. For example, the property
 \emph{isParentOf(x,y)} has as both domain and range type Person. If not all the Person instances of the knowledge base
 have supporting facts for the relation \emph{isParentOf}, then we can
 split the instances in two categories: the ones that are covered by the property and the ones that are not. For example,
@@ -117,7 +116,8 @@ $X_{root}=\{John,Mike,Anne,Mary,Lisa,Paul\} \\$
 $X_{root}^1=\{John,Mike,Anne\} \\$
 $X_{root}^2=\{Mary,Lisa,Paul\}$
 
-As in this thesis we are under open world assumption and we don't consider negated literals in the hypothesis, we ignore
+As in this thesis we are under open world assumption and we don not consider negated literals in the hypothesis, we
+ignore
 the absence and just include the presence of relations in the lattice.
 
 
@@ -195,8 +195,10 @@ argument types from each of the relations declared with \emph{rdfs:domain} and \
 straightforward task.
 
 For every possible pair of relations, we simply try to match the joining argument types from the 2 joining relations. We
-check whether they are equal or if one can be subsumed by the other. If so, then it's allowed to join the pair of relations
-on the given joining arguments, or in other words, the type hierarchy doesn't prevent them from joining. The pseudo-code
+check whether they are equal or if one can be subsumed by the other. If so, then it is allowed to join the pair of
+relations
+on the given joining arguments, or in other words, the type hierarchy does not prevent them from joining. The
+pseudo-code
 for performing such task is
 shown in the Algorithm \ref{alg1}:
 
@@ -231,7 +233,7 @@ shown in the Algorithm \ref{alg1}:
 \end{algorithm}
 
 Nevertheless, it might be that in the knowledge base, the cardinality of such join might be zero or simply not exceed
-the support threshold. Thus, it's worth to that beforehand, and that's what will be explained in the next section.
+the support threshold. Thus, it is worth to that beforehand, and that is what will be explained in the next section.
 
 \subsubsection{Exploiting Support Monotonicity}
 
@@ -239,8 +241,9 @@ Support is a monotonically decreasing measure in top-down ILP. So we know that b
 literals to the hypothesis, we can only get a smaller or equal support. Therefore, for each pair of joinable relations
 in each of the join patterns, we can query the knowledge base and check whether they have enough supporting facts.
 
-Thus, if any pair of relations doesn't reach the minimum support for a given join pattern, we know that any clause
-containing such join will therefore fail the support test as well, so we don't need to test such hypothesis in the core
+Thus, if any pair of relations does not reach the minimum support for a given join pattern, we know that any clause
+containing such join will therefore fail the support test as well, so we don not need to test such hypothesis in the
+core
 ILP algorithm.
 
 \begin{algorithm}[!h]
@@ -399,7 +402,7 @@ section(??), we will also discuss possible pruning techniques.
 
 As described in (\cite{LavracDz94}), in top-down ILP every refinement causes the support to decrease, therefore we know
 that for every node in the \graphname, its support will be greater or equal than any of its children, so support is a
-monotonically decreasing measure so we can safely prune a node that doesn't reach the minimum support threshold.
+monotonically decreasing measure so we can safely prune a node that does not reach the minimum support threshold.
 
 In this thesis, we define support as the absolute frequency of supporting facts.
 
@@ -410,7 +413,7 @@ By simplicity, we assume that every possible pair of categorical relations are i
 we search for evidence to prove the contrary.
 
 For 2 nodes to be joined, they must have a common parent, i.e. two nodes at level $l$ (with $l+1$ literals) are joinable
-if they share $l$ literals. Therefore, it's straightforward to calculate the conditional probabilities of each of the
+if they share $l$ literals. Therefore, it is straightforward to calculate the conditional probabilities of each of the
 joining nodes given the common parent, and estimate the frequency distribution for the conditional independence case.
 
 Let's say we have the following join case:
@@ -421,9 +424,9 @@ Let's say we have the following join case:
   \begin{tikzpicture}
   [scale=1,auto=center,every node/.style={minimum size=1cm}]
     \node (p)  [circle,fill=black!20] at (4,10) {$p$};
-    \node (n1) [circle,fill=black!20] at (3,8)  {$p x$};
-    \node (n2) [circle,fill=black!20] at (5,8)  {$p y$};
-    \node (n12)[circle,fill=black!20] at (4,6)  {$p x y$};
+    \node (n1) [circle,fill=black!20] at (3,8)  {$p,x$};
+    \node (n2) [circle,fill=black!20] at (5,8)  {$p,y$};
+    \node (n12)[circle,fill=black!20] at (4,6)  {$p,x,y$};
 
 
     \foreach \from/\to in {p/n1,p/n2,n1/n12,n2/n12}
@@ -480,7 +483,7 @@ We calculate the critical value $\chi^2$:
 
 \cite{Jaroszewicz02pruningredundant}
 
-Then it's possible to obtain the p-value and check whether there's enough confidence to reject the null hypothesis
+Then it is possible to obtain the p-value and check whether there is enough confidence to reject the null hypothesis
 $H_0$. 
 
 
@@ -579,7 +582,7 @@ if $l=nm$:
 \end{center}
 
 
-Pruning by support is usually not sufficient to make it feasible and it's necessary to apply
+Pruning by support is usually not sufficient to make it feasible and it is necessary to apply
 heuristics to prune it more aggressively.
 
 %%% Divergence
@@ -587,7 +590,7 @@ heuristics to prune it more aggressively.
 Pruning by divergence is clearly not safe. Let's suppose we have a root numerical property $r(x,y)$, and two categorical
 relations $a(x,z)$ with constants $A_1$ and $A_2$ and $b(x,w)$ with constants $B_1$ and $B_2$. For simplicity, let's
 assume y is divided in two buckets and root $r$ has an uniform distribution $[0.5 \, 0.5]$ from frequencies $[2 \, 2]$.
-It's possible to have $r a_1$ and $r a_2$ as well as $r b_1$ and $r b_2$ with the same uniform distribution with
+It is possible to have $r a_1$ and $r a_2$ as well as $r b_1$ and $r b_2$ with the same uniform distribution with
 frequencies $[1 \, 1]$. Nevertheless when combined we can have the following:
 
 $r a_1 b_1 : [1.0 \, 0.0] \\$
@@ -602,7 +605,7 @@ As shown above, divergence is not a monotonically decreasing measure, thus it ca
 Moreover, using a divergence measure alone might also be problematic. Histograms with low support are more likely to
 present a higher divergence than histograms with higher support, supposing that they were drawn from the same original
 distribution. Consequently, and algorithm using only the divergence as heuristics would end up giving preference to
-nodes with lower support. Therefore, it's important to use divergence combined with support as pruning heuristics.
+nodes with lower support. Therefore, it is important to use divergence combined with support as pruning heuristics.
 [Restructure, it's confusing]
 
 %Moreover, we are interested not only in rules with high confidence, but also rules with high support so more facts can
@@ -628,12 +631,18 @@ The buckets used throughout the \graphname should be consistent, and the bucketi
 specified in the very beginning with the root node. It should have as input an arbitrarily defined number of buckets
 $k$.
 
-\subsection{Bucketing by Domain}
-This bucketing method consists of simply querying both the maximum and minimum value of the root's numerical attribute
-and 
+\subsection{Equal Width}
+This discretization method consists of simply querying both the maximum and minimum values of the root's numerical
+attribute, then for splitting this interval into $k$ buckets of same width $w$:
+\begin{equation}
+ w=cfrac{max-min}{k}
+\end{equation}
 
-\subsection{Bucketing by Support}
-
+\subsection{Equal Frequencies}
+In this discretization method, frequencies are summed up then the result is divided by $k$. Bucket widths may be
+different and should adjusted in order to obtain buckets with equal frequencies. Nevertheless, data distribution might
+make it impossible to split it equally, so boundaries are set in order to have an overall distribution as close as
+possible to uniformity.
 
 \section{Incorporating \graphname into the Core ILP Algorithm}
 
@@ -645,7 +654,7 @@ or literals until stopping criteria is reached.
 
 \subsection{Querying the \graphname}
 
-In the ILP there's a fixed head literal and such literal can and should be included in the \graphname. In case it's
+In the ILP there is a fixed head literal and such literal can and should be included in the \graphname. In case it is
 present in the lattice, it plays a key role in the search. Once the root property is added in a clause that does not
 exceed the accuracy threshold.
 
@@ -665,25 +674,27 @@ the head literal that has the has the highest interestingness measure when addin
   \begin{tikzpicture}
   [scale=1,auto=center,every node/.style={minimum size=1cm}]
     \node (r)  [circle,fill=black!20] at (4,10) {$r$};
-    \node (ra) [circle,fill=black!20] at (1,8)  {\textbf{\emph{ra}}};
-    \node (rb) [circle,fill=black!20] at (3,8)  {$r b$};
-    \node (rc) [circle,fill=black!20] at (5,8)  {$r c$};
-    \node (rd) [circle,fill=black!20] at (7,8)  {$r d$};
-    \node (rab)[circle,fill=black!20] at (3,5)  {$r a b$};
-    \node (rac)[circle,fill=black!20] at (5,5)  {$r a c$};
-    \node (rad)[circle,fill=black!20] at (7,5)  {$r a d$};
-
-    \node (m1)[blue] at (3,7)  {$m_{a,rb}$};
-    \node (m2)[blue] at (5,7)  {$m_{a,rc}$};
-    \node (m3)[blue] at (7,7)  {$m_{a,rd}$};
-    \node (m4)[red] at (2.3,6)  {$m_{b,ra}$};
-    \node (m5)[red] at (3.6,6)  {$m_{c,ra}$};
-    \node (m6)[red] at (5.0,6)  {$m_{d,ra}$};
-
-
+    \node (ra) [circle,fill=black!20] at (1,8)  {\textbf{\emph{r,a}}};
+    \node (rb) [circle,fill=black!20] at (3,8)  {$r,b$};
+    \node (rc) [circle,fill=black!20] at (5,8)  {$r,c$};
+    \node (rd) [circle,fill=black!20] at (7,8)  {$r,d$};
+    \node (rab)[circle,fill=black!20] at (3,5)  {$r,a,b$};
+    \node (rac)[circle,fill=black!20] at (5,5)  {$r,a,c$};
+    \node (rad)[circle,fill=black!20] at (7,5)  {$r,a,d$};
 
     \foreach \from/\to in {r/ra,r/rb,r/rc,r/rd,ra/rab,ra/rac,ra/rad,rb/rab,rc/rac,rd/rad}
-      \draw[black!20] (\from) -- (\to);
+      \draw[black!70] (\from) -- (\to);
+
+    \node (m1)[blue] at (3,7)  {\textbf{$m_{a \leftarrow r,b}$}};
+    \node (m2)[blue] at (5,7)  {$m_{a \leftarrow r,c}$};
+    \node (m3)[blue] at (7,7)  {$m_{a \leftarrow r,d}$};
+    \node (m4)[red] at (2.3,6)  {$m_{b \leftarrow r,a}$};
+    \node (m5)[red] at (3.6,6)  {$m_{c \leftarrow r,a}$};
+    \node (m6)[red] at (5.0,6)  {$m_{d \leftarrow r,a}$};
+
+
+
+
 
     %\draw (ra) -- (rab) -|  \node [below,pos=0.25] {$m_1$}(l1);
   \end{tikzpicture}
@@ -692,11 +703,11 @@ the head literal that has the has the highest interestingness measure when addin
 
 As shown in Figure \ref{fig:latticeSuggestion}, if we can add $b$, $c$ or $d$ to $ra$, we are interested about the
 measures in blue instead of the ones in red. Nevertheless, searching for values for $m_{a,rb}$, $m_{a,rc}$ and
-$m_{a,rd}$ is a bit tricky. It's necessary to check for all children of $ra$, which ones have parents without head
+$m_{a,rd}$ is a bit tricky. It is necessary to check for all children of $ra$, which ones have parents without head
 literal $a$, then gather all the measures and rank them.
 
 In order to make it simpler, we can create a map during lattice build. This map would contain an entry for all node
-it's joined to, with head as key and literals to add sorted by measure as value. So for example when we are obtaining
+it is joined to, with head as key and literals to add sorted by measure as value. So for example when we are obtaining
 the node $rab$ by joining $ra$ and $rb$, we add to $ra$ an entry with $a$ as key, $b$ as new literal and
 associated measure $m_{a,rb}$ and we also add to $rb$ an entry with $b$ as key, $a$ as new literal ad associated
 measure $m_{b,ra}$. 
@@ -711,7 +722,7 @@ In the example of Figure \ref{fig:latticeSuggestion}, $ra$ would contain the fol
   \end{tabular}
 \end{center}
 
-As in this example the node $ra$ has only two literals, and the root $r$ can't be the head, we use the node $ra_1b_1$
+As in this example the node $ra$ has only two literals, and the root $r$ cannot be the head, we use the node $ra_1b_1$
 in Figure \ref{fig:lattice} to better illustrate it:
 
 \begin{center}
@@ -771,5 +782,5 @@ numerical property and searches for interesting ranges. With that there are
 \end{algorithm}
 
 In the specialization step, we can detect whether the clause contains any numerical property, which is root of a
-\graphname. If so, it can search for interesting numerical ranges and combine them with the best , 
+\graphname. If so, it can search for interesting ranges numerical ranges, 
 
