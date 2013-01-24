@@ -76,18 +76,24 @@
 %\setbeamertemplate{navigation symbols}{} % To remove the navigation symbols from the bottom of all slides uncomment this line
 }
 
+
+
 \setbeamertemplate{itemize items}[default]
 \setbeamertemplate{enumerate items}[default]
 
+\usepackage{pgfpages}
 \usepackage{graphicx} % Allows including images
 \usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
 \usepackage{tikz}
+
+% \pgfpagesuselayout{16 on 1}[a4paper,landscape,border shrink=0mm]
 
 %----------------------------------------------------------------------------------------
 %	TITLE PAGE
 %----------------------------------------------------------------------------------------
 
-\title[Short title]{Learning Rules With Categorical Attributes from Linked Data Sources} % The short title appears at
+\title[]{Learning Rules With Numerical and Categorical
+Attributes from Linked Data Sources} % The short title appears at
 %the bottom of every slide, the full title is only on the title page
 
 \author{Andre de Oliveira Melo} % Your name
@@ -119,26 +125,14 @@ Saarland University \\ % Your institution for the title page
 \section{Introduction}
 %------------------------------------------------
 
-\subsection{Subsection Example}
-
 \begin{frame}
 \frametitle{Semantic Web}
 \begin{quote}
  ``provides a common framework that allows data to be shared and reused across application, enterprise, and community
 boundaries''
 \end{quote}
-
-Built on W3C's:
-\begin{itemize}
- \item RDF
- \item OWL
- \item SKOS
- \item SPARQL
-\end{itemize}
 \end{frame}
-
 %------------------------------------------------
-
 \begin{frame}
 \frametitle{Linked Data}
 \begin{quote}
@@ -148,163 +142,237 @@ information and knowledge on the Semantic Web using URIs and RDF''
 \begin{quote}
  ``collection of interrelated datasets on the Web''
 \end{quote}
+ \begin{figure}
+ \includegraphics[width=0.65\linewidth]{./Figures/lod-datasets_2011-09-19}
+ \end{figure}
 \end{frame}
-
-%------------------------------------------------
-
+%-----------------------------------------------------------------------------------------------------------------------
 \begin{frame}
 \frametitle{Linked Data}
  \begin{figure}
- \includegraphics[width=0.8\linewidth]{./Figures/lod-datasets_2011-09-19}
+ \includegraphics[width=1\linewidth]{./Figures/lod-zoom}
  \end{figure}
 \end{frame}
-
-\subsection{Motivation}
-
+%-----------------------------------------------------------------------------------------------------------------------
+\section{Motivation}
+%-----------------------------------------------------------------------------------------------------------------------
 \begin{frame}
 \frametitle{Motivation}
-Learn inference rules from data:
+Learn Datalog rules from data:
 \begin{center}
-  $\underbrace{livesIn(x,y)}_{head}$:-$\underbrace{isMarriedTo(x,z),livesIn(z,y)}_{body}$
+  $\underbrace{livesIn(X,Y)}_{head}$ :- $\underbrace{isMarriedTo(X,Z),livesIn(Z,Y)}_{body}$
 \end{center}
 Support and confidence thresholds
 \begin{itemize}
- \item Support: $supp(head$:-$body)=supp(head \cup body)$
- \item Confidence: $conf(head$:-$body)=\cfrac{supp(head \cup body)}{supp(body)}$ 
+ \item Support: $supp(head$ :- $body)=supp(head \wedge body)$
+ \item Confidence: $conf(head$ :- $body)=\cfrac{supp(head \wedge body)}{supp(body)}$ 
 \end{itemize}
 \end{frame}
-
+%-----------------------------------------------------------------------------------------------------------------------
 \begin{frame}
 \frametitle{Motivation}
-Introducing constants can be relevant, e.g.:
-\begin{center}
-  \emph{speaks(x,y) :- livesIn(x,z)}\\
-  \emph{speaks(x,Portuguese) :- livesIn(x,Brazil)}
-\end{center}
-What about numerical attributes?
-\begin{center}
-  \emph{hasChild(x,y) :- hasAge(x,a)} [base-rule]
-\end{center}
+  Refining rules with constants is relevant
+  \begin{itemize}
+   \item \textbf{Base-rule}: Numerical argument with no constant \\ \quad 
+      $marritalStatus(X,single)$ :- $hasIncome(X,Y)$
+   \item \textbf{Refined-rule}: Base-rule with numerical variable set to a specific interval  \\  \quad 
+      $marritalStatus(X,single)$ :- $hasIncome(X,Y),Y \leq30k$
+  \end{itemize}
+  Combining with categories is also relevant
+  \begin{fontsize}{8}{8}
+    \begin{table}
+    \begin{tabular}{l}
+      \toprule
+      $marritalStatus(X,single)$ :- $livesIn(X,mississipi),hasIncome(X,Y)$ \\
+      $marritalStatus(X,single)$ :- $livesIn(X,mississipi),hasIncome(X,Y),Y \leq 15k$ \\ 
+      \midrule
+      $marritalStatus(X,single)$ :- $livesIn(X,newYork),hasIncome(X,Y)$ \\
+      $marritalStatus(X,single)$ :- $livesIn(X,newYork),hasIncome(X,Y),Y \leq 70k$ \\
+      \midrule
+      $marritalStatus(X,single)$ :- $livesIn(X,texas),hasIncome(X,Y)$ \\
+      $marritalStatus(X,single)$ :- $livesIn(X,texas),hasIncome(X,Y),Y \leq 31k$ \\
+      \bottomrule
+    \end{tabular}
+    \end{table}
+  \end{fontsize}
+\end{frame}
+%-----------------------------------------------------------------------------------------------------------------------
+\begin{frame}
+\frametitle{Motivation}
 \begin{itemize}
- \item \textbf{Support}: number of supporting examples
-  $supp(head$:-$body)=supp(head \cup body)$
- \item \textbf{Confidence}: $conf(head$:-$body)=\cfrac{supp(head \cup body)}{supp(body)}$ 
+  \item Learning for numerical point constants usually doesn't make sense \\ \quad
+      $marritalStatus(X,single)$ :- $hasIncome(X,18324)$ 
+  \item Even if it satisfies all thresholds \\ 
+      $speaks(X,portuguese)$ :- $livesIn(X,Z),hasPopulation(Z,193946886)$ \\
+      $speaks(X,portuguese)$ :- $livesIn(X,brazil)$
+  \item Search for intervals instead \\ \quad
+      $marritalStatus(X,single)$ :- $hasIncome(X,Y),Y \leq 30k$
+  \item Query support and confidence distribution over $Y$ and search for intervals that satisfy the thresholds \\ \quad
+     
 \end{itemize}
-\end{frame}
 
+
+\end{frame}
+%-----------------------------------------------------------------------------------------------------------------------
 \begin{frame}
 \frametitle{Motivation}
- We are more interested in base-rules that:
+ For learning rules with numerical constants, we are more interested in base-rules that:
  \begin{itemize}
   \item Satisfy support threshold
-  \item Do not satisfy confidence threshold
+  \item Do not necessarily satisfy confidence threshold
   \item Potentially has a refined-rule with an interval that satisfies both thresholds \\
-    \quad i.e., has non-uniform confidence distribution \\
-    \quad i.e., has divergent positive examples and body support distributions
+    \quad i.e., has non-uniform confidence distribution along the numerical attribute\\
+    \quad i.e., has body support and positives (body$\wedge$head) support distributions are different
  \end{itemize}
 \end{frame}
+%-----------------------------------------------------------------------------------------------------------------------
+\begin{frame}
+\frametitle{Motivation}
+ Example for a rule with positives support 117 and body support 700:
+\begin{columns}[c]
+  \column{0.45\textwidth}
+    \begin{figure}
+    \includegraphics[height=0.3\textheight]{./Figures/supportDistribution}
+    \end{figure}
+    \begin{figure}
+    \includegraphics[height=0.3\textheight]{./Figures/probabilityDistribution}
+    \end{figure}
+  \column{0.1\textwidth}
+    %\begin{centerline}
+      %\begin{fontsize}{20}{24}$\rightarrow$\end{fontsize}
+      $\rightarrow$
+    %\end{centerline}
+  \column{0.45\textwidth}
+    \begin{figure}
+    \includegraphics[width=1\linewidth]{./Figures/confidenceDistribution}
+    \end{figure}
+\end{columns}
 
+\end{frame}
+%-----------------------------------------------------------------------------------------------------------------------
 \begin{frame}
 \frametitle{Motivation}
  Problem?
  \begin{itemize}
-    \item Search space grows dramatically
-    \item Usually unfeasible to perform exhaustive search
+    \item Search space grows exponentially with the number of predicates and constants
     \item Querying support and confidence distributions is very expensive
  \end{itemize}
+ Idea:
+ \begin{itemize}
+    \item Analyze combinations of numerical and categorical properties
+    \item Measure their level of interestingness
+    \item Use core-ILP algorithm
+    \item Extend it to focus on most interesting combinations
+ \end{itemize}
 \end{frame}
-
-\section{Related Work}
-
+%-----------------------------------------------------------------------------------------------------------------------
+\section{Inductive Logic Programming}
+%-----------------------------------------------------------------------------------------------------------------------
 \begin{frame}
 \frametitle{ILP}
  Inductive Logic Programming: Finds a hypothesis $H$ that covers all positive, and no negative examples
-  \begin{equation}
-   positiveExamples + negativeExamples + background Knowledge \rightarrow hypothesis
-  \end{equation}
+  \begin{fontsize}{10}{10}
+    \begin{center}
+    $positiveExamples + negativeExamples + background Knowledge \rightarrow hypothesis$
+    \end{center}
 
-\begin{table}
-\begin{tabular}{| l | l |}
-\toprule
-\textbf{Training Examples} & \textbf{Background Knowledge}\\
-\midrule
-daughter(mary,ann) +	& parent(ann,mary)	\\
-daughter(eve,tom) +	& parent(ann, tom)	\\
-daughter(tom,ann) - 	& parent(tom,eve)	\\
-daughter(eve,ann) -	& parent(tom,ian) 	\\
-			& female(ann)		\\
-			& female(mary)		\\
-			& female(eve)		\\
-\bottomrule
-\end{tabular}
-\end{table}
+    \begin{table}
+      \begin{tabular}{ l  l }
+      \toprule
+      \textbf{Training Examples} & \textbf{Background Knowledge}\\
+      \midrule
+      daughter(mary,ann) +	& parent(ann,mary)	\\
+      daughter(eve,tom) +	& parent(ann, tom)	\\
+      daughter(tom,ann) - 	& parent(tom,eve)	\\
+      daughter(eve,ann) -	& parent(tom,ian) 	\\
+				& female(ann)		\\
+				& female(mary)		\\
+				& female(eve)		\\
+      \bottomrule
+      \end{tabular}
+    \end{table}
+
+    \begin{center}
+      $hypothesis = daughter(X,Y)$ :- $female(X),parent(Y,X)$ 
+    \end{center}
+  \end{fontsize}
 \end{frame}
-
+%-----------------------------------------------------------------------------------------------------------------------
 \begin{frame}
 \frametitle{ILP}
 Important concepts:
   \begin{itemize}
-   \item Literal: predicate symbol with bracketed n-tuple, e.g: \\ \quad $L=livesIn(x,y)$
+   \item Literal: predicate symbol with bracketed n-tuple, e.g: \\ \quad $L=livesIn(X,Y)$
    \item Clause: a disjunction of literals (negated or not), e.g: \\ \quad $c=(L_1 \vee L_2 \vee \ldots \vee \neg
 L_{m-1} \vee \neg L_{m})$
-   \item Horn Clause: a clause with a single non-negated literal, e.g: \\ \quad$\{\neg L_1 \vee \neg L_2 \vee L_3\}
-\equiv L_3$:-$L_1,L_2$
+   \item Safe Datalog Rules: Every variable in the head appear in a non-negated literal in the body, negated literal
+variables in the body should appear in some positive literal in the body, e.g.: \\ \quad 
+    $speaks(X,Y)$ :- $wasBornIn(X,Z),hasOfficialLanguage(Z,Y)$
    \item Hypothesis: a set of clauses $H$
    \item Completeness: $H$ covers all positive examples
    \item Consistency: $H$ covers no negative examples
   \end{itemize}
 \end{frame}
-
+%-----------------------------------------------------------------------------------------------------------------------
 \begin{frame}
 \frametitle{ILP}
 Approaches
   \begin{itemize}
-   \item Bottom-up: Start with least general H then perform generalizations
-   \item Top-down: Start with most general H then perform specializations
+   \item Bottom-up: Start with least general $H$ then perform generalizations
+   \item \textbf{Top-down}: Start with most general $H$ then perform specializations
    \begin{itemize}
     \item Specialization loop: adds literals to a clause and ensures consistency
     \item Covering loop: adds clauses to the hypothesis and ensures completeness
+    \item Anti-monotonic Support: refinements in the clause cannot increase the support
+    \item Apriori-style pruning
    \end{itemize}
   \end{itemize}
+What about large, noisy and incomplete Linked Open Data (LOD) datasets such as YAGO and DBpedia?:
+\begin{itemize}
+   \item Sample data to reduce size
+   \item Restrict the number of literals in a clause
+   \item Tolerate a certain level of inconsistency and incompleteness
+  \end{itemize}
 \end{frame}
-
+%-----------------------------------------------------------------------------------------------------------------------
 \section{Learning Rules With Categorical Attributes}
-
+%-----------------------------------------------------------------------------------------------------------------------
 \begin{frame}
 \frametitle{Correlation between Literals}
-Let's say we want to refine a clause with $hasIncome(x,y)$ with an interval for $y$.
-What property is more interesting to add to the clause body: 
-  \begin{center}
-   $quarterOfBirth(x,z)$ or $hasEducation(x,z)$?
-  \end{center}
+Let's say we want to refine a clause with $hasIncome(X,Y)$ with an interval for $Y$.
+What property is more interesting to add to the clause body:
 \begin{columns}[c]
   \column{0.5\textwidth}
-    \center{quarterOfBirth}
+    \begin{fontsize}{7}{8}
+      \center{$hasIncome(X,Y),quarterOfBirth(X,Z)$}
+    \end{fontsize}
     \begin{figure}
-    \includegraphics[width=1\linewidth]{./Figures/income-birthquarter.png}
+    \includegraphics[width=1\linewidth]{./Figures/income-birthquarter-zoom.png}
     \end{figure}
   \column{0.5\textwidth}
-    \center{hasEducation}
+    \begin{fontsize}{7}{8}
+      \center{$hasIncome(X,Y),hasEducation(X,Z)$}
+    \end{fontsize}
     \begin{figure}
-    \includegraphics[width=1\linewidth]{./Figures/income-education.png}
+    \includegraphics[width=1\linewidth]{./Figures/income-education-zoom.png}
     \end{figure}
 \end{columns}
 \end{frame}
-
-\begin{frame}
-\frametitle{Correlation between Literals}
-  \begin{figure}
-  \includegraphics[width=1\linewidth]{./Figures/income-education.png}
-  \end{figure}
-\end{frame}
-
+%-----------------------------------------------------------------------------------------------------------------------
+%\begin{frame}
+%\frametitle{Correlation between Literals}
+%  \begin{figure}
+%  \includegraphics[width=1\linewidth]{./Figures/income-education.png}
+% \end{figure}
+%\end{frame}
+%-----------------------------------------------------------------------------------------------------------------------
 \begin{frame}
 \frametitle{Correlation between Literals}
   \begin{table} 
     \begin{tabular}{c}
-      USCensus constants for $z$ in $hasEducation(x,z)$\\
+      USCensus constants for $Z$ in $hasEducation(X,Z)$\\
      \end{tabular}
-     \begin{tabular}{l  l}
+     \begin{tabular}{l | l}
       \midrule
       N/A (less than 3 years old)	& High school graduate	\\
       No school completed		& Some college, less than 1 year\\
@@ -318,34 +386,36 @@ What property is more interesting to add to the clause body:
     \end{tabular}
   \end{table}
 \end{frame}
-
+%-----------------------------------------------------------------------------------------------------------------------
 \begin{frame}
 \frametitle{Correlation between Literals}
-  Use distribution divergence as interestingness measures, e.g.:
-  \quad Kullback-Leibler, Chi-square, Jensen-Shannon, etc. \\
+  How to measure of the interestingness of adding a literal $l$ to a clause $c$?
+  \begin{itemize}
+   \item Extract a frequency histogram of the support distribution of $c$ and $(c \wedge l)$
+   \item Normalize both support distributions and measure their divergence (e.g., with Kullback-Leibler)
+  \end{itemize}
   But, divergence alone isn't a good idea because:
   \begin{itemize}
-   \item Lower support histograms are more likely to have a divergent distribution
-   \item Still, support is a good measure as well
+   \item Lower support histograms are more likely to have a divergent distribution (sampling error)
+   \item It's still interesting to have rules with high support
   \end{itemize}
   Then combine both measures: divergence*support
 \end{frame}
-
+%-----------------------------------------------------------------------------------------------------------------------
 \begin{frame}
 \frametitle{Correlation Lattice}
   \begin{itemize}
    \item Build a lattice similar to an itemset lattice 
-   \item Numerical property as root 
-   \item The ``items'' would be literals that can be joined with the root's non-numerical variable 
-   \item Each node consists of the joined with a set of literals
-   \item Root's numerical atribute domain is discritezed in $k$ buckets
-   \item Each node $x$ has a histogram $h(x)$ with examples frequencies $h_i(x)$ for each bucket $i
-\in {1,\ldots,k}$ to enable divergence measures 
-   \item Then we can use it to suggest the most interesting literals to be added in the refinement step from core-ILP
-   \item Idea is to generate a correlation lattice for each numerical attribute as preprocessing step 
+   \item Numerical property $r$ as root 
+   \item The ``items'' are literals that can be joined with the root's non-numerical variable $X$
+   \item Root's numerical attribute domain is discretized in $k$ buckets $b_1,\dots,b_k$
+   \item Each node $x$ has a frequency histogram $h(x)=<h_1(x),\ldots,h_k(x)>$ from its clause support distribution \\
+      \quad where $h_i(x)=supp(x|Y \in b_i)$ \quad and \quad $|h(x)|_1=supp(x)$
+   %\item Then we can use it to suggest the most interesting literals to be added in the refinement step from core-ILP
+   %\item Idea is to generate a correlation lattice for each numerical attribute as preprocessing step 
   \end{itemize}
 \end{frame}
-
+%-----------------------------------------------------------------------------------------------------------------------
 \begin{frame}
  \frametitle{Correlation Lattice}
  \begin{columns}[c]
@@ -356,17 +426,16 @@ What property is more interesting to add to the clause body:
     \end{figure}
   \column{0.4\textwidth}
     \fontsize{7}{7}
-    $r=hasIncome(x,y)$ \\
-    $a_1=hasSex(x,Male)$ \\
-    $a_2=hasSex(x,Female)$ \\
-    $b_1=employmentStatus(x,Employed)$ \\
-    $b_2=employmentStatus(x,Unemployed)$ \\
-    $c_1=hasDeficiency(x,Yes)$ \\
-    $c_2=hasDeficiency(x,No)$ \\
+    $r=hasIncome(X,Y)$ \\
+    $a_1=hasSex(X,male)$ \\
+    $a_2=hasSex(X,female)$ \\
+    $b_1=employmentStatus(X,employed)$ \\
+    $b_2=employmentStatus(X,unemployed)$ \\
+    $c_1=hasDeficiency(X,yes)$ \\
+    $c_2=hasDeficiency(X,no)$ \\
  \end{columns}
 \end{frame}
-
-
+%-----------------------------------------------------------------------------------------------------------------------
 \begin{frame}
 \frametitle{Correlation Lattice}
   \begin{itemize}
@@ -379,77 +448,115 @@ What property is more interesting to add to the clause body:
 	\item prune by support (safe)
       \end{itemize}
       \item If not sufficient, we can restrict the literals to be added in the lattice in order to reduce $n$ and $m$
+      \item As pruning heuristics, we can greedily prune it by interestingness, as well as independence checks
+(will be discussed later)
   \end{itemize}
 \end{frame}
-
+%-----------------------------------------------------------------------------------------------------------------------
 \begin{frame}
 \frametitle{Correlation Lattice}
   Literal Restrictions
   \begin{itemize}
-    \item Lattice literals should directly join with root's non-numerical argument variable
-    \item Other argumets in the literal should either be a free variable or a constant
-    \item Literals that don't directly join with root should be combined with a linking property, e.g.:
-       \begin{center}
-	  $wasBornIn(x,z)hasOfficialLanguage(z,w)$ as a single literal $r(x,w)$
-       \end{center}
-
-    \item This can be used for enable integration with different datasets
-    \begin{center}
-       $owl$:$sameAs(x,z)directed(z,w)$
-    \end{center}
+    \item Lattice literals should directly join with root's join variable $X$. For example if root is $hasIncome(X,Y)$
+we could have: \\ \quad
+	  $livesIn(X,Z)$\\ \quad
+	  $hasChild(X,no)$
+    \item Literals that don't directly join with root should be combined with a linking property, e.g.: \\ \quad
+	  $wasBornIn(X,W),hasOfficialLanguage(W,Z)$  \\ \quad
+	  $votedFor(X,W),isAffiliatedTo(W,labourParty)$  \\ \quad
+	  $isFatherOf(W,X),diedIn(W,Z)$
+    \item This can be used to enable integration with different datasets, e.g.:  \\ \quad
+	  $owl$:$sameAs(X,W),directed(W,Z)$
   \end{itemize}
 \end{frame}
-
+%-----------------------------------------------------------------------------------------------------------------------
 \begin{frame}
 \frametitle{Independence checks}
   Checks if a pair of nodes joining nodes are independent given their common parent
   \begin{figure}
-  \includegraphics[height=0.3\textheight]{./Figures/indep}
+  \includegraphics[height=0.4\textheight]{./Figures/indep}
   \end{figure}
+  $p$ is a clause containing the root literal and $(l-1)$ other literals \\
+  $x$ and $y$ are literals, s.t. $x \neq y$ and $x,y \not \in p$
   \begin{itemize}
     \item Estimate $\hat{h}(pxy)$ assuming that $x$ and $y$ are independent given $p$
-    \item Query actual $h(pxy)$ and perform a Pearson's chi-squared test
-      \begin{center}
-	  $H_0$ = $x$ and $y$ are independent given $p$ \\
+    \item Query actual $h(pxy)$ and perform a Pearson's chi-squared test \\ \quad
+	  $H_0$ = $x$ and $y$ are independent given $p$ \\ \quad
 	  $H_1$ = $x$ and $y$ are dependent given $p$
-      \end{center}
   \end{itemize}
 \end{frame}
-
+%-----------------------------------------------------------------------------------------------------------------------
 \begin{frame}
 \frametitle{Independence checks}
-  If there's not enough evidence of dependence, we know that:
-  \begin{center}
-   $x$:-$py \equiv x$:-$p$ \\
-   $y$:-$px \equiv y$:-$p$
-  \end{center}
-  The smaller the \emph{p-value} (or simply the greater the $\chi^2$ value) the greater the evidence that $x$ and
-$y$ are dependent given $p$, therefore the more interesting it is to join both $py$ and $px$
-\end{frame}
+  \begin{figure}
+    \centering
+    \begin{tikzpicture}
+    [scale=1,auto=center,every node/.style={minimum size=1cm}]
+      \node (p)[font=\tiny]   at (4,10) {$hasIncome(X,Y)$};      
+      \node (n1)[font=\tiny]  at (1,8)  {$hasIncome(X,Y),marritalStatus(X,single)$};     
+      \node (n2)[font=\tiny]  at (7,8)  {$hasIncome(X,Y),employmentStatus(X,employed)$}; 
+      \node (n12)[font=\tiny] at (4,6){$hasIncome(X,Y),marritalStatus(X,single),employmentStatus(X,employed)$};
 
+      \node (pd)[font=\tiny]   at (4,9.7)	 {$h=<6,10,8,4,2,1>$};
+      \node (pd)[font=\tiny]   at (1,7.7)  	 {$h=<4,5,4,3,1,0>$};
+      \node (pn2)[font=\tiny]  at (7,7.7)  	 {$h=<3,6,6,4,2,1>$};
+      \node (pn12)[font=\tiny] at (4,5.7)  	 {$h=<2,4,2,4,1,0>$};
+      \node (en12)[font=\tiny] at (4,5.4)  {$\hat{h}=<2,3,3,3,1,0>$};
+  
+
+
+      \foreach \from/\to in {p/n1,p/n2,n1/n12,n2/n12}
+	\draw (\from) -- (\to);
+
+      \draw[dashed] (0,9) -- (8,9);
+      \draw[dashed] (0,7) -- (8,7);
+
+      %\node (level0)[font=\small] at (10.5,10) {level $0$};
+      %\node (level1)[font=\small] at (10.5,8)  {level $1$};
+      %\node (level2)[font=\small] at (10.5,6)  {level $2$};
+    \end{tikzpicture}
+  \end{figure}
+
+ \begin{center}
+    $\chi^2=\sum_{i=1}^{k} \cfrac{(h_i - \hat{h_i})^2}{\hat{h_i}}=1 \quad \Rightarrow \quad $p-value$=0.96$
+ \end{center}
+
+ 
+\end{frame}
+%-----------------------------------------------------------------------------------------------------------------------
 \begin{frame}
-\frametitle{Search in the Lattice}
+\frametitle{Independence checks}
   \begin{itemize}
-   \item In the refinement loop from the core-ILP, the clauses have a fixed head and literals are added to the body.
-   \item Assuming that head literal is present in the lattice, we want the interestingness of adding the head to the
-body.
-   \item Searching for the new literals to be attached to the body that gives you best interestingness when adding the
-head is not a very simple task.
-   \item e.g., if we have a literal $a$ fixed as head, and wehave the lattice root literal $r$ as body,
-(i.e., the current clause is $a$:-$r$), we want the new literal $l$ such that interestingness of adding $a$ to $rl$ is
-maximum.
+   \item  If there's not enough evidence of dependence, we assume independence, then: \\ \quad
+      $x$ :- $p,y \equiv x$ :- $p$ \\ \quad
+      $y$ :- $p,x \equiv y$ :- $p$
+   \item The greater the $\chi^2$ value, the greater the evidence that $x$ and $y$ are dependent given $p$, therefore
+the more interesting it is to join both $py$ and $px$
+   \item As heuristics, we can prune a node when it's independent for all possible pairs of joining parents. That means
+its not interesting to any of its parents.
   \end{itemize}
 \end{frame}
-
+%-----------------------------------------------------------------------------------------------------------------------
 \begin{frame}
 \frametitle{Search in the Lattice}
-  In the following example, we would have $b$, $c$, and $d$ as possible new literals
-  \begin{figure}
-  \includegraphics[height=0.5\textheight]{./Figures/headmap}
-  \end{figure}
+  In the refinement loop from the core-ILP, the clauses have a fixed head and literals are added to the body.
+  In the following example, we would have $a$ as head literal, $r$ as root and $b$, $c$, $d$ as possible new
+literals
+ \begin{columns}[c]
+  \column{0.75\textwidth}
+    \begin{figure}
+    \includegraphics[height=0.5\textheight]{./Figures/headmap}
+    \end{figure}
+  \column{0.25\textwidth}
+      \begin{tabular}{r | l}
+	a & b=$m_{a,rb}$ \\
+	  & c=$m_{a,rc}$ \\
+	  & d=$m_{a,rd}$
+      \end{tabular}
+ \end{columns} 
 \end{frame}
-
-\begin{frame}
+%-----------------------------------------------------------------------------------------------------------------------
+\begin{frame} 
 \frametitle{Search in the Lattice}
    What has to be done?
   \begin{itemize}
@@ -461,40 +568,57 @@ interestingness value of adding the head
   Alternative?
   \begin{itemize}
    \item Create mapping in every node with the possible head literals as key and sorted literals to be added to body as
-value, e.g. for the node $r a_1 b_1$ in \ref{lattice}:
+value, e.g. for the node $r a_1 b_1$ in the lattice example:
    \begin{center}
     \begin{tabular}{r | l}
-      $a_1$ 	& $c_1$ [$m_{a_1,rb_1c_1}$] \\
-		& $c_2$ [$m_{a_1,rb_1c_2}$] \\
+      $a_1$ 	& $c_1$ [$m_{a_1 , r b_1 c_1}$] \\
+		& $c_2$ [$m_{a_1 , r b_1 c_2}$] \\
       \hline
-      $b_1$	& $c_1$ [$m_{b_1,ra_1c_1}$] \\
-		& $c_2$ [$m_{b_1,ra_1c_2}$]
+      $b_1$	& $c_1$ [$m_{b_1 , r a_1 c_1}$] \\
+		& $c_2$ [$m_{b_1 , r a_1 c_2}$]
     \end{tabular}
    \end{center}
    \item Only add entry if head and new literal not independent given body
   \end{itemize}
 \end{frame}
-
+%-----------------------------------------------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Incorporating the Lattice in the Core-ILP}
+  In the refinement step, we detect clauses with body containing a lattice root
+  \begin{itemize}
+  \item If clause satisfies support threshold and does not satisfy confidence threshold
+  \item Then search in lattice for body literals and head
+  \item Check the interestingness of adding the head to the body and analyze whether to search for numerical intervals
+  \item Query the lattice for suggestions of interesting literals to be added to the clause
+  \end{itemize}
+\end{frame}
+%-----------------------------------------------------------------------------------------------------------------------
 \section{Experiments}
-
+%-----------------------------------------------------------------------------------------------------------------------
 \begin{frame}
 \frametitle{Experiments}
-  Not done yet!
-  Some experiments done with USCensus
+  Some experiments done so far with USCensus
   \begin{itemize}
    \item All data joined by person only (anonymized)
    \item All properties categorical (categories as literals)
    \item Not densely linked to other datasets
-   [talk a bit about interestingness measures evaluation done with USCensus]
   \end{itemize}
 \end{frame}
-
-
-
+%-----------------------------------------------------------------------------------------------------------------------
 \begin{frame}
-\Huge{\centerline{The End}}
+\frametitle{Experiments}
+ Compare interestingness measures:
+ \begin{itemize}
+  \item \begin{color}{red}divergence*support\end{color} vs. \begin{color}{blue}support only\end{color}
+ \end{itemize}
+ \begin{figure}
+  \includegraphics[height=0.5\textheight]{./Figures/plots}
+ \end{figure}
 \end{frame}
-
+%-----------------------------------------------------------------------------------------------------------------------
+\begin{frame}
+\Huge{\centerline{Thank you}}
+\end{frame}
 %----------------------------------------------------------------------------------------
 
 \end{document} 
