@@ -33,6 +33,77 @@ More interesting for us would be base rules that satisfy the support threshold b
 threshold. In such case, if we have a non-uniform confidence distribution along the buckets, it is possible for some
 intervals, its correspondent refined-rule satisfies both thresholds. Furthermore, the confidence gain is potentially
 much greater than otherwise.
+
+For example in figure \ref{interestingnessExample}, we have an ideal example where positive examples and body support
+have completely different distributions and thus produce a very interesting confidence distribution.
+
+\begin{figure}
+  \label{interestingnessExample}
+  \begin{tikzpicture}[scale=0.8]
+  \begin{axis}[
+      ybar,
+      enlargelimits=0.10,
+      legend style={at={(0.5,-0.15)},
+	anchor=north,legend columns=-1},
+      ylabel={frequency},
+      symbolic x coords={b1,b2,b3},
+      xtick=data,
+      nodes near coords,
+      nodes near coords align={vertical},
+      ]
+  \addplot coordinates 
+     {(b1,19) (b2,18) (b3,16) (b4,14) (b5,10) (b6,6) (b7,4) (b8,2) (b9,1) (b10,0)};
+  \addplot coordinates
+     {(b1,21) (b2,23) (b3,27) (b4,40) (b5,60) (b6,80) (b7,95) (b8,105) (b9,115) (b10,120)};
+  \legend{postives, body support}
+  \end{axis}
+  \end{tikzpicture}
+  \begin{tikzpicture}[scale=0.8]
+  \begin{axis}[
+      ybar,
+      enlargelimits=0.15,
+      legend style={at={(0.5,-0.15)},
+	anchor=north,legend columns=-1},
+      ylabel={confidence},
+      symbolic x coords={b1,b2,b3},
+      xtick=data,
+      nodes near coords,
+      nodes near coords align={vertical},
+      ]
+  \addplot coordinates
+     {(b1,19/20) (b2,18/23) (b3,16/27) (b4,14/40) (b5,1/6) (b6,6/80) (b7,4/95) (b8,2/105) (b9,1/115) (b10,0)};
+  \legend{confidence}
+  \end{axis}
+  \end{tikzpicture} 
+\end{figure}
+
+In figure \ref{interestingnessDistribution}, we normalize the frequency histograms from the rule's positive examples
+and body support in order to better show how their distributions diverge.
+
+\begin{figure}
+  \label{interestingnessDistribution}
+  \begin{tikzpicture}[scale=0.8]
+  \begin{axis}[
+      ybar,
+      enlargelimits=0.10,
+      legend style={at={(0.5,-0.15)},
+	anchor=north,legend columns=-1},
+      ylabel={$p(b_i)$},
+      symbolic x coords={b1,b2,b3},
+      xtick=data,
+      nodes near coords,
+      nodes near coords align={vertical},
+      ]
+  \addplot coordinates 
+     {(b1,19/90) (b2,18/90) (b3,16/90) (b4,14/90) (b5,10/90) (b6,6/90) (b7,4/90) (b8,2/90) (b9,1/90) (b10,0)};
+  \addplot coordinates
+     {(b1,21/686) (b2,23/686) (b3,27/686) (b4,40/686) (b5,60/686) (b6,80/686) (b7,95/686) (b8,105/686) (b9,115/686)
+(b10,120/686)};
+  \legend{postives, body support}
+  \end{axis}
+  \end{tikzpicture}
+\end{figure}
+
  
 \section{Categorical Property Definition}
 
@@ -631,18 +702,32 @@ The buckets used throughout the \graphname should be consistent, and the bucketi
 specified in the very beginning with the root node. It should have as input an arbitrarily defined number of buckets
 $k$.
 
+Various different supervised and unsupervised methods for discretization of continuous features are discussed in
+\cite{Dougherty95supervisedand}. To build the lattice we don't use labels for the examples so we just use unsupervised
+methods.
+
+Supervised methods can be used for finding interesting intervals in the rules, by considering positive and negative
+examples as labels. However, it is out of the scope of this thesis, thus we will not discuss them in details.
+
 \subsection{Equal Width}
-This discretization method consists of simply querying both the maximum and minimum values of the root's numerical
-attribute, then for splitting this interval into $k$ buckets of same width $w$:
+This unsupervised discretization method consists of simply querying both the maximum and minimum values of the root's
+numerical attribute, then for splitting this interval into $k$ buckets of same width $w$:
+
 \begin{equation}
  w=cfrac{max-min}{k}
 \end{equation}
 
+It's the simples and most straightforward discretization method, but its main problem is that it is highly
+sensitive to outliers that may drastically skew the resulting distribution.
+
 \subsection{Equal Frequencies}
-In this discretization method, frequencies are summed up then the result is divided by $k$. Bucket widths may be
-different and should adjusted in order to obtain buckets with equal frequencies. Nevertheless, data distribution might
-make it impossible to split it equally, so boundaries are set in order to have an overall distribution as close as
-possible to uniformity.
+In this also unsupervised discretization method, the domain is divided in buckets with equal frequency. That is, given a
+total frequency $m$, the domain is discretized in $k$ buckets such that each has frequency $cfrac{m}{k}$. Multiple
+frequencies with same numerical attribute value might make it impossible to find bucket boundaries that equally
+distribute the frequencies.
+
+The greatest advantage of this method is that it always results in a distribution with lowest possible entropy, i.e.
+distribution is always uniform or as close to uniformity as possible.
 
 \section{Incorporating \graphname into the Core ILP Algorithm}
 
@@ -717,8 +802,8 @@ In the example of Figure \ref{fig:latticeSuggestion}, $ra$ would contain the fol
 \begin{center}
   \begin{tabular}{r | l}
     a & b [$m_{a,rb}$] \\
-      & c [$m_{a,rd}$] \\
-      & d [$m_{a,rc}$]
+      & c [$m_{a,rc}$] \\
+      & d [$m_{a,rd}$]
   \end{tabular}
 \end{center}
 
