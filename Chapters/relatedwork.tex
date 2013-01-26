@@ -1,10 +1,85 @@
 \chapter{Related Work}
 \label{rw:intro}
 
+In this chapter relevant work related to the thesis topic will be briefly presented. In section
+\ref{rw:logicProgramming}...
+
+
 \section{Logic Programming}
+\label{rw:logicProgramming}
+
+\cite{DBLP:books/sp/Lloyd87}
+\cite{DBLP:journals/ml/LavracD96}
+In this section, basic logic programming and deductive database terminology such as \emph{literal}, \emph{clause},
+\emph{program clause}, \emph{datalog clause} and \emph{hypothesis} will be presented. Firstly, it is important to
+mention that variables are represented as uppercase letters followed by a string of lowercase letters and/or digits.
+Function and predicate symbols are lowercase letters also followed by a string of lowercase and/or digits.
+
+An \emph{atomic formula} $L$ is a predicate symbol followed by a bracketed n-tuple of \emph{terms}. A \emph{term} can be
+a variable or a function symbol followed by a bracketed n-tuple of terms. A constant is a function symbol of arity 0. So
+for example, if $f$, $g$, and $h$ are function symbols and $X$ a variable, then $g(X)$ is term, $f(g(X),h)$ is also a
+term and $h$ is a \emph{constant}.
+
+A \emph{literal} is an \emph{atomic formula} which can be negated or not. So both $L$ and its negation $\overline{L}$
+are literals for any \emph{atomic formula} $L$. A clause $c$ is a disjunction of literals, for example:
+\begin{center}
+  $c=(L_1 \vee L_2 \vee \ldots \overline{L_{i}} \vee \overline{L_{i+1}} \vee \ldots) \equiv
+ L_1 \vee L_2 \vee \ldots \leftarrow L_i \wedge L_{i+1} \wedge \ldots$
+\end{center}
+
+Such disjunction of literals can also be written in following way:
+\begin{center}
+ $\{L_1,L_2,\ldots,\overline{L_i},\overline{L_{i+1}},\ldots\}$ \\
+$ L_1,L_2,\ldots \leftarrow L_i,L_{i+1},\ldots$
+\end{center}
+
+A \emph{program clause} is a clause which contains exactly one positive literal. That is, it has the form:
+\begin{center}
+ $\underbrace{T}_{head} \leftarrow \underbrace{L_1,L_2,\ldots}_{body}$
+\end{center}
+
+A \emph{datalog clause} is a program clause with no function symbols with arity greater different from zero. That means
+that only variables and constants can be used as predicate arguments. A datalog clause is considered $safe$ if all the
+variables present in the head literal $T$ are also present in the body. Moreover, it may also allow negated literals in
+the body, as long as every variable existent in a negated body literal are also be present in a non-negated body
+literal.
+
 \section{Inductive Logic Programming}
+
+\cite{DBLP:journals/ml/LavracD96}
+Inductive Logic Programming (ILP) is a machine learning technique that combines inductive machine learning with the
+logic programming representation. Given a known background knowledge and a set of training examples represented as a
+logical database of facts (literals without any variables), an ILP system will learn a hypothesis in the form of a
+logic program.
+
+The training data is a set of examples $\varepsilon$, where each examples is a grounded fact labeled as positive
+(\oplus) or negative (\ominus). We denote the set of positive examples as $\varepsilon^{+}$ and the set of negative
+examples as $\varepsilon^{-}$
+
+The background knowledge $\mathcal{B}$ is a prior knowledge which contributes in learning the hypothesis. It indirectly
+restricts the hypothesis search space, as  the learned hypothesis $\mathcal{H}$ should be consistent with the background
+knowledge as well as the training examples.
+
+A hypothesis $\mathcal{H}$ is said to cover an example $e$ given a background knowledge $\mathcal{B}$
+($covers(\mathcal{B} \cup \mathcal{H},e)$) if the example satisfies the hypothesis and background knowledge. In logic
+programming where the a $\mathcal{H}$ is a set of program clauses and an example is a ground fact, it means that $e$ is
+entailed by $\mathcal{B} \cup \mathcal{H}$.
+
+\begin{center}
+ $covers(\mathcal{B} \cup \mathcal{H},e)=true$ if $\mathcal{B} \cup \mathcal{H} \models e$
+\end{center}
+
+We can also define a covering function for a set of examples which returns a a subset with the examples entailed by
+\mathcal{B} \cup \mathcal{H}:
+
+\begin{center}
+ $covers(\mathcal{B} \cup \mathcal{H},\varepsilon)=\{e \in \varepsilon | \mathcal{B} \cup \mathcal{H} \models e\}$
+\end{center}
+
+In the \emph{single concept learning}
+
+
 \section{First Order Inductive Learning}
-\section{Datalog Rules}
 \section{Association Rule Mining}
 \subsection{Measures}
 \subsubsection{Support}
