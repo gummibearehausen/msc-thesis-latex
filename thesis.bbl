@@ -1,9 +1,21 @@
-\begin{thebibliography}{7}
+\begin{thebibliography}{10}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
   \providecommand{\doi}[1]{doi: #1}\else
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Lloyd(1987)]{DBLP:books/sp/Lloyd87}
+John~W. Lloyd.
+\newblock \emph{Foundations of Logic Programming, 2nd Edition}.
+\newblock Springer, 1987.
+\newblock ISBN 3-540-18199-7.
+
+\bibitem[Lavrac and Dzeroski(1996)]{DBLP:journals/ml/LavracD96}
+Nada Lavrac and Saso Dzeroski.
+\newblock A reply to pazzani's book review of "inductive logic programming:
+  Techniques and applications".
+\newblock \emph{Machine Learning}, 23\penalty0 (1):\penalty0 109--111, 1996.
 
 \bibitem[Brin et~al.(1999)Brin, Rastogi, and Shim]{Brin99miningoptimized}
 Sergey Brin, Rajeev Rastogi, and Kyuseok Shim.
@@ -40,6 +52,13 @@ J.~Briet and P.~Harremos.
 \newblock \emph{Physical Review A: Atomic, Molecular and Optical Physics},
   79\penalty0 (5), May 2009.
 \newblock ISSN 1050-2947.
+
+\bibitem[Dougherty et~al.(1995)Dougherty, Kohavi, and
+  Sahami]{Dougherty95supervisedand}
+James Dougherty, Ron Kohavi, and Mehran Sahami.
+\newblock Supervised and unsupervised discretization of continuous features.
+\newblock In \emph{MACHINE LEARNING: PROCEEDINGS OF THE TWELFTH INTERNATIONAL
+  CONFERENCE}, pages 194--202. Morgan Kaufmann, 1995.
 
 \bibitem[Neumann and Weikum(2010)]{Neumann:2010:RES:1731351.1731354}
 Thomas Neumann and Gerhard Weikum.

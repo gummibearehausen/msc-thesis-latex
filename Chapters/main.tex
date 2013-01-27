@@ -46,7 +46,7 @@ have completely different distributions and thus produce a very interesting conf
       legend style={at={(0.5,-0.15)},
 	anchor=north,legend columns=-1},
       ylabel={frequency},
-      symbolic x coords={b1,b2,b3},
+      symbolic x coords={b1,b2,b3,b4,b5,b6,b7,b8,b9,b10},
       xtick=data,
       nodes near coords,
       nodes near coords align={vertical},
@@ -65,13 +65,24 @@ have completely different distributions and thus produce a very interesting conf
       legend style={at={(0.5,-0.15)},
 	anchor=north,legend columns=-1},
       ylabel={confidence},
-      symbolic x coords={b1,b2,b3},
+      yticklabel={},
+      symbolic x coords={b1,b2,b3,b4,b5,b6,b7,b8,b9,b10},
       xtick=data,
       nodes near coords,
       nodes near coords align={vertical},
+      every node near coord/.append style={ anchor=mid west, rotate=70 },
       ]
-  \addplot coordinates
-     {(b1,19/20) (b2,18/23) (b3,16/27) (b4,14/40) (b5,1/6) (b6,6/80) (b7,4/95) (b8,2/105) (b9,1/115) (b10,0)};
+  \addplot[fill=gray] coordinates
+     {(b1,0.904761904761905)
+      (b2,0.782608695652174)
+      (b3,0.592592592592593)
+      (b4,0.35)
+      (b5,0.166666666666667)
+      (b6,0.075)
+      (b7,0.0421052631578947)
+      (b8,0.019047619047619)
+      (b9,0.00869565217391304)
+      (b10,0)};
   \legend{confidence}
   \end{axis}
   \end{tikzpicture} 
@@ -89,16 +100,34 @@ and body support in order to better show how their distributions diverge.
       legend style={at={(0.5,-0.15)},
 	anchor=north,legend columns=-1},
       ylabel={$p(b_i)$},
-      symbolic x coords={b1,b2,b3},
+      symbolic x coords={b1,b2,b3,b4,b5,b6,b7,b8,b9,b10},
       xtick=data,
       nodes near coords,
       nodes near coords align={vertical},
       ]
-  \addplot coordinates 
-     {(b1,19/90) (b2,18/90) (b3,16/90) (b4,14/90) (b5,10/90) (b6,6/90) (b7,4/90) (b8,2/90) (b9,1/90) (b10,0)};
   \addplot coordinates
-     {(b1,21/686) (b2,23/686) (b3,27/686) (b4,40/686) (b5,60/686) (b6,80/686) (b7,95/686) (b8,105/686) (b9,115/686)
-(b10,120/686)};
+     {(b1,0.0306122448979592)
+      (b2,0.0335276967930029)
+      (b3,0.0393586005830904)
+      (b4,0.0583090379008746)
+      (b5,0.0874635568513119)
+      (b6,0.116618075801749)
+      (b7,0.138483965014577)
+      (b8,0.153061224489796)
+      (b9,0.167638483965015)
+      (b10,0.174927113702624)};
+
+  \addplot coordinates
+     {(b1,0.211111111111111)
+      (b2,0.2)
+      (b3,0.177777777777778)
+      (b4,0.155555555555556)
+      (b5,0.111111111111111)
+      (b6,0.0666666666666667)
+      (b7,0.0444444444444444)
+      (b8,0.0222222222222222)
+      (b9,0.0111111111111111)
+      (b10,0)};
   \legend{postives, body support}
   \end{axis}
   \end{tikzpicture}
