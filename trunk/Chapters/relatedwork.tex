@@ -189,17 +189,55 @@ where $n^{+}(c)$ is the number of postive and $n^{-}(c)$ the number of negative 
 
 \section{Association Rule Mining}
 \cite{Agrawal:1993:MAR:170036.170072}
+\cite{Hipp00algorithmsfor}
 
 Association Rule Mining is method for discovering interesting relations between variables in large databases. It is
-intended to work on a database composed by a set of transactions $D=\{t_1,t_2,\ldots,t_m\}$. Each transaction consists
-of a set of items $I=\{i_1,i_2,\ldots,i_n\}$, which contains $n$ binary attributes indicating the presence or
-absence of each item in the transaction.
+intended to work on a database composed by a set of transactions $D=\{t_1,t_2,\ldots,t_m\}$ and a set of items
+$I=\{i_1,i_2,\ldots,i_n\}$. Each transaction $\mathcal{T}$ consists of a set of items which is subset of $I$ , which can
+be represented by a binary vector of size $n$ indicating the presence of absence of items in the transaction.
 
-The objective of association rule mining is to learn inference rules of the form $X \rightarrow Y$, where 
+The objective of association rule mining is to learn inference rules of the form $X \Rightarrow Y$, where $X,Y
+\subseteq I$ and $X \cap Y = \emptyset$. Rules are selected according to various interestingness measures that will be
+subsequently discussed.
+
+We say a transaction $\mathcal{T}$ supports an itemset $\mathcal{X} \subseteq \mathcal{I}$ if $\mathcal{X} \subseteq
+\mathcal{T}$. The support measure $supp(X)$ is the defined as the ratio between the number of transactions supporting
+$X$ and the total size of the database $\mathcal{D}$:
+
+\begin{equation}
+ supp(X)=\cfrac{|\{ \mathcal{T} \in \mathcal{D} | X \subseteq \mathcal{T} \}|}{|\mathcal{D}|}
+\end{equation}
+
+The support of a rule $X \Rightarrow Y$ is defined as:
+
+\begin{equation}
+ supp(X \Rightarrow Y)=supp(X \cup Y)
+\end{equation}
+
+Them confidence of a rule $X \Rightarrow Y$ is defined as the conditional probability $P(Y|X)$:
+
+\begin{equation}
+ conf(X \Rightarrow Y)=\cfrac{supp(X \cup Y)}{sup(X)}
+\end{equation}
+
+%Need to cite who invented lift
+Confidence and support are the two measures used in classical association rule mining. Albeit, there are other relevant
+measures such as \emph{lift}. It measures how different the observed rule support is in comparison to that expected if
+$X$ and $Y$ were independent:
+
+\begin{equation}
+ lift(X \Rightarrow Y)=\cfrac{supp(X \Rightarrow Y)}{supp(X)*supp(Y)}
+\end{equation}
+
+A lift value 1 would imply that $X$ and $Y$ are independent, therefore any rule involving both itemsets doesn not make
+sense. A lift value greater than 1, provides information about the level of dependence between both variables. Higher
+lift values makes a rule potentially interesting.
 
 
 
 \subsection{Measures}
+
+
 \subsubsection{Support}
 \subsubsection{Confidence}
 \subsubsection{Lift}
