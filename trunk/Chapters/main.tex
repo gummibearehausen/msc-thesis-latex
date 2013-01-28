@@ -48,8 +48,9 @@ have completely different distributions and thus produce a very interesting conf
       ylabel={frequency},
       symbolic x coords={b1,b2,b3,b4,b5,b6,b7,b8,b9,b10},
       xtick=data,
-      nodes near coords,
-      nodes near coords align={vertical},
+      %nodes near coords,
+      %nodes near coords align={vertical},
+      %every node near coord/.append style={ anchor=mid west, rotate=70 },
       ]
   \addplot coordinates 
      {(b1,19) (b2,18) (b3,16) (b4,14) (b5,10) (b6,6) (b7,4) (b8,2) (b9,1) (b10,0)};
@@ -68,9 +69,9 @@ have completely different distributions and thus produce a very interesting conf
       yticklabel={},
       symbolic x coords={b1,b2,b3,b4,b5,b6,b7,b8,b9,b10},
       xtick=data,
-      nodes near coords,
-      nodes near coords align={vertical},
-      every node near coord/.append style={ anchor=mid west, rotate=70 },
+      %nodes near coords,
+      %nodes near coords align={vertical},
+      %every node near coord/.append style={ anchor=mid west, rotate=70 },
       ]
   \addplot[fill=gray] coordinates
      {(b1,0.904761904761905)
@@ -102,21 +103,9 @@ and body support in order to better show how their distributions diverge.
       ylabel={$p(b_i)$},
       symbolic x coords={b1,b2,b3,b4,b5,b6,b7,b8,b9,b10},
       xtick=data,
-      nodes near coords,
-      nodes near coords align={vertical},
+      %nodes near coords,
+      %nodes near coords align={vertical},
       ]
-  \addplot coordinates
-     {(b1,0.0306122448979592)
-      (b2,0.0335276967930029)
-      (b3,0.0393586005830904)
-      (b4,0.0583090379008746)
-      (b5,0.0874635568513119)
-      (b6,0.116618075801749)
-      (b7,0.138483965014577)
-      (b8,0.153061224489796)
-      (b9,0.167638483965015)
-      (b10,0.174927113702624)};
-
   \addplot coordinates
      {(b1,0.211111111111111)
       (b2,0.2)
@@ -128,6 +117,17 @@ and body support in order to better show how their distributions diverge.
       (b8,0.0222222222222222)
       (b9,0.0111111111111111)
       (b10,0)};
+  \addplot coordinates
+     {(b1,0.0306122448979592)
+      (b2,0.0335276967930029)
+      (b3,0.0393586005830904)
+      (b4,0.0583090379008746)
+      (b5,0.0874635568513119)
+      (b6,0.116618075801749)
+      (b7,0.138483965014577)
+      (b8,0.153061224489796)
+      (b9,0.167638483965015)
+      (b10,0.174927113702624)};
   \legend{postives, body support}
   \end{axis}
   \end{tikzpicture}
