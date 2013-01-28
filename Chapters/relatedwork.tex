@@ -76,11 +76,129 @@ $\mathcal{B} \cup \mathcal{H}$:
  $covers(\mathcal{B} \cup \mathcal{H},\varepsilon)=\{e \in \varepsilon | \mathcal{B} \cup \mathcal{H} \models e\}$
 \end{center}
 
-In the \emph{single concept learning}
+Therewith, we can define two important concepts in inductive learning:
+
+\begin{itemize}
+ \item Completeness: A hypothesis $\mathcal{H}$ is complete with respect to background knowledge $\mathcal{B}$ and
+examples $\varepsilon$ if all the positive examples are covered, or in other words:
+$covers(\mathcal{B},\mathcal{H},\varepsilon^{+})=\varepsilon^{+}$
+ \item Consistency: A hypothesis $\mathcal{H}$ is consistent with respect to background knowledge $\mathcal{B}$ and
+examples $\varepsilon$ if no negative examples are covered, or in other words:
+$covers(\mathcal{B},\mathcal{H},\varepsilon^{-})=\emptyset$
+\end{itemize}
+
+The objective of ILP is to find a hypothesis that is complete and consistent with respect to the given training
+examples and background knowledge. The example shown in table \ref{tb:ilpExample} (presented in
+\cite{DBLP:journals/ml/LavracD96})
+illustrates a simple problem of learning a hypothesis for the target relation $daughter(X,Y)$.
+
+\begin{center}
+    \begin{table}
+    \label{tb:ilpExample}
+    \caption{A simple ILP problem: learning the \emph{daughter} relation.}
+      \begin{tabular}{ r | l }
+      \toprule
+      \textbf{Training Examples} & \textbf{Background Knowledge}\\
+      \midrule
+      daughter(mary,ann) $\oplus$	& parent(ann,mary).	\\
+      daughter(eve,tom) $\oplus$	& parent(ann,tom).	\\
+      daughter(tom,ann) $\ominus$ 	& parent(tom,eve).	\\
+      daughter(eve,ann) $\ominus$	& parent(tom,ian).	\\
+					& female(ann).		\\
+					& female(mary).		\\
+					& female(eve).		\\
+      \bottomrule
+      \end{tabular}
+    \end{table}
+\end{center}
+
+If we consider, for example, the language of safe datalog clauses, it is possible to formulate the following complete
+and consistent hypothesis:
+
+\begin{center}
+  $hypothesis = daughter(X,Y)$ :- $female(X),parent(Y,X)$ 
+\end{center}
+
+\subsection{Searching the Hypothesis Space}
+
+In ILP, the hypothesis space is determined by the language of the programs $\mathcal{L}$ consisting of the possible
+program clauses allowed by the language. Also, the vocabulary of predicate symbols is determined by the predicates from
+the background knowledge $\mathcal{B}$.
+
+It is useful to structure the search space with partial ordering into a set of clauses based on $\theta$-subsumption in
+order to systematically search the program clauses space. A clause $c$ $\theta$-subsumes $c'$ if there's a
+substitution $\theta$ such that clause $c\theta \subseteq c'$. This also introduces a notion of generality, where
+clause $c$ is at least as generaly as $c'$, or in other words, $c'$ is a specialization of $c$.
+
+For example, for $c=daughter(X,Y)$:-$parent(Y,X)$ and $c'=daughter(X,Y)$:-$female(X),parent(Y,X)$. We know that $c'$ is
+a specialization of $c$ because for $\theta=\emptyset$, $c \subset c'$ since $\{daughter(X,Y),\neg parent(Y,X)\}
+\subset \{daughter(X,Y),\neg female(X),\neg parent(Y,X)\}$.
+
+If we have $c = livesIn(X,Y)$:-$marriedTo(X,Z),livesIn(Z,Y)$ and $c' =
+livesIn(X,germany)$:-$marriedTo(X,Z),livesIn(Z,germany)$, we know that $c'$ is a specialization of $c$ because for the
+substitution $\theta=\{Y/germany\}$, $c\theta=c'$.
+
+This notion gives us an important property that cab be used for pruning parts of the search space:
+
+\begin{itemize}
+ \item When generaling from $c$ to $c'$, all the examples covered by $c$ are also covered by $c'$. So if $c$ is
+inconsistent, then all its generalizations are inconsistent as well.
+  \item When specializing from $c$ to $c'$, an example not covered by $c$ will neither be covered by $c'$. So if $c'$
+does not cover any positive examples, neither do all its specializations.
+\end{itemize}
+
+These properties are the basis for two main search approaches:
+
+\begin{itemize}
+ \item Bottom-up: starts with less general clauses and searches least general generalizations
+ \item Top-down: starts with more general clauses and searches for most general consistent specializations
+\end{itemize}
+
+As in this thesis we work only with the top-down approach, we will discuss it in more details in the next subsection.
+Further information about bottow-up approach can be found in \cite{DBLP:journals/ml/LavracD96}.
+
+\subsection{Top-Down ILP}
+
+Top-down ILP algorithm relies on specializations. Given the $\theta$-subsumtion definition, we have two main
+specialization techniques:
+
+\begin{itemize}
+ \item Apply a substitution on the clause
+ \item Add a literal to the body of the clause
+\end{itemize}
+
+The top-down algorithm consists basically of a specitialization loop that refines a clause ensuring consistency
+embedded inside a covering loop that adds clauses to the hypothesis ensuring completeness. In domains with perfect data,
+the stopping criterea require that all positive examples are covered (completeness) and no negative examples are
+covered (consistency). Nevertheless, in domains with imperfect data (due to noise, incompleteness, etc.), heuristic
+stopping criterea can be used to tolerate some level of incompleteness and inconsistency.
+
+This simplest heuristic is the expected accuracy of a clause, which is defined as the probability that an example
+covered by the clause is labeled as positive:
+\begin{equation}
+A(c)=P(e in \varepsilon^{+}|c)=\cfrac{n^{+}(c)}{n^{+}(c)+n^{-}(c)} 
+\end{equation}
+where $n^{+}(c)$ is the number of postive and $n^{-}(c)$ the number of negative examples covered by $c$. 
+
+[Sampling,MaxLiterals]
 
 
 \section{First Order Inductive Learning}
+\cite{DBLP:journals/ml/Quinlan9}
+\cite{DBLP:conf/ecml/QuinlanC93}
+
 \section{Association Rule Mining}
+\cite{Agrawal:1993:MAR:170036.170072}
+
+Association Rule Mining is method for discovering interesting relations between variables in large databases. It is
+intended to work on a database composed by a set of transactions $D=\{t_1,t_2,\ldots,t_m\}$. Each transaction consists
+of a set of items $I=\{i_1,i_2,\ldots,i_n\}$, which contains $n$ binary attributes indicating the presence or
+absence of each item in the transaction.
+
+The objective of association rule mining is to learn inference rules of the form $X \rightarrow Y$, where 
+
+
+
 \subsection{Measures}
 \subsubsection{Support}
 \subsubsection{Confidence}
