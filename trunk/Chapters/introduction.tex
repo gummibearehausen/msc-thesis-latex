@@ -54,10 +54,10 @@ too expensive as the search space grows combinatorially with the knowledge base 
 examples, the more expensive it is to test each hypothesis.
 
 Although it is very expensive to learn rules with constants, such kind of rules can are extremely interesting as they
-can express particular characteristics of specific groups. For example, the rule $speaks(x,y) := livesIn(x,z)$ is not
+can express particular characteristics of specific groups. For example, the rule $speaks(x,y)$:-$livesIn(x,z)$ is not
 very meaningful, it simply tells that people that live in anywhere will speak some language. Nevertheless, if we
-consider setting constant values for $y$ and $z$, we can learn much more valuable rules such as $speaks(x,English) :-
-livesIn(x,Australia)$ or $speaks(x,Spanish) :- livesIn(x,Mexico)$.
+consider setting constant values for $y$ and $z$, we can learn much more valuable rules such as
+$speaks(x,English)$:-$livesIn(x,Australia)$ or $speaks(x,Spanish)$:-$livesIn(x,Mexico)$.
 
 Given the huge size of search space and the great interestingness of rules with constants, it is appropriate to reduce
 the search space by pruning constants or combinations of constants that do not add interesting information to the
@@ -77,13 +77,13 @@ for this given entity without the necessity of adding the numerical property
 For example, no country has the exact same GDP or population as any other country. If we have the following rule:
 
 \begin{center}
- \emph{speaks(x,Portuguese) :- livesIn(x,y),hasPopulation(y,193946886)}
+ $speaks(x,Portuguese)$ :- $livesIn(x,y),hasPopulation(y,193946886)$
 \end{center}
 
 Assuming Brazil is the only country with a population of 193,946,886 inhabitants, this same rule would be equivalent to:
 
 \begin{center}
- \emph{speaks(x,Portuguese) :- livesIn(x,Brazil)}
+ $speaks(x,Portuguese)$ :- $livesIn(x,Brazil)$
 \end{center}
 
 Of course, if we have to choose between one of the two rules, the latter one would be preferred as it is shorter and
@@ -98,7 +98,7 @@ constant-free rule (which we will call base-rule).
 For example if we test the hypothesis and we find support=100 and confidence=0.4:
 
 \begin{center}
- \begin{math}isMarriedTo(x,y) :- hasAge(x,z)\end{math} 
+ $isMarriedTo(x,y)$ :- $hasAge(x,z)$ 
 \end{center}
 
 and then we split z into three buckets:
