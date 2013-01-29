@@ -176,7 +176,7 @@ stopping criterea can be used to tolerate some level of incompleteness and incon
 This simplest heuristic is the expected accuracy of a clause, which is defined as the probability that an example
 covered by the clause is labeled as positive:
 \begin{equation}
-A(c)=P(e in \varepsilon^{+}|c)=\cfrac{n^{+}(c)}{n^{+}(c)+n^{-}(c)} 
+A(c)=P(e \in \varepsilon^{+}|c)=\cfrac{n^{+}(c)}{n^{+}(c)+n^{-}(c)} 
 \end{equation}
 where $n^{+}(c)$ is the number of postive and $n^{-}(c)$ the number of negative examples covered by $c$. 
 
@@ -199,6 +199,10 @@ be represented by a binary vector of size $n$ indicating the presence of absence
 The objective of association rule mining is to learn inference rules of the form $X \Rightarrow Y$, where $X,Y
 \subseteq I$ and $X \cap Y = \emptyset$. Rules are selected according to various interestingness measures that will be
 subsequently discussed.
+
+\subsection{Measures}
+
+In this subsection we will discuss measures used for selecting interesting rules in the mining process.
 
 We say a transaction $\mathcal{T}$ supports an itemset $\mathcal{X} \subseteq \mathcal{I}$ if $\mathcal{X} \subseteq
 \mathcal{T}$. The support measure $supp(X)$ is the defined as the ratio between the number of transactions supporting
@@ -229,24 +233,75 @@ $X$ and $Y$ were independent:
  lift(X \Rightarrow Y)=\cfrac{supp(X \Rightarrow Y)}{supp(X)*supp(Y)}
 \end{equation}
 
-A lift value 1 would imply that $X$ and $Y$ are independent, therefore any rule involving both itemsets doesn not make
+A lift value 1 would imply that $X$ and $Y$ are independent, therefore any rule involving both itemsets does not make
 sense. A lift value greater than 1, provides information about the level of dependence between both variables. Higher
 lift values makes a rule potentially interesting.
 
+\subsection{Anti-monotonicity of Support}
 
+An important characteristic of the support measure is the anti-monotonicity. It means that for any itemset $X
+\subseteq \mathcal{I}$ if we have another itemset $Y \subseteq \mathcal{I}$ such that $X \subseteq Y$, then the support
+of $Y$ cannot be greater than the support of $X$. In other words, all subsets from a frequent itemset are also frequent,
+and all supersets from an infrequent item are also infrequent.
 
-\subsection{Measures}
+When searching for frequent itemsets, this characteristic plays a crucial role in pruning the search space, which grows
+exponentially with the number of items $n$. The set of possible itemsets is the power set over $\mathcal{I}$, which has
+size $2^n-1$. As association rules are usually required to satisfy a specified minimum support, if we know that a given
+itemset does not satisfy it, we can automatically prune all its supersets.
 
-
-\subsubsection{Support}
-\subsubsection{Confidence}
-\subsubsection{Lift}
 \subsection{Itemset Lattice}
+
+The problem of searching frequent itemsets (FI), i.e., itemsets that satisfy the specified minimum support, can be
+structured in a lattice.
+
+
+There are two special kinds of itemsets:
+\begin{itemize}
+ \item Maximal frequent itemset (MFI): a frequent itemset is maximal if none of its immediate supersets are frequent.
+ \item Closed frequent itemset (CFI): a frequent itemset is closed if all of its immediate supersets have lower
+support.
+\end{itemize}
+
+Each of these kinds of itemsets has an special property. By knowing all the maximal itemsets of a database, we
+also know all the frequent itemsets. Nevertheless, it is not possible to know the support of each of the frequent
+itemsets. By knowing all the closed of a database, it is possible to know the all the frequent itemsets as well as their
+supports.
+
+[...]
+
 \subsection{Apriori Algorithm}
+
+In the apriori algorithm, frequent itemsets are computed iteratively, by ascending order of size. The process takes $k$
+iterations where $k$ is the size of the largest frequent itemset. In each iteration $i \leq k$, the database is scanned
+once and all the support of all itemsets of size $i$ are computed.
+
+In the first iteration, all itemsets of size 1 have their supports computed. On the $1 < i \leq k$ subsequent
+iterations, a set of candidates $C_i$ is created by joining the frequent itemsets of size $i-1$ found in the previous
+iteration. Two itemsets of size $i$ can only join if they share $i-1$ items, so their union can form an itemset of size
+$i+1$. Only after finding the set of candidate itemsets $C_1$, the database is scanned in order to determe the
+support of each of them.
 
 \section{Mining Optimized Rules for Numeric Attributes}
 
-\cite{Brin99miningoptimized}
+In \cite{Brin99miningoptimized}, a technique for efficient learning association rules with interesting ranges for
+numerical attributes is presented. Such rules have the form $(A_1 \in [l_1,u_1]) \wedge C_1 \rightarrow C_2$, where
+$A_1$ is a numerical attribute, $l_1$ and $u_1$ are the lower and upper boundaries of $A_1$, and $C_1$ and $C_2$ contain
+only instantiated conditions.
+
+The authors purpose algorithms for determining values for the boundaries $l_1$ and $u_1$ for the following cases:
+
+\begin{itemize}
+ \item Optimized confidence: the rule confidence is maximized and  support of the condition $(A_1 \in [l_1,u_1]) \wedge
+C_1$ is at least the specified minimum support.
+  \item Optimized support: the support of the condition $(A_1 \in [l_1,u_1]) \wedge C_1$ is maximized and the rule
+confidence is at least the specified minimum confidence.
+  \item Optimized gain: the rule gain is maximized and the confidence is at least the specified minimum confidence.
+\end{itemize}
+
+It takes as input histograms for a 
+
+
+
 
 \section{Information Theoretic Measures}
 
