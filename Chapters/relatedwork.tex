@@ -52,9 +52,9 @@ logic programming representation. Given a known background knowledge and a set o
 logical database of facts (literals without any variables), an ILP system will learn a hypothesis in the form of a
 logic program.
 
-The training data is a set of examples $\varepsilon$, where each examples is a grounded fact labeled as positive
-($\oplus$) or negative ($\ominus$). We denote the set of positive examples as $\varepsilon^{+}$ and the set of negative
-examples as $\varepsilon^{-}$
+The training data is a set of examples $\mathcal{E}$, where each examples is a grounded fact labeled as positive
+($\oplus$) or negative ($\ominus$). We denote the set of positive examples as $\mathcal{E}^{+}$ and the set of negative
+examples as $\mathcal{E}^{-}$
 
 The background knowledge $\mathcal{B}$ is a prior knowledge which contributes in learning the hypothesis. It indirectly
 restricts the hypothesis search space, as  the learned hypothesis $\mathcal{H}$ should be consistent with the background
@@ -73,18 +73,18 @@ We can also define a covering function for a set of examples which returns a a s
 $\mathcal{B} \cup \mathcal{H}$:
 
 \begin{center}
- $covers(\mathcal{B} \cup \mathcal{H},\varepsilon)=\{e \in \varepsilon | \mathcal{B} \cup \mathcal{H} \models e\}$
+ $covers(\mathcal{B} \cup \mathcal{H},\mathcal{E})=\{e \in \mathcal{E} | \mathcal{B} \cup \mathcal{H} \models e\}$
 \end{center}
 
 Therewith, we can define two important concepts in inductive learning:
 
 \begin{itemize}
  \item Completeness: A hypothesis $\mathcal{H}$ is complete with respect to background knowledge $\mathcal{B}$ and
-examples $\varepsilon$ if all the positive examples are covered, or in other words:
-$covers(\mathcal{B},\mathcal{H},\varepsilon^{+})=\varepsilon^{+}$
+examples $\mathcal{E}$ if all the positive examples are covered, or in other words:
+$covers(\mathcal{B},\mathcal{H},\mathcal{E}^{+})=\mathcal{E}^{+}$
  \item Consistency: A hypothesis $\mathcal{H}$ is consistent with respect to background knowledge $\mathcal{B}$ and
-examples $\varepsilon$ if no negative examples are covered, or in other words:
-$covers(\mathcal{B},\mathcal{H},\varepsilon^{-})=\emptyset$
+examples $\mathcal{E}$ if no negative examples are covered, or in other words:
+$covers(\mathcal{B},\mathcal{H},\mathcal{E}^{-})=\emptyset$
 \end{itemize}
 
 The objective of ILP is to find a hypothesis that is complete and consistent with respect to the given training
@@ -167,19 +167,71 @@ specialization techniques:
  \item Add a literal to the body of the clause
 \end{itemize}
 
-The top-down algorithm consists basically of a specitialization loop that refines a clause ensuring consistency
-embedded inside a covering loop that adds clauses to the hypothesis ensuring completeness. In domains with perfect data,
-the stopping criterea require that all positive examples are covered (completeness) and no negative examples are
-covered (consistency). Nevertheless, in domains with imperfect data (due to noise, incompleteness, etc.), heuristic
-stopping criterea can be used to tolerate some level of incompleteness and inconsistency.
+The top-down algorithm consists basically of a specialization loop that refines a clause ensuring consistency
+embedded inside a covering loop that adds clauses to the hypothesis ensuring completeness. Each loop has a stopping
+criterion, the covering loop iterates until it satisfies a sufficiency criterion and the specialization loop iterates
+until it safies a necessity criterion. The algorithm \ref{alg:topDownILP} shows in more details how a generic top-down
+ILP works.
 
-This simplest heuristic is the expected accuracy of a clause, which is defined as the probability that an example
+\begin{algorithm}[!h]
+  \caption{Generic top-down specialization ILP algorithm}
+  \label{alg:topDownILP}
+  \SetKwFunction{executeQuery}
+  \KwIn{\textbf{Input:} $\mathcal{E}$: Training examples, $\mathcal{B}$: Background knowledge \\ }
+  \KwResult{$\mathcal{H}$: Learned hypothesis}
+
+  \tcp{Initialize the current training set and hypothesis}
+  $\mathcal{E}_{cur} \leftarrow \mathcal{E}$ \;
+  $\mathcal{H} \leftarrow \emptyset$ \;
+  \Repeat(Covering Loop){Sufficiency Stopping Criterion is satisfied} {
+    \tcp{Initialize clause with empty body}
+    $c \leftarrow T$ :- $\emptyset$ \;
+    \Repeat(Specialization Loop){Necessity Stopping Criterion is satisfied} {
+      $c_{best} \leftarrow$ Best refinement of $c$;
+      $c \leftarrow c_{best}$ \;
+    } ()
+    \tcp{Add clause to the hypothesis}
+    $\mathcal{H} \leftarrow \mathcal{H} \cup \{c\}$ \;
+    \tcp{Remove positive examples covered by the new hypothesis}
+    $\mathcal{E}_{cur} \leftarrow \mathcal{E}_{cur} - covers(\mathcal{B} \cup \mathcal{H},\mathcal{E}_{cur}^{+})$ \;
+  } ()
+\end{algorithm}
+
+In domains with perfect data, the stopping criteria require that all positive examples are covered (completeness) and no
+negative examples are covered (consistency). However, in practice many datasets have imperfect data. Such imperfection
+is usually of the following kinds, as described in \cite{DBLP:conf/aii/LavracD92}:
+
+\begin{itemize}
+  \item Noise: random errors in the training examples and background knowledge
+  \item Insufficiently covered example space: too sparse training examples from which it is difficult to reliably
+detect correlations
+  \item Inexactness: inappropriate or insufficient description language which does not contain an exact description of
+the target concept
+  \item Missing values in the training example
+\end{itemize}
+
+
+In order to avoid the effects of imperfect data, ILP can use heuristics as stopping criteria that tolerate
+some level of incompleteness and inconsistency. The simplest heuristic is the expected accuracy of a clause, which is
+defined as the probability that an example
 covered by the clause is labeled as positive:
 \begin{equation}
-A(c)=P(e \in \varepsilon^{+}|c)=\cfrac{n^{+}(c)}{n^{+}(c)+n^{-}(c)} 
+A(c)=P(e \in \mathcal{E}^{+}|c)=\cfrac{n^{+}(c)}{n^{+}(c)+n^{-}(c)} 
 \end{equation}
-where $n^{+}(c)$ is the number of postive and $n^{-}(c)$ the number of negative examples covered by $c$. 
+where $n^{+}(c)$ is the number of positive and $n^{-}(c)$ the number of negative examples covered by $c$. 
 
+\subsection{ILP Complexity}
+
+As discussed in \cite{DBLP:journals/ngc/GottlobLS99}, the complexity of ILP resides at the second level of polynomial
+hierarchy and it is $\Sigma_2^P$-complete. Thus, there are two sources of complexity:
+\begin{itemize}
+ \item Choice problem: 
+ \item Checking problem: checking if a choice was good or not
+\end{itemize}
+
+
+As ILP complexity grows exponentially with the number of literals, it is common to restrict the number of literals
+allowed in a clause in order to reduce execution time.
 [Sampling,MaxLiterals]
 
 
@@ -278,7 +330,7 @@ once and all the support of all itemsets of size $i$ are computed.
 In the first iteration, all itemsets of size 1 have their supports computed. On the $1 < i \leq k$ subsequent
 iterations, a set of candidates $C_i$ is created by joining the frequent itemsets of size $i-1$ found in the previous
 iteration. Two itemsets of size $i$ can only join if they share $i-1$ items, so their union can form an itemset of size
-$i+1$. Only after finding the set of candidate itemsets $C_1$, the database is scanned in order to determe the
+$i+1$. Only after finding the set of candidate itemsets $C_1$, the database is scanned in order to determine the
 support of each of them.
 
 \section{Mining Optimized Rules for Numeric Attributes}
