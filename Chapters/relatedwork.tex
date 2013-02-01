@@ -159,13 +159,17 @@ Further information about bottow-up approach can be found in \cite{DBLP:journals
 
 \subsection{Top-Down ILP}
 
-Top-down ILP algorithm relies on specializations. Given the $\theta$-subsumtion definition, we have two main
-specialization techniques:
+The search space of program clauses can be viewed as a lattice, structured by $\theta$-subsumption generality
+ordering. Such lattice is called a \emph{refinement graph}, which can be used to direct the search from most general to
+specific hypothesis. In the graph, nodes are program clauses and arcs are refinement operations, which can be of two
+kinds:
 
 \begin{itemize}
  \item Apply a substitution on the clause
  \item Add a literal to the body of the clause
 \end{itemize}
+
+[...]
 
 The top-down algorithm consists basically of a specialization loop that refines a clause ensuring consistency
 embedded inside a covering loop that adds clauses to the hypothesis ensuring completeness. Each loop has a stopping
@@ -333,6 +337,31 @@ iteration. Two itemsets of size $i$ can only join if they share $i-1$ items, so 
 $i+1$. Only after finding the set of candidate itemsets $C_1$, the database is scanned in order to determine the
 support of each of them.
 
+\begin{algorithm}[!h]
+  \caption{Apriori frequent itemset discovery}
+  \label{alg:apriori}
+  \SetKwFunction{aprioriGen}
+  \KwIn{\textbf{Input:} $\mathcal{D}$: Database of transactions \\}
+  \KwResult{$\mathcal{H}$: Learned hypothesis}
+
+  $L_1 \leftarrow$ Frequent itemsets of size 1 \;
+  $L \leftarrow L_1$ \;
+  $i \leftarrow 1$ \;
+  \While{$L_{k} \neq \emptyset$}{
+      $i \leftarrow i+1$ \;
+      $C_k \leftarrow$ \FuncSty{aprioriGen(}$L_{i-1}$\FuncSty{)} \;
+      \ForAll{$t \in \mathcal{D}$}{
+	$C_t \leftarrow \{c \in C_i | c \subseteq t\}$ \;
+	\ForAll{$c \in C_t$}{
+	  $c.frequency \leftarrow c.frequency + 1$ \;
+	}
+      }
+      $L_k \leftarrow \{c \in C_i | c.frequency \geq minSupport\}$ \;
+      $L \leftarrow L \cup L_k$ \;
+  }
+  \Return{$L$} \;
+\end{algorithm}
+
 \section{Mining Optimized Rules for Numeric Attributes}
 
 In \cite{Brin99miningoptimized}, a technique for efficient learning association rules with interesting ranges for
@@ -360,4 +389,71 @@ It takes as input histograms for a
 \cite{DBLP:conf/sac/CaldersGPR09}
 
 \section{Semantic Web Applications}
+
+The Semantic Web is, according to its official website, a technology created by the World Wide Web Consortium (W3C) to
+enable the so-called ``Web of data'', enabling computers to do more useful work and develop systems that can support
+trusted interactions over the network. 
+
+It consists of a set of technologies and formats that aim to make web resources more readily accessible to automated
+processes. The semantic web stack, in figure \ref{fig:sematicWebLayer} \footnote{Semantic Web - XML2000, slide 10".
+W3C: \url{http://www.w3.org/2000/Talks/1206-xml2k-tbl/slide10-0.html}}, illustrates the semantic web architecture
+showing how its standards are organized and how it extends the classical hypertext web.
+
+\begin{figure}
+\label{fig:sematicWebLayer}
+\begin{center}
+  \includegraphics[width=0.5\linewidth]{./Figures/Semantic-web-stack.png}
+\end{center}
+\caption{Semantic Web stack}
+\end{figure}
+
+\begin{itemize}
+ \item Resource Description Framework (RDF): a framework for creating statements in the form of triples composed by
+subject, predicate and object. It uses URIs to name the predicates as well as the entities, which may be the subject or
+object in a triple. RDF can be encoded in a variety of formats, such as RDF/XML, N3, Turtle and N-Triples.
+ \item RDF Schema (RDFS): a RDF vocabulary description language which provides basic elements for the description of
+ontologies (or RDF vocabularies) intended to structure RDF resources known as constructs (RDFS classes, associated
+properties, and utility properties).
+ \item Web Ontology Language (OWL): a semantic markup language for publishing and sharing ontologies on the web. It is a
+vocabulary extension of RDF that allows an ontology to be describe with a set of axioms which places constraints on
+classes and the types of relationships permitted between them.
+ \item SPARQL: an RDF query language for databases which can be used to express queries across diverse data sources. It
+consists of triple patterns, conjunctions, disjunctions and optional patterns. 
+ \item Rule Interchange Format (RIF): defines a standard for exchanging rules among rule systems. It focuses on
+exchange rather than defining a single one-fits-all rule language, different databases might have different
+characteristics with different necessities.
+  \item Semantic Web Rule Language (SWRL): a proposal for rule language combining sublanguages of OWL with the
+Unary/Binary Datolog Rule Markup Language (RuleML).
+\end{itemize}
+
+
+
+Among these technologies, there is the Resource Description Framework (RDF) which can be encoded in a variety
+of data formats (e.g. RDF/XML, N3, Turtle, N-Triples), 
+
 \section{Linked Open Data Applications}
+
+The Semantic Web does not need only access to reachable and manageable data in a standard format, but also
+relationships among data from different sources. Therewith, it is possible to create a huge collection of interrelated
+datasets in the Web, also referred as Linked Data.
+
+Linked Data is a fundamental part of the Semantic Web essence, facilitating a large scale integration and reasoning
+on data on the Web. A typical example of Linked dataset is DBpedia
+{\footnote{\url{http://www.dbpedia.org/}}}. It basically extracts information from Wikipedia and
+make it available in RDF incorporating links to other datasets on the web, such as 
+Geonames\footnote{\url{http://www.geonames.org/}},
+YAGO\footnote{\url{http://www.mpi-inf.mpg.de/yago-naga/yago/}}, 
+LinkedMDB\footnote{\url{http://www.linkedmdb.org/}} and 
+USCensus\footnote{\url{http://www.linkedmdb.org/}}. 
+With such linkage, it allows
+applications to exploit the extra information these datasets can provide, integrating facts from various different
+sources. Figure \ref{fig:lod} shows the Linked Open Data cloud
+diagram, 
+
+\begin{figure}
+\label{fig:lod}
+\begin{center}
+  \includegraphics[width=1\linewidth]{./Figures/lod-datasets_2011-09-19.png}
+\end{center}
+\caption{Linking Open Data cloud diagram, by Richard Cyganiak and Anja Jentzsch. \url{http://lod-cloud.net}}
+\end{figure}
