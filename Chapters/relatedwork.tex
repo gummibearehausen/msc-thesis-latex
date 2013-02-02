@@ -308,7 +308,8 @@ itemset does not satisfy it, we can automatically prune all its supersets.
 \subsection{Itemset Lattice}
 
 The problem of searching frequent itemsets (FI), i.e., itemsets that satisfy the specified minimum support, can be
-structured in a lattice.
+structured in a lattice. Firstly, an itemset is frequent if it has support greater or equal than an arbitrarily
+specified minimum support.
 
 
 There are two special kinds of itemsets:
@@ -323,6 +324,101 @@ also know all the frequent itemsets. Nevertheless, it is not possible to know th
 itemsets. By knowing all the closed of a database, it is possible to know the all the frequent itemsets as well as their
 supports.
 
+In the example of database $\mathcal{D}$ shown in table \ref{tb:itemsetLattice} with resulting itemset lattice shown in
+figure \ref{fig:itemsetLattice}, frequent itemsets are shown with thicker border. The minimum support threshold was set
+to $\cfrac{2}{5}$, so the frequent itemsets are the ones with frequency greater than or equal to 2. For this example, we
+would have as maximal itemset $\{ABCE\}$ and as closed itemsets $\{ABCE, BCE, BE\}$
+
+
+\begin{table}
+  \begin{center}
+    \label{tb:itemsetLattice}
+      \begin{tabular}{ c | l l l l }
+      \toprule
+      \textbf{TID} & \multicolumn{4}{c}{\textbf{Items}} \\
+      \midrule
+	1	& A & C & D & \\
+	2 	& B & C & E & \\
+	3	& A & B & C & E \\
+	4 	& B & E &   & \\
+	5	& A & B & C & E \\
+      \bottomrule
+      \end{tabular}
+  \caption{Example of transaction database $\mathcal{D}$ \cite{Pasquier99efficientmining}}
+  \end{center}
+\end{table}
+
+\begin{figure}[!h]
+  \caption{Itemset Lattice example}
+  \centering
+  \begin{tikzpicture}[scale=0.75,auto=center,every node/.style={draw=black, font=\tiny}]
+    \node (n0) at (11,15) {$\emptyset$};
+
+    \node (A)[very thick] 	at (5,12)  {$A^{(3)}$};
+    \node (B)[very thick] 	at (8,12)  {$B^{(4)}$};
+    \node (C)[very thick]	at (11,12) {$C^{(4)}$};
+    \node (D)			at (14,12) {$D^{(1)}$};
+    \node (E)[very thick]	at (17,12) {$E^{(4)}$};
+
+    \node (AB)[very thick] 	at (2,9)  {$AB^{(2)}$};
+    \node (AC)[very thick] 	at (4,9)  {$AC^{(3)}$};
+    \node (AD) 			at (6,9)  {$AD^{(1)}$};
+    \node (AE)[very thick] 	at (8,9)  {$AE^{(2)}$};
+    \node (BC)[very thick] 	at (10,9) {$BC^{(3)}$};
+    \node (BD) 			at (12,9) {$BD^{(0)}$};
+    \node (BE)[very thick] 	at (14,9) {$BE^{(4)}$};
+    \node (CD) 			at (16,9) {$CD^{(1)}$};
+    \node (CE)[very thick] 	at (18,9) {$CE^{(3)}$};
+    \node (DE) 			at (20,9) {$DE^{(0)}$};
+
+    \node (ABC)[very thick] 	at (2,6)  {$ABC^{(2)}$};
+    \node (ABD) 		at (4,6)  {$ABD^{(0)}$};
+    \node (ABE)[very thick] 	at (6,6)  {$ABE^{(2)}$};
+    \node (ACD) 		at (8,6)  {$ACD^{(1)}$};
+    \node (ACE)[very thick] 	at (10,6) {$ACE^{(2)}$};
+    \node (ADE) 		at (12,6) {$ADE^{(0)}$};
+    \node (BCD) 		at (14,6) {$BCD^{(0)}$};
+    \node (BCE)[very thick] 	at (16,6) {$BCE^{(3)}$};
+    \node (BDE) 		at (18,6) {$BDE^{(0)}$};
+    \node (CDE) 		at (20,6) {$CDE^{(0)}$};
+
+    \node (ABCD) 		at (5,3)  {$ABCD^{(0)}$};
+    \node (ABCE)[very thick] 	at (8,3)  {$ABCE^{(2)}$};
+    \node (ABDE) 		at (11,3) {$ABDE^{(0)}$};
+    \node (ACDE) 		at (14,3) {$ACDE^{(0)}$};
+    \node (BCDE) 		at (17,3) {$BCDE^{(0)}$};
+
+    \node (ABCDE) at (11,0) {$ABCDE^{(0)}$};
+
+    \foreach \from/\to in
+      {n0/A,n0/B,n0/C,n0/D,n0/E,
+       A/AB, A/AC, A/AD, A/AE, 
+       B/AB, B/BC, B/BD, B/BE, 
+       C/AC, C/BC, C/CD, C/CE,
+       D/AD, D/BD, D/CD, D/DE,
+       E/AE, E/BE, E/CE, E/DE,
+       AB/ABC, AB/ABD, AB/ABE,
+       AC/ABC, AC/ACD, AC/ACE,
+       AD/ABD, AD/ACD, AD/ADE,
+       AE/ABE, AE/ACE, AE/ADE,
+       BC/ABC, BC/BCD, BC/BCE,
+       BD/ABD, BD/BCD, BD/BDE,
+       BE/ABE, BE/BCE, BE/BDE,
+       CD/ACD, CD/BCD, CD/CDE,
+       CE/ACE, CE/BCE, CE/CDE,
+       DE/ADE, DE/BDE, DE/CDE,
+       ABCD/ABC, ABCD/ABD, ABCD/ACD, ABCD/BCD,
+       ABCE/ABC, ABCE/ABE, ABCE/ACE, ABCE/BCE,
+       ABDE/ABD, ABDE/ABE, ABDE/ADE, ABDE/BDE,
+       ACDE/ACD, ACDE/ACE, ACDE/ADE, ACDE/CDE,
+       BCDE/BCD, BCDE/BCE, BCDE/BDE, BCDE/CDE,
+       ABCDE/ABCD, ABCDE/ABCE, ABCDE/ABDE, ABCDE/ACDE, ABCDE/BCDE}  
+    \draw (\from) -- (\to);
+  \end{tikzpicture}
+  \label{fig:itemsetLattice}
+\end{figure}
+
+
 [...]
 
 \subsection{Apriori Algorithm}
@@ -335,7 +431,7 @@ In the first iteration, all itemsets of size 1 have their supports computed. On 
 iterations, a set of candidates $C_i$ is created by joining the frequent itemsets of size $i-1$ found in the previous
 iteration. Two itemsets of size $i$ can only join if they share $i-1$ items, so their union can form an itemset of size
 $i+1$. Only after finding the set of candidate itemsets $C_1$, the database is scanned in order to determine the
-support of each of them.
+support of each of them. The algorithm \ref{alg:apriori} shows in more details how the apriori algorithm works.
 
 \begin{algorithm}[!h]
   \caption{Apriori frequent itemset discovery}
@@ -346,21 +442,68 @@ support of each of them.
 
   $L_1 \leftarrow$ Frequent itemsets of size 1 \;
   $L \leftarrow L_1$ \;
-  $i \leftarrow 1$ \;
-  \While{$L_{k} \neq \emptyset$}{
-      $i \leftarrow i+1$ \;
-      $C_k \leftarrow$ \FuncSty{aprioriGen(}$L_{i-1}$\FuncSty{)} \;
+  $k \leftarrow 1$ \;
+  \While{$L_{k-1} \neq \emptyset$}{
+      $C_k \leftarrow$ \FuncSty{aprioriGen(}$L_{k-1}$\FuncSty{)} \;
       \ForAll{$t \in \mathcal{D}$}{
-	$C_t \leftarrow \{c \in C_i | c \subseteq t\}$ \;
+	$C_t \leftarrow \{ c | c \in C_k \wedge c \subseteq t\}$ \;
 	\ForAll{$c \in C_t$}{
 	  $c.frequency \leftarrow c.frequency + 1$ \;
 	}
       }
-      $L_k \leftarrow \{c \in C_i | c.frequency \geq minSupport\}$ \;
+      $L_k \leftarrow \{ c | c \in C_k \wedge c.frequency \geq minSupport\}$ \;
       $L \leftarrow L \cup L_k$ \;
+      $k \leftarrow k+1$ \;
   }
   \Return{$L$} \;
 \end{algorithm}
+
+For the previous example of database \ref{tb:itemsetLattice}, the itemset lattice generated by the apriori algorithm
+will be as follows:
+
+\begin{figure}[!h]
+  \caption{Itemset Lattice example}
+  \centering
+  \begin{tikzpicture}[scale=0.75,auto=center,every node/.style={draw=black, font=\tiny}]
+    \node (n0) at (11,15) {$\emptyset$};
+
+    \node (A)[very thick] 	at (5,12)  {$A^{(3)}$};
+    \node (B)[very thick] 	at (8,12)  {$B^{(4)}$};
+    \node (C)[very thick]	at (11,12) {$C^{(4)}$};
+    \node (D)			at (14,12) {$D^{(1)}$};
+    \node (E)[very thick]	at (17,12) {$E^{(4)}$};
+
+    \node (AB)[very thick] 	at (2,9)  {$AB^{(2)}$};
+    \node (AC)[very thick] 	at (4,9)  {$AC^{(3)}$};
+    \node (AE)[very thick] 	at (8,9)  {$AE^{(2)}$};
+    \node (BC)[very thick] 	at (10,9) {$BC^{(3)}$};
+    \node (BE)[very thick] 	at (14,9) {$BE^{(4)}$};
+    \node (CE)[very thick] 	at (18,9) {$CE^{(3)}$};
+
+    \node (ABC)[very thick] 	at (2,6)  {$ABC^{(2)}$};
+    \node (ABE)[very thick] 	at (6,6)  {$ABE^{(2)}$};
+    \node (ACE)[very thick] 	at (10,6) {$ACE^{(2)}$};
+    \node (BCE)[very thick] 	at (16,6) {$BCE^{(3)}$};
+
+    \node (ABCE)[very thick] 	at (8,3)  {$ABCE^{(2)}$};
+
+    \foreach \from/\to in
+      {n0/A,n0/B,n0/C,n0/D,n0/E,
+       A/AB, A/AC, A/AE, 
+       B/AB, B/BC, B/BE, 
+       C/AC, C/BC, C/CE,
+       E/AE, E/BE, E/CE,
+       AB/ABC, AB/ABE,
+       AC/ABC, AC/ACE,
+       AE/ABE, AE/ACE,
+       BC/ABC, BC/BCE,
+       BE/ABE, BE/BCE,
+       CE/ACE, CE/BCE,
+       ABCE/ABC, ABCE/ABE, ABCE/BCE}  
+    \draw (\from) -- (\to);
+  \end{tikzpicture}
+  \label{fig:itemsetLattice}
+\end{figure}
 
 \section{Mining Optimized Rules for Numeric Attributes}
 
