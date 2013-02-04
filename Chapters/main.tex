@@ -743,7 +743,7 @@ This unsupervised discretization method consists of simply querying both the max
 numerical attribute, then for splitting this interval into $k$ buckets of same width $w$:
 
 \begin{equation}
- w=cfrac{max-min}{k}
+ w=\cfrac{max-min}{k}
 \end{equation}
 
 It's the simples and most straightforward discretization method, but its main problem is that it is highly
@@ -751,7 +751,7 @@ sensitive to outliers that may drastically skew the resulting distribution.
 
 \subsection{Equal Frequencies}
 In this also unsupervised discretization method, the domain is divided in buckets with equal frequency. That is, given a
-total frequency $m$, the domain is discretized in $k$ buckets such that each has frequency $cfrac{m}{k}$. Multiple
+total frequency $m$, the domain is discretized in $k$ buckets such that each has frequency $\cfrac{m}{k}$. Multiple
 frequencies with same numerical attribute value might make it impossible to find bucket boundaries that equally
 distribute the frequencies.
 
