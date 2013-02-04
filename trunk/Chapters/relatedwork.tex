@@ -529,7 +529,104 @@ It takes as input histograms for a
 
 \section{Information Theoretic Measures}
 
+Information-theoretic measures are widely used in various fields, such as machine learning and data mining. Its
+importance is its power to measure importance of attributes and relationshiyps between attrbutes.
+
+An attribute is considered important in data mining if regularities are encountered in smaller populations obtained
+based on the values of such attribute, but not in the larger population. Such regularities are identifiable by lower
+entropy values, idicating that interesting attributes lead to entropy reduction. More specifically, the entropy
+reduction is the difference between the entropy of the decision attribute and the conditional entropy of the decision
+attribute given a particular attribute, whose importance we want to investigate.
+
+This property is explored by most learning processes. 
+
+Let's say we have $X$ as decision attribute and it divides the set of objects $U$ into a group of disjoint subsets
+defined by the value $x \in V_X$ of $X$, where $V_X$ is the non-empty set of values for $X$. Also, let's define $I_X :
+U \rightarrow V_X$ is an information function that gives the value of attribute $X$ for an object $t \in U$. The set of
+objects $m(X=x) \subseteq U$, whose value for $X$ is $x$ is defined as follows:
+
+\begin{equation}
+ m(X=x)=m(x)=\{t \in U | I_X(t)=x\}
+\end{equation}
+
+With that, the probability distribution of $X$ is defined by:
+
+\begin{equation}
+ P(X=x)=P(x)=\cfrac{|m(x)|}{|U|},\quad x \in V_X
+\end{equation}
+
+Information theoric measures are defined over probability distributions. They can measure the importance of an
+attribute, attribute association, or dissimilarity or similarity of populations. In the next subsections, we will
+discuss some of the most important measures.
+
+\subsection{Shannon's Entropy}
+
+The Shannon's entropy measure $H$ is a non-negative function which may be interpreted as a measure of the information
+content or uncertainty about an attribute $X$. It is defined over a probability distribution of $X$:
+
+\begin{equation}
+\begin{split}
+ H(P(X))=H(X)&=E_{P(X)}[-logP(X)] \\
+ &=-\sum_{x \in V_X}P(x)logP(x)
+\end{split} 
+\end{equation}
+
+The entropy of $X$ is maximum if its probability distribution is uniform and minimum if the whole population is
+concentrated on a specific value $x_c \in V_X$, i.e. $P(x_c)=1$ and $P(x)=0, x \neq x_c$. The higher the entropy,the
+higher the uncertainty about $X$ attribute value, and an entropy zero means complete certainty that the value of $X$ as
+$P(x_c)=1$.
+
+\subsection{Kullback-Leibler Divergence}
+
+The Kullback-Leibler divergence $D(P||Q)$ between the population distributions $P(X)$ and $Q(X)$, also known as
+$I$-divergence, measures the degree of deviation of $P$ from another distribution $Q$:
+
+\begin{equation}
+\begin{split}
+ D_{KL}(P||Q)&=E_{P(X)}\left[\cfrac{P(X)}{Q(X)}\right] \\
+ &=\sum_{x \in V_X}P(x)log\left(\cfrac{P(x)}{Q(x)}\right)
+\end{split} 
+\end{equation}
+
+This divergence measure is a premetric but not a metric distance. It is non-negative and it becomes zero if $P(x)=Q(x)$,
+$\forall x \in V_X$, but it doesn not satisfy the symmetry and the triangle inequality properties.
+
+There are symmetrized divergence measures based on the Kullback-Leibler, e.g.the $J$-divergence\ref{eq:jDiv} and the
+Jensen-Shannon divergence\ref{eq:jensenShannon}:
+
+\begin{equation} \label{eq:jDiv}
+  D_{J}(P||Q) = D_{KL}(P||Q) + D_{KL}(Q||P)
+\end{equation}
+\begin{equation} \label{eq:jensenShannon}
+  D_{JS}(P||Q) = \cfrac{1}{2}D_{KL}(P||M) + \cfrac{1}{2}D_{KL}(Q||M)
+\end{equation}
+
+where M is the average of the two distributions, $M=\cfrac{1}{2}(P+Q)$.
+
+The Jensen-Shannon divergence also has the advantage that the difference is always a finite value ($0 \leq
+D_{JS}(P||Q) \leq 1$, for the base 2 logarithm). Although, it still does not satisfy the triangle inequality property,
+its square root does and, therefore, is a metric.
+
+\subsection{Mutual Information}
+
+The divergence measure can be used for computing the degree of independence between two attributes $X$ and $Y$. This is
+done by simply measuring the divergence between the observed joined distribution $P(X,Y)$ and the independent
+distribution formed by the marginals $P(X)P(Y)$. We call such measure mutual information:
+
+\begin{equation} \label{eq:mutualInformation}
+\begin{split}
+ I(X;Y)&=D(P(X,Y)||P(X)P(Y)) \\
+ &=E_{P(X,Y)}\left[ log\cfrac{P(x,y)}{P(x)P(y)} \right] \\
+ &=\sum_{x \in V_X} \sum_{y \in V_Y} P(x,y)log\cfrac{P(x,y)}{P(x)P(y)}
+\end{split}
+\end{equation}
+
+Independent attributes 
+
+
 \cite{DBLP:conf/sac/CaldersGPR09}
+\cite{Vinh:2010:ITM:1953011.1953024}
+
 
 \section{Semantic Web Applications}
 
