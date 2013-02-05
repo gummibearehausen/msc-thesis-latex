@@ -52,9 +52,17 @@ logic programming representation. Given a known background knowledge and a set o
 logical database of facts (literals without any variables), an ILP system will learn a hypothesis in the form of a
 logic program.
 
-The training data is a set of examples $\mathcal{E}$, where each examples is a grounded fact labeled as positive
-($\oplus$) or negative ($\ominus$). We denote the set of positive examples as $\mathcal{E}^{+}$ and the set of negative
-examples as $\mathcal{E}^{-}$
+The clauses in the hypothesis aim at recognizing a concept $\mathcal{C}$, which is defined as a subset of objects
+$\mathcal{C} \subseteq \mathcal{U}$. For example, $\mathcal{U}$ may be the set of all students in a University and
+$\mathcal{C}$ all the students studying Informatics.
+Concepts and objects are described in a description language $\mathcal{L}$, typically a subset of first-order logic, but
+various languages have been used in ILP, including propositional logic and first order predicate calculus.
+
+The training data for learning a concept $\mathcal{C}$ is a set of examples $\mathcal{E}$, where each examples is a
+grounded fact
+labeled as positive ($\oplus$) if the object is an instance of $\mathcal{C}$, or negative ($\ominus$) otherwise. We
+denote the set
+of positive examples as $\mathcal{E}^{+}$ and the set of negative examples as $\mathcal{E}^{-}$.
 
 The background knowledge $\mathcal{B}$ is a prior knowledge which contributes in learning the hypothesis. It indirectly
 restricts the hypothesis search space, as  the learned hypothesis $\mathcal{H}$ should be consistent with the background
@@ -87,13 +95,13 @@ examples $\mathcal{E}$ if no negative examples are covered, or in other words:
 $covers(\mathcal{B},\mathcal{H},\mathcal{E}^{-})=\emptyset$
 \end{itemize}
 
-The objective of ILP is to find a hypothesis that is complete and consistent with respect to the given training
-examples and background knowledge. The example shown in table \ref{tb:ilpExample} (presented in
-\cite{DBLP:journals/ml/LavracD96})
-illustrates a simple problem of learning a hypothesis for the target relation $daughter(X,Y)$.
+The objective of learning a concept requires a hypothesis that is complete and consistent with respect to the given
+concept training examples and background knowledge. The example shown in table \ref{tb:ilpExample} (presented in
+\cite{DBLP:journals/ml/LavracD96}) illustrates a simple problem of learning a hypothesis for the target relation
+$daughter(X,Y)$.
 
 \begin{center}
-    \begin{table}
+    \begin{table}[h!]
     \label{tb:ilpExample}
     \caption{A simple ILP problem: learning the \emph{daughter} relation.}
       \begin{tabular}{ r | l }
@@ -116,7 +124,7 @@ If we consider, for example, the language of safe datalog clauses, it is possibl
 and consistent hypothesis:
 
 \begin{center}
-  $hypothesis = daughter(X,Y)$ :- $female(X),parent(Y,X)$ 
+  $\mathcal{H} = daughter(X,Y)$ :- $female(X),parent(Y,X)$ 
 \end{center}
 
 \subsection{Searching the Hypothesis Space}
@@ -130,15 +138,26 @@ order to systematically search the program clauses space. A clause $c$ $\theta$-
 substitution $\theta$ such that clause $c\theta \subseteq c'$. This also introduces a notion of generality, where
 clause $c$ is at least as generaly as $c'$, or in other words, $c'$ is a specialization of $c$.
 
-For example, for $c=daughter(X,Y)$:-$parent(Y,X)$ and $c'=daughter(X,Y)$:-$female(X),parent(Y,X)$. We know that $c'$ is
-a specialization of $c$ because for $\theta=\emptyset$, $c \subset c'$ since $\{daughter(X,Y),\neg parent(Y,X)\}
-\subset \{daughter(X,Y),\neg female(X),\neg parent(Y,X)\}$.
+For example, if we have the following $c$ and $c'$:
+\begin{align}
+  c &= daughter(X,Y) \text{ :- } parent(Y,X) \\
+  c'&= daughter(X,Y )\text{ :- } female(X),parent(Y,X)
+\end{align}
 
-If we have $c = livesIn(X,Y)$:-$marriedTo(X,Z),livesIn(Z,Y)$ and $c' =
-livesIn(X,germany)$:-$marriedTo(X,Z),livesIn(Z,germany)$, we know that $c'$ is a specialization of $c$ because for the
-substitution $\theta=\{Y/germany\}$, $c\theta=c'$.
+we know taht for that $c'$ is a specialization of $c$ because for $\theta=\emptyset$, $c \subset c'$ since:
+\begin{center}
+$\{daughter(X,Y),\neg parent(Y,X)\} \subset \{daughter(X,Y),\neg female(X),\neg parent(Y,X)\}$ 
+\end{center}
 
-This notion gives us an important property that cab be used for pruning parts of the search space:
+To better illustrate it, if we have:
+\begin{align}
+  c &= livesIn(X,Y) \text{ :- } marriedTo(X,Z),livesIn(Z,Y)\\
+  c'&=livesIn(X,germany) \text{ :- } marriedTo(X,Z),livesIn(Z,germany)
+\end{align}
+
+we know that $c'$ is a specialization of $c$ because for the substitution $\theta=\{Y/germany\}$, $c\theta=c'$.
+
+This notion gives us an important property that can be used for pruning parts of the search space:
 
 \begin{itemize}
  \item When generaling from $c$ to $c'$, all the examples covered by $c$ are also covered by $c'$. So if $c$ is
@@ -169,7 +188,16 @@ kinds:
  \item Add a literal to the body of the clause
 \end{itemize}
 
-[...]
+To better illustrate that, figure \ref{fig:refinementGraph} shows part of the refinement graph for the family
+relations problem from the example \ref{tb:ilpExample}.
+
+\begin{figure}
+\label{fig:refinementGraph}
+\begin{center}
+  \includegraphics[width=0.7\linewidth]{./Figures/refinementGraph.png}
+\end{center}
+\caption{Part of the refinement graph for the family relations problem}
+\end{figure}
 
 The top-down algorithm consists basically of a specialization loop that refines a clause ensuring consistency
 embedded inside a covering loop that adds clauses to the hypothesis ensuring completeness. Each loop has a stopping
@@ -214,7 +242,6 @@ the target concept
   \item Missing values in the training example
 \end{itemize}
 
-
 In order to avoid the effects of imperfect data, ILP can use heuristics as stopping criteria that tolerate
 some level of incompleteness and inconsistency. The simplest heuristic is the expected accuracy of a clause, which is
 defined as the probability that an example
@@ -239,9 +266,9 @@ allowed in a clause in order to reduce execution time.
 [Sampling,MaxLiterals]
 
 
-\section{First Order Inductive Learning}
-\cite{DBLP:journals/ml/Quinlan9}
-\cite{DBLP:conf/ecml/QuinlanC93}
+%\section{First Order Inductive Learning}
+%\cite{DBLP:journals/ml/Quinlan9}
+%\cite{DBLP:conf/ecml/QuinlanC93}
 
 \section{Association Rule Mining}
 \cite{Agrawal:1993:MAR:170036.170072}
@@ -329,8 +356,7 @@ figure \ref{fig:itemsetLattice}, frequent itemsets are shown with thicker border
 to $\cfrac{2}{5}$, so the frequent itemsets are the ones with frequency greater than or equal to 2. For this example, we
 would have as maximal itemset $\{ABCE\}$ and as closed itemsets $\{ABCE, BCE, BE\}$
 
-
-\begin{table}
+\begin{table}[h!]
   \begin{center}
     \label{tb:itemsetLattice}
       \begin{tabular}{ c | l l l l }
@@ -458,8 +484,8 @@ support of each of them. The algorithm \ref{alg:apriori} shows in more details h
   \Return{$L$} \;
 \end{algorithm}
 
-For the previous example of database \ref{tb:itemsetLattice}, the itemset lattice generated by the apriori algorithm
-will be as follows:
+For the previous example of database \ref{tb:aprioriLattice}, the itemset lattice generated by the apriori algorithm
+is shown in figure \ref{fig:itemsetLattice}. 
 
 \begin{figure}[!h]
   \caption{Itemset Lattice example}
@@ -502,7 +528,7 @@ will be as follows:
        ABCE/ABC, ABCE/ABE, ABCE/BCE}  
     \draw (\from) -- (\to);
   \end{tikzpicture}
-  \label{fig:itemsetLattice}
+  \label{fig:aprioriLattice}
 \end{figure}
 
 \section{Mining Optimized Rules for Numeric Attributes}
@@ -540,19 +566,21 @@ attribute given a particular attribute, whose importance we want to investigate.
 
 This property is explored by most learning processes. 
 
-Let's say we have $X$ as decision attribute and it divides the set of objects $U$ into a group of disjoint subsets
+Let's say we have $X$ as decision attribute and it divides the set of objects $\mathcal{U}$ into a group of disjoint
+subsets
 defined by the value $x \in V_X$ of $X$, where $V_X$ is the non-empty set of values for $X$. Also, let's define $I_X :
-U \rightarrow V_X$ is an information function that gives the value of attribute $X$ for an object $t \in U$. The set of
-objects $m(X=x) \subseteq U$, whose value for $X$ is $x$ is defined as follows:
+\mathcal{U} \rightarrow V_X$ is an information function that gives the value of attribute $X$ for an object $t \in
+\mathcal{U}$. The set of
+objects $m(X=x) \subseteq \mathcal{U}$, whose value for $X$ is $x$ is defined as follows:
 
 \begin{equation}
- m(X=x)=m(x)=\{t \in U | I_X(t)=x\}
+ m(X=x)=m(x)=\{t \in \mathcal{U} | I_X(t)=x\}
 \end{equation}
 
 With that, the probability distribution of $X$ is defined by:
 
 \begin{equation}
- P(X=x)=P(x)=\cfrac{|m(x)|}{|U|},\quad x \in V_X
+ P(X=x)=P(x)=\cfrac{|m(x)|}{|\mathcal{U}|},\quad x \in V_X
 \end{equation}
 
 Information theoric measures are defined over probability distributions. They can measure the importance of an
@@ -621,7 +649,8 @@ distribution formed by the marginals $P(X)P(Y)$. We call such measure mutual inf
 \end{split}
 \end{equation}
 
-Independent attributes 
+Completely independent attributes have mutual information zero, and the greater the level of dependence, the greater
+the mutual information.
 
 
 \cite{DBLP:conf/sac/CaldersGPR09}
