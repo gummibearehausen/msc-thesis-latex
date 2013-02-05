@@ -455,41 +455,50 @@ categorical constants might be the most interesting to be added to the hypothesi
 We first start with the chosen numerical property, for example $hasIncome(X,Y)$, which should have at least two
 arguments, one being a joining variable $X$ and the other the numerical attribute variable $Y$. Firstly, we query the
 examples distribution along the numerical attribute $Y$, arbitrarily choose a number of buckets $k$ and discretize
-its $Y$'s domain into buckets $b_1, b_2, \dots, b_k$ unsing any unsupervised discretization method. We then find the
-exmple frequency of each bucket and build a
+its $Y$'s domain into buckets $b_1, b_2, \dots, b_k$ using any unsupervised discretization method. 
 
-With we build a frequency histogram for the root node with the overall population 
-These buckets will be consistently used through the whole lattice to build frequency histograms.
+We then build a frequency histogram of the root node with the its overall population. We define the histogram of a node
+$n$ with numerical attribute variable $Y$ as a $k$-dimensional vector $h(n)$ where:
 
+\begin{equation}
+ h(n)=<h_1(n),h_2(n),\ldots,h_k(n)>
+\end{equation}
 
+where $h_i(n)=supp(n|Y \in b_i)$, and therefore:
 
-Subsequently, for the chosen set of categorical relations, we do the same with the examples obtained by joining the root
-with each of the categories. For every category we create a node in the lattice with assiciated frequency histogram. We
-also each the root as parent node, and add the new nodes as children from the root.
+\begin{equation}
+  |h(n)|_1=\sum_{i=1}^{k}h_i(n)=supp(n)
+\end{equation}
+
+Every node in the lattice contains a frequency histogram of its population, and all histograms are built on the same
+buckets defined in the root node for the sake of comparison. 
+
+Subsequently, for the chosen set of categorical relations, we do the same with each subpopulation of examples from each
+category obtained by joining the root with its corresponding categorical literal. For every category a node in
+the lattice is created with associated frequency histogram. In addition, the edges of the lattice are created by
+setting the root as parent node, and adding the new nodes as children from the root.
 
 In a further step, we try to join every possible pair of categorical relations and including the constants. For the
 given, example with the relations \emph{hasEducation} and \emph{wasBornInMonth} we would then create the nodes:
 
-  \emph{hasIncome(x,y)wasBornInMonth(x,``January''),hasEducation(x,``Preschool'')} \newline
-  \emph{hasIncome(x,y)wasBornInMonth(x,``January''),hasEducation(x,``Kindergarten'')} \newline
+  \emph{hasIncome(X,Y)wasBornInMonth(x,``January''),hasEducation(x,``Preschool'')} \newline
+  \emph{hasIncome(X,Y)wasBornInMonth(x,``January''),hasEducation(x,``Kindergarten'')} \newline
   \dots \newline
-  \emph{hasIncome(x,y)wasBornInMonth(x,``January''),hasEducation(x,``Doctorate Degree'')} \newline
+  \emph{hasIncome(X,Y)wasBornInMonth(x,``January''),hasEducation(x,``Doctorate Degree'')} \newline
 
-  \emph{hasIncome(x,y)wasBornInMonth(x,``February''),hasEducation(x,``Preschool'')} \newline
-  \emph{hasIncome(x,y)wasBornInMonth(x,``February''),hasEducation(x,``Kindergarten'')} \newline
+  \emph{hasIncome(X,Y)wasBornInMonth(x,``February''),hasEducation(x,``Preschool'')} \newline
+  \emph{hasIncome(X,Y)wasBornInMonth(x,``February''),hasEducation(x,``Kindergarten'')} \newline
   \dots \newline
-  \emph{hasIncome(x,y)wasBornInMonth(x,``February''),hasEducation(x,``Doctorate Degree'')} \newline
+  \emph{hasIncome(X,Y)wasBornInMonth(x,``February''),hasEducation(x,``Doctorate Degree'')} \newline
  
   \dots \newline
 
-  \emph{hasIncome(x,y)wasBornInMonth(x,``December''),hasEducation(x,``Preschool'')} \newline
-  \emph{hasIncome(x,y)wasBornInMonth(x,``December''),hasEducation(x,``Kindergarten'')} \newline
+  \emph{hasIncome(X,Y)wasBornInMonth(x,``December''),hasEducation(x,``Preschool'')} \newline
+  \emph{hasIncome(X,Y)wasBornInMonth(x,``December''),hasEducation(x,``Kindergarten'')} \newline
   \dots \newline
-  \emph{hasIncome(x,y)wasBornInMonth(x,``December''),hasEducation(x,``Doctorate Degree'')} \newline
-  
+  \emph{hasIncome(X,Y)wasBornInMonth(x,``December''),hasEducation(x,``Doctorate Degree'')} \newline
 
-  
- 
+
  \begin{figure}[!h]
   \caption{Combination of relations $hasEducation$ and $bornInMonth$ }
   \centering
@@ -520,10 +529,6 @@ given, example with the relations \emph{hasEducation} and \emph{wasBornInMonth} 
   \end{tikzpicture}
   \label{fig:combiningLiterals}
 \end{figure}
-
-
-
-  
 
 This process works just like in an itemset lattice until a predetermined maximum level or until all the
 possible combinations are exhausted. Figure \ref{fig:lattice} shows how a \graphname looks like.
@@ -572,9 +577,9 @@ Let's say we have the following join case:
   \begin{tikzpicture}
   [scale=1,auto=center,every node/.style={minimum size=1cm}]
     \node (p)  [circle,fill=black!20] at (4,10) {$p$};
-    \node (n1) [circle,fill=black!20] at (3,8)  {$p,x$};
-    \node (n2) [circle,fill=black!20] at (5,8)  {$p,y$};
-    \node (n12)[circle,fill=black!20] at (4,6)  {$p,x,y$};
+    \node (n1) [circle,fill=black!20] at (3,8)  {$px$};
+    \node (n2) [circle,fill=black!20] at (5,8)  {$py$};
+    \node (n12)[circle,fill=black!20] at (4,6)  {$pxy$};
 
 
     \foreach \from/\to in {p/n1,p/n2,n1/n12,n2/n12}
