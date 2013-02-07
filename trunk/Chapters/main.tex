@@ -29,15 +29,18 @@ As we know that $r_1 \geq TS_{conf}$, then $g_{r_2,r_1}$ is upper-bounded by:
  g_{r_2,r1} \leq \cfrac{1}{TS_{conf}}
 \end{equation}
 
-More interesting for us would be base rules that satisfy the support threshold but does not satisfy the confidence
-threshold. In such case, if we have a non-uniform confidence distribution along the buckets, it is possible for some
-intervals, its correspondent refined-rule satisfies both thresholds. Furthermore, the confidence gain is potentially
-much greater than otherwise.
+More interesting for us would be base rules which satisfy the support threshold but does not satisfy the confidence
+threshold, or which satisfies a quite low confidence threshold. In such case, if we have a non-uniform confidence
+distribution along the buckets, it is possible that, for some specific intervals, its correspondent refined-rule
+satisfies both thresholds, therefore potentially having a significant confidence gain.
 
-For example in figure \ref{interestingnessExample}, we have an ideal example where positive examples and body support
-have completely different distributions and thus produce a very interesting confidence distribution.
+In figure \ref{interestingnessExample}, we illustrate that with an ideal example where positive examples and body
+support have completely different distributions and thus produce a very interesting confidence distribution. Such
+distribution is obtained thanks to the divergent rule's positives and body support distributions. This is shown in
+figure \ref{interestingnessDistribution}, where we obtained these distributions by normalizing the frequency histograms
+from the rule's positive examples and body support.
 
-\begin{figure}
+\begin{figure} [h!]
   \label{interestingnessExample}
   \begin{tikzpicture}[scale=0.8]
   \begin{axis}[
@@ -89,9 +92,6 @@ have completely different distributions and thus produce a very interesting conf
   \end{tikzpicture} 
 \end{figure}
 
-In figure \ref{interestingnessDistribution}, we normalize the frequency histograms from the rule's positive examples
-and body support in order to better show how their distributions diverge.
-
 \begin{figure}
   \label{interestingnessDistribution}
   \begin{tikzpicture}[scale=0.8]
@@ -138,100 +138,135 @@ and body support in order to better show how their distributions diverge.
 
 In this section, we formally define a categorical property as used in the \graphname. 
 
-First of all, a candidate relation must be joined with root relation's non-numerical variable
+First of all, a candidate relation must be joined with root join variable variable $X$
 
-A candidate categorical relation $r(x,y)$, should be equivalent to a non-injective function:
+A candidate categorical relation $r(X,Z)$, where $X \in \mathcal{X}$ is the join variable and $Z$ is within
+a categorical domain $\mathcal{Z}$ with a finite number of categories $\{z_1,z_2,\ldots,z_n\}$, such that:
 
-$r(x,y) \equiv f : X \rightarrow Y , \quad s.t. \quad |Y|<|X| $ and $ |Y|>1 \newline $
-Therefore, $\nexists \, g : Y \rightarrow X , \quad s.t. \quad f(g(x))=x , \quad \forall x \in X$
+$\mathcal{X}_{z_i}= \{ x | x \in \mathcal{X} \wedge \exists r(x,z_i) \}$
+ 
+Typically, $\sum_{i=1}^{k}|\mathcal{X}_{z_i}| \ll k$ and $\mathcal{X}_{z_i} \subseteq
+\mathcal{X}$ with $|\mathcal{X}_{z_i}| < |\mathcal{X}|$
 
-We can define subsets $X_i \in X$, with which $X_i$ belonging to one category $y_i \in Y$:
+\begin{tabular}{*{2}{l}}
+\label{tb:cat1}
+  hasIncome(john,20000) & hasSex(john,male) 	\\
+  hasIncome(mike,30000) & hasSex(mike,male) 	\\
+  hasIncome(anne,25000) & hasSex(anne,female) 	\\
+  hasIncome(mary,5000) 	& hasSex(mary,female) 	\\
+  hasIncome(lisa,10000) & hasSex(lisa,female)	\\
+  hasIncome(paul,0)	& hasSex(paul,male)	\\
+\end{tabular}
 
-$X_i \subset X \quad s.t. \quad X_i = \{x \in X \,|\, f(x)=y_i ,\, y_i \in Y\} \newline $
-$X = \bigcup_{i=1}^{n} X_i $ and $ X_i \cap X_j = \emptyset ,\quad \forall i,j \in [1,n] ,\, i \neq j$
+For the table \ref{tb:cat1}, if we define $\mathcal{X}=\{ x|\exists hasIncome(x,Y), Y \in \mathcal{Y} \}$, then we would
+have the following sub-populations of $\mathcal{X}$:
 
-We can also broaden this definition by composing functional relations with a categorical or multiple categorical
-relations:
-
-If we have:
-
-$r_1(x,y) \equiv f_1 : X \rightarrow Y$ \newline
-$r_2(y,z) \equiv f_2 : Y \rightarrow Z$ 
-
-Where at least one of them is categorical, then $r'(x,z) \equiv f : X \rightarrow Z$, where $r'(x,z)=r_2(f_1(x),z)$ is also categorical
+\begin{align*}
+ \mathcal{X}_{male}&=\{ x|x \in \mathcal{X} \wedge \exists hasSex(x,male)\} \\
+  &=\{john,mike,paul\} \\
+\mathcal{X}_{female}&=\{ x|x \in \mathcal{X} \wedge \exists hasSex(x,female)\} \\
+  &=\{anne,mary,lisa\}
+\end{align*}
 
 
-Numerical properties can also be turned into a categorical, by simply applying a bucketing function that maps a
-numerical domain into a finite set of $k$ buckets:
+The $rdf$:$type$ property, for example, is also covered by this definition with the entity types being the categories.
 
-$b: \mathbb{N} \rightarrow B$, where $B=\{1,2,\dots ,k \}$
+A categorical property can be overlapping, i.e. with intersecting categories, or not. A non-overlapping categorical
+property $r(X,Z)$, such as $hasSex$, is defined as:
 
-e.g.: [make an example]
+$\mathcal{X}_{z_i} \cap \mathcal{X}_{z_j} = \emptyset, \quad \forall z_i,z_j \in \mathcal{Z}, i \neq j$
 
-So a numerical property:
+This definition of categorical property might be too restrictive, therefore, in the next sections, we broaden this
+definition by applying different techniques.
 
-$r(x,y) \equiv f : X \rightarrow \mathbb{N}$ 
+\subsection{Numerical Properties as Categorical}
 
-combined with a bucketing function $b$, $r'(x,b(y))$ would be discretized and applicable in the \graphname.
+Numerical properties with very large or infinite domain can also be dealt as categorical, by simply applying a bucketing
+function that maps its numerical domain into a finite set of $k$ buckets. For example, we can use a discretization
+function $b$ to turn a numerical property $r(X,Z)$, with $Z \in \mathbb{R}$, into a non-overlapping categorical
+property:
 
-Types are also covered by this definition. If we consider \emph{r = rdf:type} we see that $r$ which maps entities into
-types satisfies the definition presented before.
+$b: \mathbb{R} \rightarrow \mathcal{B}$, where $\mathcal{B}=\{1,2,\dots ,k \}$
 
-Similarly different knowledge bases can be interconnected by simply applying this definition with the \emph{owl:sameAs}
-relation. This allows to broaden the set of categorical properties to be analyzed in the \graphname to those contained
-in interlinked datasets.
+$r(X,b(Z)) \equiv r'(X,B) , \quad B \in \mathcal{B}$
+
+\subsection{Combination Categorical Property with Linking Relation}
+We can also broaden this definition by composing a categorical property with linking relations. Therewith, it is
+possible to use categorical relations that do not directly join with root's join variable $X$
+
+If a functional relation $r_1$ and a categorical $r_2$:
+
+$r_1(X,W) \equiv f_1 : \mathcal{X} \rightarrow \mathcal{W}$ \newline
+$r_2(W,Z),\quad Z \in \mathcal{Z}=\{z_1,z_2,\ldots,z_k\}$ is a categorical domain and 
+
+Then $r'(X,Z) \equiv r_1(X,W),r_2(W,Z) \equiv r_2(f_1(X),Z)$ is a composed categorical relation. 
+
+With that, different knowledge bases can be interconnected by simply applying this definition with $owl$:$sameAs$
+as linking relation. This allows to broaden the set of categorical properties to be analyzed in the \graphname to those
+contained in interlinked datasets.
+
+\begin{tabular}{*{2}{l}}
+\label{tb:cat1}
+  owl:sameAs(john,johnSmith)& hasProfession(johnSmith,teacher) 	 \\
+  owl:sameAs(mike,mikeBell) & hasProfession(mikeBell,actor) 	 \\
+  owl:sameAs(anne,anneSmith)& hasProfession(anneSmith,doctor)	 \\
+  owl:sameAs(lisa,lisaBell) & hasProfession(lisaBell,teacher) 
+\end{tabular}
 
 \subsection{Absence or Presence of a Property as Categories}
 
 Another possibility is to define categories for presence or absence of supporting examples for properties. With this
-approach, one can also
-include non-categorical properties into the \graphname and have insight about how the presence or absence of such
-property affects the distribution of root's numerical attribute.
+approach, one can also include non-categorical properties into the \graphname and have insight about how the presence or
+absence of such property affects the distribution of root's numerical attribute.
 
 In this case we must consider a property which does not have examples for all its domain. For example, the property
 \emph{isParentOf(x,y)} has as both domain and range type Person. If not all the Person instances of the knowledge base
-have supporting facts for the relation \emph{isParentOf}, then we can
-split the instances in two categories: the ones that are covered by the property and the ones that are not. For example,
-let \emph{hasIncome} be the root property and let's assume we have a knowledge base with the following facts:
+have supporting facts for the relation \emph{isParentOf}, then we can split the instances in two categories: the ones
+that are covered by the property and the ones that are not. For example, let \emph{hasIncome} be the root property and
+let's assume we have a knowledge base with the following facts:
 
 \begin{tabular}{*{2}{l}}
-  hasIncome(John,20000) & isParentOf(John,Mary) \\
-  hasIncome(Mike,30000) & isParentOf(Mike,Paul) \\
-  hasIncome(Anne,25000) & isParentOf(Anne,Paul) \\
-  hasIncome(Mary,5000) 	& isParentOf(Anne,Mary) \\
-  hasIncome(Lisa,10000) & 			\\
-  hasIncome(Paul,0)	& 			\\
+  hasIncome(john,20000) & isParentOf(john,mary) \\
+  hasIncome(mike,30000) & isParentOf(mike,paul) \\
+  hasIncome(anne,25000) & isParentOf(anne,paul) \\
+  hasIncome(mary,5000) 	& isParentOf(lisa,mary) \\
+  hasIncome(lisa,10000) & 			\\
+  hasIncome(paul,0)	& 			\\
 \end{tabular}
 
-Then we could split the root node set $X_{root}=\{x|\exists hasIncome(x,z)\}$ in two categories $X_{root}^1,X_{root}^2
-\in
-X_{root}$:
+Then we could split the root node set $\mathcal{X}$ in two categories $\mathcal{X}_{parent} \in \mathcal{X}$ and its
+complement $\mathcal{X}_{parent}^{c} \in \mathcal{X}$:
 
-$X_{root}^1=\{x| x \in X_{root} \land \exists isParentOf(x,y)\} \\$
-$X_{root}^2=\{x| x \in X_{root} \land \nexists isParentOf(x,y)\} \\$
-
-Each group would consist of the following instances:
-
-$X_{root}=\{John,Mike,Anne,Mary,Lisa,Paul\} \\$
-$X_{root}^1=\{John,Mike,Anne\} \\$
-$X_{root}^2=\{Mary,Lisa,Paul\}$
+\begin{align*}
+ \mathcal{X}_{parent}&=\{x| x \in \mathcal{X} \land \exists isParentOf(x,Z)\} \\
+  &=\{john,mike,anne,lisa\} \\
+ \mathcal{X}_{parent}^{c}&=\{x| x \in \mathcal{X} \land x \not \in \mathcal{X}_{parent} \} \\
+  &=\{mary,paul\} \\
+\end{align*}
 
 As in this thesis we are under open world assumption and we don not consider negated literals in the hypothesis, we
-ignore
-the absence and just include the presence of relations in the lattice.
+ignore the absence and just include the presence of relations in the lattice.
 
 
 \subsection{Notation Used}
 
-As we will see in the next sections, in the \graphname all the relations are joined by the variable of root's first
-argument. So we will denote the presence of a property $r(x,y)$ category as simply $r$, where $x$ is the join variable
-and $y$ is free and not set to any constant. If we have a categorical property $a(x,y)$ with $k$ different categories
-$A_i \in Y$ $(i=1,..,k)$, we denote each of the $a(x,A_i)$ as $a_i$.
+As we will see in the next sections, in the \graphname all the relations are joined by the variable of root's join
+argument $X$. So we will denote the presence of a property $a(X,Z)$ category as simply $a$, where the variable $Z$ is
+free and not set to any constant. If we have a categorical property $a(X,z_i)$ with $k$ different categories $z_i \in
+\mathcal{Z}=\{ z_1,z_2,\ldots,z_k\}$, we denote each of the $a(X,z_i)$ as $a_i$.
 
-So if we have a root node $r$ and a node at level 3 called $rab_1c_3$, that means we are considering the examples for
-the following join:
+So for example if we set the root relation $r=hasIncome(X,Y)$ and categorical relations:
+\begin{align*}
+a(X,Z)&=isMarriedTo(X,Z) \\
+b(X,W)&=hasSex(X,W), \quad W \in \mathcal{W} =\{male,female\} \\
+c(X,V)&=bornInMonth(X,V), \quad V \in \mathcal{V} =\{january,february,\ldots,december\}
+\end{align*}
 
-$r(x,y)a(x,z)b(x,B_1)c(x,B_3)$
+With such notation, we can write large clauses in a much more concise way, such as in the examples below:
+\begin{align*}
+rab_1c_3 &= hasIncome(X,Y),isMarriedTo(X,Z),hasSex(X,male),bornInMonth(march) \\
+rab_2c_{11} &= hasIncome(X,Y),isMarriedTo(X,Z),hasSex(X,female),bornInMonth(november)
+\end{align*}
 
 
 \section{Preprocessing}
@@ -248,10 +283,10 @@ In this step, we focus on creating a map of joinable for each join pattern betwe
 are working with RDF triples, we have four possible join patterns:
 
 \begin{itemize}
- \item Argument 1 on Argument 1: e.g. \emph{hasIncome(\textbf{x},y)hasAge(\textbf{x},z)}
- \item Argument 1 on Argument 2: e.g. \emph{hasIncome(\textbf{x},y)isMarriedTo(z,\textbf{x})}
- \item Argument 2 on Argument 1: e.g. \emph{livesIn(y,\textbf{x})isLocatedIn(\textbf{x},z)}
- \item Argument 2 on Argument 2: e.g. \emph{livesIn(y,\textbf{x})wasBornIn(z,\textbf{x})}
+ \item Argument 1 on Argument 1: e.g. \emph{hasIncome(\textbf{X},Y)hasAge(\textbf{x},zZ)}
+ \item Argument 1 on Argument 2: e.g. \emph{hasIncome(\textbf{X},Y)isMarriedTo(Z,\textbf{x})}
+ \item Argument 2 on Argument 1: e.g. \emph{livesIn(Y,\textbf{X})isLocatedIn(\textbf{X},Z)}
+ \item Argument 2 on Argument 2: e.g. \emph{livesIn(Y,\textbf{X})wasBornIn(Z,\textbf{X})}
 \end{itemize}
 
 With that we could easily obtain all the possible pair of joinable relations for each join pattern, avoiding testing
@@ -263,7 +298,8 @@ A knowledge base is expected to have an ontology defining the structure of the s
 their relationships). Additionally, every relation's range (type of \ord{1} argument) and domain (type of \ord{2}
 argument) should be defined. These information can help us identify the allowed joining relations for each join pattern.
 
-\begin{figure}[!h]
+\begin{figure}[h!]
+  \label{fig:hierarchy}
   \caption{Type hierarchy example}
   \centering
   \begin{tikzpicture}[<-,draw=black,very thick,level/.style={sibling distance = 6cm/#1,level distance = 1.5cm}]
@@ -290,9 +326,11 @@ argument) should be defined. These information can help us identify the allowed 
 \label{fig:typeHierarchy}
 \end{figure}
 
-Assuming that the knowledge base has its type hierarchy described with the relation \emph{rdfs:subClassOf} and both
-argument types from each of the relations declared with \emph{rdfs:domain} and \emph{rdfs:range} it is a
-straightforward task.
+Assuming that the knowledge base has its type hierarchy described with the relation \emph{rdfs:subClassOf}, such as the
+example shown in figure \ref{fig:hierarchy}, where in each arrow means that the tail is a subclass of the head. Also,
+we assume that every property has both argument types declared with \emph{rdfs:domain} and\emph{rdfs:range}. With such
+information, it is a straightforward task to prune out the pairs of joining relations not allowed by the type
+hierarchy.    
 
 For every possible pair of relations, we simply try to match the joining argument types from the 2 joining relations. We
 check whether they are equal or if one can be subsumed by the other. If so, then it is allowed to join the pair of
@@ -302,7 +340,7 @@ pseudo-code
 for performing such task is
 shown in the Algorithm \ref{alg1}:
 
-\begin{algorithm}[!h]
+\begin{algorithm}[h!]
   \caption{Function $checkTypes$ \newline Checks whether two relations are joinable for a given join pattern}
  \label{alg1}
  \SetKwFunction{subsumes}
@@ -346,7 +384,7 @@ containing such join will therefore fail the support test as well, so we don not
 core
 ILP algorithm.
 
-\begin{algorithm}[!h]
+\begin{algorithm}[h!]
   \caption{Function $checkSupport$ \newline Checks whether join support exceeds threshold}
   \label{alg2}
   \SetKwFunction{executeQuery}
@@ -382,7 +420,7 @@ relations as keys and a set of joinable relations as value. In the refinement st
 be queried in order to obtain suggestions of literals to be
 added.
 
-\begin{algorithm}[!h]
+\begin{algorithm}[h!]
   \caption{Preprocessing algorithm}
   \label{alg3}
   \SetKwFunction{executeQuery}
