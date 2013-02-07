@@ -56,7 +56,7 @@ The clauses in the hypothesis aim at recognizing a concept $\mathcal{C}$, which 
 $\mathcal{C} \subseteq \mathcal{U}$. For example, $\mathcal{U}$ may be the set of all students in a University and
 $\mathcal{C}$ all the students studying Informatics.
 Concepts and objects are described in a description language $\mathcal{L}$, typically a subset of first-order logic, but
-various languages have been used in ILP, including propositional logic and first order predicate calculus.
+various languages have also been used in ILP, including propositional logic and first order predicate calculus.
 
 The training data for learning a concept $\mathcal{C}$ is a set of examples $\mathcal{E}$, where each examples is a
 grounded fact
@@ -68,13 +68,13 @@ The background knowledge $\mathcal{B}$ is a prior knowledge which contributes in
 restricts the hypothesis search space, as  the learned hypothesis $\mathcal{H}$ should be consistent with the background
 knowledge as well as the training examples.
 
-A hypothesis $\mathcal{H}$ is said to cover an example $e$ given a background knowledge $\mathcal{B}$
-($covers(\mathcal{B} \cup \mathcal{H},e)$) if the example satisfies the hypothesis and background knowledge. In logic
-programming where the a $\mathcal{H}$ is a set of program clauses and an example is a ground fact, it means that $e$ is
-entailed by $\mathcal{B} \cup \mathcal{H}$.
+A hypothesis $\mathcal{H}$ is said to cover an example $e$ given a background knowledge
+$\mathcal{B}$ ($covers(\mathcal{B} \cup \mathcal{H},e)$) if the example satisfies the hypothesis and background
+knowledge. In logic programming where the $\mathcal{H}$ is a set of program clauses and an example is a ground fact, it
+means that $e$ is entailed by $\mathcal{B} \cup \mathcal{H}$.
 
 \begin{center}
- $covers(\mathcal{B} \cup \mathcal{H},e)=true$ if $\mathcal{B} \cup \mathcal{H} \models e$
+ $covers(\mathcal{B} \cup \mathcal{H},e)=true \quad$ if $\quad \mathcal{B} \cup \mathcal{H} \models e$
 \end{center}
 
 We can also define a covering function for a set of examples which returns a a subset with the examples entailed by
@@ -100,10 +100,10 @@ concept training examples and background knowledge. The example shown in table \
 \cite{DBLP:journals/ml/LavracD96}) illustrates a simple problem of learning a hypothesis for the target relation
 $daughter(X,Y)$.
 
-\begin{center}
-    \begin{table}[h!]
-    \label{tb:ilpExample}
-    \caption{A simple ILP problem: learning the \emph{daughter} relation.}
+\begin{table}[h!]
+\label{tb:ilpExample}
+\caption{A simple ILP problem: learning the \emph{daughter} relation.}
+  \begin{center}
       \begin{tabular}{ r | l }
       \toprule
       \textbf{Training Examples} & \textbf{Background Knowledge}\\
@@ -117,8 +117,8 @@ $daughter(X,Y)$.
 					& female(eve).		\\
       \bottomrule
       \end{tabular}
-    \end{table}
-\end{center}
+  \end{center}
+\end{table}
 
 If we consider, for example, the language of safe datalog clauses, it is possible to formulate the following complete
 and consistent hypothesis:
@@ -139,10 +139,10 @@ substitution $\theta$ such that clause $c\theta \subseteq c'$. This also introdu
 clause $c$ is at least as generaly as $c'$, or in other words, $c'$ is a specialization of $c$.
 
 For example, if we have the following $c$ and $c'$:
-\begin{align}
+\begin{align*}
   c &= daughter(X,Y) \text{ :- } parent(Y,X) \\
   c'&= daughter(X,Y )\text{ :- } female(X),parent(Y,X)
-\end{align}
+\end{align*}
 
 we know taht for that $c'$ is a specialization of $c$ because for $\theta=\emptyset$, $c \subset c'$ since:
 \begin{center}
@@ -150,20 +150,20 @@ $\{daughter(X,Y),\neg parent(Y,X)\} \subset \{daughter(X,Y),\neg female(X),\neg 
 \end{center}
 
 To better illustrate it, if we have:
-\begin{align}
+\begin{align*}
   c &= livesIn(X,Y) \text{ :- } marriedTo(X,Z),livesIn(Z,Y)\\
   c'&=livesIn(X,germany) \text{ :- } marriedTo(X,Z),livesIn(Z,germany)
-\end{align}
+\end{align*}
 
-we know that $c'$ is a specialization of $c$ because for the substitution $\theta=\{Y/germany\}$, $c\theta=c'$.
+we know that $c'$ is a specialization of $c$ because with the substitution $\theta=\{Y/germany\}$, $c\theta=c'$.
 
 This notion gives us an important property that can be used for pruning parts of the search space:
 
 \begin{itemize}
- \item When generaling from $c$ to $c'$, all the examples covered by $c$ are also covered by $c'$. So if $c$ is
+ \item When generalizing from $c$ to $c'$, all the examples covered by $c$ are also covered by $c'$. So if $c$ is
 inconsistent, then all its generalizations are inconsistent as well.
   \item When specializing from $c$ to $c'$, an example not covered by $c$ will neither be covered by $c'$. So if $c'$
-does not cover any positive examples, neither do all its specializations.
+does not cover any positive examples, neither do any its specializations.
 \end{itemize}
 
 These properties are the basis for two main search approaches:
@@ -180,18 +180,10 @@ Further information about bottow-up approach can be found in \cite{DBLP:journals
 
 The search space of program clauses can be viewed as a lattice, structured by $\theta$-subsumption generality
 ordering. Such lattice is called a \emph{refinement graph}, which can be used to direct the search from most general to
-specific hypothesis. In the graph, nodes are program clauses and arcs are refinement operations, which can be of two
-kinds:
+specific hypothesis. The figure \ref{fig:refinementGraph} illustrates a part of the refinement graph for the
+family relation example shown in table \ref{tb:ilpExample}.
 
-\begin{itemize}
- \item Apply a substitution on the clause
- \item Add a literal to the body of the clause
-\end{itemize}
-
-To better illustrate that, figure \ref{fig:refinementGraph} shows part of the refinement graph for the family
-relations problem from the example \ref{tb:ilpExample}.
-
-\begin{figure}
+\begin{figure}[h!]
 \label{fig:refinementGraph}
 \begin{center}
   \includegraphics[width=0.7\linewidth]{./Figures/refinementGraph.png}
@@ -199,11 +191,18 @@ relations problem from the example \ref{tb:ilpExample}.
 \caption{Part of the refinement graph for the family relations problem}
 \end{figure}
 
+In such graph, nodes are program clauses and arcs are refinement operations, which can be of two kinds:
+
+\begin{itemize}
+ \item Apply a substitution on the clause
+ \item Add a literal to the body of the clause
+\end{itemize}
+
 The top-down algorithm consists basically of a specialization loop that refines a clause ensuring consistency
 embedded inside a covering loop that adds clauses to the hypothesis ensuring completeness. Each loop has a stopping
 criterion, the covering loop iterates until it satisfies a sufficiency criterion and the specialization loop iterates
-until it safies a necessity criterion. The algorithm \ref{alg:topDownILP} shows in more details how a generic top-down
-ILP works.
+until it satisfies a necessity criterion. The algorithm \ref{alg:topDownILP} shows in more details how the generic
+top-down ILP works.
 
 \begin{algorithm}[!h]
   \caption{Generic top-down specialization ILP algorithm}
@@ -242,7 +241,7 @@ the target concept
   \item Missing values in the training example
 \end{itemize}
 
-In order to avoid the effects of imperfect data, ILP can use heuristics as stopping criteria that tolerate
+In order to avoid the effects of imperfect data, ILP can use heuristics as stopping criteria which tolerate
 some level of incompleteness and inconsistency. The simplest heuristic is the expected accuracy of a clause, which is
 defined as the probability that an example
 covered by the clause is labeled as positive:
@@ -275,9 +274,10 @@ allowed in a clause in order to reduce execution time.
 \cite{Hipp00algorithmsfor}
 
 Association Rule Mining is method for discovering interesting relations between variables in large databases. It is
-intended to work on a database composed by a set of transactions $D=\{t_1,t_2,\ldots,t_m\}$ and a set of items
-$I=\{i_1,i_2,\ldots,i_n\}$. Each transaction $\mathcal{T}$ consists of a set of items which is subset of $I$ , which can
-be represented by a binary vector of size $n$ indicating the presence of absence of items in the transaction.
+intended to work on a database composed by a set of transactions $\mathcal{D}=\{t_1,t_2,\ldots,t_m\}$ and a set of items
+$\mathcal{I}=\{i_1,i_2,\ldots,i_n\}$. Each transaction $\mathcal{T}$ consists of a set of items which is subset of $I$ ,
+which is usually represented by a binary vector of size $n$ indicating the presence of absence of items in the
+transaction.
 
 The objective of association rule mining is to learn inference rules of the form $X \Rightarrow Y$, where $X,Y
 \subseteq I$ and $X \cap Y = \emptyset$. Rules are selected according to various interestingness measures that will be
@@ -301,7 +301,8 @@ The support of a rule $X \Rightarrow Y$ is defined as:
  supp(X \Rightarrow Y)=supp(X \cup Y)
 \end{equation}
 
-Them confidence of a rule $X \Rightarrow Y$ is defined as the conditional probability $P(Y|X)$:
+The confidence of a rule $X \Rightarrow Y$, which can may be interpreted as the probability of the the head given the
+body $P(Y|X)$, is defined as:
 
 \begin{equation}
  conf(X \Rightarrow Y)=\cfrac{supp(X \cup Y)}{sup(X)}
@@ -313,12 +314,12 @@ measures such as \emph{lift}. It measures how different the observed rule suppor
 $X$ and $Y$ were independent:
 
 \begin{equation}
- lift(X \Rightarrow Y)=\cfrac{supp(X \Rightarrow Y)}{supp(X)*supp(Y)}
+ lift(X \Rightarrow Y)=\cfrac{supp(X \Rightarrow Y)}{supp(X)supp(Y)}
 \end{equation}
 
 A lift value 1 would imply that $X$ and $Y$ are independent, therefore any rule involving both itemsets does not make
 sense. A lift value greater than 1, provides information about the level of dependence between both variables. Higher
-lift values makes a rule potentially interesting.
+lift values makes a rule potentially more interesting.
 
 \subsection{Anti-monotonicity of Support}
 
@@ -327,7 +328,7 @@ An important characteristic of the support measure is the anti-monotonicity. It 
 of $Y$ cannot be greater than the support of $X$. In other words, all subsets from a frequent itemset are also frequent,
 and all supersets from an infrequent item are also infrequent.
 
-When searching for frequent itemsets, this characteristic plays a crucial role in pruning the search space, which grows
+When searching for frequent itemsets, this characteristic plays a key role in pruning the search space, which grows
 exponentially with the number of items $n$. The set of possible itemsets is the power set over $\mathcal{I}$, which has
 size $2^n-1$. As association rules are usually required to satisfy a specified minimum support, if we know that a given
 itemset does not satisfy it, we can automatically prune all its supersets.
@@ -448,10 +449,10 @@ would have as maximal itemset $\{ABCE\}$ and as closed itemsets $\{ABCE, BCE, BE
 [...]
 
 \subsection{Apriori Algorithm}
-
-In the apriori algorithm, frequent itemsets are computed iteratively, by ascending order of size. The process takes $k$
-iterations where $k$ is the size of the largest frequent itemset. In each iteration $i \leq k$, the database is scanned
-once and all the support of all itemsets of size $i$ are computed.
+The apriori algorithm is a method for searching frequent itemsets which explores the anti-monotonic property of the
+support measure. It computeds the itemsets support iteratively, by ascending order of size. The
+process takes $k$ iterations where $k$ is the size of the largest frequent itemset. In each iteration $i \leq k$, the
+database is scanned once and all the support of all itemsets of size $i$ are computed.
 
 In the first iteration, all itemsets of size 1 have their supports computed. On the $1 < i \leq k$ subsequent
 iterations, a set of candidates $C_i$ is created by joining the frequent itemsets of size $i-1$ found in the previous
@@ -459,7 +460,7 @@ iteration. Two itemsets of size $i$ can only join if they share $i-1$ items, so 
 $i+1$. Only after finding the set of candidate itemsets $C_1$, the database is scanned in order to determine the
 support of each of them. The algorithm \ref{alg:apriori} shows in more details how the apriori algorithm works.
 
-\begin{algorithm}[!h]
+\begin{algorithm}[h!]
   \caption{Apriori frequent itemset discovery}
   \label{alg:apriori}
   \SetKwFunction{aprioriGen}
@@ -487,7 +488,7 @@ support of each of them. The algorithm \ref{alg:apriori} shows in more details h
 For the previous example of database \ref{tb:aprioriLattice}, the itemset lattice generated by the apriori algorithm
 is shown in figure \ref{fig:itemsetLattice}. 
 
-\begin{figure}[!h]
+\begin{figure}[h!]
   \caption{Itemset Lattice example}
   \centering
   \begin{tikzpicture}[scale=0.75,auto=center,every node/.style={draw=black, font=\tiny}]
@@ -534,7 +535,10 @@ is shown in figure \ref{fig:itemsetLattice}.
 \section{Mining Optimized Rules for Numeric Attributes}
 
 In \cite{Brin99miningoptimized}, a technique for efficient learning association rules with interesting ranges for
-numerical attributes is presented. Such rules have the form $(A_1 \in [l_1,u_1]) \wedge C_1 \rightarrow C_2$, where
+numerical attributes is presented. It focuses on finding numerical intervals which optimize a specific interestingness
+measure, given the confidence and support distribution of a rule along a numerical attribute. 
+
+Such rules have the form $(A_1 \in [l_1,u_1]) \wedge C_1 \rightarrow C_2$, where
 $A_1$ is a numerical attribute, $l_1$ and $u_1$ are the lower and upper boundaries of $A_1$, and $C_1$ and $C_2$ contain
 only instantiated conditions.
 
@@ -548,30 +552,23 @@ confidence is at least the specified minimum confidence.
   \item Optimized gain: the rule gain is maximized and the confidence is at least the specified minimum confidence.
 \end{itemize}
 
-It takes as input histograms for a 
-
-
-
+[Add pseudo-algorithm and some more discussion]
 
 \section{Information Theoretic Measures}
 
-Information-theoretic measures are widely used in various fields, such as machine learning and data mining. Its
-importance is its power to measure importance of attributes and relationshiyps between attrbutes.
-
-An attribute is considered important in data mining if regularities are encountered in smaller populations obtained
-based on the values of such attribute, but not in the larger population. Such regularities are identifiable by lower
-entropy values, idicating that interesting attributes lead to entropy reduction. More specifically, the entropy
-reduction is the difference between the entropy of the decision attribute and the conditional entropy of the decision
-attribute given a particular attribute, whose importance we want to investigate.
-
-This property is explored by most learning processes. 
+Information-theoretic measures are widely used in various different learning processes. Its importance lies on its power
+to measure importance of attributes and relationships between attributes. An attribute is considered important in data
+mining if regularities are encountered in smaller populations obtained based on the values of such attribute, but not in
+the larger population. Such regularities are identifiable by lower entropy values, indicating that interesting
+attributes lead to entropy reduction. More specifically, the entropy reduction is the difference between the entropy of
+the decision attribute and the conditional entropy of the decision attribute given a particular attribute, whose
+importance we want to investigate.
 
 Let's say we have $X$ as decision attribute and it divides the set of objects $\mathcal{U}$ into a group of disjoint
-subsets
-defined by the value $x \in V_X$ of $X$, where $V_X$ is the non-empty set of values for $X$. Also, let's define $I_X :
-\mathcal{U} \rightarrow V_X$ is an information function that gives the value of attribute $X$ for an object $t \in
-\mathcal{U}$. The set of
-objects $m(X=x) \subseteq \mathcal{U}$, whose value for $X$ is $x$ is defined as follows:
+subsets defined by the value $x \in \mathcal{X}$ of $X$, where $\mathcal{X}$ is the non-empty set of values for
+$X$. Also, let's define $I_X : \mathcal{U} \rightarrow \mathcal{X}$ is an information function that gives the value of
+attribute $X$ for an object $t \in \mathcal{U}$. The set of objects $m(X=x) \subseteq \mathcal{U}$, whose value for $X$
+is $x$ is defined as follows:
 
 \begin{equation}
  m(X=x)=m(x)=\{t \in \mathcal{U} | I_X(t)=x\}
@@ -580,10 +577,10 @@ objects $m(X=x) \subseteq \mathcal{U}$, whose value for $X$ is $x$ is defined as
 With that, the probability distribution of $X$ is defined by:
 
 \begin{equation}
- P(X=x)=P(x)=\cfrac{|m(x)|}{|\mathcal{U}|},\quad x \in V_X
+ P(X=x)=P(x)=\cfrac{|m(x)|}{|\mathcal{U}|},\quad x \in \mathcal{X}
 \end{equation}
 
-Information theoric measures are defined over probability distributions. They can measure the importance of an
+Information theoretic measures are defined over probability distributions. They can measure the importance of an
 attribute, attribute association, or dissimilarity or similarity of populations. In the next subsections, we will
 discuss some of the most important measures.
 
@@ -595,14 +592,14 @@ content or uncertainty about an attribute $X$. It is defined over a probability 
 \begin{equation}
 \begin{split}
  H(P(X))=H(X)&=E_{P(X)}[-logP(X)] \\
- &=-\sum_{x \in V_X}P(x)logP(x)
+ &=-\sum_{x \in \mathcal{X}}P(x)logP(x)
 \end{split} 
 \end{equation}
 
 The entropy of $X$ is maximum if its probability distribution is uniform and minimum if the whole population is
-concentrated on a specific value $x_c \in V_X$, i.e. $P(x_c)=1$ and $P(x)=0, x \neq x_c$. The higher the entropy,the
-higher the uncertainty about $X$ attribute value, and an entropy zero means complete certainty that the value of $X$ as
-$P(x_c)=1$.
+concentrated on a specific value $x_c \in \mathcal{X}$, i.e. $P(x_c)=1$ and $P(x)=0, x \neq x_c$. The higher the
+entropy,the higher the uncertainty about $X$ attribute value, and an entropy zero means complete certainty about the
+value of $X$ since $P(x_c)=1$.
 
 \subsection{Kullback-Leibler Divergence}
 
@@ -612,14 +609,14 @@ $I$-divergence, measures the degree of deviation of $P$ from another distributio
 \begin{equation}
 \begin{split}
  D_{KL}(P||Q)&=E_{P(X)}\left[\cfrac{P(X)}{Q(X)}\right] \\
- &=\sum_{x \in V_X}P(x)log\left(\cfrac{P(x)}{Q(x)}\right)
+ &=\sum_{x \in \mathcal{X}}P(x)log\left(\cfrac{P(x)}{Q(x)}\right)
 \end{split} 
 \end{equation}
 
 This divergence measure is a premetric but not a metric distance. It is non-negative and it becomes zero if $P(x)=Q(x)$,
-$\forall x \in V_X$, but it doesn not satisfy the symmetry and the triangle inequality properties.
+$\forall x \in \mathcal{X}$, but it doesn not satisfy the symmetry and the triangle inequality properties.
 
-There are symmetrized divergence measures based on the Kullback-Leibler, e.g.the $J$-divergence\ref{eq:jDiv} and the
+There are symmetrized divergence measures based on the Kullback-Leibler, e.g. the $J$-divergence\ref{eq:jDiv} and the
 Jensen-Shannon divergence\ref{eq:jensenShannon}:
 
 \begin{equation} \label{eq:jDiv}
@@ -645,7 +642,7 @@ distribution formed by the marginals $P(X)P(Y)$. We call such measure mutual inf
 \begin{split}
  I(X;Y)&=D(P(X,Y)||P(X)P(Y)) \\
  &=E_{P(X,Y)}\left[ log\cfrac{P(x,y)}{P(x)P(y)} \right] \\
- &=\sum_{x \in V_X} \sum_{y \in V_Y} P(x,y)log\cfrac{P(x,y)}{P(x)P(y)}
+ &=\sum_{x \in \mathcal{X}} \sum_{y \in \mathcal{Y}} P(x,y)log\cfrac{P(x,y)}{P(x)P(y)}
 \end{split}
 \end{equation}
 
@@ -663,7 +660,7 @@ The Semantic Web is, according to its official website, a technology created by 
 enable the so-called ``Web of data'', enabling computers to do more useful work and develop systems that can support
 trusted interactions over the network. 
 
-It consists of a set of technologies and formats that aim to make web resources more readily accessible to automated
+It consists of a set of technologies and formats which aim to make web resources more readily accessible to automated
 processes. The semantic web stack, in figure \ref{fig:sematicWebLayer} \footnote{Semantic Web - XML2000, slide 10".
 W3C: \url{http://www.w3.org/2000/Talks/1206-xml2k-tbl/slide10-0.html}}, illustrates the semantic web architecture
 showing how its standards are organized and how it extends the classical hypertext web.
@@ -684,7 +681,7 @@ object in a triple. RDF can be encoded in a variety of formats, such as RDF/XML,
 ontologies (or RDF vocabularies) intended to structure RDF resources known as constructs (RDFS classes, associated
 properties, and utility properties).
  \item Web Ontology Language (OWL): a semantic markup language for publishing and sharing ontologies on the web. It is a
-vocabulary extension of RDF that allows an ontology to be describe with a set of axioms which places constraints on
+vocabulary extension of RDF that allows an ontology to be described with a set of axioms which places constraints on
 classes and the types of relationships permitted between them.
  \item SPARQL: an RDF query language for databases which can be used to express queries across diverse data sources. It
 consists of triple patterns, conjunctions, disjunctions and optional patterns. 
@@ -694,11 +691,6 @@ characteristics with different necessities.
   \item Semantic Web Rule Language (SWRL): a proposal for rule language combining sublanguages of OWL with the
 Unary/Binary Datolog Rule Markup Language (RuleML).
 \end{itemize}
-
-
-
-Among these technologies, there is the Resource Description Framework (RDF) which can be encoded in a variety
-of data formats (e.g. RDF/XML, N3, Turtle, N-Triples), 
 
 \section{Linked Open Data Applications}
 

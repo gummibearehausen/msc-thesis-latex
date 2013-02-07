@@ -26,23 +26,23 @@ two types:
  \item \emph{Hard Rules}: Consistency constraints which might represent functional dependencies, functional or
 inverse-functional properties of predicates or mutual exclusion. For example:
     \begin{itemize}
-      \item \begin{math} marriedTo(x,y) :- marriedTo(y,x),(x \neq y)\end{math}
-      \item \begin{math} grandChildOf(x,y) :- childOf(x,z),childOf(z,y)\end{math}
-      \item \begin{math} parentOf(x,y) :- childOf(y,x)\end{math}
-      \item \begin{math} (z=y) :- wasBornIn(x,z),wasBornIn(x,y)\end{math}
+      \item $ marriedTo(X,Y) :- marriedTo(Y,X),(X \neq Y)$
+      \item $ grandChildOf(X,Y) :- childOf(X,Z),childOf(Z,Y)$
+      \item $ parentOf(X,Y) :- childOf(Y,X)$
+      \item $ (Z=Y) :- wasBornIn(X,Z),wasBornIn(X,Y)$
     \end{itemize}
 
  \item \emph{Soft Rules}: Weighted Datalog rules that frequently, but not always hold in the real world. As they
 might also produce incorrect information, derived facts can have a level of uncertainty which is represented by a
 confidence value. For example, it's know that married people usually live in the same place as their partner:
     \begin{center}
-      \begin{math} livesIn(x,y) :- marriedTo(x,z)livesIn(z,y)\end{math}
+      $ livesIn(X,Y) :- marriedTo(X,Z)livesIn(Z,Y)$
     \end{center}
 \end{enumerate}
 
-So, if we have an incomplete knowledge base, which lacks information about where \emph{Michelle Obama}l lives, but
+So, if we have an incomplete knowledge base, which lacks information about where \emph{Michelle Obama} lives, but
 we know that she's married to \emph{Barack Obama} and he lives in \emph{Washington, D.C.}, we could then apply this soft
-rule to derive the fact \emph{livesIn(MichelleObama, WashingtonDC)}. 
+rule to derive the fact \emph{livesIn(michelleObama, washingtonDC)}. 
 
 %http://people.csail.mit.edu/kersting/profile/PROFILE_ilp.html
 
@@ -54,13 +54,15 @@ too expensive as the search space grows combinatorially with the knowledge base 
 examples, the more expensive it is to test each hypothesis.
 
 Although it is very expensive to learn rules with constants, such kind of rules can are extremely interesting as they
-can express particular characteristics of specific groups. For example, the rule $speaks(x,y)$ :- $livesIn(x,z)$ is not
+can express particular characteristics of specific groups. For example, the rule $speaks(X,Y)$ :- $livesIn(X,Z)$ is not
 very meaningful, it simply tells that people that live in anywhere will speak some language. Nevertheless, if we
-consider setting constant values for $y$ and $z$, we can learn much more valuable rules such as
-$speaks(x,English)$ :- $livesIn(x,Australia)$ or $speaks(x,Spanish)$ :- $livesIn(x,Mexico)$.
+consider setting constant values for $Y$ and $Z$, we can learn much more valuable rules such as
+$speaks(X,english)$ :- $livesIn(X,australia)$ or $speaks(X,spanish)$ :- $livesIn(X,mexico)$.
 
-Given the huge size of search space and the great interestingness of rules with constants, it is appropriate to reduce
-the search space by pruning constants or combinations of constants that do not add interesting information to the
+The problem of that, is that for such example, it would be necessary to test rules with all combinations of country and
+languages, what surely can lead to a very expensive process when applied on large databases. Given the huge size of
+search space and the great interestingness of rules with constants, it is appropriate to reduce the search space by
+pruning constants or combinations of constants that do not add interesting information to the
 hypothesis.
 
 [Talk more about ILP]
@@ -69,21 +71,22 @@ hypothesis.
 
 \section{Motivation}
 
-Numerical properties are a special case, depending on the numerical attribute
-domain, in case of a continuous real number domain for example, setting a numerical constant as an individual value will
-very likely have a single entity associated to it. In such case it would be equivalent to simply specifying a constant
-for this given entity without the necessity of adding the numerical property
+For numerical properties it might be also relevant to search for interesting constants. Nevertheless, for very large or
+infinite numerical domains such as the real numbers for example, setting a numerical constant as an individual value
+will very likely have a single entity associated to it. In such case it would be equivalent to simply specifying a
+constant for this given entity without the necessity of adding the numerical property
 
-For example, no country has the exact same GDP or population as any other country. If we have the following rule:
+For example, it is extremely unlikely that a country has the exact same GDP or population as any other country. If we
+have the following rule with the $hasPopulation$, whose domain is the positive integer numbers $\mathbb{N}^+$:
 
 \begin{center}
- $speaks(x,Portuguese)$ :- $livesIn(x,y),hasPopulation(y,193946886)$
+ $speaks(X,portuguese)$ :- $livesIn(X,Z),hasPopulation(Z,193946886)$
 \end{center}
 
-Assuming Brazil is the only country with a population of 193,946,886 inhabitants, this same rule would be equivalent to:
+As Brazil is the only country with a population of 193,946,886 inhabitants, this same rule would be equivalent to:
 
 \begin{center}
- $speaks(x,Portuguese)$ :- $livesIn(x,Brazil)$
+ $speaks(X,portuguese)$ :- $livesIn(X,brazil)$
 \end{center}
 
 Of course, if we have to choose between one of the two rules, the latter one would be preferred as it is shorter and
@@ -98,47 +101,47 @@ constant-free rule (which we will call base-rule).
 For example if we test the hypothesis and we find support=100 and confidence=0.4:
 
 \begin{center}
- $isMarriedTo(x,y)$ :- $hasAge(x,z)$ 
+ $isMarriedTo(X,Y)$ :- $hasAge(X,Z)$ 
 \end{center}
 
-and then we split z into three buckets:
+and then we split $Z$ into three buckets:
 
 \begin{itemize}
- \item \begin{math} k=1: z\in[0,20]\end{math}
- \item \begin{math} k=2: z\in(20,40]\end{math}
- \item \begin{math} k=3: z\in(40,\infty]\end{math}
+ \item $ b_1: Z\in[0,20]$
+ \item $ b_2: Z\in(20,40]$
+ \item $ b_3: Z\in(40,\infty]$
 \end{itemize}
 
-we then generate three refined-rules by restricting the base-rule's domain from variable $z$:
+we then generate three refined-rules by restricting the base-rule's domain from variable $Z$:
 
 \begin{itemize}
 
- \item \begin{math}isMarriedTo(x,y) :- hasAge(x,z), z\in[0,20]\end{math}	
+ \item $isMarriedTo(X,Y) :- hasAge(X,Z), z\in[0,20]$	
     \newline support=40, confidence=0.1
- \item \begin{math}isMarriedTo(x,y) :- hasAge(x,z), z\in(20,40]\end{math}	
+ \item $isMarriedTo(X,Y) :- hasAge(X,Z), z\in(20,40]$	
     \newline support=40, confidence=0.5
- \item \begin{math}isMarriedTo(x,y) :- hasAge(x,z), z\in(40,\infty]\end{math}
+ \item $isMarriedTo(X,Y) :- hasAge(X,Z), z\in(40,\infty]$
     \newline support=20, confidence=0.8
 
 \end{itemize}
 
-for $k=2$ and $k=3$, the hypothesis has significant gain by specifying numerical constants. Adding a relation to the
+for $b_2$ and $b_3$, the hypothesis has significant gain by specifying numerical constants. Adding a relation to the
 body might produce totally different support and confidence distributions along the buckets. For example, if we add the
-relation hasChild(x,a), we could obtain other interesting rules:
+relation $hasChild(X,A)$, we could obtain other interesting rules:
 
 Base-rule:
 \begin{itemize}
- \item \begin{math}isMarriedTo(x,y) \leftarrow hasAge(x,z)hasChild(x,a)\end{math}	
+ \item $sMarriedTo(X,Y) \leftarrow hasAge(X,Z),hasChild(X,A)$	
     \newline support=50, confidence=0.625
 \end{itemize}
 
 Refined-rules:
 \begin{itemize}
- \item \begin{math}isMarriedTo(x,y) \leftarrow hasAge(x,z)hasChild(x,a), z\in[0,20]\end{math}	
+ \item $isMarriedTo(X,Y) \leftarrow hasAge(X,Z),hasChild(x,a), Z\in[0,20]$	
     \newline support=2, confidence=0.5
- \item \begin{math}isMarriedTo(x,y) \leftarrow hasAge(x,z)hasChild(x,a), z\in(20,40]\end{math}	
+ \item $isMarriedTo(X,Y) \leftarrow hasAge(X,Z),hasChild(x,a), Z\in(20,40]$	
     \newline support=30, confidence=0.7
- \item \begin{math}isMarriedTo(x,y) \leftarrow hasAge(x,z)hasChild(x,a), z\in(40,\infty]\end{math}	
+ \item $isMarriedTo(X,Y) \leftarrow hasAge(X,Z),hasChild(x,a), Z\in(40,\infty]$	
     \newline support=18, confidence=0.9
 \end{itemize}
 
@@ -156,7 +159,7 @@ Refined-rules:
     ]
 \addplot coordinates {(b1,0.1) (b2,0.5) (b3,0.8)};
 \addplot coordinates {(b1,0.5) (b2,0.7) (b3,0.9)};
-\legend{isMarriedTo(x,y):-hasAge(x,z) , isMarriedTo(x,y):-hasAge(x,z)hasChild(x,a)}
+\legend{isMarriedTo(X,Y):-hasAge(X,Z) , isMarriedTo(X,Y):-hasAge(X,Z)hasChild(X,A)}
 \end{axis}
 \end{tikzpicture}
 \begin{tikzpicture}[scale=0.8]
@@ -173,13 +176,13 @@ Refined-rules:
     ]
 \addplot coordinates {(b1,40) (b2,40) (b3,20)};
 \addplot coordinates {(b1, 2) (b2,30) (b3,18)};
-\legend{isMarriedTo(x,y):-hasAge(x,z) , isMarriedTo(x,y):-hasAge(x,z)hasChild(x,a)}
+\legend{isMarriedTo(X,Y):-hasAge(X,Z), isMarriedTo(X,Y):-hasAge(X,Z)hasChild(X,A)}
 \end{axis}
 \end{tikzpicture}
 
-Adding more predicate to the rule might not bring any gain or even loss in accuracy to the base-rule, but when bucketing
-per age, present a different accuracy and support distribution and might even produce gain in accuracy for some specific
-buckets.
+Adding a given predicate to the rule might not bring any gain or even loss in accuracy to the base-rule, but when
+bucketing per age, present a different accuracy and support distribution and might even produce gain in accuracy for
+some specific buckets.
 
 Nevertheless, adding a predicate with no correlation to the rule might not generate any gain. Thus, it's necessary to
 carefully choose the relations and eventual constants and discard the ones with no correlation to the rule.  
@@ -190,7 +193,7 @@ to for interesting intervals. In each graph, that has a numerical property as ro
 distribution on the numerical attribute, and build a histogram by splitting them into \emph{k} buckets. Subsequently, we
 pick a set of \emph{c} categorical properties that can be joined with the root, extract the frequencies histogram and
 analyze how the distribution of sub-population created by joining them with the root is affected. Afterwards, we try to
-combine each of the categories and see if they still produce interesting sub-populations creating a lattice, like in
+combine the categories and check whether they still produce interesting sub-populations creating a lattice, like in
 frequent set mining apriori algorithm.
 
 We discuss the pruning opportunities and also evaluate different heuristics and interestingness measures and their
