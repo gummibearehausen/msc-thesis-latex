@@ -508,8 +508,9 @@ where $h_i(n)=supp(n|Y \in b_i)$, and therefore:
   |h(n)|_1=\sum_{i=1}^{k}h_i(n)=supp(n)
 \end{equation}
 
-Every node in the lattice contains a frequency histogram of its population, and all histograms are built on the same
-buckets defined in the root node for the sake of comparison. 
+Every node in the lattice is composed by conjunctive clause of non-negated literals and contains a frequency histogram
+of its population. For the sake of comparison between, all histograms are built on the same buckets defined in the root
+node. 
 
 Subsequently, for the chosen set of categorical relations, we do the same with each subpopulation of examples from each
 category obtained by joining the root with its corresponding categorical literal. For every category a node in
@@ -581,8 +582,6 @@ possible combinations are exhausted. Figure \ref{fig:lattice} shows how a \graph
   \label{fig:lattice}
 \end{figure}
 
-Every node contains a frequency histogram 
-
 \subsection{Pruning Opportunities}
 
 In this section we discuss about safe pruning opportunities that can be explored whilst building the \graphname: support
@@ -595,7 +594,10 @@ As described in (\cite{LavracDz94}), in top-down ILP every refinement causes the
 that for every node in the \graphname, its support will be greater or equal than any of its children, so support is a
 monotonically decreasing measure so we can safely prune a node that does not reach the minimum support threshold.
 
-In this thesis, we define support as the absolute frequency of supporting facts.
+In this thesis, we define support as the absolute frequency of supporting facts. So the support of a node $n$ is
+defined as:
+
+$supp(n)=|{x|x \in n}|$
 
 
 \subsubsection{Independence Checks}
@@ -614,11 +616,10 @@ Let's say we have the following join case:
   \centering
   \begin{tikzpicture}
   [scale=1,auto=center,every node/.style={minimum size=1cm}]
-    \node (p)  [circle,fill=black!20] at (4,10) {$p$};
-    \node (n1) [circle,fill=black!20] at (3,8)  {$px$};
-    \node (n2) [circle,fill=black!20] at (5,8)  {$py$};
-    \node (n12)[circle,fill=black!20] at (4,6)  {$pxy$};
-
+    \node (p)  [circle,fill=black!20] at (4,10) {$n$};
+    \node (n1) [circle,fill=black!20] at (3,8)  {$nx$};
+    \node (n2) [circle,fill=black!20] at (5,8)  {$ny$};
+    \node (n12)[circle,fill=black!20] at (4,6)  {$nxy$};
 
     \foreach \from/\to in {p/n1,p/n2,n1/n12,n2/n12}
       \draw (\from) -- (\to);
@@ -633,24 +634,23 @@ Let's say we have the following join case:
   \label{fig:joinIndepExample}
 \end{figure}
 
-Each node $p$ contains a histogram $h(p)$ with the example frequencies and we define $h_i(p)$ as the frequency of bucket
-$b_i$ in $h(p)$. For the example shown in figure \ref{fig:joinIndepExample}, we can calculate the conditional
-probability $p_i(x|p)$ and $p_i(y|p)$. With that, we can calculate $\hat{h_i}(p x y)$, which is the estimation of
-$h_i(p x y)$ assuming that $x$ and $y$ are independent given common parent $p$.
+In the example shown in figure \ref{fig:joinIndepExample}, $x$ and $y$ are literals and $n$ is a node with clause $c_n$,
+such that $x \neq y$ and $x,y \not \in c_n$. The nodes $nx$ and $ny$ are formed by adding $x$ and $y$ to $n$, so
+$c_{nx}=\{c_n,x\}$ and $c_{ny}=\{c_n,y\}$. With the histogram from these three nodes, we can calculate the conditional
+probability $p_i(x|n)$ and $p_i(y|n)$, then calculate $\hat{h_i}(nxy)$, which is the estimation of
+$h_i(nxy)$ assuming that $x$ and $y$ are independent given common parent $n$.
 
-\begin{equation}
+\begin{align*}
 \label{eq:condindep}
-\begin{split}
- p_i(x|py) &= p_i(x|p) \\ 
- &= \cfrac{h_i(xp)}{h_i(p)} \\ 
- p_i(y|px) &= p_i(y|p) \\ 
- &= \cfrac{h_i(yp)}{h_i(p)} \\ \\ 
- \hat{h_i}(pxy) &= p_i(x|py)p_i(y|p)*h_i(p) \\ 
+ p_i(x|ny) &= p_i(x|n) \\ 
+ &= \cfrac{h_i(nx)}{h_i(n)} \\ 
+ p_i(y|nx) &= p_i(y|p) \\ 
+ &= \cfrac{h_i(ny)}{h_i(n)} \\ \\ 
+ \hat{h_i}(nxy) &= p_i(x|ny)p_i(y|n)*h_i(n) \\ 
  &= p_i(x|p)h_i(yp) \\ 
- \hat{h_i}(pxy) &= p_i(y|px)p_i(x|p)*h_i(p) \\ 
- &= p_i(y|p)h_i(xp)
-\end{split}
-\end{equation}
+ \hat{h_i}(nxy) &= p_i(y|nx)p_i(x|n)*h_i(n) \\ 
+ &= p_i(y|n)h_i(xn)
+\end{align*}
 
 After that, we query the actual frequency distribution on the knowledge base and do a Pearson's chi-squared
 independence test. As null hypothesis and alternative hypothesis we have:
@@ -873,7 +873,7 @@ $ra$. We are not searching for the most interesting child from $ra$, but for the
 the head literal that has the has the highest interestingness measure when adding the head.
 
 \begin{figure}[!h]
-  \caption{Node join example for independence test}
+  \caption{Interestingness of adding a literal to the body of a clause}
   \centering
   \begin{tikzpicture}
   [scale=1,auto=center,every node/.style={minimum size=1cm}]
@@ -896,10 +896,6 @@ the head literal that has the has the highest interestingness measure when addin
     \node (m5)[red] at (3.6,6)  {$m_{c \leftarrow r,a}$};
     \node (m6)[red] at (5.0,6)  {$m_{d \leftarrow r,a}$};
 
-
-
-
-
     %\draw (ra) -- (rab) -|  \node [below,pos=0.25] {$m_1$}(l1);
   \end{tikzpicture}
   \label{fig:latticeSuggestion}
@@ -910,11 +906,28 @@ measures in blue instead of the ones in red. Nevertheless, searching for values 
 $m_{a,rd}$ is a bit tricky. It is necessary to check for all children of $ra$, which ones have parents without head
 literal $a$, then gather all the measures and rank them.
 
-In order to make it simpler, we can create a map during lattice build. This map would contain an entry for all node
-it is joined to, with head as key and literals to add sorted by measure as value. So for example when we are obtaining
-the node $rab$ by joining $ra$ and $rb$, we add to $ra$ an entry with $a$ as key, $b$ as new literal and
-associated measure $m_{a,rb}$ and we also add to $rb$ an entry with $b$ as key, $a$ as new literal ad associated
-measure $m_{b,ra}$. 
+In order to make it simpler, we can create a suggestions map during lattice build. This map would contain an entry for
+all node it is joined to, with head as key and literals to add sorted by measure as value. So for example when we are
+obtaining the node $rab$ by joining $ra$ and $rb$, we add to $ra$ an entry with $a$ as key, $b$ as new literal and
+associated measure $m_{a,rb}$ and we also add to $rb$ an entry with $b$ as key, $a$ as new literal ad associated measure
+$m_{b,ra}$. This is shown more clearly in algorithm \ref{alg:buildmaps}.
+
+\begin{algorithm}[h!]
+ \caption{Suggestion map build when joining nodes during lattice build}
+ \label{alg:buildmaps}
+ \KwIn{\textbf{Input:} $nx, ny$: Joining nodes, $n$: Common parent node}
+  $\hat{h}(nxy) \leftarrow h(nx)h(ny)/h(n)$ \;
+  $h(nxy) \leftarrow $\FuncSty{queryFrequencyHistogram(}$nxy$\FuncSty{)} \;
+  $\chi^2 \leftarrow \sum_{i=1}^{k}(h_i(nxy)-\hat{h}_i(nxy))^2/(\hat{h}_i(nxy))$ \;
+  $dof \leftarrow k-1$ \;
+  $pValue = $\FuncSty{criticalValue(}$\chi^2,dof$\FuncSty{)} \;
+  \If{$pValue \geq minPValue$}{
+    $m_{x,ny} \leftarrow $\FuncSty{interestingness(}$h(nxy),h(ny)$\FuncSty{)} \;
+    $m_{y,nx} \leftarrow $\FuncSty{interestingness(}$h(nxy),h(nx)$\FuncSty{)} \;
+    $nx.suggestionsMap(x) \leftarrow (y,m_{x,ny})$ \;
+    $ny.suggestionsMap(y) \leftarrow (x,m_{y,nx})$ \;
+  }
+\end{algorithm}
 
 In the example of Figure \ref{fig:latticeSuggestion}, $ra$ would contain the following map:
 
@@ -983,6 +996,18 @@ numerical property and searches for interesting ranges. With that there are
     $node_i \leftarrow node$.\FuncSty{search(}$lit_i$\FuncSty{)} \;
     \FuncSty{checkNumericalRanges(}$clause \cup lit_i$,$lit_{new}$,$node_i$\FuncSty{)} \;
   }
+\end{algorithm}
+
+\begin{algorithm}[!h]
+ \caption{Check whether a clause has potential interesting numerical intervals}
+ \label{alg4}
+ \SetKwFunction{checkNumericalRanges}
+ \KwIn{\textbf{Input:} $clause$: Clause with numerical literal, $lattice$: Lattice from 
+  \ForEach{$lit_i \in suggestions$ \textbf{and} $i \leq k$} {
+    $node_i \leftarrow node$.\FuncSty{search(}$lit_i$\FuncSty{)} \;
+    \FuncSty{checkNumericalRanges(}$clause \cup lit_i$,$lit_{new}$,$node_i$\FuncSty{)} \;
+  }
+
 \end{algorithm}
 
 In the specialization step, we can detect whether the clause contains any numerical property, which is root of a
