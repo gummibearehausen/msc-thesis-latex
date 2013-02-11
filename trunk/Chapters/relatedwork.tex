@@ -532,6 +532,46 @@ is shown in figure \ref{fig:itemsetLattice}.
   \label{fig:aprioriLattice}
 \end{figure}
 
+\section{Discretization of Numerical Attributes}
+\label{sec:discretization}
+
+Discretization of constinuous features is a very important tool frequently used in statistics, data mining and machine
+learning. It is a pre-processing technique which is used for reducing the effects of observation errors. It is
+basically a form of quantization where the original data values in a given interval are replaced by a representative
+value of that interval.
+
+Discretization techniques can be divided in supervised and unsupervised methods. The first requires the objects to
+be labeled with classes, and the domain is discretized with the objetive of reducing the class entropies. The second
+one doesn not consider object classes, only object frequencies. Unsupervised methods normally require the number of
+buckets to be arbitrarily defined.
+
+Various different supervised and unsupervised methods for discretization of continuous features are discussed in
+\cite{Dougherty95supervisedand}. To build the lattice we don't use labels for the examples so we just use unsupervised
+methods.
+
+Supervised methods can be used for finding interesting intervals in the rules, by considering positive and negative
+examples as labels. However, it is out of the scope of this thesis, thus we will not discuss them in details.
+
+\subsection{Equal Width}
+This unsupervised discretization method consists of simply querying both the maximum and minimum values of the root's
+numerical attribute, then for splitting this interval into $k$ buckets of same width $w$:
+
+\begin{equation}
+ w=\cfrac{max-min}{k}
+\end{equation}
+
+It's the simples and most straightforward discretization method, but its main problem is that it is highly
+sensitive to outliers that may drastically skew the resulting distribution.
+
+\subsection{Equal Frequencies}
+In this also unsupervised discretization method, the domain is divided in buckets with equal frequency. That is, given a
+total frequency $m$, the domain is discretized in $k$ buckets such that each has frequency $\cfrac{m}{k}$. Multiple
+objects with same numerical attribute value might make it impossible to find bucket boundaries that equally
+distribute the frequencies.
+
+The greatest advantage of this method is that it always results in a distribution with lowest possible entropy, i.e.
+distribution is always uniform or as close to uniformity as possible.
+
 \section{Mining Optimized Rules for Numeric Attributes}
 
 In \cite{Brin99miningoptimized}, a technique for efficient learning association rules with interesting ranges for
