@@ -2,7 +2,7 @@
 \label{cl:intro}
 
 In this chapter we will discuss what kind of rules we are interested in, define what categorical properties are,
-describe in more details a \graphname, how to build it and integrate it in the core ILP learning algorithm.
+describe in more details a correlation lattice, how to build it and integrate it in the core ILP learning algorithm.
 
 \section{Interesting Rule Definition}
 
@@ -42,6 +42,8 @@ from the rule's positive examples and body support.
 
 \begin{figure} [h!]
   \label{interestingnessExample}
+  \caption{Example of frequency histograms from body support and positives support (left), and resulting confidence
+distribution (right)}
   \begin{tikzpicture}[scale=0.8]
   \begin{axis}[
       ybar,
@@ -92,8 +94,11 @@ from the rule's positive examples and body support.
   \end{tikzpicture} 
 \end{figure}
 
-\begin{figure}
+
+\begin{figure}[h!]
+\begin{center}
   \label{interestingnessDistribution}
+  \caption{Support distribution of body and positives from figure \ref{interestingnessExample}}
   \begin{tikzpicture}[scale=0.8]
   \begin{axis}[
       ybar,
@@ -131,12 +136,12 @@ from the rule's positive examples and body support.
   \legend{postives, body support}
   \end{axis}
   \end{tikzpicture}
+  \end{center}
 \end{figure}
 
- 
 \section{Categorical Property Definition}
 
-In this section, we formally define a categorical property as used in the \graphname. 
+In this section, we formally define a categorical property as used in the correlation lattice. 
 
 First of all, a candidate relation must be joined with root join variable variable $X$
 
@@ -202,7 +207,8 @@ $r_2(W,Z),\quad Z \in \mathcal{Z}=\{z_1,z_2,\ldots,z_k\}$ is a categorical domai
 Then $r'(X,Z) \equiv r_1(X,W),r_2(W,Z) \equiv r_2(f_1(X),Z)$ is a composed categorical relation. 
 
 With that, different knowledge bases can be interconnected by simply applying this definition with $owl$:$sameAs$
-as linking relation. This allows to broaden the set of categorical properties to be analyzed in the \graphname to those
+as linking relation. This allows to broaden the set of categorical properties to be analyzed in the correlation lattice
+to those
 contained in interlinked datasets.
 
 \begin{tabular}{*{2}{l}}
@@ -216,8 +222,8 @@ contained in interlinked datasets.
 \subsection{Absence or Presence of a Property as Categories}
 
 Another possibility is to define categories for presence or absence of supporting examples for properties. With this
-approach, one can also include non-categorical properties into the \graphname and have insight about how the presence or
-absence of such property affects the distribution of root's numerical attribute.
+approach, one can also include non-categorical properties into the correlation lattice and have insight about how the
+presence or absence of such property affects the distribution of root's numerical attribute.
 
 In this case we must consider a property which does not have examples for all its domain. For example, the property
 \emph{isParentOf(x,y)} has as both domain and range type Person. If not all the Person instances of the knowledge base
@@ -250,9 +256,9 @@ ignore the absence and just include the presence of relations in the lattice.
 
 \subsection{Notation Used}
 
-As we will see in the next sections, in the \graphname all the relations are joined by the variable of root's join
-argument $X$. So we will denote the presence of a property $a(X,Z)$ category as simply $a$, where the variable $Z$ is
-free and not set to any constant. If we have a categorical property $a(X,z_i)$ with $k$ different categories $z_i \in
+As we will see in the next sections, in the correlation lattice all the relations are joined by the variable of root's
+join argument $X$. So we will denote the presence of a property $a(X,Z)$ category as simply $a$, where the variable $Z$
+is free and not set to any constant. If we have a categorical property $a(X,z_i)$ with $k$ different categories $z_i \in
 \mathcal{Z}=\{ z_1,z_2,\ldots,z_k\}$, we denote each of the $a(X,z_i)$ as $a_i$.
 
 So for example if we set the root relation $r=hasIncome(X,Y)$ and categorical relations:
@@ -274,8 +280,8 @@ rab_2c_{11} &= hasIncome(X,Y),isMarriedTo(X,Z),hasSex(X,female),bornInMonth(nove
 In this section, we will present the preprocessing steps required by our proposed algorithm. It basically consists of
 first building a joinable relations map for each join pattern, according
 to relations domain and range types as well as support threshold. Afterwards, we search the available categorical
-properties for each numerical relation that will be used in the \graphname. At last we build the so called \graphname,
-which belongs to the preprocessing step but will be discussed in the next section.
+properties for each numerical relation that will be used in the correlation lattice. At last we build the lattice
+itself, which belongs to the preprocessing step but will be discussed in the next section.
 
 \subsection{Relation Preprocessing}
 
@@ -461,13 +467,13 @@ added.
 
 \subsection{}
 
-\section{\graphname}
+\section{Correlation Lattice}
 \label{ch:lattice}
 
 The idea is to build during preprocessing a graph inspired in the itemset lattice that describes the influence of
-different categorical relations on a given numerical attribute's distribution. We call such graph a \graphname.
-Comparing to a Itemset Lattice, in a \graphname we have a set of categorical relations (that are joined with root
-property) instead of items. In addition, Each node in the graph has an associated histogram with the support
+different categorical relations on a given numerical attribute's distribution. We call such graph a correlation lattice.
+Comparing to a Itemset Lattice, in a correlation lattice we have a set of categorical relations (that are joined with
+root property) instead of items. In addition, Each node in the graph has an associated histogram with the support
 distribution over the root's numerical attribute.
 
 To illustrate the idea, let's analyze a simple real-world example with the $hasIncome(X,Y)$ relation. If we have two
@@ -570,7 +576,7 @@ given, example with the relations \emph{hasEducation} and \emph{wasBornInMonth} 
 \end{figure}
 
 This process works just like in an itemset lattice until a predetermined maximum level or until all the
-possible combinations are exhausted. Figure \ref{fig:lattice} shows how a \graphname looks like.
+possible combinations are exhausted. Figure \ref{fig:lattice} shows how a correlation lattice looks like.
 
 \begin{figure}[!h]
   \caption{Correlation Lattice example}
@@ -584,15 +590,17 @@ possible combinations are exhausted. Figure \ref{fig:lattice} shows how a \graph
 
 \subsection{Pruning Opportunities}
 
-In this section we discuss about safe pruning opportunities that can be explored whilst building the \graphname: support
-and conditional independence. As these might not be sufficient to reduce lattice size to a feasible level, later, in
-section(??), we will also discuss possible pruning techniques.
+In this section we discuss about safe pruning opportunities that can be explored whilst building the correlation
+lattice: support and conditional independence. As these might not be sufficient to reduce lattice size to a feasible
+level, later, in section \ref{sec:heuristics}, we will also discuss possible pruning techniques.
 
 \subsubsection{Support}
 
 As described in (\cite{LavracDz94}), in top-down ILP every refinement causes the support to decrease, therefore we know
-that for every node in the \graphname, its support will be greater or equal than any of its children, so support is a
-monotonically decreasing measure so we can safely prune a node that does not reach the minimum support threshold.
+that for every node in the correlation lattice, its support will be greater or equal than any of its children, so
+support is a monotonically decreasing measure so we can safely prune a node that does not reach the minimum support
+threshold. Therefore, we can use the apriori-style pruning, just like in the core-ILP and in the association rule
+mining.
 
 In this thesis, we define support as the absolute frequency of supporting facts. So the support of a node $n$ is
 defined as:
@@ -752,10 +760,11 @@ potentially interesting for searching for refined-rules with numerical intervals
 
 
 \subsection{Heuristics}
+\label{sec:heuristics}
 
-As seen before, the number of nodes in \graphname grows exponentially with the number of categorical relations
-and its constants. For $n$ categorical relations, each with $m$ constants, the total number of nodes is $2^{nm}$. As we
-limit the number of levels in the lattice to $l$, the total number of nodes reduces to:
+As seen before, the number of nodes in a correlation lattice grows exponentially with the number of categorical
+relations and its constants. For $n$ categorical relations, each with $m$ constants, the total number of nodes is
+$2^{nm}$. As we limit the number of levels in the lattice to $l$, the total number of nodes reduces to:
 
 \begin{center}
   \begin{equation}
@@ -809,66 +818,43 @@ As seen seen in Section (???), checking for conditional independence of categori
 can detect equivalent rules like in Figure \ref{fig:joinIndepExample} where we know that 
 $x \leftarrow py \equiv x \leftarrow p$ and $y \leftarrow px \equiv y \leftarrow p$. Nevertheless, we cannot prune the
 node $pxy$ from the lattice as we $x$ and $y$ might not be independent given $pz$, and for instance, a rule $x
-\leftarrow pyz$ might not be equivalent to $x \leftarrow py$. 
+\leftarrow pyz$ might not be equivalent to $x \leftarrow py$.
 
-\section{Bucketing Numerical Attributes}
+\section{Bucketing the Numerical Attributes}
 
 So far we have mentioned that the root's numerical attribute domain should be discretized by dividing it in buckets in
 order to build frequency histograms and compare distributions. In this section, we will discuss about how to perform
 such discretization.
 
-The buckets used throughout the \graphname should be consistent, and the bucketing method as well as the boundaries are
-specified in the very beginning with the root node. It should have as input an arbitrarily defined number of buckets
-$k$.
+The buckets used throughout the whole correlation lattice should be consistent, and the bucketing method as well as the
+boundaries are specified in the very beginning with the root node. It should have as input an arbitrarily defined number
+of buckets $k$.
 
-Various different supervised and unsupervised methods for discretization of continuous features are discussed in
-\cite{Dougherty95supervisedand}. To build the lattice we don't use labels for the examples so we just use unsupervised
-methods.
+Since we don't consider any labels for the examples, we use one of the unsupervised discretization methods presented in
+section \ref{sec:discretization}: equal frequencies or equal width. We choose the method according to the domain
+characteristics and define the bucket boudaries based on the overall population distrution.
 
-Supervised methods can be used for finding interesting intervals in the rules, by considering positive and negative
-examples as labels. However, it is out of the scope of this thesis, thus we will not discuss them in details.
+\section{Incorporating Correlation Lattice into the Core ILP Algorithm}
 
-\subsection{Equal Width}
-This unsupervised discretization method consists of simply querying both the maximum and minimum values of the root's
-numerical attribute, then for splitting this interval into $k$ buckets of same width $w$:
-
-\begin{equation}
- w=\cfrac{max-min}{k}
-\end{equation}
-
-It's the simples and most straightforward discretization method, but its main problem is that it is highly
-sensitive to outliers that may drastically skew the resulting distribution.
-
-\subsection{Equal Frequencies}
-In this also unsupervised discretization method, the domain is divided in buckets with equal frequency. That is, given a
-total frequency $m$, the domain is discretized in $k$ buckets such that each has frequency $\cfrac{m}{k}$. Multiple
-frequencies with same numerical attribute value might make it impossible to find bucket boundaries that equally
-distribute the frequencies.
-
-The greatest advantage of this method is that it always results in a distribution with lowest possible entropy, i.e.
-distribution is always uniform or as close to uniformity as possible.
-
-\section{Incorporating \graphname into the Core ILP Algorithm}
-
-The ILP core learning algorithm requires some modifications in order to support the \graphname. As stated before, we use
-the top-down search, starting from the most general clauses then further refining them by introducing new substitutions
-or literals until stopping criteria is reached.
+The ILP core learning algorithm requires some modifications in order to support the correlation lattice. As stated
+before, we use the top-down search, starting from the most general clauses then further refining them by introducing new
+substitutions or literals until stopping criteria is reached.
 
 [...]
 
-\subsection{Querying the \graphname}
+\subsection{Querying the Correlation Lattice}
 
-In the ILP there is a fixed head literal and such literal can and should be included in the \graphname. In case it is
-present in the lattice, it plays a key role in the search. Once the root property is added in a clause that does not
-exceed the accuracy threshold.
+In the ILP there is a fixed head literal and such literal can and should be included in the correlation lattice. In case
+it is present in the lattice, it plays a key role in the search. Once the root property is added in a clause that does
+not exceed the accuracy threshold.
 
 In such case we are interested in searching the most interesting literals to add. First step would be to search in the
 lattice the literals already present in both head and body of the clause that are joined with the root. Nevertheless,
 what we are not really interested in the benefit of adding a literal to the conjunction of rule's head and body, but in
 the benefit of adding the head to a body with a new literal.
 
-For example, if we have the clause $a \leftarrow r$, $r$ is the root of a \graphname and the head $a$ is included in it.
-After searching in the graph for the literals joined with root present in the clause we would come to node
+For example, if we have the clause $a$:-$r$, $r$ is the root of a correlation lattice and the head $a$ is included in
+it. After searching in the graph for the literals joined with root present in the clause we would come to node
 $ra$. We are not searching for the most interesting child from $ra$, but for the children, which has a parent without
 the head literal that has the has the highest interestingness measure when adding the head.
 
@@ -1000,9 +986,9 @@ numerical property and searches for interesting ranges. With that there are
 
 \begin{algorithm}[!h]
  \caption{Check whether a clause has potential interesting numerical intervals}
- \label{alg4}
+ \label{alg5}
  \SetKwFunction{checkNumericalRanges}
- \KwIn{\textbf{Input:} $clause$: Clause with numerical literal, $lattice$: Lattice from 
+ \KwIn{\textbf{Input:} $clause$: Clause with numerical literal, $lattice$: Lattice from }
   \ForEach{$lit_i \in suggestions$ \textbf{and} $i \leq k$} {
     $node_i \leftarrow node$.\FuncSty{search(}$lit_i$\FuncSty{)} \;
     \FuncSty{checkNumericalRanges(}$clause \cup lit_i$,$lit_{new}$,$node_i$\FuncSty{)} \;
@@ -1011,5 +997,5 @@ numerical property and searches for interesting ranges. With that there are
 \end{algorithm}
 
 In the specialization step, we can detect whether the clause contains any numerical property, which is root of a
-\graphname. If so, it can search for interesting ranges numerical ranges, 
+correlation lattice. If so, it can search for interesting ranges numerical ranges, 
 

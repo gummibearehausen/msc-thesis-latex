@@ -23,7 +23,7 @@ Every node essentially contains the following attributes:
 \end{itemize}
 
 
-\subsubsection{Building the \graphname}
+\subsubsection{Building the Correlation Lattice}
 
 For building the \graphname, we start with the root node, which has a numerical property as literal and no constants assigned, e.g. \emph{hasIncome(x,y)}. We then query the  distribution of positive examples over the property in the whole Knowledge Base.
 
@@ -41,7 +41,7 @@ Afterwards, we select the the categorical properties that will be used in the la
 
 With such query, it's possible to extract a histogram for the node \emph{hasIncome(x,y)hasEducation(x,z)} and its correspondent constants. 
 
-\subsubsection{Searching Rules in \graphname}
+\subsubsection{Searching Rules in Correlation Lattice}
 
 In the \graphname itself, it's possible to extract valuable rules. Given its characteristic of all the relations being joined on the same root argument, those rules represent how different categories are related along root's numberical constants.
 
