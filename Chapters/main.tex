@@ -274,6 +274,28 @@ rab_1c_3 &= hasIncome(X,Y),isMarriedTo(X,Z),hasSex(X,male),bornInMonth(march) \\
 rab_2c_{11} &= hasIncome(X,Y),isMarriedTo(X,Z),hasSex(X,female),bornInMonth(november)
 \end{align*}
 
+\section{Interestingness Measure}
+
+As discussed before, we are interested in rules that have divergent positives and body support distributions, or in
+other words, adding the head to the body clause should result in a different distribution along the target numerical
+attribute $Y$. Therefore, we define the interestingness of adding a literal $l$ to a clause $c$ as the
+dissimilarity of $c \wedge l$ and $c$ support distributionw along $Y$.
+
+It is possible to use any state-of-the-art dissimilarity measure, such as the ones presented
+in \ref{sec:infotheoreticmeasures}. Kullback-Leibler or its metrified version Jensen-Shannon are good options, and
+can be directly applied on normalized frequency histograms. However, using a divergence
+measure alone as interestingness measure is maybe cause some problems.
+
+Firstly, it is important to take into account the sampling error. The lower the support of a clause, the higher the
+expected fluctuations of the observed distribution in relation to the sampling distribution. That means that if we
+draw two distributions from the same sampling distribution, one with more examples than the other, and measure the
+divergence between each of them and the sampling distribution, the smaller sample is expected to have a higher
+divergence.
+
+Because of that, divergence measure alone tends to rank clauses with smaller support as more interesting. In order to
+compansate such effect, we can combine a divergence measure with the support, by simply multiplying their values.
+Morover, including support into our interestingness measure is important because, after all, we are still interested
+in rules with high support.
 
 \section{Preprocessing}
 
