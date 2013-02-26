@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.11.20)  4 FEB 2013 15:41
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.11.20)  26 FEB 2013 17:31
 entering extended mode
 **Thesis.tex
 (C:\Users\ande01\Documents\Thesis\dissertation\Thesis.tex
@@ -1419,9 +1419,6 @@ Package hyperref Info: Option `colorlinks' set `true' on input line 53.
 
 (C:\Users\ande01\Documents\Thesis\dissertation\Thesis.aux
 
-LaTeX Warning: Label `fig:itemsetLattice' multiply defined.
-
-
 LaTeX Warning: Label `alg4' multiply defined.
 
 
@@ -1525,7 +1522,7 @@ Package ps4pdf Warning: Graphic container `Thesis-pics.pdf' not found.
 ------------------------------------------------------------------------------
  Title Page
 ------------------------------------------------------------------------------
-<minerva.pdf, id=206, 146.5475pt x 146.5475pt>
+<minerva.pdf, id=222, 146.5475pt x 146.5475pt>
 File: minerva.pdf Graphic file (type pdf)
  <use minerva.pdf>
 Package pdftex.def Info: minerva.pdf used on input line 75.
@@ -1578,7 +1575,7 @@ Overfull \hbox (12.49623pt too wide) in paragraph at lines 75--75
  [][] 
  []
 
-<eule-rz.pdf, id=207, 85.31876pt x 85.31876pt>
+<eule-rz.pdf, id=223, 85.31876pt x 85.31876pt>
 File: eule-rz.pdf Graphic file (type pdf)
  <use eule-rz.pdf>
 Package pdftex.def Info: eule-rz.pdf used on input line 75.
@@ -1648,273 +1645,506 @@ Chapter 1.
 ------------------------------------------------------------------------------
  1 Introduction
 ------------------------------------------------------------------------------
-LaTeX Font Info:    Try loading font information for TS1+lmr on input line 29.
-(C:\Users\ande01\MikTex\tex\latex\lm\ts1lmr.fd
-File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
-) [1
+[1
 
 
 
 
 ]
-Overfull \hbox (11.89296pt too wide) in paragraph at lines 43--46
-\T1/lmr/m/it/10.95 (-20) Wash-ing-ton, D.C.\T1/lmr/m/n/10.95 (-20) , we could t
-hen ap-ply this soft rule to de-rive the fact \T1/lmr/m/it/10.95 (-20) livesIn(
-MichelleObama,
+Overfull \hbox (1.29884pt too wide) in paragraph at lines 79--83
+\OML/lmm/m/it/10.95 speaks\OT1/lmr/m/n/10.95 (-20) (\OML/lmm/m/it/10.95 X; span
+ish\OT1/lmr/m/n/10.95 (-20) )$ \T1/lmr/m/n/10.95 (-20) :- $\OML/lmm/m/it/10.95 
+livesIn\OT1/lmr/m/n/10.95 (-20) (\OML/lmm/m/it/10.95 X; mexico\OT1/lmr/m/n/10.9
+5 (-20) )$ \T1/lmr/m/n/10.95 (-20) or $\OML/lmm/m/it/10.95 speaks\OT1/lmr/m/n/1
+0.95 (-20) (\OML/lmm/m/it/10.95 X; english\OT1/lmr/m/n/10.95 (-20) )$ \T1/lmr/m
+/n/10.95 (-20) :- $\OML/lmm/m/it/10.95 livesIn\OT1/lmr/m/n/10.95 (-20) (\OML/lm
+m/m/it/10.95 X; australia\OT1/lmr/m/n/10.95 (-20) )$\T1/lmr/m/n/10.95 (-20) .
  []
 
-[2] [3] [4])
-(C:\Users\ande01\Documents\Thesis\dissertation\Chapters\relatedwork.tex
-[5] [6
+[2]
+LaTeX Font Info:    Try loading font information for TS1+lmr on input line 125.
 
-]
+ (C:\Users\ande01\MikTex\tex\latex\lm\ts1lmr.fd
+File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
+) [3] [4] [5])
+(C:\Users\ande01\Documents\Thesis\dissertation\Chapters\relatedwork.tex
+[6]
 Chapter 2.
 ------------------------------------------------------------------------------
  2 Related Work
 ------------------------------------------------------------------------------
-[7] [8]
+[7
 
-Package caption Warning: \label without proper \caption on input line 97.
+] [8]
+
+Package caption Warning: \label without proper \caption on input line 122.
 See the caption package documentation for explanation.
 
 
-LaTeX Warning: Reference `tb:ilpExample' on page 9 undefined on input line 91.
-
-[9]
-Overfull \hbox (71.20901pt too wide) in paragraph at lines 133--136
-[]\T1/lmr/m/n/10.95 (-20) For ex-am-ple, for $\OML/lmm/m/it/10.95 c \OT1/lmr/m/
-n/10.95 (-20) = \OML/lmm/m/it/10.95 daughter\OT1/lmr/m/n/10.95 (-20) (\OML/lmm/
-m/it/10.95 X; Y\OT1/lmr/m/n/10.95 (-20) )$\T1/lmr/m/n/10.95 (-20) :-$\OML/lmm/m
-/it/10.95 parent\OT1/lmr/m/n/10.95 (-20) (\OML/lmm/m/it/10.95 Y; X\OT1/lmr/m/n/
-10.95 (-20) )$ \T1/lmr/m/n/10.95 (-20) and $\OML/lmm/m/it/10.95 c[] \OT1/lmr/m/
-n/10.95 (-20) = \OML/lmm/m/it/10.95 daughter\OT1/lmr/m/n/10.95 (-20) (\OML/lmm/
-m/it/10.95 X; Y\OT1/lmr/m/n/10.95 (-20) )$\T1/lmr/m/n/10.95 (-20) :-$\OML/lmm/m
-/it/10.95 female\OT1/lmr/m/n/10.95 (-20) (\OML/lmm/m/it/10.95 X\OT1/lmr/m/n/10.
-95 (-20) )\OML/lmm/m/it/10.95 ; parent\OT1/lmr/m/n/10.95 (-20) (\OML/lmm/m/it/1
-0.95 Y; X\OT1/lmr/m/n/10.95 (-20) )$\T1/lmr/m/n/10.95 (-20) .
- []
+LaTeX Warning: Reference `tab:ilpExample' on page 9 undefined on input line 117
+.
 
 
-Overfull \hbox (70.90633pt too wide) in paragraph at lines 133--136
-\T1/lmr/m/n/10.95 (-20) We know that $\OML/lmm/m/it/10.95 c[]$ \T1/lmr/m/n/10.9
-5 (-20) is a spe-cial-iza-tion of $\OML/lmm/m/it/10.95 c$ \T1/lmr/m/n/10.95 (-2
-0) be-cause for $\OML/lmm/m/it/10.95  \OT1/lmr/m/n/10.95 (-20) = \OMS/lmsy/m/n
-/10.95 ;$\T1/lmr/m/n/10.95 (-20) , $\OML/lmm/m/it/10.95 c \OMS/lmsy/m/n/10.95 
- \OML/lmm/m/it/10.95 c[]$ \T1/lmr/m/n/10.95 (-20) since $\OMS/lmsy/m/n/10.95 f\
-OML/lmm/m/it/10.95 daughter\OT1/lmr/m/n/10.95 (-20) (\OML/lmm/m/it/10.95 X; Y\O
-T1/lmr/m/n/10.95 (-20) )\OML/lmm/m/it/10.95 ; \OMS/lmsy/m/n/10.95 :\OML/lmm/m/i
-t/10.95 parent\OT1/lmr/m/n/10.95 (-20) (\OML/lmm/m/it/10.95 Y; X\OT1/lmr/m/n/10
-.95 (-20) )\OMS/lmsy/m/n/10.95 g 
- []
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[9] [10]
+
+Package caption Warning: \label without proper \caption on input line 207.
+See the caption package documentation for explanation.
 
 
-Overfull \hbox (27.78976pt too wide) in paragraph at lines 137--140
-[]\T1/lmr/m/n/10.95 (-20) If we have $\OML/lmm/m/it/10.95 c \OT1/lmr/m/n/10.95 
-(-20) = \OML/lmm/m/it/10.95 livesIn\OT1/lmr/m/n/10.95 (-20) (\OML/lmm/m/it/10.9
-5 X; Y\OT1/lmr/m/n/10.95 (-20) )$\T1/lmr/m/n/10.95 (-20) :-$\OML/lmm/m/it/10.95
- marriedTo\OT1/lmr/m/n/10.95 (-20) (\OML/lmm/m/it/10.95 X; Z\OT1/lmr/m/n/10.95 
-(-20) )\OML/lmm/m/it/10.95 ; livesIn\OT1/lmr/m/n/10.95 (-20) (\OML/lmm/m/it/10.
-95 Z; Y\OT1/lmr/m/n/10.95 (-20) )$ \T1/lmr/m/n/10.95 (-20) and $\OML/lmm/m/it/1
-0.95 c[] \OT1/lmr/m/n/10.95 (-20) = \OML/lmm/m/it/10.95 livesIn\OT1/lmr/m/n/10.
-95 (-20) (\OML/lmm/m/it/10.95 X; germany\OT1/lmr/m/n/10.95 (-20) )$\T1/lmr/m/n/
-10.95 (-20) :-
- []
+LaTeX Warning: Reference `fig:refinementGraph' on page 11 undefined on input li
+ne 203.
 
-[10]
-LaTeX Font Info:    Try loading font information for T1+lmtt on input line 187.
 
- (C:\Users\ande01\MikTex\tex\latex\lm\t1lmtt.fd
+Package caption Warning: \label without proper \caption on input line 122.
+See the caption package documentation for explanation.
+
+
+LaTeX Warning: Reference `tab:ilpExample' on page 11 undefined on input line 20
+4.
+
+<./Figures/refinementGraph.png, id=406, 896.90874pt x 564.46674pt>
+File: ./Figures/refinementGraph.png Graphic file (type png)
+
+<use ./Figures/refinementGraph.png>
+Package pdftex.def Info: ./Figures/refinementGraph.png used on input line 209.
+(pdftex.def)             Requested size: 292.22987pt x 183.906pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+LaTeX Font Info:    Try loading font information for T1+lmtt on input line 230.
+
+(C:\Users\ande01\MikTex\tex\latex\lm\t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 
-Package natbib Warning: Citation `DBLP:conf/aii/LavracD92' on page 11 undefined
- on input line 206.
+LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[11]
+[11] [12 <C:/Users/ande01/Documents/Thesis/dissertation/Figures/refinementGraph
+.png (PNG copy)>] [13] [14]
 
-Package natbib Warning: Citation `DBLP:journals/ngc/GottlobLS99' on page 12 und
-efined on input line 229.
-
-
-Package natbib Warning: Citation `DBLP:journals/ml/Quinlan9' on page 12 undefin
-ed on input line 243.
-
-
-Package natbib Warning: Citation `DBLP:conf/ecml/QuinlanC93' on page 12 undefin
-ed on input line 244.
-
-
-Package natbib Warning: Citation `Agrawal:1993:MAR:170036.170072' on page 12 un
-defined on input line 247.
-
-
-Package natbib Warning: Citation `Hipp00algorithmsfor' on page 12 undefined on 
-input line 248.
-
-[12] [13]
-
-Package caption Warning: \label without proper \caption on input line 335.
+Package caption Warning: \label without proper \caption on input line 387.
 See the caption package documentation for explanation.
 
 
-LaTeX Warning: Reference `tb:itemsetLattice' on page 14 undefined on input line
- 327.
+LaTeX Warning: Reference `tab:itemsetLattice' on page 15 undefined on input lin
+e 380.
 
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 347.
+(Font)              <10> on input line 399.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 347.
+(Font)              <7> on input line 399.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 347.
+(Font)              <5> on input line 399.
 
-Package natbib Warning: Citation `Pasquier99efficientmining' on page 14 undefin
-ed on input line 347.
-
-
-Package natbib Warning: Citation `Pasquier99efficientmining' on page 14 undefin
-ed on input line 347.
+Package natbib Warning: Citation `Pasquier99efficientmining' on page 15 undefin
+ed on input line 399.
 
 
-Overfull \hbox (1.42247pt too wide) in paragraph at lines 417--419
+Package natbib Warning: Citation `Pasquier99efficientmining' on page 15 undefin
+ed on input line 399.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+Overfull \hbox (1.42247pt too wide) in paragraph at lines 469--471
  [][] 
  []
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[14] [15]
+[15]
 
-Package caption Warning: \label without proper \caption on input line 335.
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+LaTeX Warning: Reference `tab:aprioriLattice' on page 16 undefined on input lin
+e 511.
+
+
+Package caption Warning: \label without proper \caption on input line 387.
 See the caption package documentation for explanation.
 
 
-LaTeX Warning: Reference `tb:itemsetLattice' on page 16 undefined on input line
- 461.
-
-[16] [17] [18]
-
-LaTeX Warning: Reference `eq:jDiv' on page 19 undefined on input line 594.
+LaTeX Warning: Reference `tab:itemsetLattice' on page 16 undefined on input lin
+e 515.
 
 
-LaTeX Warning: Reference `eq:jensenShannon' on page 19 undefined on input line 
-595.
-
-
-Package natbib Warning: Citation `Vinh:2010:ITM:1953011.1953024' on page 19 und
-efined on input line 626.
-
-[19]
-
-Package caption Warning: \label without proper \caption on input line 622.
+Package caption Warning: \label without proper \caption on input line 387.
 See the caption package documentation for explanation.
 
 
-LaTeX Warning: Reference `fig:sematicWebLayer' on page 20 undefined on input li
-ne 636.
+LaTeX Warning: Reference `tab:itemsetLattice' on page 16 undefined on input lin
+e 515.
 
+[16] [17] [18] [19] [20] [21]
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <9> on input line 637.
-<./Figures/Semantic-web-stack.png, id=451, 395.4775pt x 431.6125pt>
+(Font)              <9> on input line 742.
+
+
+Package caption Warning: \label without proper \caption on input line 752.
+See the caption package documentation for explanation.
+
+
+LaTeX Warning: Reference `fig:sematicWebLayer' on page 22 undefined on input li
+ne 747.
+
+<./Figures/Semantic-web-stack.png, id=508, 395.4775pt x 431.6125pt>
 File: ./Figures/Semantic-web-stack.png Graphic file (type png)
 
 <use ./Figures/Semantic-web-stack.png>
-Package pdftex.def Info: ./Figures/Semantic-web-stack.png used on input line 64
-3.
+Package pdftex.def Info: ./Figures/Semantic-web-stack.png used on input line 75
+4.
 (pdftex.def)             Requested size: 208.73653pt x 227.81175pt.
- [20 <C:/Users/ande01/Documents/Thesis/dissertation/Figures/Semantic-web-stack.
-png>]
-
-Package caption Warning: \label without proper \caption on input line 673.
-See the caption package documentation for explanation.
-
-
-LaTeX Warning: Reference `fig:lod' on page 21 undefined on input line 688.
-
-[21]
-<./Figures/lod-datasets_2011-09-19.png, id=487, 1706.375pt x 1125.20375pt>
+ [22] [23 <C:/Users/ande01/Documents/Thesis/dissertation/Figures/Semantic-web-s
+tack.png>]
+<./Figures/lod-datasets_2011-09-19.png, id=529, 1706.375pt x 1125.20375pt>
 File: ./Figures/lod-datasets_2011-09-19.png Graphic file (type png)
 
 <use ./Figures/lod-datasets_2011-09-19.png>
 Package pdftex.def Info: ./Figures/lod-datasets_2011-09-19.png used on input li
-ne 694.
+ne 791.
 (pdftex.def)             Requested size: 417.47307pt x 275.27385pt.
-)
-(C:\Users\ande01\Documents\Thesis\dissertation\Chapters\main.tex [22 <C:/Users/
-ande01/Documents/Thesis/dissertation/Figures/lod-datasets_2011-09-19.png>]
+
+
+Package caption Warning: \label without proper \caption on input line 789.
+See the caption package documentation for explanation.
+
+
+LaTeX Warning: Reference `fig:lod' on page 24 undefined on input line 806.
+
+
+Package caption Warning: \label without proper \caption on input line 810.
+See the caption package documentation for explanation.
+
+
+LaTeX Warning: Reference `fig:lodZoom' on page 24 undefined on input line 807.
+
+<./Figures/lod-zoom.png, id=545, 465.23813pt x 392.21532pt>
+File: ./Figures/lod-zoom.png Graphic file (type png)
+
+<use ./Figures/lod-zoom.png>
+Package pdftex.def Info: ./Figures/lod-zoom.png used on input line 812.
+(pdftex.def)             Requested size: 417.47307pt x 351.96115pt.
+
+
+Package caption Warning: \label without proper \caption on input line 789.
+See the caption package documentation for explanation.
+
+
+LaTeX Warning: Reference `fig:lod' on page 24 undefined on input line 814.
+
+
+Package caption Warning: \label without proper \caption on input line 789.
+See the caption package documentation for explanation.
+
+
+LaTeX Warning: Reference `fig:lod' on page 24 undefined on input line 814.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+) (C:\Users\ande01\Documents\Thesis\dissertation\Chapters\main.tex [24 <C:/User
+s/ande01/Documents/Thesis/dissertation/Figures/lod-datasets_2011-09-19.png>]
+[25 <C:/Users/ande01/Documents/Thesis/dissertation/Figures/lod-zoom.png>]
+[26
+
+]
 Chapter 3.
 ------------------------------------------------------------------------------
  3 Learning Rules With Numerical and Categorical Attributes
 ------------------------------------------------------------------------------
-[23
 
-]
+Overfull \hbox (237.86075pt too wide) in paragraph at lines 21--21
+[] 
+ []
 
-Package caption Warning: \label without proper \caption on input line 41.
+[27]
+
+Package caption Warning: \label without proper \caption on input line 57.
 See the caption package documentation for explanation.
 
 
-LaTeX Warning: Reference `interestingnessExample' on page 24 undefined on input
- line 37.
+LaTeX Warning: Reference `interestingnessExample' on page 28 undefined on input
+ line 49.
 
 
-Package caption Warning: \label without proper \caption on input line 96.
+Package caption Warning: \label without proper \caption on input line 113.
 See the caption package documentation for explanation.
 
 
-LaTeX Warning: Reference `interestingnessDistribution' on page 24 undefined on 
-input line 92.
+LaTeX Warning: Reference `interestingnessDistribution' on page 28 undefined on 
+input line 52.
 
-[24] [25]
-Underfull \hbox (badness 10000) in paragraph at lines 210--212
 
- []
+Package caption Warning: \label without proper \caption on input line 57.
+See the caption package documentation for explanation.
 
-[26] [27]
+
+LaTeX Warning: Reference `interestingnessExample' on page 28 undefined on input
+ line 114.
+
+
+Package caption Warning: \label without proper \caption on input line 57.
+See the caption package documentation for explanation.
+
+
+LaTeX Warning: Reference `interestingnessExample' on page 28 undefined on input
+ line 114.
+
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
+[28]
 
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-[28] [29] [30]
-Underfull \hbox (badness 10000) in paragraph at lines 465--469
-
- []
+Package caption Warning: \label without proper \caption on input line 173.
+See the caption package documentation for explanation.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 470--474
+LaTeX Warning: Reference `tab:cat1' on page 29 undefined on input line 188.
 
- []
+[29] [30]
+
+Package caption Warning: \label without proper \caption on input line 173.
+See the caption package documentation for explanation.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 475--476
+LaTeX Warning: Reference `tab:cat1' on page 31 undefined on input line 249.
 
+
+Package caption Warning: \label without proper \caption on input line 173.
+See the caption package documentation for explanation.
+
+
+LaTeX Warning: Reference `tab:cat1' on page 31 undefined on input line 249.
+
+
+Package caption Warning: \label without proper \caption on input line 248.
+See the caption package documentation for explanation.
+
+
+LaTeX Warning: Reference `tab:cat2' on page 31 undefined on input line 258.
+
+
+Package caption Warning: \label without proper \caption on input line 173.
+See the caption package documentation for explanation.
+
+
+LaTeX Warning: Reference `tab:cat1' on page 31 undefined on input line 258.
+
+
+Overfull \hbox (277.24794pt too wide) in paragraph at lines 269--269
+[] 
  []
 
 [31]
-Underfull \hbox (badness 10000) in paragraph at lines 477--481
+Overfull \hbox (45.58194pt too wide) in paragraph at lines 325--325
+[] 
+ []
+
+[32]
+
+LaTeX Warning: Reference `sec:infotheoreticmeasures' on page 33 undefined on in
+put line 335.
+
+[33]
+
+Package caption Warning: \label without proper \caption on input line 381.
+See the caption package documentation for explanation.
+
+
+LaTeX Warning: Reference `fig:hierarchy' on page 34 undefined on input line 410
+.
+
+[34] [35]
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[36] [37]
+Underfull \hbox (badness 10000) in paragraph at lines 606--610
 
  []
 
-(C:\Users\ande01\Documents\Thesis\dissertation\Chapters\graph1.tex)
-Overfull \hbox (23.53589pt too wide) in paragraph at lines 491--493
+[38]
+Underfull \hbox (badness 10000) in paragraph at lines 611--615
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 616--617
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 618--622
+
+ []
+
+
+Overfull \hbox (32.56038pt too wide) in paragraph at lines 629--629
+ [][][][]$\OML/lmm/m/it/6 hasIncome\OT1/lmr/m/n/6 (\OML/lmm/m/it/6 X; Y\OT1/lmr
+/m/n/6 )\OML/lmm/m/it/6 ;$ 
+ []
+
+
+Overfull \hbox (61.08942pt too wide) in paragraph at lines 629--629
+ []$\OML/lmm/m/it/6 bornInMonth\OT1/lmr/m/n/6 (\OML/lmm/m/it/6 X; january\OT1/l
+mr/m/n/6 )$ 
+ []
+
+
+Overfull \hbox (32.56038pt too wide) in paragraph at lines 630--630
+ [][][][]$\OML/lmm/m/it/6 hasIncome\OT1/lmr/m/n/6 (\OML/lmm/m/it/6 X; Y\OT1/lmr
+/m/n/6 )\OML/lmm/m/it/6 ;$ 
+ []
+
+
+Overfull \hbox (64.17828pt too wide) in paragraph at lines 630--630
+ []$\OML/lmm/m/it/6 bornInMonth\OT1/lmr/m/n/6 (\OML/lmm/m/it/6 X; december\OT1/
+lmr/m/n/6 )$ 
+ []
+
+
+Overfull \hbox (32.56038pt too wide) in paragraph at lines 631--631
+ [][][][]$\OML/lmm/m/it/6 hasIncome\OT1/lmr/m/n/6 (\OML/lmm/m/it/6 X; Y\OT1/lmr
+/m/n/6 )\OML/lmm/m/it/6 ;$ 
+ []
+
+
+Overfull \hbox (65.27696pt too wide) in paragraph at lines 631--631
+ []$\OML/lmm/m/it/6 hasEducation\OT1/lmr/m/n/6 (\OML/lmm/m/it/6 X; preschool\OT
+1/lmr/m/n/6 )$ 
+ []
+
+
+Overfull \hbox (32.56038pt too wide) in paragraph at lines 632--632
+ [][][][]$\OML/lmm/m/it/6 hasIncome\OT1/lmr/m/n/6 (\OML/lmm/m/it/6 X; Y\OT1/lmr
+/m/n/6 )\OML/lmm/m/it/6 ;$ 
+ []
+
+
+Overfull \hbox (45.30269pt too wide) in paragraph at lines 632--632
+ []$\OML/lmm/m/it/6 hasEducation\OT1/lmr/m/n/6 (\OML/lmm/m/it/6 X; phd\OT1/lmr/
+m/n/6 )$ 
+ []
+
+
+Overfull \hbox (32.56038pt too wide) in paragraph at lines 641--641
+ [][][][]$\OML/lmm/m/it/6 hasIncome\OT1/lmr/m/n/6 (\OML/lmm/m/it/6 X; Y\OT1/lmr
+/m/n/6 )\OML/lmm/m/it/6 ;$ 
+ []
+
+
+Overfull \hbox (64.2325pt too wide) in paragraph at lines 641--641
+ []$\OML/lmm/m/it/6 bornInMonth\OT1/lmr/m/n/6 (\OML/lmm/m/it/6 X; january\OT1/l
+mr/m/n/6 )\OML/lmm/m/it/6 ;$ 
+ []
+
+
+Overfull \hbox (65.27696pt too wide) in paragraph at lines 641--641
+ []$\OML/lmm/m/it/6 hasEducation\OT1/lmr/m/n/6 (\OML/lmm/m/it/6 X; preschool\OT
+1/lmr/m/n/6 )$ 
+ []
+
+
+Overfull \hbox (32.56038pt too wide) in paragraph at lines 643--643
+ [][][][]$\OML/lmm/m/it/6 hasIncome\OT1/lmr/m/n/6 (\OML/lmm/m/it/6 X; Y\OT1/lmr
+/m/n/6 )\OML/lmm/m/it/6 ;$ 
+ []
+
+
+Overfull \hbox (64.2325pt too wide) in paragraph at lines 643--643
+ []$\OML/lmm/m/it/6 bornInMonth\OT1/lmr/m/n/6 (\OML/lmm/m/it/6 X; january\OT1/l
+mr/m/n/6 )\OML/lmm/m/it/6 ;$ 
+ []
+
+
+Overfull \hbox (45.30269pt too wide) in paragraph at lines 643--643
+ []$\OML/lmm/m/it/6 hasEducation\OT1/lmr/m/n/6 (\OML/lmm/m/it/6 X; phd\OT1/lmr/
+m/n/6 )$ 
+ []
+
+
+Overfull \hbox (32.56038pt too wide) in paragraph at lines 645--645
+ [][][][]$\OML/lmm/m/it/6 hasIncome\OT1/lmr/m/n/6 (\OML/lmm/m/it/6 X; Y\OT1/lmr
+/m/n/6 )\OML/lmm/m/it/6 ;$ 
+ []
+
+
+Overfull \hbox (67.32137pt too wide) in paragraph at lines 645--645
+ []$\OML/lmm/m/it/6 bornInMonth\OT1/lmr/m/n/6 (\OML/lmm/m/it/6 X; december\OT1/
+lmr/m/n/6 )\OML/lmm/m/it/6 ;$ 
+ []
+
+
+Overfull \hbox (65.27696pt too wide) in paragraph at lines 645--645
+ []$\OML/lmm/m/it/6 hasEducation\OT1/lmr/m/n/6 (\OML/lmm/m/it/6 X; preschool\OT
+1/lmr/m/n/6 )$ 
+ []
+
+
+Overfull \hbox (32.56038pt too wide) in paragraph at lines 647--647
+ [][][][]$\OML/lmm/m/it/6 hasIncome\OT1/lmr/m/n/6 (\OML/lmm/m/it/6 X; Y\OT1/lmr
+/m/n/6 )\OML/lmm/m/it/6 ;$ 
+ []
+
+
+Overfull \hbox (67.32137pt too wide) in paragraph at lines 647--647
+ []$\OML/lmm/m/it/6 bornInMonth\OT1/lmr/m/n/6 (\OML/lmm/m/it/6 X; december\OT1/
+lmr/m/n/6 )\OML/lmm/m/it/6 ;$ 
+ []
+
+
+Overfull \hbox (45.30269pt too wide) in paragraph at lines 647--647
+ []$\OML/lmm/m/it/6 hasEducation\OT1/lmr/m/n/6 (\OML/lmm/m/it/6 X; phd\OT1/lmr/
+m/n/6 )$ 
+ []
+
+
+Overfull \hbox (16.61726pt too wide) in paragraph at lines 651--653
  [][] 
  []
 
-[32] [33] [34] [35] [36] [37] [38] [39]
+(C:\Users\ande01\Documents\Thesis\dissertation\Chapters\graph1.tex)
+Overfull \hbox (23.53589pt too wide) in paragraph at lines 664--666
+ [][] 
+ []
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[39] [40] [41]
+
+LaTeX Warning: Reference `eq:condindep' on page 42 undefined on input line 771.
+
+
+[42] [43] [44]
+
+LaTeX Warning: Reference `sec:discretization' on page 45 undefined on input lin
+e 927.
+
+[45]
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[46] [47]
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 )
 (C:\Users\ande01\Documents\Thesis\dissertation\Chapters\algorithmic-framework.t
-ex [40] [41] [42
+ex [48] [49] [50
 
 ]
 Chapter 4.
 ------------------------------------------------------------------------------
  4 Algorithmic Framework
 ------------------------------------------------------------------------------
-[43]
+[51]
 Overfull \hbox (34.39864pt too wide) in paragraph at lines 42--43
 []\T1/lmr/m/n/10.95 (-20) With such query, it's pos-si-ble to ex-tract a his-to
 gram for the node \T1/lmr/m/it/10.95 (-20) has-In-come(x,y)hasEducation(x,z)
@@ -1925,8 +2155,8 @@ Underfull \hbox (badness 10000) in paragraph at lines 54--65
 
  []
 
-[44]) (C:\Users\ande01\Documents\Thesis\dissertation\Chapters\experiments.tex
-[45] [46
+[52]) (C:\Users\ande01\Documents\Thesis\dissertation\Chapters\experiments.tex
+[53] [54
 
 ]
 Chapter 5.
@@ -1940,12 +2170,35 @@ Package microtype Info: Character `029' is missing
 ------------------------------------------------------------------------------
  List of Figures
 ------------------------------------------------------------------------------
-[47] [48] [49] [50
+[55] [56] [57] [58
 
-] (C:\Users\ande01\Documents\Thesis\dissertation\Thesis.lof)
+] (C:\Users\ande01\Documents\Thesis\dissertation\Thesis.lof
+
+Package caption Warning: \label without proper \caption on input line 387.
+See the caption package documentation for explanation.
+
+
+LaTeX Warning: Reference `tab:itemsetLattice' on page 59 undefined on input lin
+e 6.
+
+
+Package caption Warning: \label without proper \caption on input line 789.
+See the caption package documentation for explanation.
+
+
+LaTeX Warning: Reference `fig:lod' on page 59 undefined on input line 9.
+
+
+Package caption Warning: \label without proper \caption on input line 57.
+See the caption package documentation for explanation.
+
+
+LaTeX Warning: Reference `interestingnessExample' on page 59 undefined on input
+ line 12.
+
+)
 \tf@lof=\write6
-
-[51] [52
+ [59] [60
 
 ]
 ------------------------------------------------------------------------------
@@ -1953,20 +2206,27 @@ Package microtype Info: Character `029' is missing
 ------------------------------------------------------------------------------
 (C:\Users\ande01\Documents\Thesis\dissertation\Thesis.lot
 
-Package natbib Warning: Citation `Pasquier99efficientmining' on page 53 undefin
+Package natbib Warning: Citation `Pasquier99efficientmining' on page 61 undefin
 ed on input line 5.
+
+
+Package caption Warning: \label without proper \caption on input line 173.
+See the caption package documentation for explanation.
+
+
+LaTeX Warning: Reference `tab:cat1' on page 61 undefined on input line 8.
 
 )
 \tf@lot=\write7
- [53
+ [61
 
-] [54
+] [62
 
 ]
 ------------------------------------------------------------------------------
  Bibliography
 ------------------------------------------------------------------------------
-(C:\Users\ande01\Documents\Thesis\dissertation\Thesis.bbl [55
+(C:\Users\ande01\Documents\Thesis\dissertation\Thesis.bbl [63
 
 
 ])
@@ -1977,7 +2237,7 @@ Package natbib Warning: There were undefined citations.
 Package ps4pdf Warning: `Thesis-pics.pdf' is no more valid.
 
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 195.
-[56]
+[64]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 195.
  (C:\Users\ande01\Documents\Thesis\dissertation\Thesis.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 195.
@@ -2137,9 +2397,11 @@ Presections/acknowledgement.tex
 ./Chapters/introduction.tex
   ts1lmr.fd    2009/10/30 v1.6 Font defs for Latin Modern
 ./Chapters/relatedwork.tex
+./Figures/refinementGraph.png
   t1lmtt.fd    2009/10/30 v1.6 Font defs for Latin Modern
 ./Figures/Semantic-web-stack.png
 ./Figures/lod-datasets_2011-09-19.png
+./Figures/lod-zoom.png
 ./Chapters/main.tex
 ./Chapters/graph1.tex
 ./Chapters/algorithmic-framework.tex
@@ -2148,14 +2410,8 @@ Presections/acknowledgement.tex
  ***********
 
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 195.
-
-Package rerunfilecheck Warning: File `Thesis.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `Thesis.out':
-(rerunfilecheck)             Before: A2E9C050EA2BB5E1CC7009ABA34C41AB;9455
-(rerunfilecheck)             After:  CD6BC2789FBAE43A697F93A510338BF3;9644.
+Package rerunfilecheck Info: File `Thesis.out' has not changed.
+(rerunfilecheck)             Checksum: D115286DB53C4E36C73188B836CE49B3;10626.
 
 LaTeX Warning: There were undefined references.
 
@@ -2165,143 +2421,38 @@ LaTeX Warning: There were multiply-defined labels.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 195.
  ) 
 Here is how much of TeX's memory you used:
- 32659 strings out of 494045
- 642136 string characters out of 3150398
- 845139 words of memory out of 3000000
- 34857 multiletter control sequences out of 15000+200000
- 132088 words of font info for 169 fonts, out of 3000000 for 9000
+ 32805 strings out of 494045
+ 644642 string characters out of 3150398
+ 850305 words of memory out of 3000000
+ 34993 multiletter control sequences out of 15000+200000
+ 132810 words of font info for 176 fonts, out of 3000000 for 9000
  715 hyphenation exceptions out of 8191
- 56i,20n,93p,787b,2116s stack positions out of 5000i,500n,10000p,200000b,50000s
-pdfTeX warning (dest): name{figure.caption.121} has been referenced but does 
-not exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{figure.caption.120} has been referenced but does no
-t exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{figure.caption.70} has been referenced but does not
- exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{figure.caption.104} has been referenced but does no
-t exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{equation.89} has been referenced but does not exist
-, replaced by a fixed one
-
-pdfTeX warning (dest): name{figure.caption.88} has been referenced but does not
- exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{figure.caption.84} has been referenced but does not
- exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{algocf.77} has been referenced but does not exist, 
-replaced by a fixed one
-
-pdfTeX warning (dest): name{algocf.80} has been referenced but does not exist, 
-replaced by a fixed one
-
-pdfTeX warning (dest): name{algocf.73} has been referenced but does not exist, 
-replaced by a fixed one
-
-pdfTeX warning (dest): name{figure.caption.63} has been referenced but does not
- exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{figure.caption.62} has been referenced but does not
- exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{figure.caption.57} has been referenced but does not
- exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{figure.caption.50} has been referenced but does not
- exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{dummy.122} has been referenced but does not exist, 
-replaced by a fixed one
-
-pdfTeX warning (dest): name{chapter.119} has been referenced but does not exist
-, replaced by a fixed one
-
-pdfTeX warning (dest): name{subsection.114} has been referenced but does not ex
-ist, replaced by a fixed one
-
-pdfTeX warning (dest): name{section.113} has been referenced but does not exist
-, replaced by a fixed one
-
-pdfTeX warning (dest): name{section.112} has been referenced but does not exist
-, replaced by a fixed one
-
-pdfTeX warning (dest): name{chapter.111} has been referenced but does not exist
-, replaced by a fixed one
-
-pdfTeX warning (dest): name{section.102} has been referenced but does not exist
-, replaced by a fixed one
-
-pdfTeX warning (dest): name{subsection.99} has been referenced but does not exi
-st, replaced by a fixed one
-
-pdfTeX warning (dest): name{section.98} has been referenced but does not exist,
- replaced by a fixed one
-
-pdfTeX warning (dest): name{subsection.95} has been referenced but does not exi
-st, replaced by a fixed one
-
-pdfTeX warning (dest): name{subsection.91} has been referenced but does not exi
-st, replaced by a fixed one
-
-pdfTeX warning (dest): name{section.82} has been referenced but does not exist,
- replaced by a fixed one
-
-pdfTeX warning (dest): name{subsection.81} has been referenced but does not exi
-st, replaced by a fixed one
-
-pdfTeX warning (dest): name{section.67} has been referenced but does not exist,
- replaced by a fixed one
-
-pdfTeX warning (dest): name{subsection.66} has been referenced but does not exi
-st, replaced by a fixed one
-
-pdfTeX warning (dest): name{subsection.65} has been referenced but does not exi
-st, replaced by a fixed one
-
-pdfTeX warning (dest): name{section.64} has been referenced but does not exist,
- replaced by a fixed one
-
-pdfTeX warning (dest): name{section.59} has been referenced but does not exist,
- replaced by a fixed one
-
-pdfTeX warning (dest): name{chapter.58} has been referenced but does not exist,
- replaced by a fixed one
-
-pdfTeX warning (dest): name{section.51} has been referenced but does not exist,
- replaced by a fixed one
-
-pdfTeX warning (dest): name{section.48} has been referenced but does not exist,
- replaced by a fixed one
-
-{C:/Users/ande01/MikTex/fonts/enc/dvips/lm/lm-ec.enc}{C:/Users/ande01/MikTex/fo
-nts/enc/dvips/lm/lm-rm.enc}{C:/Users/ande01/MikTex/fonts/enc/dvips/lm/lm-mathit
-.enc}{C:/Users/ande01/MikTex/fonts/enc/dvips/lm/lm-mathsy.enc}{C:/Users/ande01/
-MikTex/fonts/enc/dvips/lm/lm-mathex.enc}{C:/Users/ande01/MikTex/fonts/enc/dvips
-/lm/lm-ts1.enc}<C:/Users/ande01/MikTex/fonts/type1/public/lm/lmbx10.pfb><C:/Use
-rs/ande01/MikTex/fonts/type1/public/lm/lmbx12.pfb><C:/Users/ande01/MikTex/fonts
-/type1/public/lm/lmbxi10.pfb><C:/Users/ande01/MikTex/fonts/type1/public/lm/lmcs
-c10.pfb><C:/Users/ande01/MikTex/fonts/type1/public/lm/lmex10.pfb><C:/Users/ande
-01/MikTex/fonts/type1/public/lm/lmmi10.pfb><C:/Users/ande01/MikTex/fonts/type1/
-public/lm/lmmi6.pfb><C:/Users/ande01/MikTex/fonts/type1/public/lm/lmmi8.pfb><C:
-/Users/ande01/MikTex/fonts/type1/public/lm/lmr10.pfb><C:/Users/ande01/MikTex/fo
-nts/type1/public/lm/lmr12.pfb><C:/Users/ande01/MikTex/fonts/type1/public/lm/lmr
-17.pfb><C:/Users/ande01/MikTex/fonts/type1/public/lm/lmr5.pfb><C:/Users/ande01/
-MikTex/fonts/type1/public/lm/lmr6.pfb><C:/Users/ande01/MikTex/fonts/type1/publi
-c/lm/lmr8.pfb><C:/Users/ande01/MikTex/fonts/type1/public/lm/lmr9.pfb><C:/Users/
-ande01/MikTex/fonts/type1/public/lm/lmri10.pfb><C:/Users/ande01/MikTex/fonts/ty
-pe1/public/lm/lmri12.pfb><C:/Users/ande01/MikTex/fonts/type1/public/lm/lmssbx10
-.pfb><C:/Users/ande01/MikTex/fonts/type1/public/lm/lmsy10.pfb><C:/Users/ande01/
-MikTex/fonts/type1/public/lm/lmsy6.pfb><C:/Users/ande01/MikTex/fonts/type1/publ
-ic/lm/lmsy8.pfb><C:/Users/ande01/MikTex/fonts/type1/public/lm/lmtt10.pfb><C:/Us
-ers/ande01/MikTex/fonts/type1/public/lm/lmtt9.pfb><C:/Users/ande01/MikTex/fonts
-/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on Thesis.pdf (66 pages, 1908588 bytes).
+ 56i,20n,93p,709b,2181s stack positions out of 5000i,500n,10000p,200000b,50000s
+{C:/Users/ande01/MikTex/fonts/enc/dvips/lm/lm-ec.enc}{C:/Users/ande01/MikTex/
+fonts/enc/dvips/lm/lm-rm.enc}{C:/Users/ande01/MikTex/fonts/enc/dvips/lm/lm-math
+it.enc}{C:/Users/ande01/MikTex/fonts/enc/dvips/lm/lm-mathsy.enc}{C:/Users/ande0
+1/MikTex/fonts/enc/dvips/lm/lm-mathex.enc}{C:/Users/ande01/MikTex/fonts/enc/dvi
+ps/lm/lm-ts1.enc}<C:/Users/ande01/MikTex/fonts/type1/public/lm/lmbx10.pfb><C:/U
+sers/ande01/MikTex/fonts/type1/public/lm/lmbx12.pfb><C:/Users/ande01/MikTex/fon
+ts/type1/public/lm/lmbxi10.pfb><C:/Users/ande01/MikTex/fonts/type1/public/lm/lm
+csc10.pfb><C:/Users/ande01/MikTex/fonts/type1/public/lm/lmex10.pfb><C:/Users/an
+de01/MikTex/fonts/type1/public/lm/lmmi10.pfb><C:/Users/ande01/MikTex/fonts/type
+1/public/lm/lmmi6.pfb><C:/Users/ande01/MikTex/fonts/type1/public/lm/lmmi8.pfb><
+C:/Users/ande01/MikTex/fonts/type1/public/lm/lmr10.pfb><C:/Users/ande01/MikTex/
+fonts/type1/public/lm/lmr12.pfb><C:/Users/ande01/MikTex/fonts/type1/public/lm/l
+mr17.pfb><C:/Users/ande01/MikTex/fonts/type1/public/lm/lmr5.pfb><C:/Users/ande0
+1/MikTex/fonts/type1/public/lm/lmr6.pfb><C:/Users/ande01/MikTex/fonts/type1/pub
+lic/lm/lmr8.pfb><C:/Users/ande01/MikTex/fonts/type1/public/lm/lmr9.pfb><C:/User
+s/ande01/MikTex/fonts/type1/public/lm/lmri10.pfb><C:/Users/ande01/MikTex/fonts/
+type1/public/lm/lmri12.pfb><C:/Users/ande01/MikTex/fonts/type1/public/lm/lmssbx
+10.pfb><C:/Users/ande01/MikTex/fonts/type1/public/lm/lmsy10.pfb><C:/Users/ande0
+1/MikTex/fonts/type1/public/lm/lmsy6.pfb><C:/Users/ande01/MikTex/fonts/type1/pu
+blic/lm/lmsy8.pfb><C:/Users/ande01/MikTex/fonts/type1/public/lm/lmtt10.pfb><C:/
+Users/ande01/MikTex/fonts/type1/public/lm/lmtt9.pfb><C:/Users/ande01/MikTex/fon
+ts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on Thesis.pdf (74 pages, 2277585 bytes).
 PDF statistics:
- 903 PDF objects out of 1000 (max. 8388607)
- 241 named destinations out of 1000 (max. 500000)
- 39345 words of extra memory for PDF output out of 42996 (max. 10000000)
+ 992 PDF objects out of 1000 (max. 8388607)
+ 235 named destinations out of 1000 (max. 500000)
+ 39387 words of extra memory for PDF output out of 42996 (max. 10000000)
 

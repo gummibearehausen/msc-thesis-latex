@@ -6,10 +6,15 @@
 \addtotoc{Abstract}  % Add the "Abstract" page entry to the Contents
 \abstract{
 \addtocontents{toc}{\vspace{1em}}  % Add a gap in the Contents, for aesthetics
-  Inductive Logic Programming (ILP) is a consolidated technique for mining Datalog rules in knowledge bases.
+  Inductive Logic Programming (ILP) is a consolidated technique for mining first-order rules in knowledge bases.
 Nevertheless, it's inherently expensive and the hypothesis search space grows combinatorially with the knowledge base size.
-This problem is even more dramatic when literals with constants are considerated, therefore, it usually requires very aggressive pruning for making it feasible.
-With the objective of efficiently learning rules with ranges for numerical attributes, we propose a preprocessing step and an extension to ILP top-down algorithm, that suggests the most interesting categorical constants to be added in the refinement step. It consists of building a lattice that expresses the correlations between a root numerical attribute and multiple categorical relations and their constants. This lattice is then queried by the core ILP algorithm in the refinement step and provides a list of refinement suggestions ordered by a defined interestingness measure. This thesis discusses how to efficiently build the lattice, how it's incorporated in the core learning algorithm and evaluates different iterestingness measures.
+This problem is even more dramatic when literals with constants are considered. Therefore, it usually requires very
+aggressive pruning for making it feasible. In the preprocessing step, we build a lattice that expresses the
+correlations between a root numerical attribute and multiple categorical relations and their constants. This lattice
+is then queried by the core ILP algorithm in the refinement step in order to obtain the interestingness of searching
+for interesting intervals of a given numerical attribute variable, as well as a list of refinement suggestions ordered
+by a defined interestingness measure. This thesis discusses how to efficiently build the lattice, how it's
+incorporated in the core learning algorithm and evaluates different iterestingness measures.
 
 
 }

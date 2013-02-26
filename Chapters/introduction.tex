@@ -1,89 +1,104 @@
 \chapter{Introduction}
 \label{ch:intro}
 
-In the last years, the volume of semantic data available, in particular in RDF format, has dramatically increased.
-Initiatives like the W3C Semantic Web and the Linked Open Data  have great contribution in such development. The first
-provides a common standard that allows data to be shared and reused across different applications and the latter
-provides linkages between different datasets that were not originally interconnected. Moreover, advances in information
-extraction have also made a strong contribution, by crawling multiple non-structured resources in the Web and extracting
-RDF facts.
+\begin{comment}
+ Inductive Logic Programming (ILP) is a consolidated technique for mining first-order rules in knowledge bases.
+Nevertheless, it's inherently expensive and the hypothesis search space grows combinatorially with the knowledge base
+size. 
+This problem is even more dramatic when literals with constants are considered. Therefore, it usually requires
+very aggressive pruning for making it feasible. In the preprocessing step, we build a lattice that expresses the
+correlations between a root numerical attribute and multiple categorical relations and their constants. This lattice
+is then queried by the core ILP algorithm in the refinement step in order to obtain the interestingness of searching
+for interesting intervals of a given numerical attribute variable, as well as a list of refinement suggestions ordered
+by a defined interestingness measure. This thesis discusses how to efficiently build the lattice, how it's
+incorporated in the core learning algorithm and evaluates different iterestingness measures.
+\end{comment}
+
+
+In the last years, the volume of semantic data available, in particular in RDF format, has dramatically
+increased. Initiatives like the W3C Semantic Web and the Linked Open Data  have great contribution in such
+development. The first provides a common standard that allows data to be shared and reused across different
+applications and the latter provides linkages between different datasets that were not originally interconnected.
+Moreover, advances in information extraction have also made a strong contribution, by crawling multiple non-structured
+resources in the Web and extracting RDF facts.
 
 Nevertheless, information extraction still has its limitations and many of its sources might contain contradictory
 or uncertain information. Therefore, many of the extracted datasets suffer from incompleteness, noise and uncertainty.
-The firs one means that there are facts that are not existent in the dataset, the second one means that the dataset
-might contain facts that are not true and the latter one means that the truth of the facts is not certain. These
+The first one means that there are facts that are not existent in the dataset, the second one means that the dataset
+might contain facts that are not true, and the latter one means that the truth of the facts is not certain. These
 problems make it much more challenging to automatically learn rules from the data.
 
 %Moreover, for noisy and incomplete knowledge bases, the automatic (i.e., unsupervised) selection of positive and
 %negative training examples needed for learning new rules poses a major challenge to the adoption of these techniques.
 
-In order to reduce such problems, one can apply a set of inference rules that describes its domain to the knowledge
-base. With that, it's possible to resolve contradictions as well as strengthen or weaken their confidence values. It's
-also possible to derive new facts that are originally not existent due to incompleteness. Such inference rules can be of
-two types:
+In order to reduce such problems, one can apply a set of inference rules that describes the knowledge base domain.
+With that, it is possible to resolve contradictions as well as strengthen or weaken their confidence values. It is
+also possible to derive new facts that are originally not existent due to incompleteness. Such inference rules can
+either represent consistency constraints (hard rules), or rules that hold for most but all cases in real world (soft
+rules).
 
-\begin{enumerate}
- \item \emph{Hard Rules}: Consistency constraints which might represent functional dependencies, functional or
-inverse-functional properties of predicates or mutual exclusion. For example:
-    \begin{itemize}
-      \item $ marriedTo(X,Y)$ :- $marriedTo(Y,X),(X \neq Y)$
-      \item $ grandChildOf(X,Y)$ :- $childOf(X,Z),childOf(Z,Y)$
-      \item $ parentOf(X,Y)$ :- $childOf(Y,X)$
-      \item $ (Z=Y)$ :- $wasBornIn(X,Z),wasBornIn(X,Y)$
-    \end{itemize}
+In this thesis, we consider only inference rules that can be represented as safe Datalog clauses. In a nutshell,
+a Datalog clause is a logic program clause composed by a head predicates and a list of body predicates, each
+predicate is a tuple with variables or constants as arguments. A Datalog clause is safe if all the variables present
+in the head are also present in the body, moreover, negated predicates are allowed in the body as long as every
+variable present in a negated predicate is also present in a non-negated predicate.
 
- \item \emph{Soft Rules}: Weighted Datalog rules that frequently, but not always hold in the real world. As they
-might also produce incorrect information, derived facts can have a level of uncertainty which is represented by a
-confidence value. For example, it's know that married people usually live in the same place as their partner:
-    \begin{center}
-      $ livesIn(X,Y)$ :- $marriedTo(X,Z)livesIn(Z,Y)$
-    \end{center}
-\end{enumerate}
+An example of safe Datalog rule, which states that married people usually live in the same place as their spouse,
+could be written as follows:
 
-So, if we have an incomplete knowledge base, which lacks information about where \emph{Michelle Obama} lives, but
-we know that she's married to \emph{Barack Obama} and he lives in \emph{Washington, D.C.}, we could then apply this soft
-rule to derive the fact \emph{livesIn(michelleObama, washingtonDC)}. 
+\begin{center}
+  $livesIn(X,Y)$ :- $marriedTo(X,Z),livesIn(Z,Y)$
+\end{center}
+
+If we have an incomplete knowledge base, which lacks information about where \emph{Michelle Obama} lives, but
+contains the facts $marriedTo(michelleObama,barackObama)$ and $livesIn(barackObama,washingtonDC)$, we could then
+apply the aforementioned rule to derive the fact $livesIn(michelleObama, washingtonDC)$. 
+
 
 %http://people.csail.mit.edu/kersting/profile/PROFILE_ilp.html
 
 Such rules are rarely known beforehand, but the data itself can be used to mine these rules using Inductive Logic
-Programming (ILP). It is a well-established framework for inductively learning relational descriptions (in the form of
-logic programs) from examples and background knowledge. Given a logical database of facts, an ILP system will generate
-hypothesis in a pre-determined order and test them against the examples. However in a large knowledge base, ILP becomes
-too expensive as the search space grows combinatorially with the knowledge base size and the larger the number of
-examples, the more expensive it is to test each hypothesis.
+Programming (ILP). ILP is a well-established framework for inductively learning relational descriptions (in the form
+of logic programs) from examples and background knowledge. Given a logical database of facts, an ILP system will
+generate hypotheses in a pre-determined order and test them against the examples. However, in a large knowledge base,
+ILP becomes too expensive as the search space grows combinatorially with the knowledge base size, and the larger the
+number of examples, the more expensive it is to test each hypothesis.
 
-Although it is very expensive to learn rules with constants, such kind of rules can are extremely interesting as they
+Although it is very expensive to learn rules with constants, such kind of rules can be extremely interesting as they
 can express particular characteristics of specific groups. For example, the rule $speaks(X,Y)$ :- $livesIn(X,Z)$ is not
 very meaningful, it simply tells that people that live in anywhere will speak some language. Nevertheless, if we
 consider setting constant values for $Y$ and $Z$, we can learn much more valuable rules such as
 $speaks(X,english)$ :- $livesIn(X,australia)$ or $speaks(X,spanish)$ :- $livesIn(X,mexico)$.
 
-The problem of that, is that for such example, it would be necessary to test rules with all combinations of country and
-languages, what surely can lead to a very expensive process when applied on large databases. Given the huge size of
-search space and the great interestingness of rules with constants, it is appropriate to reduce the search space by
-pruning constants or combinations of constants that do not add interesting information to the
+The problem of that, is that for such an example, it would be necessary to test rules with all combinations of
+countries and languages, which surely can lead to a very expensive process when applied on large databases. Given the
+huge size of the search space and the great interestingness of rules with constants, it is appropriate to reduce the
+search space by pruning constants or combinations of constants that do not have any correlation to the
 hypothesis.
 
-[Talk more about ILP]
+The literal $bornInMonth(X,april)$, for example, does not have any correlation  to $speaks(X,spanish )$ :-
+$livesIn(X,mexico)$ or $speaks(X,english)$ :- $livesIn(X,australia)$. So if we ad such literal to the body of any of
+theses clauses, it would most likely not cause any change to the confidence,  but crtanly a reduction in the support,
+therefore it is not interesting to test these hypotheses with the addition of  such uncorelated literal.
 
 %This will give as output a set of rules which should satisfy a minimum support and confidence.
 
 \section{Motivation}
 
-For numerical properties it might be also relevant to search for interesting constants. Nevertheless, for very large or
-infinite numerical domains such as the real numbers for example, setting a numerical constant as an individual value
-will very likely have a single entity associated to it. In such case it would be equivalent to simply specifying a
-constant for this given entity without the necessity of adding the numerical property
+For numerical properties, it might be also relevant to search for interesting constants. Nevertheless, for very large
+or infinite numerical domains such as the real numbers for example, setting a numerical constant as an individual
+value will very likely have a single entity associated to it. In such a case, it would be equivalent to simply
+specifying a constant for this given entity without the necessity of adding the numerical property
 
 For example, it is extremely unlikely that a country has the exact same GDP or population as any other country. If we
-have the following rule with the $hasPopulation$, whose domain is the positive integer numbers $\mathbb{N}^+$:
+have the following rule with the attribute $hasPopulation$, whose domain is the positive integer numbers
+$\mathbb{N}^+$:
 
 \begin{center}
  $speaks(X,portuguese)$ :- $livesIn(X,Z),hasPopulation(Z,193946886)$
 \end{center}
 
-As Brazil is the only country with a population of 193,946,886 inhabitants, this same rule would be equivalent to:
+As Brazil is the only country with a population of $193,946,886$ inhabitants, this same rule would be equivalent to:
 
 \begin{center}
  $speaks(X,portuguese)$ :- $livesIn(X,brazil)$
@@ -94,9 +109,9 @@ specifies the country in a clearer manner. Moreover, by setting numerical consta
 huge number of different constants to test in the hypothesis and most of them would be most likely discarded because of
 low support.
 
-Therefore, it is interesting to split the attribute's domain into categories by discretizing it .
-Subsequently check if any of the buckets present different confidence in comparison to its correspondent numerical
-constant-free rule (which we will call base-rule).
+Therefore, it is interesting to discretize the numerical attribute's domain into categories, and
+subsequently check if any of the buckets present different confidence in comparison to its correspondent numerical
+constant-free rule (which we will call ``base-rule'').
 
 For example if we test the hypothesis and we find support=100 and confidence=0.4:
 
@@ -193,15 +208,19 @@ carefully choose the relations and eventual constants and discard the ones with 
 
 \section{Contributions}
 In this thesis, we propose a pre-processing step to build a graph we call correlation lattice for each numerical
-property we want to for interesting intervals. In each graph, that has a numerical property as root, we first query the
-examples distribution on the numerical attribute, and build a histogram by splitting them into \emph{k} buckets.
-Subsequently, we  pick a set of \emph{c} categorical properties that can be joined with the root, extract the
+property we want to for interesting intervals. In each graph, that has a numerical property as its root, we first
+query the examples distribution on the numerical attribute, and build a histogram by discretizing them into $k$
+buckets. Subsequently, we  pick a set of $c$ categorical properties that can be joined with the root, extract the
 frequencies histogram and analyze how the distribution of sub-population created by joining them with the root is
 affected. Afterwards, we try to combine the categories and check whether they still produce interesting sub-populations
 creating a lattice, like in frequent set mining apriori algorithm.
 
-We discuss the pruning opportunities and also evaluate different heuristics and interestingness measures and their
-efficiency in finding rules with numerical intervals. 
+We compare the distributions obtained from the frequencies histograms using information theoretical measures,
+such as Kullback-Leibler divergence, as well as independence checks, such as Pearson's Chi-squared, in order to
+measure the interestingness of adding literals to clauses.
+
+Moreover, we discuss the pruning opportunities and also evaluate different heuristics and interestingness measures and
+their efficiency in finding rules with numerical intervals. 
 
 \begin{comment}
 In a clause containing a numerical attribute in the body, we can obtain a support and confidence as well as support
@@ -209,10 +228,20 @@ value for each of the buckets. Therewith, we can search the most interesting int
 confidence thresholds
 \end{comment}
 
-With information about different examples distributions contained in the generated lattice, once we add one of the root
+With information about different example distributions contained in the generated lattice, once we add one of the root
 properties during the core ILP algorithm, we can then search for the most interesting categorical properties that could
-result in different confidence distributions. For every categorical property we can also suggest the most interesting
+result in different confidence distributions. For every categorical property, we can also suggest the most interesting
 constants and other categorical properties to be combined in a subcategory of both.
+
+In summary, we present in this thesis three main contributions:
+
+\begin{itemize}
+ \item A measure of the interestingness of searching for a specific interval for a rule's numerical attribute
+variable.
+ \item The correlation lattice and its pruning methods.
+ \item Experiments on Linked Open Data datasets.
+\end{itemize}
+
 
 \section{Outline}
 

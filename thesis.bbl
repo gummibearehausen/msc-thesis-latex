@@ -1,4 +1,4 @@
-\begin{thebibliography}{10}
+\begin{thebibliography}{16}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -17,6 +17,39 @@ Nada Lavrac and Saso Dzeroski.
   Techniques and applications".
 \newblock \emph{Machine Learning}, 23\penalty0 (1):\penalty0 109--111, 1996.
 
+\bibitem[Lavrac and Dzeroski(1992)]{DBLP:conf/aii/LavracD92}
+Nada Lavrac and Saso Dzeroski.
+\newblock Background knowledge and declarative bias in inductive concept
+  learning.
+\newblock In \emph{AII}, pages 51--71, 1992.
+
+\bibitem[Gottlob et~al.(1999)Gottlob, Leone, and
+  Scarcello]{DBLP:journals/ngc/GottlobLS99}
+Georg Gottlob, Nicola Leone, and Francesco Scarcello.
+\newblock On the complexity of some inductive logic programming problems.
+\newblock \emph{New Generation Comput.}, 17\penalty0 (1):\penalty0 53--75,
+  1999.
+
+\bibitem[Quinlan and Cameron-Jones(1993)]{DBLP:conf/ecml/QuinlanC93}
+J.~Ross Quinlan and R.~Mike Cameron-Jones.
+\newblock Foil: A midterm report.
+\newblock In \emph{ECML}, pages 3--20, 1993.
+
+\bibitem[Agrawal et~al.(1993)Agrawal, Imieli\'{n}ski, and
+  Swami]{Agrawal:1993:MAR:170036.170072}
+Rakesh Agrawal, Tomasz Imieli\'{n}ski, and Arun Swami.
+\newblock Mining association rules between sets of items in large databases.
+\newblock \emph{SIGMOD Rec.}, 22\penalty0 (2):\penalty0 207--216, June 1993.
+\newblock ISSN 0163-5808.
+\newblock \doi{10.1145/170036.170072}.
+\newblock URL \url{http://doi.acm.org/10.1145/170036.170072}.
+
+\bibitem[Hipp et~al.(2000)Hipp, Güntzer, and
+  Nakhaeizadeh]{Hipp00algorithmsfor}
+Jochen Hipp, Ulrich Güntzer, and Gholamreza Nakhaeizadeh.
+\newblock Algorithms for association rule mining -- a general survey and
+  comparison, 2000.
+
 \bibitem[Brin et~al.(1999)Brin, Rastogi, and Shim]{Brin99miningoptimized}
 Sergey Brin, Rajeev Rastogi, and Kyuseok Shim.
 \newblock Mining optimized gain rules for numeric attributes.
@@ -28,6 +61,16 @@ Sergey Brin, Rajeev Rastogi, and Kyuseok Shim.
 Toon Calders, Christian~W. G{\"u}nther, Mykola Pechenizkiy, and Anne Rozinat.
 \newblock Using minimum description length for process mining.
 \newblock In \emph{SAC}, pages 1451--1455, 2009.
+
+\bibitem[Vinh et~al.(2010)Vinh, Epps, and
+  Bailey]{Vinh:2010:ITM:1953011.1953024}
+Nguyen~Xuan Vinh, Julien Epps, and James Bailey.
+\newblock Information theoretic measures for clusterings comparison: Variants,
+  properties, normalization and correction for chance.
+\newblock \emph{J. Mach. Learn. Res.}, 9999:\penalty0 2837--2854, December
+  2010.
+\newblock ISSN 1532-4435.
+\newblock URL \url{http://dl.acm.org/citation.cfm?id=1953011.1953024}.
 
 \bibitem[Lavrac and Dzeroski(1994)]{LavracDz94}
 Nada Lavrac and Saso Dzeroski.

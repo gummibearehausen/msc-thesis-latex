@@ -1,49 +1,15 @@
-This is BibTeX, Version 0.99c (TeX Live 2009/Debian)
-The top-level auxiliary file: Thesis.aux
+This is BibTeX, Version 0.99dThe top-level auxiliary file: Thesis.aux
 The style file: unsrtnat.bst
 Database file #1: Bibliography.bib
+A bad cross reference---entry "DBLP:conf/aii/LavracD92"
+refers to entry "DBLP:conf/aii/1992", which doesn't exist
+A bad cross reference---entry "DBLP:conf/ecml/QuinlanC93"
+refers to entry "DBLP:conf/ecml/1993", which doesn't exist
 A bad cross reference---entry "DBLP:conf/sac/CaldersGPR09"
 refers to entry "DBLP:conf/sac/2009", which doesn't exist
+Warning--I didn't find a database entry for "DBLP:journals/ml/Quinlan9"
+Warning--I didn't find a database entry for "Pasquier99efficientmining"
+Warning--I didn't find a database entry for "DBLP:conf/aii/1992"
+Warning--I didn't find a database entry for "DBLP:conf/ecml/1993"
 Warning--I didn't find a database entry for "DBLP:conf/sac/2009"
-You've used 7 entries,
-            2481 wiz_defined-function locations,
-            612 strings with 5986 characters,
-and the built_in function-call counts, 3096 in all, are:
-= -- 285
-> -- 123
-< -- 8
-+ -- 48
-- -- 34
-* -- 216
-:= -- 457
-add.period$ -- 27
-call.type$ -- 7
-change.case$ -- 13
-chr.to.int$ -- 7
-cite$ -- 7
-duplicate$ -- 170
-empty$ -- 289
-format.name$ -- 51
-if$ -- 696
-int.to.chr$ -- 1
-int.to.str$ -- 8
-missing$ -- 8
-newline$ -- 48
-num.names$ -- 21
-pop$ -- 62
-preamble$ -- 1
-purify$ -- 7
-quote$ -- 0
-skip$ -- 120
-stack$ -- 0
-substring$ -- 151
-swap$ -- 48
-text.length$ -- 3
-text.prefix$ -- 0
-top$ -- 0
-type$ -- 46
-warning$ -- 0
-while$ -- 25
-width$ -- 0
-write$ -- 109
-(There was 1 error message)
+(There were 3 error messages)
