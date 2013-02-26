@@ -1,12 +1,19 @@
 \chapter{Related Work}
-\label{rw:intro}
+\label{sec:rw-intro}
 
-In this chapter relevant work related to the thesis topic will be briefly presented. In section
-\ref{rw:logicProgramming}...
+In this chapter relevant work related to the thesis topic will be briefly presented. In section 
+~\ref{sec:rw-lp} we introduce important logic programming concepts, and in section ~\ref{sec:rw-ilp} we discuss in
+more details how Inductive Logic Programming (ILP) works. Later, in section ~\ref{sec:rw-arm} we briefly present
+association rule mining highlighting concepts relevant to this thesis. In section ~\ref{sec:rw-discretization}, we
+talk about discretization of numerical attributes and discuss the most popular unsupervised methods. After that, we
+present in section ~\ref{sec:rw-miningOptimizedRules} a method for mining rules optimized numerical intervals. In
+section ~\ref{sec:rw-infotheoreticmeasures}, we introduce the information-theoretical measures used in this thesis,
+and finally, in sections ~\ref{sec:rw-semanticWeb} and ~\ref{sec:rw-lod}, we give a quick overview about Semantic Web
+and Linked Open Data.
 
 
 \section{Logic Programming}
-\label{rw:logicProgramming}
+\label{sec:rw-lp}
 
 \cite{DBLP:books/sp/Lloyd87}
 \cite{DBLP:journals/ml/LavracD96}
@@ -15,8 +22,10 @@ In this section, basic logic programming and deductive database terminology such
 mention that variables are represented as uppercase letters followed by a string of lowercase letters and/or digits.
 Function and predicate symbols are lowercase letters also followed by a string of lowercase and/or digits.
 
-An \emph{atomic formula} $L$ is a predicate symbol followed by a bracketed n-tuple of \emph{terms}. A \emph{term} can be
-a variable or a function symbol followed by a bracketed n-tuple of terms. A constant is a function symbol of arity 0. So
+An \emph{atomic formula} $L$ is a predicate symbol followed by a bracketed n-tuple of \emph{terms}. A \emph{term} can
+be
+a variable or a function symbol followed by a bracketed n-tuple of terms. A constant is a function symbol of arity 0.
+So
 for example, if $f$, $g$, and $h$ are function symbols and $X$ a variable, then $g(X)$ is term, $f(g(X),h)$ is also a
 term and $h$ is a \emph{constant}.
 
@@ -38,16 +47,21 @@ A \emph{program clause} is a clause which contains exactly one positive literal.
  $\underbrace{T}_{head} \leftarrow \underbrace{L_1,L_2,\ldots}_{body}$
 \end{center}
 
-A \emph{datalog clause} is a program clause with no function symbols with arity greater different from zero. That means
-that only variables and constants can be used as predicate arguments. A datalog clause is considered $safe$ if all the
-variables present in the head literal $T$ are also present in the body. Moreover, it may also allow negated literals in
-the body, as long as every variable existent in a negated body literal are also be present in a non-negated body
-literal.
+A \emph{Datalog clause} is a program clause with no function symbols with arity greater different from zero. That
+means that only variables and constants can be used as predicate arguments. A datalog clause is considered \emph{safe}
+if all the variables present in the head literal $T$ are also present in the body. Moreover, it may also allow negated
+literals in the body, as long as every variable existent in a negated body literal are also be present in a
+non-negated body literal.
+
+Besides that, it is important to mention that Datalog rules support not only relational predicates but also
+arithmetical, such as $=$, $\neq$, $>$, $<$, $\geq$, $\leq$, which improves the expressiveness of the language
+allowing that, for instance, numerical attribute variables have their domain restricted to a specific interval.
 
 \section{Inductive Logic Programming}
+\label{sec:rw-ilp}
 
 \cite{DBLP:journals/ml/LavracD96}
-Inductive Logic Programming (ILP) is a machine learning technique that combines inductive machine learning with the
+Inductive Logic Programming (ILP) is a machine learning technique that combines machine learning with the
 logic programming representation. Given a known background knowledge and a set of training examples represented as a
 logical database of facts (literals without any variables), an ILP system will learn a hypothesis in the form of a
 logic program.
@@ -55,7 +69,8 @@ logic program.
 The clauses in the hypothesis aim at recognizing a concept $\mathcal{C}$, which is defined as a subset of objects
 $\mathcal{C} \subseteq \mathcal{U}$. For example, $\mathcal{U}$ may be the set of all students in a University and
 $\mathcal{C}$ all the students studying Informatics.
-Concepts and objects are described in a description language $\mathcal{L}$, typically a subset of first-order logic, but
+Concepts and objects are described in a description language $\mathcal{L}$, typically a subset of first-order logic,
+but
 various languages have also been used in ILP, including propositional logic and first order predicate calculus.
 
 The training data for learning a concept $\mathcal{C}$ is a set of examples $\mathcal{E}$, where each examples is a
@@ -64,13 +79,16 @@ labeled as positive ($\oplus$) if the object is an instance of $\mathcal{C}$, or
 denote the set
 of positive examples as $\mathcal{E}^{+}$ and the set of negative examples as $\mathcal{E}^{-}$.
 
-The background knowledge $\mathcal{B}$ is a prior knowledge which contributes in learning the hypothesis. It indirectly
-restricts the hypothesis search space, as  the learned hypothesis $\mathcal{H}$ should be consistent with the background
+The background knowledge $\mathcal{B}$ is a prior knowledge which contributes in learning the hypothesis. It
+indirectly
+restricts the hypothesis search space, as  the learned hypothesis $\mathcal{H}$ should be consistent with the
+background
 knowledge as well as the training examples.
 
 A hypothesis $\mathcal{H}$ is said to cover an example $e$ given a background knowledge
 $\mathcal{B}$ ($covers(\mathcal{B} \cup \mathcal{H},e)$) if the example satisfies the hypothesis and background
-knowledge. In logic programming where the $\mathcal{H}$ is a set of program clauses and an example is a ground fact, it
+knowledge. In logic programming where the $\mathcal{H}$ is a set of program clauses and an example is a ground fact,
+it
 means that $e$ is entailed by $\mathcal{B} \cup \mathcal{H}$.
 
 \begin{center}
@@ -96,12 +114,12 @@ $covers(\mathcal{B},\mathcal{H},\mathcal{E}^{-})=\emptyset$
 \end{itemize}
 
 The objective of learning a concept requires a hypothesis that is complete and consistent with respect to the given
-concept training examples and background knowledge. The example shown in table \ref{tb:ilpExample} (presented in
+concept training examples and background knowledge. The example shown in table ~\ref{tab:ilpExample} (extracted from
 \cite{DBLP:journals/ml/LavracD96}) illustrates a simple problem of learning a hypothesis for the target relation
 $daughter(X,Y)$.
 
 \begin{table}[h!]
-\label{tb:ilpExample}
+\label{tab:ilpExample}
 \caption{A simple ILP problem: learning the \emph{daughter} relation.}
   \begin{center}
       \begin{tabular}{ r | l }
@@ -130,10 +148,12 @@ and consistent hypothesis:
 \subsection{Searching the Hypothesis Space}
 
 In ILP, the hypothesis space is determined by the language of the programs $\mathcal{L}$ consisting of the possible
-program clauses allowed by the language. Also, the vocabulary of predicate symbols is determined by the predicates from
+program clauses allowed by the language. Also, the vocabulary of predicate symbols is determined by the predicates
+from
 the background knowledge $\mathcal{B}$.
 
-It is useful to structure the search space with partial ordering into a set of clauses based on $\theta$-subsumption in
+It is useful to structure the search space with partial ordering into a set of clauses based on $\theta$-subsumption
+in
 order to systematically search the program clauses space. A clause $c$ $\theta$-subsumes $c'$ if there's a
 substitution $\theta$ such that clause $c\theta \subseteq c'$. This also introduces a notion of generality, where
 clause $c$ is at least as generaly as $c'$, or in other words, $c'$ is a specialization of $c$.
@@ -149,7 +169,7 @@ we know taht for that $c'$ is a specialization of $c$ because for $\theta=\empty
 $\{daughter(X,Y),\neg parent(Y,X)\} \subset \{daughter(X,Y),\neg female(X),\neg parent(Y,X)\}$ 
 \end{center}
 
-To better illustrate it, if we have:
+To better illustrate this, if we have:
 \begin{align*}
   c &= livesIn(X,Y) \text{ :- } marriedTo(X,Z),livesIn(Z,Y)\\
   c'&=livesIn(X,germany) \text{ :- } marriedTo(X,Z),livesIn(Z,germany)
@@ -179,9 +199,9 @@ Further information about bottow-up approach can be found in \cite{DBLP:journals
 \subsection{Top-Down ILP}
 
 The search space of program clauses can be viewed as a lattice, structured by $\theta$-subsumption generality
-ordering. Such lattice is called a \emph{refinement graph}, which can be used to direct the search from most general to
-specific hypothesis. The figure \ref{fig:refinementGraph} illustrates a part of the refinement graph for the
-family relation example shown in table \ref{tb:ilpExample}.
+ordering. Such a lattice is called a \emph{refinement graph}, which can be used to direct the search from most general
+to specific hypothesis. Figure ~\ref{fig:refinementGraph} illustrates a part of the refinement graph for the
+family relation example shown in table ~\ref{tab:ilpExample}.
 
 \begin{figure}[h!]
 \label{fig:refinementGraph}
@@ -191,17 +211,13 @@ family relation example shown in table \ref{tb:ilpExample}.
 \caption{Part of the refinement graph for the family relations problem}
 \end{figure}
 
-In such graph, nodes are program clauses and arcs are refinement operations, which can be of two kinds:
-
-\begin{itemize}
- \item Apply a substitution on the clause
- \item Add a literal to the body of the clause
-\end{itemize}
+In such a graph, nodes are program clauses and arcs are refinement operations, which can be of two kinds: apply
+a substitution on the clause; add a literal to the body of the clause.
 
 The top-down algorithm consists basically of a specialization loop that refines a clause ensuring consistency
 embedded inside a covering loop that adds clauses to the hypothesis ensuring completeness. Each loop has a stopping
 criterion, the covering loop iterates until it satisfies a sufficiency criterion and the specialization loop iterates
-until it satisfies a necessity criterion. The algorithm \ref{alg:topDownILP} shows in more details how the generic
+until it satisfies a necessity criterion. The algorithm ~\ref{alg:topDownILP} shows in more details how the generic
 top-down ILP works.
 
 \begin{algorithm}[!h]
@@ -228,17 +244,18 @@ top-down ILP works.
   } ()
 \end{algorithm}
 
-In domains with perfect data, the stopping criteria require that all positive examples are covered (completeness) and no
-negative examples are covered (consistency). However, in practice many datasets have imperfect data. Such imperfection
-is usually of the following kinds, as described in \cite{DBLP:conf/aii/LavracD92}:
+In domains with perfect data, the stopping criteria require that all positive examples are covered (completeness) and
+no
+negative examples are covered (consistency). However, in practice, many datasets have imperfect data. Such
+imperfection is usually of the following kinds, as described in \cite{DBLP:conf/aii/LavracD92}:
 
 \begin{itemize}
-  \item Noise: random errors in the training examples and background knowledge
+  \item Noise: random errors in the training examples and background knowledge.
   \item Insufficiently covered example space: too sparse training examples from which it is difficult to reliably
-detect correlations
+detect correlations.
   \item Inexactness: inappropriate or insufficient description language which does not contain an exact description of
-the target concept
-  \item Missing values in the training example
+the target concept.
+  \item Missing facts in the training example.
 \end{itemize}
 
 In order to avoid the effects of imperfect data, ILP can use heuristics as stopping criteria which tolerate
@@ -270,12 +287,15 @@ allowed in a clause in order to reduce execution time.
 %\cite{DBLP:conf/ecml/QuinlanC93}
 
 \section{Association Rule Mining}
+\label{sec:rw-arm}
 \cite{Agrawal:1993:MAR:170036.170072}
 \cite{Hipp00algorithmsfor}
 
 Association Rule Mining is method for discovering interesting relations between variables in large databases. It is
-intended to work on a database composed by a set of transactions $\mathcal{D}=\{t_1,t_2,\ldots,t_m\}$ and a set of items
-$\mathcal{I}=\{i_1,i_2,\ldots,i_n\}$. Each transaction $\mathcal{T}$ consists of a set of items which is subset of $I$ ,
+intended to work on a database composed by a set of transactions $\mathcal{D}=\{t_1,t_2,\ldots,t_m\}$ and a set of
+items
+$\mathcal{I}=\{i_1,i_2,\ldots,i_n\}$. Each transaction $\mathcal{T}$ consists of a set of items which is subset of $I$
+,
 which is usually represented by a binary vector of size $n$ indicating the presence of absence of items in the
 transaction.
 
@@ -309,7 +329,8 @@ body $P(Y|X)$, is defined as:
 \end{equation}
 
 %Need to cite who invented lift
-Confidence and support are the two measures used in classical association rule mining. Albeit, there are other relevant
+Confidence and support are the two measures used in classical association rule mining. Albeit, there are other
+relevant
 measures such as \emph{lift}. It measures how different the observed rule support is in comparison to that expected if
 $X$ and $Y$ were independent:
 
@@ -324,13 +345,17 @@ lift values makes a rule potentially more interesting.
 \subsection{Anti-monotonicity of Support}
 
 An important characteristic of the support measure is the anti-monotonicity. It means that for any itemset $X
-\subseteq \mathcal{I}$ if we have another itemset $Y \subseteq \mathcal{I}$ such that $X \subseteq Y$, then the support
-of $Y$ cannot be greater than the support of $X$. In other words, all subsets from a frequent itemset are also frequent,
+\subseteq \mathcal{I}$ if we have another itemset $Y \subseteq \mathcal{I}$ such that $X \subseteq Y$, then the
+support
+of $Y$ cannot be greater than the support of $X$. In other words, all subsets from a frequent itemset are also
+frequent,
 and all supersets from an infrequent item are also infrequent.
 
 When searching for frequent itemsets, this characteristic plays a key role in pruning the search space, which grows
-exponentially with the number of items $n$. The set of possible itemsets is the power set over $\mathcal{I}$, which has
-size $2^n-1$. As association rules are usually required to satisfy a specified minimum support, if we know that a given
+exponentially with the number of items $n$. The set of possible itemsets is the power set over $\mathcal{I}$, which
+has
+size $2^n-1$. As association rules are usually required to satisfy a specified minimum support, if we know that a
+given
 itemset does not satisfy it, we can automatically prune all its supersets.
 
 \subsection{Itemset Lattice}
@@ -349,17 +374,17 @@ support.
 
 Each of these kinds of itemsets has an special property. By knowing all the maximal itemsets of a database, we
 also know all the frequent itemsets. Nevertheless, it is not possible to know the support of each of the frequent
-itemsets. By knowing all the closed of a database, it is possible to know the all the frequent itemsets as well as their
-supports.
+itemsets. By knowing all the closed itemsets of a database, it is possible to know the all the frequent itemsets as
+well as their supports.
 
-In the example of database $\mathcal{D}$ shown in table \ref{tb:itemsetLattice} with resulting itemset lattice shown in
-figure \ref{fig:itemsetLattice}, frequent itemsets are shown with thicker border. The minimum support threshold was set
-to $\cfrac{2}{5}$, so the frequent itemsets are the ones with frequency greater than or equal to 2. For this example, we
-would have as maximal itemset $\{ABCE\}$ and as closed itemsets $\{ABCE, BCE, BE\}$
+In the example of database $\mathcal{D}$ shown in Table ~\ref{tab:itemsetLattice} with the resulting itemset lattice
+shown in Figure ~\ref{fig:itemsetLattice}, frequent itemsets are shown with thicker border. The minimum support
+threshold is set to $2/5$, so the frequent itemsets are the ones with frequency greater than or equal to 2. For this
+example, we would have as maximal itemset $\{ABCE\}$ and as closed itemsets $\{ABCE, BCE, BE\}$
 
 \begin{table}[h!]
   \begin{center}
-    \label{tb:itemsetLattice}
+    \label{tab:itemsetLattice}
       \begin{tabular}{ c | l l l l }
       \toprule
       \textbf{TID} & \multicolumn{4}{c}{\textbf{Items}} \\
@@ -445,20 +470,18 @@ would have as maximal itemset $\{ABCE\}$ and as closed itemsets $\{ABCE, BCE, BE
   \label{fig:itemsetLattice}
 \end{figure}
 
-
-[...]
-
 \subsection{Apriori Algorithm}
 The apriori algorithm is a method for searching frequent itemsets which explores the anti-monotonic property of the
-support measure. It computeds the itemsets support iteratively, by ascending order of size. The
+support measure. It computes the itemsets support iteratively, by ascending order of size. The
 process takes $k$ iterations where $k$ is the size of the largest frequent itemset. In each iteration $i \leq k$, the
 database is scanned once and all the support of all itemsets of size $i$ are computed.
 
 In the first iteration, all itemsets of size 1 have their supports computed. On the $1 < i \leq k$ subsequent
 iterations, a set of candidates $C_i$ is created by joining the frequent itemsets of size $i-1$ found in the previous
-iteration. Two itemsets of size $i$ can only join if they share $i-1$ items, so their union can form an itemset of size
+iteration. Two itemsets of size $i$ can only join if they share $i-1$ items, so their union can form an itemset of
+size
 $i+1$. Only after finding the set of candidate itemsets $C_1$, the database is scanned in order to determine the
-support of each of them. The algorithm \ref{alg:apriori} shows in more details how the apriori algorithm works.
+support of each of them. Algorithm ~\ref{alg:apriori} shows in more details how the apriori algorithm works.
 
 \begin{algorithm}[h!]
   \caption{Apriori frequent itemset discovery}
@@ -485,11 +508,12 @@ support of each of them. The algorithm \ref{alg:apriori} shows in more details h
   \Return{$L$} \;
 \end{algorithm}
 
-For the previous example of database \ref{tb:aprioriLattice}, the itemset lattice generated by the apriori algorithm
-is shown in figure \ref{fig:itemsetLattice}. 
+For the previous example of database ~\ref{tab:aprioriLattice}, the itemset lattice generated by the apriori algorithm
+is shown in Figure ~\ref{fig:aprioriLattice}. 
 
 \begin{figure}[h!]
-  \caption{Itemset Lattice example}
+  \caption{Itemset Lattice generated by apriori algorithm for the example from Table ~\ref{tab:itemsetLattice}}
+  
   \centering
   \begin{tikzpicture}[scale=0.75,auto=center,every node/.style={draw=black, font=\tiny}]
     \node (n0) at (11,15) {$\emptyset$};
@@ -533,28 +557,28 @@ is shown in figure \ref{fig:itemsetLattice}.
 \end{figure}
 
 \section{Discretization of Numerical Attributes}
-\label{sec:discretization}
+\label{sec:rw-discretization}
 
-Discretization of constinuous features is a very important tool frequently used in statistics, data mining and machine
-learning. It is a pre-processing technique which is used for reducing the effects of observation errors. It is
-basically a form of quantization where the original data values in a given interval are replaced by a representative
-value of that interval.
+Discretization of constinuous features is a very important tool which is frequently used in statistics, data mining
+and machine learning. It is a pre-processing technique which is used for reducing the effects of observation errors.
+It is basically a form of quantization where the original data values in a given interval are replaced by a
+representative value of that interval.
 
 Discretization techniques can be divided in supervised and unsupervised methods. The first requires the objects to
 be labeled with classes, and the domain is discretized with the objetive of reducing the class entropies. The second
-one doesn not consider object classes, only object frequencies. Unsupervised methods normally require the number of
-buckets to be arbitrarily defined.
+one does not consider object classes, only object frequencies. Unsupervised methods normally require the number of
+buckets to be beforehand defined.
 
-Various different supervised and unsupervised methods for discretization of continuous features are discussed in
-\cite{Dougherty95supervisedand}. To build the lattice we don't use labels for the examples so we just use unsupervised
-methods.
+Various different supervised and unsupervised methods for the discretization of continuous features are discussed in
+\cite{Dougherty95supervisedand}. To build the lattice, we don not use labels for the examples so we just use
+unsupervised methods.
 
 Supervised methods can be used for finding interesting intervals in the rules, by considering positive and negative
-examples as labels. However, it is out of the scope of this thesis, thus we will not discuss them in details.
+examples as labels. However, it is out of the scope of this thesis, thus we will not discuss these in detail.
 
 \subsection{Equal Width}
 This unsupervised discretization method consists of simply querying both the maximum and minimum values of the root's
-numerical attribute, then for splitting this interval into $k$ buckets of same width $w$:
+numerical attribute, then splitting this interval into $k$ buckets of same width $w$:
 
 \begin{equation}
  w=\cfrac{max-min}{k}
@@ -564,28 +588,32 @@ It's the simples and most straightforward discretization method, but its main pr
 sensitive to outliers that may drastically skew the resulting distribution.
 
 \subsection{Equal Frequencies}
-In this also unsupervised discretization method, the domain is divided in buckets with equal frequency. That is, given a
-total frequency $m$, the domain is discretized in $k$ buckets such that each has frequency $\cfrac{m}{k}$. Multiple
+In this also unsupervised discretization method, the domain is divided in buckets with equal frequency. That is, given
+a
+total frequency $m$, the domain is discretized in $k$ buckets such that each has frequency $m/k$. Multiple
 objects with same numerical attribute value might make it impossible to find bucket boundaries that equally
 distribute the frequencies.
 
-The greatest advantage of this method is that it always results in a distribution with lowest possible entropy, i.e.
+The greatest advantage of this method is that it always results in a distribution with highest possible entropy, i.e.,
 distribution is always uniform or as close to uniformity as possible.
 
 \section{Mining Optimized Rules for Numeric Attributes}
+\label{sec:rw-miningOptimizedRules}
 
-In \cite{Brin99miningoptimized}, a technique for efficient learning association rules with interesting ranges for
+In \cite{Brin99miningoptimized}, a technique for efficiently learning association rules with interesting ranges for
 numerical attributes is presented. It focuses on finding numerical intervals which optimize a specific interestingness
 measure, given the confidence and support distribution of a rule along a numerical attribute. 
 
 Such rules have the form $(A_1 \in [l_1,u_1]) \wedge C_1 \rightarrow C_2$, where
-$A_1$ is a numerical attribute, $l_1$ and $u_1$ are the lower and upper boundaries of $A_1$, and $C_1$ and $C_2$ contain
+$A_1$ is a numerical attribute, $l_1$ and $u_1$ are the lower and upper boundaries of $A_1$, and $C_1$ and $C_2$
+contain
 only instantiated conditions.
 
-The authors purpose algorithms for determining values for the boundaries $l_1$ and $u_1$ for the following cases:
+The authors propose algorithms for determining values for the boundaries $l_1$ and $u_1$ for the following cases:
 
 \begin{itemize}
- \item Optimized confidence: the rule confidence is maximized and  support of the condition $(A_1 \in [l_1,u_1]) \wedge
+ \item Optimized confidence: the rule confidence is maximized and  support of the condition $(A_1 \in [l_1,u_1])
+\wedge
 C_1$ is at least the specified minimum support.
   \item Optimized support: the support of the condition $(A_1 \in [l_1,u_1]) \wedge C_1$ is maximized and the rule
 confidence is at least the specified minimum confidence.
@@ -594,21 +622,32 @@ confidence is at least the specified minimum confidence.
 
 [Add pseudo-algorithm and some more discussion]
 
-\section{Information Theoretic Measures}
-\label{sec:infotheoreticmeasures}
+It is important to highlight that this technique does not have the same purpose of the work presented in this thesis.
+While \cite{Brin99miningoptimized} focuses on finding the optimal interval with respect to a given measure, assuming
+that we already have support and confidence distribution along the numerical attrbiute, in this thesis, we focus on
+identifying rules which potentially have subinterval with confidence gain in relation to its base rule, before we
+actually query the support and confidence distributions, which is very expensive, pruning rules that have no
+correlation to the numerical atributed to be investigated. 
 
-Information-theoretic measures are widely used in various different learning processes. Its importance lies on its power
+\section{Information-Theoretic Measures}
+\label{sec:rw-infotheoreticmeasures}
+
+Information-theoretic measures are widely used in various different learning processes. Its importance lies on its
+power
 to measure importance of attributes and relationships between attributes. An attribute is considered important in data
-mining if regularities are encountered in smaller populations obtained based on the values of such attribute, but not in
+mining if regularities are encountered in smaller populations obtained based on the values of such attribute, but not
+in
 the larger population. Such regularities are identifiable by lower entropy values, indicating that interesting
-attributes lead to entropy reduction. More specifically, the entropy reduction is the difference between the entropy of
+attributes lead to entropy reduction. More specifically, the entropy reduction is the difference between the entropy
+of
 the decision attribute and the conditional entropy of the decision attribute given a particular attribute, whose
 importance we want to investigate.
 
 Let's say we have $X$ as decision attribute and it divides the set of objects $\mathcal{U}$ into a group of disjoint
 subsets defined by the value $x \in \mathcal{X}$ of $X$, where $\mathcal{X}$ is the non-empty set of values for
 $X$. Also, let's define $I_X : \mathcal{U} \rightarrow \mathcal{X}$ is an information function that gives the value of
-attribute $X$ for an object $t \in \mathcal{U}$. The set of objects $m(X=x) \subseteq \mathcal{U}$, whose value for $X$
+attribute $X$ for an object $t \in \mathcal{U}$. The set of objects $m(X=x) \subseteq \mathcal{U}$, whose value for
+$X$
 is $x$ is defined as follows:
 
 \begin{equation}
@@ -622,7 +661,7 @@ With that, the probability distribution of $X$ is defined by:
 \end{equation}
 
 Information theoretic measures are defined over probability distributions. They can measure the importance of an
-attribute, attribute association, or dissimilarity or similarity of populations. In the next subsections, we will
+attribute, attribute association, dissimilarity, or similarity of populations. In the next subsections, we will
 discuss some of the most important measures.
 
 \subsection{Shannon's Entropy}
@@ -637,15 +676,15 @@ content or uncertainty about an attribute $X$. It is defined over a probability 
 \end{split} 
 \end{equation}
 
-The entropy of $X$ is maximum if its probability distribution is uniform and minimum if the whole population is
-concentrated on a specific value $x_c \in \mathcal{X}$, i.e. $P(x_c)=1$ and $P(x)=0, x \neq x_c$. The higher the
-entropy,the higher the uncertainty about $X$ attribute value, and an entropy zero means complete certainty about the
-value of $X$ since $P(x_c)=1$.
+The entropy of $X$ is maximum if its probability distribution is uniform, and minimum if the whole population is
+concentrated on a specific value $x_c \in \mathcal{X}$, i.e., $P(x_c)=1$ and $P(x)=0, x \neq x_c$. The higher the
+entropy,the higher the uncertainty about $X$'s attribute value, and an entropy of zero means complete certainty about
+the value of $X$ since $P(x_c)=1$.
 
 \subsection{Kullback-Leibler Divergence}
 
-The Kullback-Leibler divergence $D(P||Q)$ between the population distributions $P(X)$ and $Q(X)$, also known as
-$I$-divergence, measures the degree of deviation of $P$ from another distribution $Q$:
+The Kullback-Leibler divergence $D(P||Q)$ between the population distributions $P(X)$ and $Q(X)$ measures the degree
+of deviation of $P$ from another distribution $Q$:
 
 \begin{equation}
 \begin{split}
@@ -654,11 +693,12 @@ $I$-divergence, measures the degree of deviation of $P$ from another distributio
 \end{split} 
 \end{equation}
 
-This divergence measure is a premetric but not a metric distance. It is non-negative and it becomes zero if $P(x)=Q(x)$,
-$\forall x \in \mathcal{X}$, but it doesn not satisfy the symmetry and the triangle inequality properties.
+This divergence measure is a premetric but not a metric distance. It is non-negative and it becomes zero if
+$P(x)=Q(x)$,
+$\forall x \in \mathcal{X}$, but it does not satisfy the symmetry and the triangle inequality properties.
 
-There are symmetrized divergence measures based on the Kullback-Leibler, e.g. the $J$-divergence\ref{eq:jDiv} and the
-Jensen-Shannon divergence\ref{eq:jensenShannon}:
+There are symmetrized divergence measures based on the Kullback-Leibler, e.g. the $J$-divergence~\ref{eq:jDiv} and the
+Jensen-Shannon divergence~\ref{eq:jensenShannon}:
 
 \begin{equation} \label{eq:jDiv}
   D_{J}(P||Q) = D_{KL}(P||Q) + D_{KL}(Q||P)
@@ -670,18 +710,19 @@ Jensen-Shannon divergence\ref{eq:jensenShannon}:
 where M is the average of the two distributions, $M=\cfrac{1}{2}(P+Q)$.
 
 The Jensen-Shannon divergence also has the advantage that the difference is always a finite value ($0 \leq
-D_{JS}(P||Q) \leq 1$, for the base 2 logarithm). Although, it still does not satisfy the triangle inequality property,
+D_{JS}(P||Q) \leq 1$, for the base-2 logarithm). Although, it still does not satisfy the triangle inequality property,
 its square root does and, therefore, is a metric.
 
 \subsection{Mutual Information}
 
-The divergence measure can be used for computing the degree of independence between two attributes $X$ and $Y$. This is
+The divergence measure can be used for computing the degree of independence between two attributes $X$ and $Y$. This
+is
 done by simply measuring the divergence between the observed joined distribution $P(X,Y)$ and the independent
 distribution formed by the marginals $P(X)P(Y)$. We call such measure mutual information:
 
 \begin{equation} \label{eq:mutualInformation}
 \begin{split}
- I(X;Y)&=D(P(X,Y)||P(X)P(Y)) \\
+ MI(X;Y)&=D(P(X,Y)||P(X)P(Y)) \\
  &=E_{P(X,Y)}\left[ log\cfrac{P(x,y)}{P(x)P(y)} \right] \\
  &=\sum_{x \in \mathcal{X}} \sum_{y \in \mathcal{Y}} P(x,y)log\cfrac{P(x,y)}{P(x)P(y)}
 \end{split}
@@ -696,13 +737,14 @@ the mutual information.
 
 
 \section{Semantic Web Applications}
+\label{sec:rw-semanticWeb}
 
-The Semantic Web is, according to its official website, a technology created by the World Wide Web Consortium (W3C) to
-enable the so-called ``Web of data'', enabling computers to do more useful work and develop systems that can support
-trusted interactions over the network. 
+The Semantic Web is, according to its official website\footnote{\url{http://www.w3.org/standards/semanticweb/}}, a
+technology created by the World Wide Web Consortium (W3C) to enable the so-called ``Web of data'', enabling computers
+to do more useful work and develop systems that can support trusted interactions over the network. 
 
 It consists of a set of technologies and formats which aim to make web resources more readily accessible to automated
-processes. The semantic web stack, in figure \ref{fig:sematicWebLayer} \footnote{Semantic Web - XML2000, slide 10".
+processes. The Semantic Web Stack, in Figure ~\ref{fig:sematicWebLayer}\footnote{Semantic Web - XML2000, slide 10".
 W3C: \url{http://www.w3.org/2000/Talks/1206-xml2k-tbl/slide10-0.html}}, illustrates the semantic web architecture
 showing how its standards are organized and how it extends the classical hypertext web.
 
@@ -716,15 +758,18 @@ showing how its standards are organized and how it extends the classical hyperte
 
 \begin{itemize}
  \item Resource Description Framework (RDF): a framework for creating statements in the form of triples composed by
-subject, predicate and object. It uses URIs to name the predicates as well as the entities, which may be the subject or
+subject, predicate and object. It uses URIs to name the predicates as well as the entities, which may be the subject
+or
 object in a triple. RDF can be encoded in a variety of formats, such as RDF/XML, N3, Turtle and N-Triples.
  \item RDF Schema (RDFS): a RDF vocabulary description language which provides basic elements for the description of
 ontologies (or RDF vocabularies) intended to structure RDF resources known as constructs (RDFS classes, associated
 properties, and utility properties).
- \item Web Ontology Language (OWL): a semantic markup language for publishing and sharing ontologies on the web. It is a
+ \item Web Ontology Language (OWL): a semantic markup language for publishing and sharing ontologies on the web. It is
+a
 vocabulary extension of RDF that allows an ontology to be described with a set of axioms which places constraints on
 classes and the types of relationships permitted between them.
- \item SPARQL: an RDF query language for databases which can be used to express queries across diverse data sources. It
+ \item SPARQL: an RDF query language for databases which can be used to express queries across diverse data sources.
+It
 consists of triple patterns, conjunctions, disjunctions and optional patterns. 
  \item Rule Interchange Format (RIF): defines a standard for exchanging rules among rule systems. It focuses on
 exchange rather than defining a single one-fits-all rule language, different databases might have different
@@ -734,28 +779,37 @@ Unary/Binary Datolog Rule Markup Language (RuleML).
 \end{itemize}
 
 \section{Linked Open Data Applications}
+\label{sec:rw-lod}
 
 The Semantic Web does not need only access to reachable and manageable data in a standard format, but also
 relationships among data from different sources. Therewith, it is possible to create a huge collection of interrelated
 datasets in the Web, also referred as Linked Data.
 
+\begin{figure}[h!]
+\label{fig:lod}
+\begin{center}
+  \includegraphics[width=1\linewidth]{./Figures/lod-datasets_2011-09-19.png}
+\end{center}
+\caption{Linking Open Data cloud diagram, by Richard Cyganiak and Anja Jentzsch. \url{http://lod-cloud.net}}
+\end{figure}
+
 Linked Data is a fundamental part of the Semantic Web essence, facilitating a large scale integration and reasoning
-on data on the Web. A typical example of Linked dataset is DBpedia
+on data on the Web. A typical example of a Linked Data collection is DBpedia
 {\footnote{\url{http://www.dbpedia.org/}}}. It basically extracts information from Wikipedia and
-make it available in RDF incorporating links to other datasets on the web, such as 
+makes it available in RDF incorporating links to other datasets on the web, such as 
 Geonames\footnote{\url{http://www.geonames.org/}},
 YAGO\footnote{\url{http://www.mpi-inf.mpg.de/yago-naga/yago/}}, 
 LinkedMDB\footnote{\url{http://www.linkedmdb.org/}} and 
 USCensus\footnote{\url{http://www.linkedmdb.org/}}. 
 With such linkage, it allows
 applications to exploit the extra information these datasets can provide, integrating facts from various different
-sources. Figure \ref{fig:lod} shows the Linked Open Data cloud
-diagram, 
+sources. Figure ~\ref{fig:lod} shows the latest version of the whole Linked Open Data cloud
+diagram, and Figure ~\ref{fig:lodZoom} zooms to and highlights some of the datasets used in this thesis, also sho
 
-\begin{figure}
-\label{fig:lod}
+\begin{figure}[h!]
+\label{fig:lodZoom}
 \begin{center}
-  \includegraphics[width=1\linewidth]{./Figures/lod-datasets_2011-09-19.png}
+  \includegraphics[width=1\linewidth]{./Figures/lod-zoom.png}
 \end{center}
-\caption{Linking Open Data cloud diagram, by Richard Cyganiak and Anja Jentzsch. \url{http://lod-cloud.net}}
+\caption{Zoom of Figure ~\ref{fig:lod} highlighting datasets relevant to this thesis}
 \end{figure}
