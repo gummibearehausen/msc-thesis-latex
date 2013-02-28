@@ -2,13 +2,13 @@
 \label{sec:rw-intro}
 
 In this chapter relevant work related to the thesis topic will be briefly presented. In section 
-~\ref{sec:rw-lp} we introduce important logic programming concepts, and in section ~\ref{sec:rw-ilp} we discuss in
-more details how Inductive Logic Programming (ILP) works. Later, in section ~\ref{sec:rw-arm} we briefly present
-association rule mining highlighting concepts relevant to this thesis. In section ~\ref{sec:rw-discretization}, we
+~\ref{sec:rw-lp} we introduce important logic programming concepts, and in section~\ref{sec:rw-ilp} we discuss in
+more details how Inductive Logic Programming (ILP) works. Later, in section~\ref{sec:rw-arm} we briefly present
+association rule mining highlighting concepts relevant to this thesis. In section~\ref{sec:rw-discretization}, we
 talk about discretization of numerical attributes and discuss the most popular unsupervised methods. After that, we
-present in section ~\ref{sec:rw-miningOptimizedRules} a method for mining rules optimized numerical intervals. In
-section ~\ref{sec:rw-infotheoreticmeasures}, we introduce the information-theoretical measures used in this thesis,
-and finally, in sections ~\ref{sec:rw-semanticWeb} and ~\ref{sec:rw-lod}, we give a quick overview about Semantic Web
+present in section~\ref{sec:rw-miningOptimizedRules} a method for mining rules optimized numerical intervals. In
+section~\ref{sec:rw-infotheoreticmeasures}, we introduce the information-theoretical measures used in this thesis,
+and finally, in sections~\ref{sec:rw-semanticWeb} and~\ref{sec:rw-lod}, we give a quick overview about Semantic Web
 and Linked Open Data.
 
 
@@ -114,7 +114,7 @@ $covers(\mathcal{B},\mathcal{H},\mathcal{E}^{-})=\emptyset$
 \end{itemize}
 
 The objective of learning a concept requires a hypothesis that is complete and consistent with respect to the given
-concept training examples and background knowledge. The example shown in table ~\ref{tab:ilpExample} (extracted from
+concept training examples and background knowledge. The example shown in table~\ref{tab:ilpExample} (extracted from
 \cite{DBLP:journals/ml/LavracD96}) illustrates a simple problem of learning a hypothesis for the target relation
 $daughter(X,Y)$.
 
@@ -200,8 +200,8 @@ Further information about bottow-up approach can be found in \cite{DBLP:journals
 
 The search space of program clauses can be viewed as a lattice, structured by $\theta$-subsumption generality
 ordering. Such a lattice is called a \emph{refinement graph}, which can be used to direct the search from most general
-to specific hypothesis. Figure ~\ref{fig:refinementGraph} illustrates a part of the refinement graph for the
-family relation example shown in table ~\ref{tab:ilpExample}.
+to specific hypothesis. Figure~\ref{fig:refinementGraph} illustrates a part of the refinement graph for the
+family relation example shown in table~\ref{tab:ilpExample}.
 
 \begin{figure}[h!]
 \label{fig:refinementGraph}
@@ -217,7 +217,7 @@ a substitution on the clause; add a literal to the body of the clause.
 The top-down algorithm consists basically of a specialization loop that refines a clause ensuring consistency
 embedded inside a covering loop that adds clauses to the hypothesis ensuring completeness. Each loop has a stopping
 criterion, the covering loop iterates until it satisfies a sufficiency criterion and the specialization loop iterates
-until it satisfies a necessity criterion. The algorithm ~\ref{alg:topDownILP} shows in more details how the generic
+until it satisfies a necessity criterion. The algorithm~\ref{alg:topDownILP} shows in more details how the generic
 top-down ILP works.
 
 \begin{algorithm}[!h]
@@ -270,17 +270,23 @@ where $n^{+}(c)$ is the number of positive and $n^{-}(c)$ the number of negative
 \subsection{ILP Complexity}
 
 As discussed in \cite{DBLP:journals/ngc/GottlobLS99}, the complexity of ILP resides at the second level of polynomial
-hierarchy and it is $\Sigma_2^P$-complete. Thus, there are two sources of complexity:
+hierarchy and it is $\Sigma_2^P$-complete. $\Sigma_2^P$ means that it has complexity $NP^{NP}$, and that happens
+because there are two interlaced sources of $NP$ complexity class:
 \begin{itemize}
- \item Choice problem: 
- \item Checking problem: checking if a choice was good or not
+ \item Choice problem, which is $NP$
+ \item Checking problem, which is $co$-$NP$
 \end{itemize}
 
+The choice problem, in ILP, is the the problem of searching in the hypothesis space, while the checking problem is the
+problem of testing a given hypothesis. Since ILP has a great complexity, it is appropriate to employ various techniques
+with the objective of reducing runtime.
 
-As ILP complexity grows exponentially with the number of literals, it is common to restrict the number of literals
-allowed in a clause in order to reduce execution time.
-[Sampling,MaxLiterals]
-
+One popular strategy is the limitation of the number of literals allowed in a clause, which limits the number of
+levels, which is easy to implement and can drastically reduce the size of the hypothesis search space, nevertheless, it
+may also reduce the quality of the learned hypothesis. Another popular strategy is the data sampling. When well applied,
+this can be a very good alternative, however, with semantic data, it can be very tricky to make a good sample without
+significant loss of information. There are several different sampling techniques for semantic data, however, it is out
+of the scope of this thesis.
 
 %\section{First Order Inductive Learning}
 %\cite{DBLP:journals/ml/Quinlan9}
@@ -377,8 +383,8 @@ also know all the frequent itemsets. Nevertheless, it is not possible to know th
 itemsets. By knowing all the closed itemsets of a database, it is possible to know the all the frequent itemsets as
 well as their supports.
 
-In the example of database $\mathcal{D}$ shown in Table ~\ref{tab:itemsetLattice} with the resulting itemset lattice
-shown in Figure ~\ref{fig:itemsetLattice}, frequent itemsets are shown with thicker border. The minimum support
+In the example of database $\mathcal{D}$ shown in Table~\ref{tab:itemsetLattice} with the resulting itemset lattice
+shown in Figure~\ref{fig:itemsetLattice}, frequent itemsets are shown with thicker border. The minimum support
 threshold is set to $2/5$, so the frequent itemsets are the ones with frequency greater than or equal to 2. For this
 example, we would have as maximal itemset $\{ABCE\}$ and as closed itemsets $\{ABCE, BCE, BE\}$
 
@@ -481,7 +487,7 @@ iterations, a set of candidates $C_i$ is created by joining the frequent itemset
 iteration. Two itemsets of size $i$ can only join if they share $i-1$ items, so their union can form an itemset of
 size
 $i+1$. Only after finding the set of candidate itemsets $C_1$, the database is scanned in order to determine the
-support of each of them. Algorithm ~\ref{alg:apriori} shows in more details how the apriori algorithm works.
+support of each of them. Algorithm~\ref{alg:apriori} shows in more details how the apriori algorithm works.
 
 \begin{algorithm}[h!]
   \caption{Apriori frequent itemset discovery}
@@ -508,11 +514,11 @@ support of each of them. Algorithm ~\ref{alg:apriori} shows in more details how 
   \Return{$L$} \;
 \end{algorithm}
 
-For the previous example of database ~\ref{tab:aprioriLattice}, the itemset lattice generated by the apriori algorithm
-is shown in Figure ~\ref{fig:aprioriLattice}. 
+For the previous example of database~\ref{tab:aprioriLattice}, the itemset lattice generated by the apriori algorithm
+is shown in Figure~\ref{fig:aprioriLattice}. 
 
 \begin{figure}[h!]
-  \caption{Itemset Lattice generated by apriori algorithm for the example from Table ~\ref{tab:itemsetLattice}}
+  \caption{Itemset Lattice generated by apriori algorithm for the example from Table~\ref{tab:itemsetLattice}}
   
   \centering
   \begin{tikzpicture}[scale=0.75,auto=center,every node/.style={draw=black, font=\tiny}]
@@ -555,6 +561,10 @@ is shown in Figure ~\ref{fig:aprioriLattice}.
   \end{tikzpicture}
   \label{fig:aprioriLattice}
 \end{figure}
+
+As we will show later in Section~\ref{sec:correlation-lattice}, the itemset lattice and the apriori algorithm inspired
+and served as base for the correlation lattice. Therefore, both structures look alike, and have similar building
+processes.
 
 \section{Discretization of Numerical Attributes}
 \label{sec:rw-discretization}
@@ -618,16 +628,72 @@ C_1$ is at least the specified minimum support.
   \item Optimized support: the support of the condition $(A_1 \in [l_1,u_1]) \wedge C_1$ is maximized and the rule
 confidence is at least the specified minimum confidence.
   \item Optimized gain: the rule gain is maximized and the confidence is at least the specified minimum confidence.
+\cite{Brin99miningoptimized} defines gain of a rule $r$ as $gain(r)= supp(r)*(conf(r)-minConf)$, where $minConf$ is the
+confidence threshold.
 \end{itemize}
 
-[Add pseudo-algorithm and some more discussion]
+In~\cite{Brin99miningoptimized}, the two dimensional case with two different numerical attributes is also discussed,
+however, in this section we will focus on the single numerical attribute case.
+
+Basically, it first takes the transactions with numerical attribute $A_1$ and discretizes its numerical domain of size
+$n$ into $b < n$ buckets, in order to reduce the complexity of the algorithm. It uses a supervised bucketing algorithm,
+which uses as labels ``$+$'' if the confidence value is greater than the threshold (positive gain), and ``$-$'', if it
+is less (negative gain). This method does not compromise the optimality of the algorithm, as it collapses values with
+similar labels together, generating $b$ buckets, each with its own support and confidence values.
+Figure~\ref{fig:brinbucket} shows an example where a domain of size $n=6$ is discretized into $b=3$ buckets.
+
+\begin{figure}
+\label{fig:brinbucket}
+\begin{center}
+  \includegraphics[width=0.5\linewidth]{./Figures/brin-bucket.png}
+\end{center}
+\caption{Example of buckets generated~\cite{Brin99miningoptimized}}
+\end{figure}
+
+Algorithm~\ref{alg:brin} shows how the proposed one-dimensional algorithm works for gain optimization.
+Figure~\ref{fig:optgain} illustrates that with an example with $b=6$ buckets, with confidence values $10$, $-15$, $20$,
+$-15$, $20$, and $-15$. $PSet$ is the optimized gain set containing $i-1$ intervals, and $NSet$ contains the
+remaining intervals not stored in $PSet$. These sets are represented before and after the iterations $i=1$ and $i=2$.
+As shown in the figure, any optimized interval contained in $PSet$ has positive gain, and its neighboring intervals
+have negative gain.
+
+\begin{algorithm}[h!]
+ \caption{Algorithm for computing optimized gain set~\cite{Brin99miningoptimized}}
+ \label{alg:brin}
+ \KwIn{\textbf{Input:} $b$: number of buckets, $k$: maximum number of optimum intervals}
+  $PSet \leftarrow \emptyset$\;
+  $NSet \leftarrow \{[1,b]\}$\;
+  \For{$i \leftarrow 1$ to $k$} {
+      Let $P_q$ be the interval in $PSet$ with the smallest value for $gain(min(P_q))$\;
+      Let $N_q$ be the interval in $NSet$ with the smallest value for $gain(max(N_q))$\;
+      \eIf{$gain(min(P_q))+gain(max(N_q)) < 0$}{
+	  Delete $P_q$ from $PSet$\;
+	  Split $P_q$ into three sub-intervals (with $min(P_q)$ as the middle interval)\;
+	  Insert the first and third intervals to $PSet$ and second interval to $NSet$\;
+      }{
+	  Delete $N_q$ from $NSet$;
+	  Split $N_q$ into three sub-intervals (with $max(N_q)$ as the middle interval)\;
+	  Insert the first and third intervals to $NSet$ and second interval to $PSet$\;
+      }
+  }
+  \Return $PSet$\;
+\end{algorithm}
+
+\begin{figure}
+\label{fig:optgain}
+\begin{center}
+  \includegraphics[width=1\linewidth]{./Figures/optgain1d.png}
+\end{center}
+\caption{Execution trace of procedure shown in Algorithm~\ref{alg:brin}. (a) Before first iteration, (b) after first
+iteration, (c) before second iteration, and (d) after second iteration\cite{Brin99miningoptimized}.}
+\end{figure}
 
 It is important to highlight that this technique does not have the same purpose of the work presented in this thesis.
 While \cite{Brin99miningoptimized} focuses on finding the optimal interval with respect to a given measure, assuming
-that we already have support and confidence distribution along the numerical attrbiute, in this thesis, we focus on
-identifying rules which potentially have subinterval with confidence gain in relation to its base rule, before we
+that we already have support and confidence distribution along the numerical attribute, in this thesis, we focus on
+identifying rules which potentially have sub-interval with confidence gain in relation to its base rule, before we
 actually query the support and confidence distributions, which is very expensive, pruning rules that have no
-correlation to the numerical atributed to be investigated. 
+correlation to the numerical attribute to be investigated. 
 
 \section{Information-Theoretic Measures}
 \label{sec:rw-infotheoreticmeasures}
@@ -744,7 +810,7 @@ technology created by the World Wide Web Consortium (W3C) to enable the so-calle
 to do more useful work and develop systems that can support trusted interactions over the network. 
 
 It consists of a set of technologies and formats which aim to make web resources more readily accessible to automated
-processes. The Semantic Web Stack, in Figure ~\ref{fig:sematicWebLayer}\footnote{Semantic Web - XML2000, slide 10".
+processes. The Semantic Web Stack, in Figure~\ref{fig:sematicWebLayer}\footnote{Semantic Web - XML2000, slide 10".
 W3C: \url{http://www.w3.org/2000/Talks/1206-xml2k-tbl/slide10-0.html}}, illustrates the semantic web architecture
 showing how its standards are organized and how it extends the classical hypertext web.
 
@@ -803,13 +869,13 @@ LinkedMDB\footnote{\url{http://www.linkedmdb.org/}} and
 USCensus\footnote{\url{http://www.linkedmdb.org/}}. 
 With such linkage, it allows
 applications to exploit the extra information these datasets can provide, integrating facts from various different
-sources. Figure ~\ref{fig:lod} shows the latest version of the whole Linked Open Data cloud
-diagram, and Figure ~\ref{fig:lodZoom} zooms to and highlights some of the datasets used in this thesis, also sho
+sources. Figure~\ref{fig:lod} shows the latest version of the whole Linked Open Data cloud
+diagram, and Figure~\ref{fig:lodZoom} zooms to and highlights some of the datasets used in this thesis, also sho
 
 \begin{figure}[h!]
 \label{fig:lodZoom}
 \begin{center}
   \includegraphics[width=1\linewidth]{./Figures/lod-zoom.png}
 \end{center}
-\caption{Zoom of Figure ~\ref{fig:lod} highlighting datasets relevant to this thesis}
+\caption{Zoom of Figure~\ref{fig:lod} highlighting datasets relevant to this thesis}
 \end{figure}
