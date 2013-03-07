@@ -15,14 +15,17 @@ and Linked Open Data.
 \section{Logic Programming}
 \label{sec:rw-lp}
 
-\cite{DBLP:books/sp/Lloyd87}
-\cite{DBLP:journals/ml/LavracD96}
 In this section, basic logic programming and deductive database terminology such as \emph{literal}, \emph{clause},
-\emph{program clause}, \emph{datalog clause} and \emph{hypothesis} will be presented. Firstly, it is important to
-mention that variables are represented as uppercase letters followed by a string of lowercase letters and/or digits.
-Function and predicate symbols are lowercase letters also followed by a string of lowercase and/or digits.
+\emph{program clause}, \emph{datalog clause} and \emph{hypothesis} will be presented. We use terminology and
+definitions described in \citet{DBLP:books/sp/Lloyd87} and \citet{LavracDz94}.
 
-An \emph{atomic formula} $L$ is a predicate symbol followed by a bracketed n-tuple of \emph{terms}. A \emph{term} can
+Firstly, it is important to
+mention that variables are represented as uppercase letters followed by a string of lowercase letters and/or digits.
+Function and predicate symbols (including constants) are lowercase letters also followed by a string of lowercase and/or
+digits.
+
+Following the An \emph{atomic formula} $L$ is a predicate symbol followed by a bracketed n-tuple of \emph{terms}. A
+\emph{term} can
 be
 a variable or a function symbol followed by a bracketed n-tuple of terms. A constant is a function symbol of arity 0.
 So
@@ -60,7 +63,6 @@ allowing that, for instance, numerical attribute variables have their domain res
 \section{Inductive Logic Programming}
 \label{sec:rw-ilp}
 
-\cite{DBLP:journals/ml/LavracD96}
 Inductive Logic Programming (ILP) is a machine learning technique that combines machine learning with the
 logic programming representation. Given a known background knowledge and a set of training examples represented as a
 logical database of facts (literals without any variables), an ILP system will learn a hypothesis in the form of a
@@ -85,11 +87,10 @@ restricts the hypothesis search space, as  the learned hypothesis $\mathcal{H}$ 
 background
 knowledge as well as the training examples.
 
-A hypothesis $\mathcal{H}$ is said to cover an example $e$ given a background knowledge
-$\mathcal{B}$ ($covers(\mathcal{B} \cup \mathcal{H},e)$) if the example satisfies the hypothesis and background
-knowledge. In logic programming where the $\mathcal{H}$ is a set of program clauses and an example is a ground fact,
-it
-means that $e$ is entailed by $\mathcal{B} \cup \mathcal{H}$.
+As defined in \citet{DBLP:journals/ml/LavracD96}, a hypothesis $\mathcal{H}$ is covers an example $e$ given a
+background knowledge $\mathcal{B}$ ($covers(\mathcal{B} \cup \mathcal{H},e)$) if the example satisfies the hypothesis
+and background knowledge. In logic programming where the $\mathcal{H}$ is a set of program clauses and an example is a
+ground fact, it means that $e$ is entailed by $\mathcal{B} \cup \mathcal{H}$.
 
 \begin{center}
  $covers(\mathcal{B} \cup \mathcal{H},e)=true \quad$ if $\quad \mathcal{B} \cup \mathcal{H} \models e$
@@ -114,13 +115,12 @@ $covers(\mathcal{B},\mathcal{H},\mathcal{E}^{-})=\emptyset$
 \end{itemize}
 
 The objective of learning a concept requires a hypothesis that is complete and consistent with respect to the given
-concept training examples and background knowledge. The example shown in table~\ref{tab:ilpExample} (extracted from
-\cite{DBLP:journals/ml/LavracD96}) illustrates a simple problem of learning a hypothesis for the target relation
+concept training examples and background knowledge. The example shown in table~\ref{tab:ilpExample} illustrates a simple
+problem of learning a hypothesis for the target relation
 $daughter(X,Y)$.
 
 \begin{table}[h!]
-\label{tab:ilpExample}
-\caption{A simple ILP problem: learning the \emph{daughter} relation.}
+\caption{A simple ILP problem: learning the \emph{daughter} relation \citep{DBLP:journals/ml/LavracD96} .}
   \begin{center}
       \begin{tabular}{ r | l }
       \toprule
@@ -135,6 +135,7 @@ $daughter(X,Y)$.
 					& female(eve).		\\
       \bottomrule
       \end{tabular}
+  \label{tab:ilpExample}
   \end{center}
 \end{table}
 
@@ -149,14 +150,12 @@ and consistent hypothesis:
 
 In ILP, the hypothesis space is determined by the language of the programs $\mathcal{L}$ consisting of the possible
 program clauses allowed by the language. Also, the vocabulary of predicate symbols is determined by the predicates
-from
-the background knowledge $\mathcal{B}$.
+from the background knowledge $\mathcal{B}$.
 
-It is useful to structure the search space with partial ordering into a set of clauses based on $\theta$-subsumption
-in
-order to systematically search the program clauses space. A clause $c$ $\theta$-subsumes $c'$ if there's a
-substitution $\theta$ such that clause $c\theta \subseteq c'$. This also introduces a notion of generality, where
-clause $c$ is at least as generaly as $c'$, or in other words, $c'$ is a specialization of $c$.
+\citet{DBLP:journals/ml/LavracD96} structures the search space with partial ordering of clauses based on
+$\theta$-subsumption, in order to systematically search the program clauses space. A clause $c$ $\theta$-subsumes $c'$
+if there's a substitution $\theta$ such that clause $c\theta \subseteq c'$. This also introduces a notion of generality,
+where clause $c$ is at least as generally as $c'$, or in other words, $c'$ is a specialization of $c$.
 
 For example, if we have the following $c$ and $c'$:
 \begin{align*}
@@ -164,7 +163,7 @@ For example, if we have the following $c$ and $c'$:
   c'&= daughter(X,Y )\text{ :- } female(X),parent(Y,X)
 \end{align*}
 
-we know taht for that $c'$ is a specialization of $c$ because for $\theta=\emptyset$, $c \subset c'$ since:
+we know that for that $c'$ is a specialization of $c$ because for $\theta=\emptyset$, $c \subset c'$ since:
 \begin{center}
 $\{daughter(X,Y),\neg parent(Y,X)\} \subset \{daughter(X,Y),\neg female(X),\neg parent(Y,X)\}$ 
 \end{center}
@@ -194,7 +193,7 @@ These properties are the basis for two main search approaches:
 \end{itemize}
 
 As in this thesis we work only with the top-down approach, we will discuss it in more details in the next subsection.
-Further information about bottow-up approach can be found in \cite{DBLP:journals/ml/LavracD96}.
+Further information about bottow-up approach can be found in \citet{DBLP:journals/ml/LavracD96}.
 
 \subsection{Top-Down ILP}
 
@@ -204,11 +203,11 @@ to specific hypothesis. Figure~\ref{fig:refinementGraph} illustrates a part of t
 family relation example shown in table~\ref{tab:ilpExample}.
 
 \begin{figure}[h!]
-\label{fig:refinementGraph}
 \begin{center}
   \includegraphics[width=0.7\linewidth]{./Figures/refinementGraph.png}
 \end{center}
-\caption{Part of the refinement graph for the family relations problem}
+\caption{Part of the refinement graph for the family relations problem\citep{DBLP:journals/ml/LavracD96}.}
+\label{fig:refinementGraph}
 \end{figure}
 
 In such a graph, nodes are program clauses and arcs are refinement operations, which can be of two kinds: apply
@@ -221,8 +220,7 @@ until it satisfies a necessity criterion. The algorithm~\ref{alg:topDownILP} sho
 top-down ILP works.
 
 \begin{algorithm}[!h]
-  \caption{Generic top-down specialization ILP algorithm}
-  \label{alg:topDownILP}
+  \caption{Generic top-down specialization ILP algorithm \citep{DBLP:journals/ml/LavracD96}.}
   \SetKwFunction{executeQuery}
   \KwIn{\textbf{Input:} $\mathcal{E}$: Training examples, $\mathcal{B}$: Background knowledge \\ }
   \KwResult{$\mathcal{H}$: Learned hypothesis}
@@ -242,12 +240,13 @@ top-down ILP works.
     \tcp{Remove positive examples covered by the new hypothesis}
     $\mathcal{E}_{cur} \leftarrow \mathcal{E}_{cur} - covers(\mathcal{B} \cup \mathcal{H},\mathcal{E}_{cur}^{+})$ \;
   } ()
+ \label{alg:topDownILP}
 \end{algorithm}
 
 In domains with perfect data, the stopping criteria require that all positive examples are covered (completeness) and
 no
 negative examples are covered (consistency). However, in practice, many datasets have imperfect data. Such
-imperfection is usually of the following kinds, as described in \cite{DBLP:conf/aii/LavracD92}:
+imperfection is usually of the following kinds, as described in \citet{DBLP:conf/aii/LavracD92}:
 
 \begin{itemize}
   \item Noise: random errors in the training examples and background knowledge.
@@ -269,7 +268,7 @@ where $n^{+}(c)$ is the number of positive and $n^{-}(c)$ the number of negative
 
 \subsection{ILP Complexity}
 
-As discussed in \cite{DBLP:journals/ngc/GottlobLS99}, the complexity of ILP resides at the second level of polynomial
+As shown in \citet{DBLP:journals/ngc/GottlobLS99}, the complexity of ILP resides at the second level of polynomial
 hierarchy and it is $\Sigma_2^P$-complete. $\Sigma_2^P$ means that it has complexity $NP^{NP}$, and that happens
 because there are two interlaced sources of $NP$ complexity class:
 \begin{itemize}
@@ -294,15 +293,12 @@ of the scope of this thesis.
 
 \section{Association Rule Mining}
 \label{sec:rw-arm}
-\cite{Agrawal:1993:MAR:170036.170072}
-\cite{Hipp00algorithmsfor}
 
-Association Rule Mining is method for discovering interesting relations between variables in large databases. It is
-intended to work on a database composed by a set of transactions $\mathcal{D}=\{t_1,t_2,\ldots,t_m\}$ and a set of
-items
-$\mathcal{I}=\{i_1,i_2,\ldots,i_n\}$. Each transaction $\mathcal{T}$ consists of a set of items which is subset of $I$
-,
-which is usually represented by a binary vector of size $n$ indicating the presence of absence of items in the
+Association Rule Mining, as described in~\citet{Agrawal:1993:MAR:170036.170072}, is method for discovering interesting
+relations between variables in large databases. It is intended to work on a database composed by a set of transactions
+$\mathcal{D}=\{t_1,t_2,\ldots,t_m\}$ and a set of items $\mathcal{I}=\{i_1,i_2,\ldots,i_n\}$. Each transaction
+$\mathcal{T}$ consists of a set of items which is subset of $I$, which is usually represented by a binary vector of size
+$n$ indicating the presence of absence of items in the
 transaction.
 
 The objective of association rule mining is to learn inference rules of the form $X \Rightarrow Y$, where $X,Y
@@ -313,7 +309,8 @@ subsequently discussed.
 
 In this subsection we will discuss measures used for selecting interesting rules in the mining process.
 
-We say a transaction $\mathcal{T}$ supports an itemset $\mathcal{X} \subseteq \mathcal{I}$ if $\mathcal{X} \subseteq
+As defined in~\citet{Agrawal:1993:MAR:170036.170072}, a transaction $\mathcal{T}$ supports an itemset
+$\mathcal{X} \subseteq \mathcal{I}$ if $\mathcal{X} \subseteq
 \mathcal{T}$. The support measure $supp(X)$ is the defined as the ratio between the number of transactions supporting
 $X$ and the total size of the database $\mathcal{D}$:
 
@@ -370,7 +367,6 @@ The problem of searching frequent itemsets (FI), i.e., itemsets that satisfy the
 structured in a lattice. Firstly, an itemset is frequent if it has support greater or equal than an arbitrarily
 specified minimum support.
 
-
 There are two special kinds of itemsets:
 \begin{itemize}
  \item Maximal frequent itemset (MFI): a frequent itemset is maximal if none of its immediate supersets are frequent.
@@ -390,7 +386,6 @@ example, we would have as maximal itemset $\{ABCE\}$ and as closed itemsets $\{A
 
 \begin{table}[h!]
   \begin{center}
-    \label{tab:itemsetLattice}
       \begin{tabular}{ c | l l l l }
       \toprule
       \textbf{TID} & \multicolumn{4}{c}{\textbf{Items}} \\
@@ -402,12 +397,13 @@ example, we would have as maximal itemset $\{ABCE\}$ and as closed itemsets $\{A
 	5	& A & B & C & E \\
       \bottomrule
       \end{tabular}
-  \caption{Example of transaction database $\mathcal{D}$ \cite{Pasquier99efficientmining}}
-  \end{center}
+  \caption{Example of transaction database $\mathcal{D}$ \citep{Pasquier99efficientmining}}
+  \label{tab:itemsetLattice}
+ \end{center}
 \end{table}
 
 \begin{figure}[!h]
-  \caption{Itemset Lattice example}
+  \caption{Itemset Lattice example~\citep{Pasquier99efficientmining}.}
   \centering
   \begin{tikzpicture}[scale=0.75,auto=center,every node/.style={draw=black, font=\tiny}]
     \node (n0) at (11,15) {$\emptyset$};
@@ -477,10 +473,10 @@ example, we would have as maximal itemset $\{ABCE\}$ and as closed itemsets $\{A
 \end{figure}
 
 \subsection{Apriori Algorithm}
-The apriori algorithm is a method for searching frequent itemsets which explores the anti-monotonic property of the
-support measure. It computes the itemsets support iteratively, by ascending order of size. The
-process takes $k$ iterations where $k$ is the size of the largest frequent itemset. In each iteration $i \leq k$, the
-database is scanned once and all the support of all itemsets of size $i$ are computed.
+The apriori algorithm, discussed in ~\citet{Pasquier99efficientmining}, is a method for searching frequent itemsets
+which explores the anti-monotonic property of the support measure. It computes the itemsets support iteratively, by
+ascending order of size. The process takes $k$ iterations where $k$ is the size of the largest frequent itemset. In each
+iteration $i \leq k$, the database is scanned once and all the support of all itemsets of size $i$ are computed.
 
 In the first iteration, all itemsets of size 1 have their supports computed. On the $1 < i \leq k$ subsequent
 iterations, a set of candidates $C_i$ is created by joining the frequent itemsets of size $i-1$ found in the previous
@@ -490,8 +486,7 @@ $i+1$. Only after finding the set of candidate itemsets $C_1$, the database is s
 support of each of them. Algorithm~\ref{alg:apriori} shows in more details how the apriori algorithm works.
 
 \begin{algorithm}[h!]
-  \caption{Apriori frequent itemset discovery}
-  \label{alg:apriori}
+  \caption{Apriori frequent itemset discovery~\citep{Pasquier99efficientmining}.}
   \SetKwFunction{aprioriGen}
   \KwIn{\textbf{Input:} $\mathcal{D}$: Database of transactions \\}
   \KwResult{$\mathcal{H}$: Learned hypothesis}
@@ -512,10 +507,11 @@ support of each of them. Algorithm~\ref{alg:apriori} shows in more details how t
       $k \leftarrow k+1$ \;
   }
   \Return{$L$} \;
+ \label{alg:apriori}
 \end{algorithm}
 
-For the previous example of database~\ref{tab:aprioriLattice}, the itemset lattice generated by the apriori algorithm
-is shown in Figure~\ref{fig:aprioriLattice}. 
+For the previous example of database from Table~\ref{tab:itemsetLattice}, the itemset lattice generated by the apriori
+algorithm is shown in Figure~\ref{fig:aprioriLattice}. 
 
 \begin{figure}[h!]
   \caption{Itemset Lattice generated by apriori algorithm for the example from Table~\ref{tab:itemsetLattice}}
@@ -580,7 +576,7 @@ one does not consider object classes, only object frequencies. Unsupervised meth
 buckets to be beforehand defined.
 
 Various different supervised and unsupervised methods for the discretization of continuous features are discussed in
-\cite{Dougherty95supervisedand}. To build the lattice, we don not use labels for the examples so we just use
+\citet{Dougherty95supervisedand}. To build the lattice, we don not use labels for the examples so we just use
 unsupervised methods.
 
 Supervised methods can be used for finding interesting intervals in the rules, by considering positive and negative
@@ -610,7 +606,7 @@ distribution is always uniform or as close to uniformity as possible.
 \section{Mining Optimized Rules for Numeric Attributes}
 \label{sec:rw-miningOptimizedRules}
 
-In \cite{Brin99miningoptimized}, a technique for efficiently learning association rules with interesting ranges for
+In \citet{Brin99miningoptimized}, a technique for efficiently learning association rules with interesting ranges for
 numerical attributes is presented. It focuses on finding numerical intervals which optimize a specific interestingness
 measure, given the confidence and support distribution of a rule along a numerical attribute. 
 
@@ -628,11 +624,11 @@ C_1$ is at least the specified minimum support.
   \item Optimized support: the support of the condition $(A_1 \in [l_1,u_1]) \wedge C_1$ is maximized and the rule
 confidence is at least the specified minimum confidence.
   \item Optimized gain: the rule gain is maximized and the confidence is at least the specified minimum confidence.
-\cite{Brin99miningoptimized} defines gain of a rule $r$ as $gain(r)= supp(r)*(conf(r)-minConf)$, where $minConf$ is the
+\citet{Brin99miningoptimized} defines gain of a rule $r$ as $gain(r)= supp(r)*(conf(r)-minConf)$, where $minConf$ is the
 confidence threshold.
 \end{itemize}
 
-In~\cite{Brin99miningoptimized}, the two dimensional case with two different numerical attributes is also discussed,
+In~\citet{Brin99miningoptimized}, the two dimensional case with two different numerical attributes is also discussed,
 however, in this section we will focus on the single numerical attribute case.
 
 Basically, it first takes the transactions with numerical attribute $A_1$ and discretizes its numerical domain of size
@@ -643,11 +639,11 @@ similar labels together, generating $b$ buckets, each with its own support and c
 Figure~\ref{fig:brinbucket} shows an example where a domain of size $n=6$ is discretized into $b=3$ buckets.
 
 \begin{figure}
-\label{fig:brinbucket}
 \begin{center}
   \includegraphics[width=0.5\linewidth]{./Figures/brin-bucket.png}
 \end{center}
-\caption{Example of buckets generated~\cite{Brin99miningoptimized}}
+\caption{Example of buckets generated~\citep{Brin99miningoptimized}}
+\label{fig:brinbucket}
 \end{figure}
 
 Algorithm~\ref{alg:brin} shows how the proposed one-dimensional algorithm works for gain optimization.
@@ -658,7 +654,7 @@ As shown in the figure, any optimized interval contained in $PSet$ has positive 
 have negative gain.
 
 \begin{algorithm}[h!]
- \caption{Algorithm for computing optimized gain set~\cite{Brin99miningoptimized}}
+ \caption{Algorithm for computing optimized gain set~\citep{Brin99miningoptimized}}
  \label{alg:brin}
  \KwIn{\textbf{Input:} $b$: number of buckets, $k$: maximum number of optimum intervals}
   $PSet \leftarrow \emptyset$\;
@@ -680,16 +676,16 @@ have negative gain.
 \end{algorithm}
 
 \begin{figure}
-\label{fig:optgain}
 \begin{center}
   \includegraphics[width=1\linewidth]{./Figures/optgain1d.png}
 \end{center}
 \caption{Execution trace of procedure shown in Algorithm~\ref{alg:brin}. (a) Before first iteration, (b) after first
-iteration, (c) before second iteration, and (d) after second iteration\cite{Brin99miningoptimized}.}
+iteration, (c) before second iteration, and (d) after second iteration\citep{Brin99miningoptimized}.}
+\label{fig:optgain}
 \end{figure}
 
 It is important to highlight that this technique does not have the same purpose of the work presented in this thesis.
-While \cite{Brin99miningoptimized} focuses on finding the optimal interval with respect to a given measure, assuming
+While \citet{Brin99miningoptimized} focuses on finding the optimal interval with respect to a given measure, assuming
 that we already have support and confidence distribution along the numerical attribute, in this thesis, we focus on
 identifying rules which potentially have sub-interval with confidence gain in relation to its base rule, before we
 actually query the support and confidence distributions, which is very expensive, pruning rules that have no
@@ -749,7 +745,8 @@ the value of $X$ since $P(x_c)=1$.
 
 \subsection{Kullback-Leibler Divergence}
 
-The Kullback-Leibler divergence $D(P||Q)$ between the population distributions $P(X)$ and $Q(X)$ measures the degree
+The Kullback-Leibler divergence~\citep{Kullback51klDivergence} $D(P||Q)$ between the population
+distributions $P(X)$ and $Q(X)$ measures the degree
 of deviation of $P$ from another distribution $Q$:
 
 \begin{equation}
@@ -777,7 +774,8 @@ where M is the average of the two distributions, $M=\cfrac{1}{2}(P+Q)$.
 
 The Jensen-Shannon divergence also has the advantage that the difference is always a finite value ($0 \leq
 D_{JS}(P||Q) \leq 1$, for the base-2 logarithm). Although, it still does not satisfy the triangle inequality property,
-its square root does and, therefore, is a metric.
+its square root does and, therefore, is a metric. Further details about these divergence measures are presented
+in~\citet{17795}, \citet{Vinh:2010:ITM:1953011.1953024}, and~\citet{guiasu1977information}.
 
 \subsection{Mutual Information}
 
@@ -797,11 +795,6 @@ distribution formed by the marginals $P(X)P(Y)$. We call such measure mutual inf
 Completely independent attributes have mutual information zero, and the greater the level of dependence, the greater
 the mutual information.
 
-
-\cite{DBLP:conf/sac/CaldersGPR09}
-\cite{Vinh:2010:ITM:1953011.1953024}
-
-
 \section{Semantic Web Applications}
 \label{sec:rw-semanticWeb}
 
@@ -815,11 +808,11 @@ W3C: \url{http://www.w3.org/2000/Talks/1206-xml2k-tbl/slide10-0.html}}, illustra
 showing how its standards are organized and how it extends the classical hypertext web.
 
 \begin{figure}
-\label{fig:sematicWebLayer}
 \begin{center}
   \includegraphics[width=0.5\linewidth]{./Figures/Semantic-web-stack.png}
 \end{center}
 \caption{Semantic Web stack}
+\label{fig:sematicWebLayer}
 \end{figure}
 
 \begin{itemize}
@@ -841,8 +834,13 @@ consists of triple patterns, conjunctions, disjunctions and optional patterns.
 exchange rather than defining a single one-fits-all rule language, different databases might have different
 characteristics with different necessities.
   \item Semantic Web Rule Language (SWRL): a proposal for rule language combining sublanguages of OWL with the
-Unary/Binary Datolog Rule Markup Language (RuleML).
+Unary/Binary Datolog Rule Markup Language\footnote{\url{http://ruleml.org/}} (RuleML), which specifies different
+derivation rules via XML Schema.
 \end{itemize}
+
+%ruleml.org/talks/RuleML-Family-PPSWR06-talk-up.ppt
+
+%http://ruleml.org/1.0/exa/
 
 \section{Linked Open Data Applications}
 \label{sec:rw-lod}
@@ -852,11 +850,11 @@ relationships among data from different sources. Therewith, it is possible to cr
 datasets in the Web, also referred as Linked Data.
 
 \begin{figure}[h!]
-\label{fig:lod}
 \begin{center}
   \includegraphics[width=1\linewidth]{./Figures/lod-datasets_2011-09-19.png}
 \end{center}
 \caption{Linking Open Data cloud diagram, by Richard Cyganiak and Anja Jentzsch. \url{http://lod-cloud.net}}
+\label{fig:lod}
 \end{figure}
 
 Linked Data is a fundamental part of the Semantic Web essence, facilitating a large scale integration and reasoning
@@ -873,9 +871,9 @@ sources. Figure~\ref{fig:lod} shows the latest version of the whole Linked Open 
 diagram, and Figure~\ref{fig:lodZoom} zooms to and highlights some of the datasets used in this thesis, also sho
 
 \begin{figure}[h!]
-\label{fig:lodZoom}
 \begin{center}
   \includegraphics[width=1\linewidth]{./Figures/lod-zoom.png}
 \end{center}
 \caption{Zoom of Figure~\ref{fig:lod} highlighting datasets relevant to this thesis}
+\label{fig:lodZoom}
 \end{figure}
