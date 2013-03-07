@@ -1,3 +1,8 @@
+%\externaldocument{algorithm-framework}
+%\externaldocument{relatedwork}
+%\externaldocument{introduction}
+%\externaldocument{experiments}
+
 \chapter{Learning Rules With Numerical and Categorical Attributes}
 \label{cl:intro}
 
@@ -14,7 +19,6 @@ focusing on searching ranges in the numerical attribute's domain that satisfy su
 In this context, we define a rule with free numerical variable as \emph{base-rule} and the same rule with the
 numerical variable restricted to a specific interval or value as a \emph{refined-rule}. For instance, if we have
 two rules $r_1$ and $r_2$:
-
 \begin{align*}
 r_1: employmentStatus(X,unemployed)&\text{ :- }hasIncome(X,Y) \\
 r_2: employmentStatus(X,unemployed)&\text{ :- }hasIncome(X,Y),Y>100000
@@ -54,7 +58,6 @@ where we obtained these distributions by normalizing the frequency histograms
 from the rule's positive examples and body support.
 
 \begin{figure} [h!]
-  \label{interestingnessExample}
   \caption{Example of frequency histograms from body support and positives support (left), and resulting confidence
 distribution (right)}
   \begin{tikzpicture}[scale=0.8]
@@ -104,13 +107,13 @@ distribution (right)}
       (b10,0)};
   \legend{confidence}
   \end{axis}
-  \end{tikzpicture} 
+  \end{tikzpicture}
+  \label{interestingnessExample} 
 \end{figure}
 
 
 \begin{figure}[h!]
 \begin{center}
-  \label{interestingnessDistribution}
   \caption{Support distribution of body and positives from figure~\ref{interestingnessExample}}
   \begin{tikzpicture}[scale=0.8]
   \begin{axis}[
@@ -149,7 +152,8 @@ distribution (right)}
   \legend{postives, body support}
   \end{axis}
   \end{tikzpicture}
-  \end{center}
+\label{interestingnessDistribution}
+\end{center}
 \end{figure}
 
 \section{Categorical Property Definition}
@@ -157,7 +161,7 @@ distribution (right)}
 In this section, we formally define a categorical property as used in the correlation lattice. 
 
 First of all, a candidate relation must be joined with a root's non-numerical variable $X \in \mathcal{X}$ ,which will
-be used for joinign with all the categorical properties.
+be used for joining with all the categorical properties.
 
 A candidate categorical relation $r(X,Z)$, where $X$ is the join variable and $Z$ is within
 a categorical domain $\mathcal{Z}$ with a finite number of categories $\{z_1,z_2,\ldots,z_n\}$, such that:
@@ -170,7 +174,6 @@ Typically, $|\mathcal{X}| \gg n$ and $\mathcal{X}_{z_i} \subseteq
 \mathcal{X}$ with $|\mathcal{X}_{z_i}| < |\mathcal{X}|$
 
 \begin{table}[h!]
- \label{tab:cat1}
  \begin{center}
  \caption{Example data for categorical relation $hasSex$}
   \begin{tabular}{*{2}{l}}
@@ -183,10 +186,12 @@ Typically, $|\mathcal{X}| \gg n$ and $\mathcal{X}_{z_i} \subseteq
     hasIncome(paul,0)	  & hasSex(paul,male)	\\
     \bottomrule
   \end{tabular}
-  \end{center}
+ \label{tab:cat1}
+ \end{center}
+
 \end{table}
   
-For the table~\ref{tab:cat1}, if we define $\mathcal{X}=\{ x|\exists hasIncome(x,Y), Y \in \mathcal{Y} \}$, then we
+For Table~\ref{tab:cat1}, if we define $\mathcal{X}=\{ x|\exists hasIncome(x,Y), Y \in \mathcal{Y} \}$, then we
 would
 have the following sub-populations of $\mathcal{X}$:
 
@@ -246,7 +251,6 @@ lattice
 to those contained in interlinked datasets.
 
 \begin{table}[h!]
- \label{tab:cat2}
  \begin{center}
  \caption{Example of data linked to example from Table~\ref{tab:cat1}}
   \begin{tabular}{l l}
@@ -257,6 +261,7 @@ to those contained in interlinked datasets.
     owl:sameAs(lisa,lisaBell) & hasProfession(lisaBell,teacher)  \\
     \bottomrule
   \end{tabular}
+ \label{tab:cat2}
  \end{center}
 \end{table}
 
@@ -287,7 +292,6 @@ that are covered by the property and the ones that are not. For example, let \em
 let's assume we have a knowledge base with the following facts:
 
 \begin{table}[h!]
- \label{tab:cat3}
  \begin{center}
  \caption{Example of absence and presence of property as categories}
   \begin{tabular}{l l}
@@ -300,6 +304,7 @@ let's assume we have a knowledge base with the following facts:
     hasIncome(paul,0)	  & 			\\
     \bottomrule
   \end{tabular}
+ \label{tab:cat3}
  \end{center}
 \end{table}
 
@@ -318,6 +323,7 @@ not assume that its negation is true. Therefore, we do not consider negated lite
 ignore the absence and just include the presence of properties in the lattice.
 
 \subsection{Notation Used}
+\label{sec:notation}
 
 As we will see in the next sections, in the correlation lattice all the relations are joined by the variable of
 a root's join argument $X$. So we will denote the presence of a property $a(X,Z)$ category as simply $a$, where the
@@ -342,11 +348,11 @@ rab_2c_{11} &\equiv hasIncome(X,Y),isMarriedTo(X,Z),hasSex(X,female),bornInMonth
 As discussed before, we are interested in rules that have divergent positives and body support distributions, or in
 other words, adding the head to the body clause should result in a different distribution along the target numerical
 attribute $Y$. Therefore, we define the interestingness of adding a literal $l$ to a clause $c$ as the
-dissimilarity of $c \wedge l$ and $c$ support distributionw along $Y$.
+dissimilarity of $c \wedge l$ and $c$ support distribution along $Y$.
 
 It is possible to use any state-of-the-art dissimilarity measure, such as the ones presented
-in~\ref{sec:infotheoreticmeasures}. Kullback-Leibler or its metrified version Jensen-Shannon are good options, and
-can be directly applied on normalized frequency histograms. However, using a divergence
+in Section~\ref{sec:rw-infotheoreticmeasures}. Kullback-Leibler or its metrified version Jensen-Shannon are good
+options, and can be directly applied on normalized frequency histograms. However, using a divergence
 measure alone as interestingness measure is maybe cause some problems.
 
 Firstly, it is important to take into account the sampling error. The lower the support of a clause, the higher the
@@ -356,8 +362,8 @@ divergence between each of them and the sampling distribution, the smaller sampl
 divergence.
 
 Because of that, divergence measure alone tends to rank clauses with smaller support as more interesting. In order to
-compansate such effect, we can combine a divergence measure with the support, by simply multiplying their values.
-Morover, including support into our interestingness measure is important because, after all, we are still interested
+compensate such effect, we can combine a divergence measure with the support, by simply multiplying their values.
+Moreover, including support into our interestingness measure is important because, after all, we are still interested
 in rules with high support.
 
 \section{Preprocessing}
@@ -400,7 +406,6 @@ argument) should be defined. These information can help us identify the allowed 
 pattern.
 
 \begin{figure}[h!]
-  \label{fig:hierarchy}
   \caption{Type hierarchy example}
   \centering
   \begin{tikzpicture}[<-,draw=black,very thick,level/.style={sibling distance = 6cm/#1,level distance = 1.5cm}]
@@ -423,8 +428,7 @@ pattern.
 	}
       };
   \end{tikzpicture}
-
-\label{fig:typeHierarchy}
+  \label{fig:hierarchy}
 \end{figure}
 
 Assuming that the knowledge base has its type hierarchy described with the relation \emph{rdfs:subClassOf}, such as
@@ -442,7 +446,6 @@ not prevent them from joining. The pseudo-code for performing such task is shown
 
 \begin{algorithm}[h!]
   \caption{Function $checkTypes$ \newline Checks whether two relations are joinable for a given join pattern}
- \label{alg1}
  \SetKwFunction{subsumes}
  \KwIn{\textbf{Input:} $r_i$, $r_j$: Joining relations, $arg_i$, $arg_j$: Joining arguments \\}
  \KwOut{True if $arg_i$ from $r_i$ joins with $arg_j$ from $r_j$, False otherwise}
@@ -468,6 +471,7 @@ not prevent them from joining. The pseudo-code for performing such task is shown
    }{
     \Return false\;
   }
+ \label{alg1}
 \end{algorithm}
 
 Nevertheless, it might be that in the knowledge base, the cardinality of such join might be zero or simply not exceed
@@ -485,7 +489,6 @@ core ILP algorithm.
 
 \begin{algorithm}[h!]
   \caption{Function $checkSupport$ \newline Checks whether join support exceeds threshold}
-  \label{alg2}
   \SetKwFunction{executeQuery}
   \KwIn{\textbf{Input:} $r_i$, $r_j$: Joining relations, $arg_i$, $arg_j$: Joining arguments, $supportThreshold$:
 Support threshold \\ }
@@ -518,6 +521,7 @@ Support threshold \\ }
     }{
       \Return false\;
     }
+  \label{alg2}
 \end{algorithm}
 
 
@@ -530,7 +534,6 @@ added.
 
 \begin{algorithm}[h!]
   \caption{Preprocessing algorithm}
-  \label{alg3}
   \SetKwFunction{executeQuery}
   \KwIn{\textbf{Input:} $r$: Set of Relations, $supportThreshold$: The support threshold \\ }
   \KwResult{$L_{m,n}(r_i)$: List of joinable relations, where $m,n \in \{1,2\}, r_i \in r$}
@@ -577,6 +580,7 @@ added.
 	    }
 	}
    }
+  \label{alg3}
 \end{algorithm}
 
 \subsection{}
@@ -628,15 +632,15 @@ for different education levels, e.g. Nursery school and Master's Degree, their i
 be different from each other them and different from the overall income distribution. 
 
 \begin{figure}[h!]
-\label{fig:income-education}
 \caption{Discrete probability distributions of income by year quarter (left), and by education level (right)}
 \begin{center}
   \includegraphics[width=1\linewidth]{./Figures/birthquarter-education.png}
 \end{center}
+\label{fig:income-education}
 \end{figure}
 
 Figure~\ref{fig:income-education} shows the discrete probability distributions of income from each category's
-subpopulation. On the left, we have the four income distributions of people born in Q1, Q2, Q3 and Q4, and on the
+sub-population. On the left, we have the four income distributions of people born in Q1, Q2, Q3 and Q4, and on the
 right, the 17 different income distributions of people having each education level. As it is easily noticeable, for all
 the 4 year quarters, the income distribution is pretty much the same, while the education level, which has great
 influence on the income, the distributions are very different.
@@ -672,7 +676,7 @@ Every node in the lattice is composed by conjunctive clause of non-negated liter
 of its population. For the sake of comparison, all histograms are built on the same buckets defined in the
 root node. 
 
-Subsequently, for the chosen set of categorical relations, we do the same with each subpopulation of examples from
+Subsequently, for the chosen set of categorical relations, we do the same with each sub-population of examples from
 each
 category obtained by joining the root with its corresponding categorical literal. For every category a node in
 the lattice is created with the associated frequency histogram. In addition, the edges of the lattice are created by
@@ -804,8 +808,7 @@ $c_{nx}=\{c_n,x\}$ and $c_{ny}=\{c_n,y\}$. With the histogram from these three n
 probability $p_i(x|n)$ and $p_i(y|n)$, then calculate $\hat{h_i}(nxy)$, which is the estimation of
 $h_i(nxy)$ assuming that $x$ and $y$ are independent given common parent $n$.
 
-\begin{align*}
-\label{eq:condindep}
+\begin{align}
  p_i(x|ny) &= p_i(x|n) \\ 
  &= \cfrac{h_i(nx)}{h_i(n)} \\ 
  p_i(y|nx) &= p_i(y|p) \\ 
@@ -814,7 +817,8 @@ $h_i(nxy)$ assuming that $x$ and $y$ are independent given common parent $n$.
  &= p_i(x|p)h_i(yp) \\ 
  \hat{h_i}(nxy) &= p_i(y|nx)p_i(x|n)*h_i(n) \\ 
  &= p_i(y|n)h_i(xn)
-\end{align*}
+\label{eq:condindep}
+\end{align}
 
 After that, we query the actual frequency distribution on the knowledge base and do a Pearson's chi-squared
 independence test. As null hypothesis and alternative hypothesis we have:
@@ -1006,8 +1010,7 @@ number
 of buckets $k$.
 
 Since we do not consider any labels for the examples, we use one of the unsupervised discretization methods presented
-in
-section~\ref{sec:discretization}: equal frequencies or equal width. We choose the method according to the domain
+in Section~\ref{sec:rw-discretization}: equal frequencies or equal width. We choose the method according to the domain
 characteristics and define the bucket boundaries based on the overall population distribution.
 
 \section{Incorporating Correlation Lattice into the Core ILP Algorithm}
@@ -1016,8 +1019,6 @@ characteristics and define the bucket boundaries based on the overall population
 The ILP core learning algorithm requires some modifications in order to support the correlation lattice. As stated
 before, we use top-down search, starting from the most general clauses then further refining them by introducing
 new substitutions or literals until a stopping criteria is reached.
-
-[...]
 
 \subsection{Querying the Correlation Lattice}
 
@@ -1079,7 +1080,6 @@ measure $m_{b,ra}$. This is shown more clearly in Algorithm~\ref{alg:buildmaps}.
 
 \begin{algorithm}[h!]
  \caption{Suggestion map build when joining nodes during lattice build}
- \label{alg:buildmaps}
  \KwIn{\textbf{Input:} $nx, ny$: Joining nodes, $n$: Common parent node}
   $\hat{h}(nxy) \leftarrow h(nx)h(ny)/h(n)$\;
   $h(nxy) \leftarrow $\FuncSty{queryFrequencyHistogram(}$nxy$\FuncSty{)}\;
@@ -1092,6 +1092,7 @@ measure $m_{b,ra}$. This is shown more clearly in Algorithm~\ref{alg:buildmaps}.
     $nx.suggestionsMap(x) \leftarrow (y,m_{x,ny})$\;
     $ny.suggestionsMap(y) \leftarrow (x,m_{y,nx})$\;
   }
+ \label{alg:buildmaps}
 \end{algorithm}
 
 In the example of Figure~\ref{fig:latticeSuggestion}, $ra$ would contain the following map:
@@ -1128,7 +1129,6 @@ the clause is interesting by calling the function \FuncSty{isClauseInteresting},
 
 \begin{algorithm}[!h]
  \caption{Extension to the refinement step}
- \label{alg4}
  \SetKwFunction{checkNumericalRanges}
  \KwIn{\textbf{Input:} $clause$: Set of literals from the clause, $lattice(r_{root})$: Set of existent Correlation
 Lattices, 
@@ -1143,11 +1143,11 @@ Minimum interestingness value allowed \\}
 	\FuncSty{checkNumericalRanges(}$clause$,$lit_{new}$,$node$\FuncSty{)}\;
     }
   }
+ \label{alg4}
 \end{algorithm}
 
 \begin{algorithm}[!h]
  \caption{\FuncSty{checkNumericalRanges}}
- \label{alg5}
  \SetKwFunction{queryAccuracyDistribution, querySupportDistribution}
  \KwIn{\textbf{Input:}  \\}
  \KwOut{}
@@ -1164,11 +1164,11 @@ Minimum interestingness value allowed \\}
     $node_i \leftarrow node$.\FuncSty{search(}$lit_i$\FuncSty{)}\;
     \FuncSty{checkNumericalRanges(}$clause \cup lit_i$,$lit_{new}$,$node_i$\FuncSty{)}\;
   }
+ \label{alg5}
 \end{algorithm}
 
 \begin{algorithm}[!h]
  \caption{\FuncSty{isClauseInteresting}}
- \label{alg6}
  \SetKwFunction{checkNumericalRanges}
  \KwIn{\textbf{Input:} $clause$: Clause with numerical literal, $root$: Correlation lattice root node,
 $interestingnessThreshold$: Minimum interestingness value allowed }
@@ -1186,7 +1186,7 @@ $interestingnessThreshold$: Minimum interestingness value allowed }
   } {
       \Return  false\;
   }
-
+ \label{alg6}
 \end{algorithm}
 
 Once we find out that that the clause is interesting, we can perform the numerical interval search refinement
