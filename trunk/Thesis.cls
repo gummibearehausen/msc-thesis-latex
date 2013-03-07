@@ -50,7 +50,7 @@
   \space}
 
 \def\monthgerman{\ifcase\month\or
-  Januar\or Februar\or Mar\"az\or April\or Mai\or Juni\or
+  Januar\or Februar\or M\"arz\or April\or Mai\or Juni\or
   Juli\or August\or September\or Oktober\or November\or Dezember\fi
   \space}
 
@@ -183,7 +183,7 @@
 \newcommand*{\subject}[1]{\def\subjectname{#1}}
 \newcommand*{\keywords}[1]{\def\keywordnames{#1}}
 \supervisor  {Dr. Martin Theobald}
-\reviewer    {Prof. Dr. Max Mustermann}
+\reviewer    {Prof. Dr. Gerhard Weikum}
 \examiner    {}
 \degree      {}
 \authors     {Andr\'e de Oliveira Melo}
