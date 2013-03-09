@@ -1,6 +1,62 @@
 \chapter{Experiments}
 \label{ch:intro}
 
+In order to evaluate our extension of ILP, the correlation and lattice, and the different interestingness measures, we
+perform a series of experiments on Linked Data.
+
+First, we test our proposed approach on LinkedMDB 
+
+Firstly, we compare different measures by building same-sized correlation lattices on the $hasIncome(X,Y)$
+relation from the USCensus, then searching for interesting rules with intervals for $Y$ inside the lattice itself as
+described in Section~\ref{sec:searchRulesInCL}. The lattices are build by greedily choosing the top-k most interesting
+nodes in each level according to the chosen measure, and pruning the rest so that all the lattices have the same
+quantity of nodes.
+
+Also, we measure the total time spent for the construction of each lattice as well as the number of interesting rules
+found in it. As candidate categorical relations, we chose the 18 shown in Table~\ref{tab:uscensusRelations}. More
+details about the categories can be found at the PUMS
+Data
+Dictionary\footnote{\url{http://www.census.gov/acs/www/Downloads/data_documentation/pums/DataDict/PUMSDataDict05_07.pdf}
+}
+
+\begin{table}[h!]
+\begin{minipage}{\textwidth}
+ \begin{center}
+ \caption{Chosen categorical relations from USCensus}
+  \begin{tabular}{l l c}
+    \toprule
+      Name	& Label				& Number of Categories \\
+    \midrule
+      sex	& Sex				&	2	\\
+      st	& State				&	52\footnote{Including Puerto Rico and Washington D.C.}	\\
+      racwht	& is White			&	2	\\
+      racblk	& is Black			&	2	\\
+      racasn	& is Asian			&	2	\\
+      qtrbir	& Quarter of Birth		&	4	\\	
+      nativity	& born In the US		&	2	\\
+      mar	& Marital Status		&	5	\\
+      lanp	& Language Spoken at Home	&	104	\\
+      esr	& Employment Status		&	6	\\
+      dphy	& Physical Difficulty		&	2	\\
+      schl	& Educational Level		&	17	\\	
+      occp	& Occupation			&	470	\\
+      sch	& School Enrollment		&	3	\\
+      rel	& Relationship			&	12	\\
+      esp	& Employment Status of Parents	&	8	\\
+      oc	& Own Child			&	2	\\
+    \bottomrule
+  \end{tabular}
+ \label{tab:uscensusRelations}
+ \end{center}
+\end{minipage}
+\end{table}
+
+
+
+
+Since the USCensus data is completely joined on person entities, and all categorical relations have literals as
+constants (usually integer numbers mapped to a set of) of entities 
+
 ***Roughly explaining the experiments I did so far, we want to evaluate whether the heuristics are good.
 So we use US Census data to build a lattice (for income property) with the limitation of having up to $n$ nodes at each
 level. So far I compared the KL-divergence*Support with support only as measures. For every level I sort the nodes by
@@ -139,7 +195,7 @@ implementation problems I had when creating the lattice in YAGO.
 
 We selected a couple of interesting rules learned with our approach in order to illustrate the kind of results we
 obtain. On LinkedMDB, for example, we learned that films in English with Canadian director, and low budget are
-significantly more likely to be also Canadian than the ones with higher budget. The base rule shown below has
+significantly more likely to be also Canadian than those with higher budget. The base rule shown below has
 confidence $0.36$:
 
 $country(X,canada)$ :- $director(X,Z),bornIn(Z,canada),language(X,english),budget(X,Y)$
@@ -147,4 +203,126 @@ $country(X,canada)$ :- $director(X,Z),bornIn(Z,canada),language(X,english),budge
 When we refine this rule, we find an interval with confidence $0.83$:
 
 $country(X,canada)$ :- $director(X,Z),bornIn(Z,canada),language(X,english),budget(X,Y),Y\leq 80000$
+
+Another interesting example reveals that films written by a spouse of Fritz Lang (in this case, Thea von
+Harbou, who was an actress, writer, and director), and which have long runtime are more likely to have been directed by
+Fritz Lang than those with shorter runtime. The base rule has confidence $0.6$:
+
+$director(X,fritzLang)$ :- $writer(A,D),spouse(D,fritzLang),runtime(X,Y)$
+
+And the refined rule has confidence $0.82$:
+
+$director(X,fritzLang)$ :- $writer(A,D),spouse(D,fritzLang),runtime(X,Y),Y\geq 6800s$
+
+Other examples of interesting rules learned are shown in Table~\ref{tab:mdbRuleExamples}.
+
+\begin{table}[h!]
+\begin{minipage}{\textwidth}
+ \begin{center}
+ \caption{Interesting rules with numerical intervals}
+  \begin{tabular}{ >{\emph}r >{\raggedright}p{7cm} | c | c }
+    \toprule
+      & Refined Rule				& Conf 	& Gain \\
+    \midrule
+      director(X,fritzLang) :-&writer(X,Z), spouse(Z,fritzLang), runtime(X,Y), Y$\geq 6800s$ & 
+      0.82	& 0.37 \\
+      writer(X,sylvesterStallone) :-&starring(X,sylvesterStallone), subject(X,englishLanguageFilms),
+      budget(X,Y), Y$\in [6M,31M]$ &
+      0.89	& 0.48 \\
+      producer(X,clintEastwood) :-&director(X,clintEastwood), starring(X,clintEastwood),
+      subject(X,englishLanguageFilms), budget(X,Y), Y$\geq 13M$ &
+      1.00	& 0.73 \\
+      starring(X,clintEastwood) :- &budget(X,Y), director(X,clintEastwood), starring(A,clintEastwood), 
+      subject(A,englishLanguageFilms), Y$\in [930K,25M]$&
+      0.82	& 0.56 \\
+      starring(X,Z) :-&writer(X,Z), country(X,uk), distributor(X,bbc),r untime(X,Y), Y$\leq 4080s$ &
+      0.9	& 0.53 \\
+
+    \bottomrule
+  \end{tabular}
+ \label{tab:mdbRuleExamples}
+ \end{center}
+\end{minipage}
+\end{table}
+
+
+On the
+
+\begin{table}[h!]
+\begin{minipage}{\textwidth}
+ \begin{center}
+ \caption{Interesting rules with numerical intervals}
+  \begin{tabular}{ >{\textit}r >{\raggedright}p{7cm} | c | c }
+    \toprule
+      & Refined Rule				& Conf 	& Gain \\
+    \midrule
+      director(X,fritzLang) :-&writer(X,Z), spouse(Z,fritzLang), runtime(X,Y), Y$\geq 6800s$ & 
+      0.82	& 0.37 \\
+      writer(X,sylvesterStallone) :-&starring(X,sylvesterStallone), subject(X,englishLanguageFilms),
+      budget(X,Y), Y$\in [6M,31M]$ &
+      0.89	& 0.48 \\
+      producer(X,clintEastwood) :-&director(X,clintEastwood), starring(X,clintEastwood),
+      subject(X,englishLanguageFilms), budget(X,Y), Y$\geq 13M$ &
+      1.00	& 0.73 \\
+      starring(X,clintEastwood) :- &budget(X,Y), director(X,clintEastwood), starring(A,clintEastwood), 
+      subject(A,englishLanguageFilms), Y$\in [930K,25M]$&
+      0.82	& 0.56 \\
+      starring(X,Z) :-&writer(X,Z), country(X,uk), distributor(X,bbc),r untime(X,Y), Y$\leq 4080s$ &
+      0.9	& 0.53 \\
+
+    \bottomrule
+  \end{tabular}
+ \label{tab:ruleExamples}
+ \end{center}
+\end{minipage}
+\end{table}
+
+
+
+\begin{figure}
+ \caption{Recall-Accuracy }
+ \centering
+ \begin{tikzpicture}[scale=1.0]
+  \begin{axis}[
+	  xlabel=\textsc{Recall},
+	  ylabel=\textsc{Accuracy}
+      ]
+  \addplot coordinates {(0,0.6) (0.05769231,0.6) (0.2884615,0.8333333) (0.4038461,0.8571429) (0.5192308
+, 0.8709678) (0.5192308,0.84375) (0.5192308,0.7012987) (0.5192308,0.627907) (0.5192308,0.5744681) (
+0.5192308,0.5192308) (0.625,0.5555556) (0.7307692,0.5846154) (0.9807692,0.4573991) (0.9903846 ,
+0.4598214) (1,0.4622222)};
+  \addplot coordinates {(0,0.9230769) (0.2307692,0.9230769) (0.4615385,0.9230769) (0.5192308,0.8709678)
+(0.5192308,0.7605634) (0.5192308,0.6428571) (0.625,0.6701031) (0.625,0.6190476) (0.625,0.5652174) (
+0.7307692,0.59375) (0.7307692,0.5846154) (0.9807692,0.4636364) (0.9903846,0.4660633) (1,0.4684685)};
+  \addplot coordinates { (0,0.9230769) (0.2307692,0.9230769) (0.2884615,0.8333333) (0.5192308,0.8709678)
+(0.5192308,0.72) (0.5192308,0.6428571) (0.5192308,0.627907) (0.5192308,0.5744681) (0.625,0.6074766)
+(0.625,0.5555556) (0.7307692,0.5846154) (0.9807692,0.4573991) (0.9903846,0.4598214) (1,0.4622222)};
+  \addplot coordinates {(0,0.6) (0.05769231,0.6) (0.05769231,0.5) (0.05769231,0.24) (0.2980769 ,
+0.5961539) (0.2980769,0.4428571) (0.5384616,0.5773196) (0.6442308,0.5630252) (0.75,0.5909091) (1 ,
+0.4521739)};
+  \end{axis}
+  \end{tikzpicture}
+\end{figure}
+
+\begin{figure}
+ \caption{Runtime-LearnedRules}
+ \centering
+ \begin{tikzpicture}[scale=1.0]
+  \begin{axis}[
+	  xlabel=\textsc{Runtime},
+	  ylabel=\textsc{\#Learned Rules}
+      ]
+  \addplot coordinates {(0,0) (1877,6) (4795,30) (6962,42) (9116,54) (9337,54) (11852,54) (
+13187,54) (14225,54) (16052,54) (20014,65) (22411,76) (32833,102) (32949,103) (33251,104
+)};
+  \addplot coordinates {(0,0) (2772,24) (6923,48) (8690,54) (9977,54) (12400,54) (16145,65)
+(17187,65) (18979,65) (21270,76) (21483,76) (31215,102) (31324,103) (31637,104)};
+  \addplot coordinates {(0,0) (2877,24) (4672,30) (8934,54) (11447,54) (12813,54) (13033,54)
+(14057,54) (17836,65) (19703,65) (21991,76) (32064,102) (32173,103) (32449,104)};
+  \addplot coordinates { (0,0) (1762,6) (1976,6) (4413,6) (7488,31) (10319,31) (14620,56) (
+19691,67) (21995,78) (32452,104)};
+  \end{axis}
+  \end{tikzpicture}
+\end{figure}
+
 
