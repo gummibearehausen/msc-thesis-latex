@@ -135,7 +135,7 @@ Therefore, it is interesting to discretize the numerical attribute's domain into
 subsequently check if any of the buckets present different confidence in comparison to its correspondent numerical
 constant-free rule (which we will call ``base-rule'').
 
-For example if we test the hypothesis and we find support=100 and confidence=0.4:
+For example if we test the hypothesis and we find support=40 and confidence=0.4:
 
 \begin{center}
  $isMarriedTo(X,Y)$ :- $hasAge(X,Z)$ 
@@ -154,11 +154,11 @@ we then generate three refined-rules by restricting the base-rule's domain from 
 \begin{itemize}
 
  \item $isMarriedTo(X,Y)$ :- $hasAge(X,Z), z\in[0,20]$	
-    \newline support=40, confidence=0.1
+    \newline support=4, confidence=0.1
  \item $isMarriedTo(X,Y)$ :- $hasAge(X,Z), z\in(20,40]$	
-    \newline support=40, confidence=0.5
+    \newline support=20, confidence=0.5
  \item $isMarriedTo(X,Y)$ :- $hasAge(X,Z), z\in(40,\infty]$
-    \newline support=20, confidence=0.8
+    \newline support=16, confidence=0.8
 
 \end{itemize}
 
@@ -169,17 +169,17 @@ relation $hasChild(X,A)$, we could obtain other interesting rules:
 Base-rule:
 \begin{itemize}
  \item $sMarriedTo(X,Y)$ :- $hasAge(X,Z),hasChild(X,A)$	
-    \newline support=50, confidence=0.625
+    \newline support=32, confidence=0.76
 \end{itemize}
 
 Refined-rules:
 \begin{itemize}
  \item $isMarriedTo(X,Y)$ :- $hasAge(X,Z),hasChild(x,a), Z\in[0,20]$	
-    \newline support=2, confidence=0.5
+    \newline support=1, confidence=0.5
  \item $isMarriedTo(X,Y)$ :- $hasAge(X,Z),hasChild(x,a), Z\in(20,40]$	
-    \newline support=30, confidence=0.7
+    \newline support=15, confidence=0.75
  \item $isMarriedTo(X,Y)$ :- $hasAge(X,Z),hasChild(x,a), Z\in(40,\infty]$	
-    \newline support=18, confidence=0.9
+    \newline support=16, confidence=0.8
 \end{itemize}
 
 \begin{figure}
@@ -198,7 +198,7 @@ Refined-rules:
     nodes near coords align={vertical},
     ]
 \addplot coordinates {(b1,0.1) (b2,0.5) (b3,0.8)};
-\addplot coordinates {(b1,0.5) (b2,0.7) (b3,0.9)};
+\addplot coordinates {(b1,0.5) (b2,0.75) (b3,0.8)};
 \legend{isMarriedTo(X,Y):-hasAge(X,Z) , isMarriedTo(X,Y):-hasAge(X,Z)hasChild(X,A)}
 \end{axis}
 \end{tikzpicture}
@@ -214,8 +214,8 @@ Refined-rules:
     nodes near coords,
     nodes near coords align={vertical},
     ]
-\addplot coordinates {(b1,40) (b2,40) (b3,20)};
-\addplot coordinates {(b1, 2) (b2,30) (b3,18)};
+\addplot coordinates {(b1,4) (b2,20) (b3,16)};
+\addplot coordinates {(b1, 2) (b2,15) (b3,16)};
 \legend{isMarriedTo(X,Y):-hasAge(X,Z), isMarriedTo(X,Y):-hasAge(X,Z)hasChild(X,A)}
 \end{axis}
 \end{tikzpicture}
