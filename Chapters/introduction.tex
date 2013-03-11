@@ -251,9 +251,9 @@ confidence thresholds
 \end{comment}
 
 With information about different example distributions contained in the generated lattice, once we add one of the root
-properties during the core ILP algorithm, we can then search for the most interesting categorical properties that could
-result in different confidence distributions. For every categorical property, we can also suggest the most interesting
-constants and other categorical properties to be combined in a subcategory of both.
+properties during the core ILP algorithm, we can try to predict whether the rule has interesting intervals for the
+given numerical attribute, and prevent unnecessary expensive queries to be fired. Furthermore, for a given clause, we
+can also suggest the most interesting literals to be added to the body of the clause.
 
 In summary, we present in this thesis three main contributions:
 

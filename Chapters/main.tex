@@ -1016,6 +1016,7 @@ before, we use top-down search, starting from the most general clauses then furt
 new substitutions or literals until a stopping criteria is reached.
 
 \subsection{Querying the Correlation Lattice}
+\label{sec:queryingTheLattice}
 
 In the ILP there is a fixed head literal and such literal can and should be included in the correlation lattice. In
 case it is present in the lattice, it plays a key role in the search. Once the root property is added in a clause that
@@ -1027,8 +1028,8 @@ what we are not really interested in the benefit of adding a literal to the conj
 in
 the benefit of adding the head to a body with a new literal.
 
-For example, if we have the clause $a$:-$r$, $r$ is the root of a correlation lattice and the head $a$ is included in
-it. After searching in the graph for the literals joined with root present in the clause we would come to node
+For example, if we have the clause $a$:-$r$, where $r$ is the root of a correlation lattice and the head $a$ is included
+in it. After searching in the graph for the literals joined with root present in the clause we would come to node
 $ra$. We are not searching for the most interesting child from $ra$, but for the children, which has a parent without
 the head literal that has the has the highest interestingness measure when adding the head.
 
@@ -1084,8 +1085,8 @@ measure $m_{b,ra}$. This is shown more clearly in Algorithm~\ref{alg:buildmaps}.
   \If{$pValue \geq minPValue$}{
     $m_{x,ny} \leftarrow $\FuncSty{interestingness(}$h(nxy),h(ny)$\FuncSty{)}\;
     $m_{y,nx} \leftarrow $\FuncSty{interestingness(}$h(nxy),h(nx)$\FuncSty{)}\;
-    $nx.suggestionsMap(x) \leftarrow (y,m_{x,ny})$\;
-    $ny.suggestionsMap(y) \leftarrow (x,m_{y,nx})$\;
+    $nx.suggestions(x) \leftarrow (y,m_{x,ny})$\;
+    $ny.suggestions(y) \leftarrow (x,m_{y,nx})$\;
   }
  \label{alg:buildmaps}
 \end{algorithm}
@@ -1118,8 +1119,9 @@ can much more easily find the best suggestions for any possible head literal wit
 
 First we need to introduce the search for numerical intervals as a possible refinement in the top-down ILP refinement
 step. Such a refinement would be possible only if the body contains a literal which is the root of a correlation
-lattice and whose numerical attribute variable is free, as shown in Algorithm~\ref{alg4}. If so, then we check whether
-the clause is interesting by calling the function \FuncSty{isClauseInteresting}, which is shown in Algorithm~\ref{alg6}.
+lattice and whose numerical attribute variable is free, as shown in Algorithm~\ref{alg4}. If so, then we can try to
+predict whether the clause is interesting by calling the function \FuncSty{isClauseInteresting}, which is shown in
+Algorithm~\ref{alg6}.
 
 
 \begin{algorithm}[!h]
