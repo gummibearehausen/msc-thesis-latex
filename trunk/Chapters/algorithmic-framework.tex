@@ -8,8 +8,8 @@ change the knowledge base back-end to RDF3X, in order to improve the SPARQL quer
 \section{Knowledge Base Back-end}
 
 For storing and retrieving RDF data we use RDF3X \citep{Neumann:2010:RES:1731351.1731354}. It has the advantage of being
-specialized and optimized for RDF data, using a strong indexing approach with compressed B$^+$-Tree indices for each of
-six permutations of \emph{subject (S)}, \emph{predicate (P)} and \emph{object (O)}:
+specialized and optimized for RDF triples, using a strong indexing approach with compressed B$^+$-Tree indices for each
+of six permutations of \emph{subject (S)}, \emph{predicate (P)} and \emph{object (O)}:
 \emph{SPO},\emph{SOP},\emph{OSP},\emph{OPS},\emph{PSO} and \emph{POS}.
 
 All the facts are stored in a single triples table, with no schema, over which the indices are created. Moreover, one
@@ -17,18 +17,16 @@ important characteristic of the indices is that they feature count-aggregated va
 two-dimensional projections.
 
 The query processor explores the exhaustive indexation by relying mostly on merge-joins over the sorted index lists, and
-building operator trees that preserve a convenient ordering which allows further merge-joins. When it is impossible,
+building operator trees that preserve a convenient ordering which allows further merge-joins. When not possible,
 RDF3X simply switches to hash-join.
 
 RDF3X supports SPARQL queries, nevertheless, in the version 0.3.7 which was used in this thesis, many features of the
-query language were not implement. For example, optional patterns are not supported, and sorting and filtering of
-numerical attributes is not implemented, with numbers being dealt as strings. Therefore the expression $31>4$, for
-example, will be evaluated as the comparison of strings $``31''>``4''$, which returns false instead of true.
+query language were not implement. For example, optional patterns are not supported, and sorting and filtering
+operators for numerical attributes is not implemented, therefore numbers are dealt as strings. The expression $31>4$,
+for example, is evaluated as the comparison of strings $``31''>``4''$, which returns false instead of true. As the
+evaluation of numerical expressions plays a key role in this thesis, we had to make changes to the original code
+for implementing this feature.
 
-As the evaluation of numerical expressions plays a key role in this thesis, we had to make changes to the original code
-in order to support this feature.
-
-The RDF3X process is accessed by the Java application via the JDBC interface.
 
 \section{Preprocessing}
 
@@ -44,72 +42,107 @@ a whole, such as the root property, root node, maximum number of levels, as well
 the lattice nodes, such as discretization boundaries, support and interestingness thresholds. Moreover, it maintains a
 hash set with all the lattice nodes in order to avoid duplicate nodes.
 
-
 \subsubsection{The CorrelationLatticeNode class}
 
 In a \emph{CorrelationLatticeNode} we simply store the histogram data obtained with the discretization on root's
-numerical attribute, a set of pointers to the child nodes
+numerical attribute, the pointers to the child nodes, the suggestion maps (presented in
+Section~\ref{sec:queryingTheLattice}). The UML Class diagram from Figure~\ref{fig:classDiagram} shows in more details
+how both classes are structured.
 
-Every node essentially contains the following attributes:
+\begin{figure}
+\caption{UML Class diagram from CorrelationLattice and CorrelationLatticeNode}
+\begin{center}
+  \begin{tikzpicture}
+    \umlclass[x=2,y=7]{CorrelationLattice} {
+	numericalProperty : Property \\
+	maximumDepth : Integer \\
+	numberOfBuckets : Integer \\
+	discretizationBoundaries : Integer[numberOfBuckets-1] \\
+	minSupport : Integer \\
+	minConfidence : Float \\
+    }{}
+    \umlclass[x=2,y=0]{CorrelationLatticeNode} {
+      children : CorrelationLatticeNode[] \\
+      clause : Literal[] \\
+      suggestions : Map<Literal,SortedList<Literal>> \\
+      histogram : Integer[] \\
+      distribution : Float[] \\
+    }{
+      getSuggestions(head : Literal) : SortedList<Literal>\\
+      search(literal : Literal) : CorrelationLatticeNode\\
+    }
+    \umlassoc[arg1=lattice, mult1=1, arg2=nodes, mult2=1..*]{CorrelationLattice}{CorrelationLatticeNode} 
+  \end{tikzpicture}
+\label{fig:classDiagram}
+\end{center}
+\end{figure}
 
-\begin{itemize}
- \item Set of pointers to parent nodes
- \item Set of pointers to child nodes
- \item Set of pointers to constant nodes
- \item Histogram with facts distribution over root numerical property
-\end{itemize}
 
-
-\subsubsection{Building the Correlation Lattice}
+\subsection{Building the Correlation Lattice}
 
 For building the correlation lattice, we start with the root node, which has a numerical property as literal and no
-constants assigned, e.g. \emph{hasIncome(x,y)}. We then query the  distribution of positive examples over the property
-in the whole Knowledge Base.
+constants assigned, e.g. \emph{hasIncome(X,Y)}. We use the query below in order to obtain the  distribution of 
+examples along the numerical attribute $Y$ in the whole Knowledge Base.
 
 \begin{center}
- \emph{SELECT COUNT ?y WHERE \{ ?x <hasIncome> ?y \} GROUP BY (?y)}
+ \emph{SELECT COUNT ?Y WHERE \{ ?X <hasIncome> ?Y \} GROUP BY (?Y)}
 \end{center}
 
-It's also necessary to specify the bucketing technique and the number of buckets in order to extract the histogram from the obtained query results. These buckets are used to build the histograms of all nodes in the graph.
+We also use the result of this query in order to obtain the minimum and maximum values from $Y$, and set the
+discretization boundaries for the specified discretization technique. As a result, we can extract the root
+node's frequencies histogram. We keep the discretization boundaries in the CorrelationLattice class, as it will be used
+consistently throughout the whole lattice.
 
-Afterwards, we select the the categorical properties that will be used in the lattice. For each of the selected properties, we join them with the root numerical property (for simplicity we'll assume all the categorical properties are joined with both \ord{1} arguments) and we query the distribution again. In the first level, it's necessary to extract a histogram for each of the categorical constants in the selected properties. Therefore, it's a good strategy to group the results also by these categorical constants so If we select \emph{hasEducation} for example, we would then fire the following SPARQL query:
+Afterwards, we select the the categorical properties that will be used in the lattice. For each of the selected
+properties, we join them with the root numerical property, then query the resulting distribution. In the first level,
+it's necessary to extract a histogram for each of the categorical constants in the selected properties. Therefore, it's
+a good strategy to group the results also by these categorical constants so If we select \emph{hasEducation} for
+example, we would then fire the following SPARQL query:
 
 \begin{center}
- \emph{SELECT COUNT ?z ?y WHERE \{ ?x <hasIncome> ?y . ?x <hasEducation> ?z \} GROUP BY (?z,?y)}
+ \emph{SELECT COUNT ?Z ?Y WHERE \{ ?X <hasIncome> ?Y . ?X <hasEducation> ?Z \} GROUP BY (?Z,?Y)}
 \end{center}
 
-With such query, we can extract a histogram for the node \emph{hasIncome(x,y)hasEducation(x,z)} and its correspondent
-constants. 
+With such query, we can extract a histogram for the node \emph{hasIncome(X,Y)hasEducation(X,Z)} and for the
+nodes obtained for each constant of $Z$. 
 
-For the further levels, we simply add a pattern correspondent to each literal in the node. 
+For the further levels, we simply add a pattern correspondent to each literal in the node, querying each combination of
+categories individually. For instance, if we combine the categories $hasEducation(X,phd)$ and $hasSex(X,female)$, the
+correspondent query would be:
+
+\begin{center}
+ \emph{SELECT COUNT ?Y WHERE \{ ?X <hasIncome> ?Y . ?X <hasEducation> <phd> . ?X <hasSex> <female> \} GROUP BY (?Y)}
+\end{center}
 
 
-\subsubsection{Searching Rules in Correlation Lattice}
+\subsection{Searching Rules in Correlation Lattice}
 \label{sec:searchRulesInCL}
 
-In the lattice itself, it's possible to extract valuable rules. Given its characteristic of all the relations being
-joined on the same root argument, those rules represent how different categories are related along root's numberical
+In the lattice itself, it is possible to extract valuable rules. Given its characteristic of all the relations being
+joined on the same root argument, these extracted rules represent how different categories are related along root's
+numberical
 constants.
 
-For every non-root node in the correlation lattice, any of its parents can be seen as rule's body and the difference
-literal as head. Below, we show an example using the notation defined at~\ref{sec:notation}:
+Every non-root node in the correlation lattice can be understood as the body of a rule, and the new literal from any of
+its children can be understood as the head. 
 
-For the node $r a_1 b_1 c_1$ with parents $r a_1 b_1$, $r a_1 c_1$ and $r b_1 c_1$, we can extract and easily evaluate three rules:
+Below, we show an example using the notation defined at~\ref{sec:notation}. For the node $r a_1 b_1$ with children $r
+a_1 b_1 c_1$, $r a_1 b_1 c_2$ and $r a_1 b_1 d_1$, we can easily evaluate three rules:
 
 \begin{align*}
-Rule_1: \quad &a_1\text{ :- }b_1,c_1,r \\ 
+Rule_1: \quad &c_1\text{ :- }a_1,b_1,r \\ 
 &supp(Rule_1) = h(r a_1 b_1 c_1) \\
-&acc(Rule_1) = \frac{h(r a_1 b_1 c_1)}{h(r b_1 c_1)} \\ \\
-Rule_2: \quad &b_1\text{ :- }a_1,c_1,r \\
- &supp(Rule_2) = h(r a_1 b_1 c_1) \\
- &acc(Rule_2) = \frac{h_i(r a_1 b_1 c_1)}{h(r a_1 c_1)} \\ \\
-Rule_3: \quad &c_1\text{ :- }a_1,b_1,r \\
- &supp(Rule_3) = h(r a_1 b_1 c_1) \\
- &acc(Rule_3) = \frac{h(r a_1 b_1 c_1)}{h(r a_1 b_1)} 
+&acc(Rule_1) = \frac{h(r a_1 b_1 c_1)}{h(a_1,b_1,r)} \\ \\
+Rule_2: \quad &c_2\text{ :- }a_1,b_1,r \\
+ &supp(Rule_2) = h(r a_1 b_1 c_2) \\
+ &acc(Rule_2) = \frac{h_i(r a_1 b_1 c_2)}{h(a_1,b_1,r)} \\ \\
+Rule_3: \quad &d_1\text{ :- }a_1,b_1,r \\
+ &supp(Rule_3) = h(r a_1 b_1 d_1) \\
+ &acc(Rule_3) = \frac{h(r a_1 b_1 d_1)}{h(a_1,b_1,r)} 
 \end{align*}
 
 Therefore, in order to search for rules in the correlation lattice, we can simply perform a breadth-first traversal in
-the lattice, and do such evaluation in each node. 
+the lattice, and do such evaluation for every node. 
 
 Subsequently we can analyze the frequency and confidence distributions and determine whether any of the rules are
 interesting, using any of the techniques such as \citet{Brin99miningoptimized}, discussed
