@@ -70,7 +70,16 @@ Dictionary\footnote{\url{http://www.census.gov/acs/www/Downloads/data_documentat
 \end{table}
 
 The plot from Figure~\ref{fig:uscensus:Nodes-GoodRules} shows the number of rules learned per lattice size (defined by
-number of nodes per level). As observed, 
+number of nodes per level). The KL-divergence only has the worst performance, as expected, since clauses with lower
+support are more likely to have higher interestingness. The other three measures perform roughly simarly, however, for
+fewer nodes, it performs worse than others catching up later. This can be explained by the fact that it gives
+preferrence to very high support categories which cover the majority of the population, such as $hasDeficiency(X,no)$,
+which tend to have a distribution similar to its superpopulation. 
+
+Analysing the plot from Figure~\ref{fig:uscensus:Nodes-Runtime}, it is clear that using support only as interestingness
+measure is very costy. As it concentrates on larger categories, the queries required for building the lattice are much
+more expensive. JS-divergence and L-divergenc combined with support are much more efficient than support only, as they
+can learn about the same amount of rules with on average less than  
 
 
 Since the USCensus data is completely joined on person entities, and all categorical relations have literals
@@ -85,7 +94,7 @@ chose DBpedia and LinkedMDB in order to evaluate our ILP-extension.
         xlabel=\textsc{\#Nodes per Lattice level},
         ylabel=\textsc{\#Interesting Rules},
         legend entries={Support only, KL-divergence*Support, KL-divergence only, JS-divergence*Support},
-	legend style={legend pos=north west,font=\tiny}]
+	legend style={legend pos=north east,font=\tiny}]
     ]
 % Support
 \addplot coordinates {(0,0) (5,2) (10,2) (15,2) (20,2) (25,3) (30,4) (35,6) (40,14) (45,25) (50,28) (55,30) (60,38)
@@ -129,13 +138,14 @@ chose DBpedia and LinkedMDB in order to evaluate our ILP-extension.
 \end{figure}
 
 \begin{figure}
+\caption{Number of interesting rules per runtime extracted }
 \begin{tikzpicture}[scale=1.0]
  \begin{axis}[
 	width=15cm, height=10cm,
-        xlabel=\textsc{Runtime ($ms$)},
-        ylabel=\textsc{\#Interesting rules},
+        xlabel=\textsc{\#Nodes per lattice level},
+        ylabel=\textsc{\#Interesting rules/$ms$},
         legend entries={Support only, KL-divergence*Support, KL-divergence only, JS-divergence*Support},
-	legend style={legend pos=north west,font=\tiny}]
+	legend style={legend pos=north east,font=\tiny}]
     ]
 \addplot coordinates {(5,0.0004473272) (10,0.0001799694) (15,0.0001031832) (20,7.566586e-05) (25 ,
 9.266695e-05) (30,0.0001019680) (35,0.0001350165) (40,0.0002801457) (45,0.0004596349) (50 ,
@@ -167,7 +177,7 @@ chose DBpedia and LinkedMDB in order to evaluate our ILP-extension.
 	xlabel=\textsc{Recall},
 	ylabel=\textsc{Precision},
 	legend entries={Support only, KL-divergence*Support, KL-divergence only, JS-divergence*Support},
-	legend style={legend pos=north west,font=\tiny}]
+	legend style={legend pos=north east,font=\tiny}]
       ]
   \addplot coordinates {(0,0.08527132) (0.03741496,0.08527132) (0.4591837,0.5212355) (0.4795918,0.3691100)
 (0.4931973,0.3072034)
@@ -322,7 +332,7 @@ On the
 	xlabel=\textsc{Recall},
 	ylabel=\textsc{Precision},
         legend entries={Support only, KL-divergence*Support, KL-divergence only, JS-divergence*Support},
-	legend style={legend pos=north west,font=\tiny}]
+	legend style={legend pos=north east,font=\tiny}]
       ]
   \addplot coordinates {(0.0,0.6) (0.05769231,0.6) (0.05769231,0.5) (0.05769231,0.24) (0.2980769 ,
 0.5961539) (0.2980769,0.4428571) (0.5384616,0.5773196) (0.6442308,0.5630252) (0.75,0.5909091) (1 ,
