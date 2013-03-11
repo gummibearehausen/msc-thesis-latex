@@ -16,7 +16,8 @@ Moreover, searching for rules with numerical intervals requires very expensive q
 any significant confidence gain.
 We propose a preprocessing step and an extension to ILP top-down algorithm, with the objective of efficiently learning
 rules with interesting intervals for numerical attributes, i.e., rules which present a significant gain when restricting
-a numerical attribute variable to a specific interval, combined with categorical constants.
+a numerical attribute variable to a specific interval, by trying to predict whether a rule has any interesting
+interval .
 In the preprocessing step, we build a lattice that expresses the correlations between a root numerical attribute and
 multiple categorical relations and their constants, while in the refinement step of ILP, we query this lattice in order
 to know whether it is interesting to search for numerical intervals, as well as obtain a list of refinement
