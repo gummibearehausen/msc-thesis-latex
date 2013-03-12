@@ -892,10 +892,10 @@ used.
     \begin{equation}
       D_{KL}(P||Q)=\sum_{\substack{i}}\ln\left(\cfrac{P(i)}{Q(i)}\right)*P(i)
     \end{equation}
- \item Chi-squared ($\chi^2$):
-    \begin{equation}
-      D_{\chi^2}(P||Q)=\sum_{\substack{i}}\cfrac{(P(i)-Q(i))^2}{P(i)}
-    \end{equation}
+ %\item Chi-squared ($\chi^2$):
+ %  \begin{equation}
+ %    D_{\chi^2}(P||Q)=\sum_{\substack{i}}\cfrac{(P(i)-Q(i))^2}{P(i)}
+ %  \end{equation}
  \item Jensen-Shannon~\cite{17795}:
     \begin{equation}
       D_{JS}(P||Q)=\cfrac{1}{2}D_{KL}(P||M)+\cfrac{1}{2}D_{KL}(Q||M), 
@@ -906,11 +906,10 @@ Where $P$ and $Q$ are discrete probability distributions to be compared and $M=\
 context, these distributions would be the frequency histogram normalized to 1, and nodes directly connected by edges
 would have their distributions compared.
 
-As discussed in~\cite{17795}, although Jensen-Shannon is computationally more expensive, it has the advantage of being
-a symmetric and smoothed version of the Kullback-Leibler measure.
+As discussed in Section~\ref{sec:kldiv}, although Jensen-Shannon is computationally more expensive, it has the advantage
+of being a symmetric and smoothed version of the Kullback-Leibler measure. 
 
-These divergence measures are important for identifying potential accuracy distributions. If the divergence between
-the
+These divergence measures are important for identifying potential accuracy distributions. If the divergence between the
 frequency distributions of a parent and child node is big, that means that if we have a rule with the parent node as
 body and the additional literal from the child as head, its accuracy distribution will not be uniform and therefore
 potentially be interesting for searching for refined-rules with numerical intervals.
