@@ -6,17 +6,17 @@ In this chapter relevant work related to the thesis topic will be briefly presen
 more details how Inductive Logic Programming (ILP) works. Later, in Section~\ref{sec:rw-arm} we briefly present
 association rule mining highlighting concepts relevant to this thesis. In Section~\ref{sec:rw-discretization}, we
 talk about discretization of numerical attributes and discuss the most popular unsupervised methods. After that, we
-present in section~\ref{sec:rw-miningOptimizedRules} a method for mining rules optimized numerical intervals. In
-section~\ref{sec:rw-infotheoreticmeasures}, we introduce the information-theoretical measures used in this thesis,
-and finally, in sections~\ref{sec:rw-semanticWeb} and~\ref{sec:rw-lod}, we give a quick overview about Semantic Web
+present in Section~\ref{sec:rw-miningOptimizedRules} a method for mining rules optimized numerical intervals. In
+Section~\ref{sec:rw-infotheoreticmeasures}, we introduce the information-theoretical measures used in this thesis,
+and finally, in Sections~\ref{sec:rw-semanticWeb} and~\ref{sec:rw-lod}, we give a quick overview about Semantic Web
 and Linked Open Data.
 
 
 \section{Logic Programming}
 \label{sec:rw-lp}
 
-In this section, basic logic programming and deductive database terminology such as \emph{literal}, \emph{clause},
-\emph{program clause}, \emph{datalog clause} and \emph{hypothesis} will be presented. We use terminology and
+In this Section, basic logic programming and deductive database terminology such as \emph{literal}, \emph{clause},
+\emph{program clause}, \emph{Datalog clause} and \emph{hypothesis} will be presented. We use terminology and
 definitions described in \citet{DBLP:books/sp/Lloyd87} and \citet{LavracDz94}.
 
 Firstly, it is important to
@@ -51,7 +51,7 @@ A \emph{program clause} is a clause which contains exactly one positive literal.
 \end{center}
 
 A \emph{Datalog clause} is a program clause with no function symbols with arity greater different from zero. That
-means that only variables and constants can be used as predicate arguments. A datalog clause is considered \emph{safe}
+means that only variables and constants can be used as predicate arguments. A Datalog clause is considered \emph{safe}
 if all the variables present in the head literal $T$ are also present in the body. Moreover, it may also allow negated
 literals in the body, as long as every variable existent in a negated body literal are also be present in a
 non-negated body literal.
@@ -139,7 +139,7 @@ $daughter(X,Y)$.
   \end{center}
 \end{table}
 
-If we consider, for example, the language of safe datalog clauses, it is possible to formulate the following complete
+If we consider, for example, the language of safe Datalog clauses, it is possible to formulate the following complete
 and consistent hypothesis:
 
 \begin{center}
@@ -192,7 +192,7 @@ These properties are the basis for two main search approaches:
  \item Top-down: starts with more general clauses and searches for most general consistent specializations
 \end{itemize}
 
-As in this thesis we work only with the top-down approach, we will discuss it in more details in the next subsection.
+As in this thesis we work only with the top-down approach, we will discuss it in more details in the Section.
 Further information about bottow-up approach can be found in \citet{DBLP:journals/ml/LavracD96}.
 
 \subsection{Top-Down ILP}
@@ -272,8 +272,8 @@ As shown in \citet{DBLP:journals/ngc/GottlobLS99}, the complexity of ILP resides
 hierarchy and it is $\Sigma_2^P$-complete. $\Sigma_2^P$ means that it has complexity $NP^{NP}$, and that happens
 because there are two interlaced sources of $NP$ complexity class:
 \begin{itemize}
- \item Choice problem, which is $NP$
- \item Checking problem, which is $co$-$NP$
+ \item The choice problem, which is in the $NP$ class.
+ \item The checking problem, which is in the $co$-$NP$ class.
 \end{itemize}
 
 The choice problem, in ILP, is the the problem of searching in the hypothesis space, while the checking problem is the
@@ -307,7 +307,7 @@ subsequently discussed.
 
 \subsection{Measures}
 
-In this subsection we will discuss measures used for selecting interesting rules in the mining process.
+In this Section we will discuss measures used for selecting interesting rules in the mining process.
 
 As defined in~\citet{Agrawal:1993:MAR:170036.170072}, a transaction $\mathcal{T}$ supports an itemset
 $\mathcal{X} \subseteq \mathcal{I}$ if $\mathcal{X} \subseteq
@@ -565,22 +565,23 @@ processes.
 \section{Discretization of Numerical Attributes}
 \label{sec:rw-discretization}
 
-Discretization of constinuous features is a very important tool which is frequently used in statistics, data mining
-and machine learning. It is a pre-processing technique which is used for reducing the effects of observation errors.
+Discretization of continuous features is a very important tool which is frequently used in statistics, data mining
+and machine learning. It is a preprocessing technique which is used for reducing the effects of observation errors.
 It is basically a form of quantization where the original data values in a given interval are replaced by a
 representative value of that interval.
 
 Discretization techniques can be divided in supervised and unsupervised methods. The first requires the objects to
-be labeled with classes, and the domain is discretized with the objetive of reducing the class entropies. The second
+be labeled with classes, and the domain is discretized with the objective of reducing the class entropies. The second
 one does not consider object classes, only object frequencies. Unsupervised methods normally require the number of
 buckets to be beforehand defined.
 
 Various different supervised and unsupervised methods for the discretization of continuous features are discussed in
 \citet{Dougherty95supervisedand}. To build the lattice, we don not use labels for the examples so we just use
-unsupervised methods.
+unsupervised methods. The discretization of numerical attributes plays a key role in this thesis, as it allows us to
+consistently compare how different populations are distributed along a given attribute.
 
 Supervised methods can be used for finding interesting intervals in the rules, by considering positive and negative
-examples as labels. However, it is out of the scope of this thesis, thus we will not discuss these in detail.
+examples as labels. However, as it is out of the scope of this thesis, we will not discuss these in detail.
 
 \subsection{Equal Width}
 This unsupervised discretization method consists of simply querying both the maximum and minimum values of the root's
@@ -590,7 +591,7 @@ numerical attribute, then splitting this interval into $k$ buckets of same width
  w=\cfrac{max-min}{k}
 \end{equation}
 
-It's the simples and most straightforward discretization method, but its main problem is that it is highly
+It's the simplest and most straightforward discretization method, but its main problem is that it is highly
 sensitive to outliers that may drastically skew the resulting distribution.
 
 \subsection{Equal Frequencies}
@@ -629,7 +630,7 @@ confidence threshold.
 \end{itemize}
 
 In~\citet{Brin99miningoptimized}, the two dimensional case with two different numerical attributes is also discussed,
-however, in this section we will focus on the single numerical attribute case.
+however, in this Section we will focus on the single numerical attribute case.
 
 Basically, it first takes the transactions with numerical attribute $A_1$ and discretizes its numerical domain of size
 $n$ into $b < n$ buckets, in order to reduce the complexity of the algorithm. It uses a supervised bucketing algorithm,
@@ -723,7 +724,7 @@ With that, the probability distribution of $X$ is defined by:
 \end{equation}
 
 Information theoretic measures are defined over probability distributions. They can measure the importance of an
-attribute, attribute association, dissimilarity, or similarity of populations. In the next subsections, we will
+attribute, attribute association, dissimilarity, or similarity of populations. In the next Sections, we will
 discuss some of the most important measures.
 
 \subsection{Shannon's Entropy}
@@ -805,7 +806,7 @@ to do more useful work and develop systems that can support trusted interactions
 
 It consists of a set of technologies and formats which aim to make web resources more readily accessible to automated
 processes. The Semantic Web Stack, in Figure~\ref{fig:sematicWebLayer}\footnote{Semantic Web - XML2000, slide 10".
-W3C: \url{http://www.w3.org/2000/Talks/1206-xml2k-tbl/slide10-0.html}}, illustrates the semantic web architecture
+W3C: \url{http://www.w3.org/2000/Talks/1206-xml2k-tbl/slide10-0.html}}, illustrates the Semantic Web architecture
 showing how its standards are organized and how it extends the classical hypertext web.
 
 \begin{figure}
@@ -839,6 +840,10 @@ Unary/Binary Datolog Rule Markup Language\footnote{\url{http://ruleml.org/}} (Ru
 derivation rules via XML Schema.
 \end{itemize}
 
+All these technologies are extremely important to this thesis. To illustrate that, all the knowledge bases used are
+stored as RDF triples, we access them with SPARQL queries, we exploit OWL classes and properties to optimize our
+learning algorithm, and we can express the learned Datalog rules in SWRL.
+
 %ruleml.org/talks/RuleML-Family-PPSWR06-talk-up.ppt
 
 %http://ruleml.org/1.0/exa/
@@ -869,7 +874,7 @@ USCensus\footnote{\url{http://www.linkedmdb.org/}}.
 With such linkage, it allows
 applications to exploit the extra information these datasets can provide, integrating facts from various different
 sources. Figure~\ref{fig:lod} shows the latest version of the whole Linked Open Data cloud
-diagram, and Figure~\ref{fig:lodZoom} zooms to and highlights some of the datasets used in this thesis, also sho
+diagram, and Figure~\ref{fig:lodZoom} zooms to and highlights some of the datasets used in this thesis.
 
 \begin{figure}[h!]
 \begin{center}

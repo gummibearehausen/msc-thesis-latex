@@ -8,13 +8,19 @@ change the knowledge base back-end to RDF3X, in order to improve the SPARQL quer
 \section{Knowledge Base Back-end}
 
 For storing and retrieving RDF data we use RDF3X \citep{Neumann:2010:RES:1731351.1731354}. It has the advantage of being
-specialized and optimized for RDF triples, using a strong indexing approach with compressed B$^+$-Tree indices for each
-of six permutations of \emph{subject (S)}, \emph{predicate (P)} and \emph{object (O)}:
+specialized and optimized for RDF triples, using a strong indexing approach with compressed B$^+$-Tree indices for all
+the six permutations of \emph{subject (S)}, \emph{predicate (P)} and \emph{object (O)}:
 \emph{SPO},\emph{SOP},\emph{OSP},\emph{OPS},\emph{PSO} and \emph{POS}.
 
-All the facts are stored in a single triples table, with no schema, over which the indices are created. Moreover, one
-important characteristic of the indices is that they feature count-aggregated variants in each of the one- and
-two-dimensional projections.
+All the facts are stored in a single triples table, with no schema, over which the indices are created. Other six
+additional aggregated indices for all the pairs of \emph{subject}, \emph{predicate} and \emph{object}
+(\emph{SP},\emph{SO},\emph{OS},\emph{OP},\emph{PS} and \emph{PO}). These indices store only two of the three
+columns of a triple and contain an aggregated count for the number of occurrences of this pair among all the triples.
+
+Moreover, all the literals in the facts table are replaced by ids using a mapping dictionary. This brings two important
+benefits: the compression of the facts table; the simplification for the query processor, which only is required to
+compare ids instead of eventually long strings. Because of that, it requires two additional indices, one that maps
+literals to ids, and another that maps ids to strings.
 
 The query processor explores the exhaustive indexation by relying mostly on merge-joins over the sorted index lists, and
 building operator trees that preserve a convenient ordering which allows further merge-joins. When not possible,
@@ -115,38 +121,7 @@ correspondent query would be:
 \end{center}
 
 
-\subsection{Searching Rules in Correlation Lattice}
-\label{sec:searchRulesInCL}
 
-In the lattice itself, it is possible to extract valuable rules. Given its characteristic of all the relations being
-joined on the same root argument, these extracted rules represent how different categories are related along root's
-numberical
-constants.
-
-Every non-root node in the correlation lattice can be understood as the body of a rule, and the new literal from any of
-its children can be understood as the head. 
-
-Below, we show an example using the notation defined at~\ref{sec:notation}. For the node $r a_1 b_1$ with children $r
-a_1 b_1 c_1$, $r a_1 b_1 c_2$ and $r a_1 b_1 d_1$, we can easily evaluate three rules:
-
-\begin{align*}
-Rule_1: \quad &c_1\text{ :- }a_1,b_1,r \\ 
-&supp(Rule_1) = h(r a_1 b_1 c_1) \\
-&acc(Rule_1) = \frac{h(r a_1 b_1 c_1)}{h(a_1,b_1,r)} \\ \\
-Rule_2: \quad &c_2\text{ :- }a_1,b_1,r \\
- &supp(Rule_2) = h(r a_1 b_1 c_2) \\
- &acc(Rule_2) = \frac{h_i(r a_1 b_1 c_2)}{h(a_1,b_1,r)} \\ \\
-Rule_3: \quad &d_1\text{ :- }a_1,b_1,r \\
- &supp(Rule_3) = h(r a_1 b_1 d_1) \\
- &acc(Rule_3) = \frac{h(r a_1 b_1 d_1)}{h(a_1,b_1,r)} 
-\end{align*}
-
-Therefore, in order to search for rules in the correlation lattice, we can simply perform a breadth-first traversal in
-the lattice, and do such evaluation for every node. 
-
-Subsequently we can analyze the frequency and confidence distributions and determine whether any of the rules are
-interesting, using any of the techniques such as \citet{Brin99miningoptimized}, discussed
-in~\ref{sec:rw-miningOptimizedRules}, in order to search for optimal intervals.
 
 
 % Substitution for constants only in categorical relations, query by support
