@@ -390,10 +390,14 @@ Additionally, we have other two patterns that are a combination of ones mentione
 \emph{hasPlayers(\textbf{X},\textbf{Y}),supportsTeam(\textbf{Y},\textbf{X})}
 \end{itemize}
 
-With that we could easily obtain all the possible pair of joinable relations for each join pattern, avoiding testing
-hypothesis containing invalid join pairs.
+These are the relevant possible join patterns. The cross-product case, for instance
+\emph{livesIn(X,Y),wasBornIn(Z,W)}, is not allowed by our learning algorithm, since it does not have any senseful
+meaning.
 
-\subsubsection{Exploiting Relation Range and Domain Types}
+For each of the six allowed join patterns, we can precompute all the valid pair of joinable relations, so that
+we can automatically prune any hypothesis containing invalid pairs of joining relations.
+
+\subsubsection{Exploiting RDF Schema Properties}
 
 A knowledge base is expected to have an ontology defining the structure of the stored data (the types of entities and
 their relationships). Additionally, every relation's range (type of \ord{1} argument) and domain (type of \ord{2}
@@ -606,19 +610,19 @@ For the relation $quarterOfBirth(X,Z)$, we have the 4 year quarters as possible 
   \end{tabular}
 \end{center}
 
-For the relation $hasEducation(X,W)$, we have 17 different levels as possible constants for $W$:
+For the relation $hasEducation(X,W)$, we have 16 different levels as possible constants for $W$:
 
 \begin{center}
   \begin{tabular}{l l}
-    N/A (less than 3 years old) 	&High school graduate                 		\\
-    No school completed			&Some college, less than 1 year			\\
-    Nursery school to grade 4   	&One or more years of college, no degree	\\
-    Grade 5 or grade 6          	&Associate's degree				\\
-    Grade 7 or grade 8          	&Bachelor's degree				\\
-    Grade 9                     	&Master's degree				\\
-    Grade 10                    	&Professional school degree			\\
-    Grade 11                    	&Doctorate degree				\\
-    Grade 12 no diploma 		&						\\
+    	
+    No school completed			&High school graduate                 		\\
+    Nursery school to grade 4   	&Some college, less than 1 year			\\
+    Grade 5 or grade 6          	&One or more years of college, no degree	\\
+    Grade 7 or grade 8          	&Associate's degree				\\
+    Grade 9                     	&Bachelor's degree				\\
+    Grade 10                    	&Master's degree				\\
+    Grade 11                    	&Professional school degree			\\
+    Grade 12 no diploma 		&Doctorate degree				\\
   \end{tabular}
 \end{center}
 
@@ -636,7 +640,7 @@ be different from each other them and different from the overall income distribu
 
 Figure~\ref{fig:income-education} shows the discrete probability distributions of income from each category's
 sub-population. On the left, we have the four income distributions of people born in Q1, Q2, Q3 and Q4, and on the
-right, the 17 different income distributions of people having each educational level. As it is easily noticeable, for
+right, the 16 different income distributions of people having each educational level. As it is easily noticeable, for
 all the 4 year quarters, the income distribution is pretty much the same, while the educational level, which has great
 influence on the income, the distributions are very different.
 
@@ -808,9 +812,9 @@ $h_i(nxy)$ assuming that $x$ and $y$ are independent given common parent $n$.
  &= \cfrac{h_i(nx)}{h_i(n)} \\ 
  p_i(y|nx) &= p_i(y|p) \\ 
  &= \cfrac{h_i(ny)}{h_i(n)} \\ \\ 
- \hat{h_i}(nxy) &= p_i(x|ny)p_i(y|n)*h_i(n) \\ 
+ \hat{h_i}(nxy) &= p_i(x|ny)p_i(y|n)h_i(n) \\ 
  &= p_i(x|p)h_i(yp) \\ 
- \hat{h_i}(nxy) &= p_i(y|nx)p_i(x|n)*h_i(n) \\ 
+ \hat{h_i}(nxy) &= p_i(y|nx)p_i(x|n)h_i(n) \\ 
  &= p_i(y|n)h_i(xn)
 \label{eq:condindep}
 \end{align}
@@ -890,7 +894,7 @@ used.
 \begin{itemize}
  \item Kullback-Leibler~\cite{Kullback51klDivergence}: 
     \begin{equation}
-      D_{KL}(P||Q)=\sum_{\substack{i}}\ln\left(\cfrac{P(i)}{Q(i)}\right)*P(i)
+      D_{KL}(P||Q)=\sum_{\substack{i}}\ln\left(\cfrac{P(i)}{Q(i)}\right)P(i)
     \end{equation}
  %\item Chi-squared ($\chi^2$):
  %  \begin{equation}
@@ -998,10 +1002,8 @@ order to build frequency histograms and compare distributions. In this section, 
 such discretization.
 
 The buckets used throughout the whole correlation lattice should be consistent, and the bucketing method as well as
-the
-boundaries are specified in the very beginning with the root node. It should have as input an arbitrarily defined
-number
-of buckets $k$.
+the boundaries are specified in the very beginning with the root node. In addition they require as input an
+user-defined parameter $k$, which defines the number of buckets in all histograms.
 
 Since we do not consider any labels for the examples, we use one of the unsupervised discretization methods presented
 in Section~\ref{sec:rw-discretization}: equal frequencies or equal width. We choose the method according to the domain
@@ -1013,6 +1015,40 @@ characteristics and define the bucket boundaries based on the overall population
 The ILP core learning algorithm requires some modifications in order to support the correlation lattice. As stated
 before, we use top-down search, starting from the most general clauses then further refining them by introducing
 new substitutions or literals until a stopping criteria is reached.
+
+
+\subsection{Searching Rules in Correlation Lattice}
+\label{sec:searchRulesInCL}
+
+In the lattice itself, it is possible to extract valuable rules. Given its characteristic of all the relations being
+joined on the same root argument, these extracted rules represent how different categories are related along root's
+numerical constants.
+
+Every non-root node in the correlation lattice can be understood as the body of a rule, and the new literal from any of
+its children can be understood as the head. 
+
+Below, we show an example using the notation defined at~\ref{sec:notation}. For the node $r a_1 b_1$ with children $r
+a_1 b_1 c_1$, $r a_1 b_1 c_2$ and $r a_1 b_1 d_1$, we can easily evaluate three rules:
+
+\begin{align*}
+Rule_1: \quad &c_1\text{ :- }a_1,b_1,r \\ 
+&supp(Rule_1) = h(r a_1 b_1 c_1) \\
+&acc(Rule_1) = \frac{h(r a_1 b_1 c_1)}{h(a_1,b_1,r)} \\ \\
+Rule_2: \quad &c_2\text{ :- }a_1,b_1,r \\
+ &supp(Rule_2) = h(r a_1 b_1 c_2) \\
+ &acc(Rule_2) = \frac{h_i(r a_1 b_1 c_2)}{h(a_1,b_1,r)} \\ \\
+Rule_3: \quad &d_1\text{ :- }a_1,b_1,r \\
+ &supp(Rule_3) = h(r a_1 b_1 d_1) \\
+ &acc(Rule_3) = \frac{h(r a_1 b_1 d_1)}{h(a_1,b_1,r)} 
+\end{align*}
+
+Therefore, in order to search for rules in the correlation lattice, we can simply perform a breadth-first traversal in
+the lattice, and do such evaluation for every node. 
+
+Subsequently we can analyze the frequency and confidence distributions and determine whether any of the rules are
+interesting, using any of the techniques such as \citet{Brin99miningoptimized}, discussed
+in~\ref{sec:rw-miningOptimizedRules}, in order to search for optimal intervals.
+
 
 \subsection{Querying the Correlation Lattice}
 \label{sec:queryingTheLattice}
@@ -1119,7 +1155,8 @@ can much more easily find the best suggestions for any possible head literal wit
 First we need to introduce the search for numerical intervals as a possible refinement in the top-down ILP refinement
 step. Such a refinement would be possible only if the body contains a literal which is the root of a correlation
 lattice and whose numerical attribute variable is free, as shown in Algorithm~\ref{alg4}. If so, then we can try to
-predict whether the clause is interesting by calling the function \FuncSty{isClauseInteresting}, which is shown in
+predict whether the clause is interesting by calling the function \FuncSty{predictInterestingness}, which is shown
+in
 Algorithm~\ref{alg6}.
 
 
@@ -1135,7 +1172,7 @@ Minimum interestingness value allowed \\}
   $r_{new} \leftarrow lit_{new}.relation$\;
   \If{$arg_{new} = 1$ \textbf{and} $r_{new}$ is numerical \textbf{and} $\exists$ $lattice(r_{new})$} {
     $root \leftarrow$ $lattice(r_{new}).root$\;
-    \If{\FuncSty{isClauseInteresting(}$clause$,$root$,$interestingnessThreshold$\FuncSty{)}} {
+    \If{\FuncSty{predictInterestingness(}$clause$,$root$,$interestingnessThreshold$\FuncSty{)}} {
 	\FuncSty{checkNumericalRanges(}$clause$,$lit_{new}$,$node$\FuncSty{)}\;
     }
   }
@@ -1164,7 +1201,7 @@ Minimum interestingness value allowed \\}
 \end{algorithm}
 
 \begin{algorithm}[!h]
- \caption{\FuncSty{isClauseInteresting}}
+ \caption{\FuncSty{predictInterestingness}}
  \SetKwFunction{checkNumericalRanges}
  \KwIn{\textbf{Input:} $clause$: Clause with numerical literal, $root$: Correlation lattice root node,
 $interestingnessThreshold$: Minimum interestingness value allowed }

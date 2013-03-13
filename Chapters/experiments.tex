@@ -4,6 +4,10 @@
 In order to evaluate our extension of ILP, the correlation and lattice, and the different interestingness measures, we
 perform a series of experiments on Linked Data.
 
+First of all, in all the experiments, we define as interesting rule a refined-rule $r_{ref}$ which satisfies the
+confidence threshold $minConf=0.75$ and support threshold $minSupp=10$, and has a confidence gain in relation to its
+base-rule $r_{base}$ of at least $1.25$ (with gain defined as $conf(r_{ref})/conf(r_{base})$).
+
 In the first experiment, we compare different measures by building same-sized correlation lattices on the
 $hasIncome(X,Y)$ relation from the USCensus, then searching for interesting rules with intervals for $Y$ inside the
 lattice itself as described in Section~\ref{sec:searchRulesInCL}. The lattices are build by greedily choosing the top-k
@@ -36,8 +40,8 @@ Dictionary\footnote{\url{http://www.census.gov/acs/www/Downloads/data_documentat
       lanp	& Language Spoken at Home	&	104	\\
       esr	& Employment Status		&	6	\\
       dphy	& Physical Difficulty		&	2	\\
-      schl	& Educational Level		&	17	\\	
-      occp	& Occupation			&	470	\\
+      schl	& Educational Level		&	16	\\	
+      %occp	& Occupation			&	470	\\
       sch	& School Enrollment		&	3	\\
       rel	& Relationship (to household owner)		&	12	\\
       esp	& Employment Status of Parents	&	8	\\
@@ -50,7 +54,7 @@ Dictionary\footnote{\url{http://www.census.gov/acs/www/Downloads/data_documentat
 \end{table}
 
 We build the lattice on a training partition of USCensus of size 1.7GB containing $884365$ people entities, and test the
-learned rules on a test set of size 0.4GB with $369024$ people entities. Therewith, we can evaluate the accuracy of the
+learned rules on a test set of size 0.5GB with $369024$ people entities. Therewith, we can evaluate the accuracy of the
 learned rules. 
 
 The plot from Figure~\ref{fig:uscensus:Nodes-GoodRules} shows the number of rules learned per lattice size (defined by
@@ -58,12 +62,15 @@ number of nodes per level). The KL-divergence only has the worst performance, as
 support are more likely to have higher interestingness. The other three measures perform roughly similarly, however, for
 fewer nodes, it performs worse than others catching up later. This can be explained by the fact that it gives
 preference to very high support categories which cover the majority of the population, such as $hasDeficiency(X,no)$,
-which tend to have a distribution similar to its superpopulation. 
+which tend to have a distribution similar to overall population. 
 
-Analysing the plot from Figure~\ref{fig:uscensus:Nodes-Runtime}, it is clear that using support only as interestingness
+Analyzing the plot from Figure~\ref{fig:uscensus:Nodes-Runtime}, it is clear that using support only as interestingness
 measure has a high cost. As it concentrates on larger categories, the queries required for building the lattice are much
-more expensive. JS-divergence and L-divergenc combined with support are much more efficient than support only, as they
-can learn about the same amount of rules with on average less than  
+more expensive. JS-divergence and KL-divergence combined with support are much more efficient than support only, as they
+can learn about the same amount of rules in significantly shorter runtime
+
+An important effect of divergence in the interestingness measure can be clearly observed in
+Figure~\ref{fig:uscensus:Nodes-RulesPerRuntime}. 
 
 
 Since the USCensus data is completely joined on person entities, and all categorical relations have literals
@@ -503,20 +510,20 @@ $1.37$:
       & Refined Rule				& Conf 	& Gain \\
     \midrule
       country(X,canada) :-&director(X,Z), bornIn(Z,canada), language(X,english), budget(X,Y), Y$\leq 80000$ &
-      0.83	& 0.36 \\ \hline
+      0.83	& 2.30 \\ \hline
       director(X,fritzLang) :-&writer(X,Z), spouse(Z,fritzLang), runtime(X,Y), Y$\geq 6800s$ & 
-      0.82	& 0.37 \\ \hline
+      0.82	& 2.21 \\ \hline
       writer(X,sylvesterStallone) :-&starring(X,sylvesterStallone), subject(X,englishLanguageFilms),
       budget(X,Y), Y$\in [6M,31M]$ &
-      0.89	& 0.48 \\ \hline
+      0.89	& 1.85 \\ \hline
       producer(X,clintEastwood) :-&director(X,clintEastwood), starring(X,clintEastwood),
       subject(X,englishLanguageFilms), budget(X,Y), Y$\geq 13M$ &
-      1.00	& 0.73 \\ \hline
+      1.00	& 1.37 \\ \hline
       starring(X,clintEastwood) :- &budget(X,Y), director(X,clintEastwood), starring(A,clintEastwood), 
       subject(A,englishLanguageFilms), Y$\in [930K,25M]$&
-      0.82	& 0.56 \\ \hline
-      starring(X,Z) :-&writer(X,Z), country(X,uk), distributor(X,bbc),r untime(X,Y), Y$\leq 4080s$ &
-      0.9	& 0.53 \\ \hline
+      0.82	& 1.46 \\ \hline
+      starring(X,Z) :-&writer(X,Z), country(X,uk), distributor(X,bbc), runtime(X,Y), Y$\leq 4080s$ &
+      0.9	& 1.70 \\ \hline
 
     \bottomrule
   \end{tabular}
@@ -550,7 +557,7 @@ Table~\ref{tab:uscensusRuleExamples}.
 
 The results obtained in the first experiment indicate the proposed divergence combined with support measures have the
 potential to be used as heuristics in order to reduce the search space of rules with numerical and categorical
-constants, being much more efficient than support only or divergence only.
+constants, being much more efficient than support only or divergence only. 
 
 In our last experiment, we apply it into the core-ILP and try to evaluate our proposed ILP extension on LinkedMDB and
 DBpedia. Results indicate that indeed, with the divergence measures, the precision of the interestingness predictions
@@ -558,7 +565,7 @@ is higher for lower recall. Moreover, KL-divergence*support seems to perform sli
 However, since the data is not ideal, it is premature to draw any conclusions. 
 [Elaborate later]
 
-[Separete section?]
+[Separate section?]
 
 - UScensus experiment shows the advantage of combining divergence with support
 
