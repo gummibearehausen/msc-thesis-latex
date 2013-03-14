@@ -1,56 +1,56 @@
 \chapter{Learning Rules With Numerical and Categorical Attributes}
 \label{cl:intro}
 
-In this chapter, we will discuss what kinds of rules we are interested in, define what categorical properties are,
+In this chapter, we discuss what kinds of rules we are interested in, define categorical properties,
 describe in more details a correlation lattice, how to build it and integrate it into the core ILP learning
 algorithm.
 
 \section{Interesting Rule Definition}
 
-In this section, we formally define what kind of rules we are interested in obtaining with the algorithm proposed in
-this thesis. As briefly explained in the introduction, the objective is to learn rules with numerical properties,
-focusing on searching ranges in the numerical attribute's domain that satisfy support and confidence thresholds.
+In this section, we formally define what kind of rules we are interested in. As briefly explained in the introduction,
+the objective is to learn rules with numerical properties, focusing on searching intervals in the numerical attribute's
+domain that satisfy support and confidence thresholds.
 
-In this context, we define a rule with free numerical variable as \emph{base-rule} and the same rule with the
-numerical variable restricted to a specific interval or value as a \emph{refined-rule}. For instance, if we have
+In this context, we define a rule with free numerical variable as a \emph{base-rule} and the same rule with the
+numerical variable restricted to a specific interval as a \emph{refined-rule}. For instance, if we have
 two rules $r_1$ and $r_2$:
+
 \begin{align*}
 r_1: employmentStatus(X,unemployed)&\text{ :- }hasIncome(X,Y) \\
 r_2: employmentStatus(X,unemployed)&\text{ :- }hasIncome(X,Y),Y>100000
 \end{align*}
 
-Then we say that $r_1$ is the base-rule of $r_2$ and $r_2$ is a refined-rule of $r_1$.
+then we say that $r_1$ is the base-rule of $r_2$, and $r_2$ is a refined-rule of $r_1$.
 
-Searching numerical intervals for a base-rule that already satisfies confidence threshold is not so interesting. The
-base-rule itself implicitly specifies an interval which covers the whole numerical attribute domain from any possible
-refined-rules. Moreover, even if for some specific range we have a higher confidence value, the gain in comparison to
-its base-rule would not be very significant as the base-rule already presents a high confidence value (at least higher
-than the specified threshold).
+Searching numerical intervals for a base-rule that already satisfies the confidence threshold is usually not so
+interesting, since the base-rule itself already covers the whole numerical attribute
+domain. Moreover, even if for some specific interval we have a higher confidence value, the gain in comparison to
+its base-rule would not be very significant, since the base-rule already presents a fairly high confidence value.
 
-More precisely, if we have a confidence threshold $TS_{conf}$, and define confidence gain from a refined-rule
-$r_2$ in comparison to its base-rule $r_1$ as $g_{r_2,r_1}$ as:
+More precisely, if we have a confidence threshold $minConf$, and define confidence gain from a refined-rule
+$r_2$ in comparison to its base-rule $r_1$, $gain_{r_2,r_1}$ as:
 
 \begin{equation}
- g_{r_2,r1}=\cfrac{conf_{r_2}}{conf_{r_1}}
+ gain_{r_2,r1}=\cfrac{conf_{r_2}}{conf_{r_1}}
 \end{equation}
 
-As we know that $r_1 \geq TS_{conf}$, then $g_{r_2,r_1}$ is upper-bounded by:
+since $r_1 \geq minConf$, then $gain_{r_2,r_1}$ is upper-bounded by:
 
 \begin{equation}
- g_{r_2,r1} \leq \cfrac{1}{TS_{conf}}
+ gain_{r_2,r1} \leq \cfrac{1}{minConf}
 \end{equation}
 
 More interesting for us would be base rules which satisfy the support threshold but do not satisfy the confidence
-threshold, or which satisfies a quite low confidence threshold. In such case, if we have a non-uniform confidence
-distribution along the buckets, it is possible that, for some specific intervals, its correspondent refined-rule
-satisfies both thresholds, therefore potentially having a significant confidence gain.
+threshold, or which satisfy a low confidence threshold. In such case, if we the confidence distribution along the
+buckets is non-uniform, it is possible that, for some specific intervals, its correspondent refined-rule satisfies both
+thresholds, therefore potentially having a significant confidence gain.
 
-In Figure~\ref{interestingnessExample}, we illustrate that with an example where positive examples and body
-support have completely different distributions and thus produce a very interesting confidence distribution. Such a
-distribution is obtained thanks to the divergent rule's positives (examples that satisfy the head and body) and body
-support (examples that support the body) distributions. This is shown in Figure~\ref{interestingnessDistribution},
-where we obtained these distributions by normalizing the frequency histograms
-from the rule's positive examples and body support.
+In Figure~\ref{interestingnessExample}, we illustrate that with a case where positive examples and body
+support have completely different distributions, and therefore, produce a very interesting confidence distribution. Such
+a distribution is possible because of the divergent rule's positives (examples that satisfy the head
+and body) and body support (examples that support the body) distributions. This is emphasized in
+Figure~\ref{interestingnessDistribution}, where we show the distributions obtained by normalizing the frequency
+histograms from Figure~\ref{interestingnessExample} (left).
 
 \begin{figure} [h!]
   \caption{Example of frequency histograms from body support and positives support (left), and resulting confidence
@@ -153,20 +153,20 @@ distribution (right)}
 
 \section{Categorical Property Definition}
 
-In this section, we formally define a categorical property as used in the correlation lattice. 
+In this section we formally define what is a categorical property as used in the correlation lattice. 
 
-First of all, a candidate relation must be joined with a root's non-numerical variable $X \in \mathcal{X}$ ,which will
-be used for joining with all the categorical properties.
+First of all, we consider properties that can be joined with a root's non-numerical variable $X \in \mathcal{X}$
+, which is used for joining with all the categorical properties.
 
-A candidate categorical relation $r(X,Z)$, where $X$ is the join variable and $Z$ is within
-a categorical domain $\mathcal{Z}$ with a finite number of categories $\{z_1,z_2,\ldots,z_n\}$, such that:
+A property $r(X,Z)$ is categorical if the variable $Z$ is within a categorical domain $\mathcal{Z}$ with a finite
+number of categories $\{z_1,z_2,\ldots,z_n\}$. This property should also be able to create categorical sub-populations
+of $\mathcal{X}$:
 
 \begin{center}
 $\mathcal{X}_{z_i}= \{ x | x \in \mathcal{X} \wedge \exists r(x,z_i) \}$ 
 \end{center}
 
-Typically, $|\mathcal{X}| \gg n$ and $\mathcal{X}_{z_i} \subseteq
-\mathcal{X}$ with $|\mathcal{X}_{z_i}| < |\mathcal{X}|$
+where typically, $|\mathcal{X}| \gg n$ and  $|\mathcal{X}_{z_i}| < |\mathcal{X}|$.
 
 \begin{table}[h!]
  \begin{center}
@@ -187,8 +187,7 @@ Typically, $|\mathcal{X}| \gg n$ and $\mathcal{X}_{z_i} \subseteq
 \end{table}
   
 For Table~\ref{tab:cat1}, if we define $\mathcal{X}=\{ x|\exists hasIncome(x,Y), Y \in \mathcal{Y} \}$, then we
-would
-have the following sub-populations of $\mathcal{X}$:
+would have the following sub-populations of $\mathcal{X}$:
 
 \begin{align*}
  \mathcal{X}_{male}&=\{ x|x \in \mathcal{X} \wedge \exists hasSex(x,male)\} \\
@@ -207,16 +206,16 @@ property $r(X,Z)$, such as $hasSex$, is defined as:
 $\mathcal{X}_{z_i} \cap \mathcal{X}_{z_j} = \emptyset, \quad \forall z_i,z_j \in \mathcal{Z}, i \neq j$ 
 \end{center}
 
-This definition of categorical property might be too restrictive, therefore, in the next sections, we broaden this
-definition by applying different techniques.
+This definition of categorical property might be too restrictive, therefore, we present ways of broadening this
+definition in the next sections.
 
 \subsection{Discretizing Numerical Properties into Categories}
 
-Numerical properties with very large or infinite domain can also be dealt as categorical, by simply applying a
+Numerical properties with very large or infinite domain can also be treated as categorical, by simply applying a
 bucketing
 function that maps its numerical domain into a finite set of $k$ buckets. For example, we can use a discretization
 function $b$ to turn a numerical property $r(X,Z)$, with $Z \in \mathbb{R}$, into a non-overlapping categorical
-% property:
+property:
 
 \begin{center}
  $b: \mathbb{R} \rightarrow \mathcal{B}$, where $\mathcal{B}=\{b_1,b_2,\dots ,b_k \}$
@@ -227,23 +226,24 @@ function $b$ to turn a numerical property $r(X,Z)$, with $Z \in \mathbb{R}$, int
 \end{center}
 
 This can be easily done with any discretization method, such as equal width or equal frequencies, which were
-presented on Section~\ref{sec:rw-discretization}.
+presented in Section~\ref{sec:rw-discretization}.
 
 \subsection{Combining Categorical Property with Linking Relation}
 We can also broaden this definition by composing a categorical property with linking relations. Therewith, it is
-possible to use categorical relations that do not directly join with root's join variable $X$
+possible to use categorical relations that do not directly join with root's join variable $X$.
 
 If a functional relation $r_1$ and a categorical $r_2$:
 
-$r_1(X,W) \equiv f_1 : \mathcal{X} \rightarrow \mathcal{W}$ \newline
-$r_2(W,Z),\quad Z \in \mathcal{Z}=\{z_1,z_2,\ldots,z_k\}$ is a categorical domain 
+\begin{align*}
+r_1(X,W),\quad &\text{such that }r_1(X,W) \equiv f_1 : \mathcal{X} \rightarrow \mathcal{W} \\
+r_2(W,Z),\quad &\text{where }Z \in \mathcal{Z}=\{z_1,z_2,\ldots,z_k\} 
+\end{align*}
 
-Then $r'(X,Z) \equiv r_1(X,W),r_2(W,Z) \equiv r_2(f_1(X),Z)$ is a composed categorical relation. 
+then $r'(X,Z) \equiv r_1(X,W),r_2(W,Z) \equiv r_2(f_1(X),Z)$ is a composed categorical relation. 
 
-With that, different knowledge bases can be interconnected by simply applying this definition with $owl$:$sameAs$
-as linking relation. This allows to broaden the set of categorical properties to be analyzed in the correlation
-lattice
-to those contained in interlinked datasets.
+With this idea, different knowledge bases can be interconnected by simply applying this definition with
+\emph{owl:sameAs} as linking relation. This allows to broaden the set of categorical properties to be analyzed in the
+correlation lattice to those contained in any interlinked dataset.
 
 \begin{table}[h!]
  \begin{center}
@@ -260,9 +260,10 @@ to those contained in interlinked datasets.
  \end{center}
 \end{table}
 
-Table~\ref{tab:cat2} illustrates that, as it contains data about profession, not existent in Table~\ref{tab:cat1}.
-By combining $owl$:$sameAs$ with $hasProfession$, we can also categorize the data from the first example into
-professions as follows:
+Table~\ref{tab:cat2} shows an example of facts from a source different from that of Table~\ref{tab:cat1}, containing
+\emph{owl:sameAs} relations linking person entities from both sources. By combining \emph{owl:sameAs} with
+\emph{hasProfession}, we can also categorize the data from the first example into
+professions:
 
 \begin{align*}
 \mathcal{X}_{teacher}&=\{ x|x \in \mathcal{X} \wedge \exists (owl:sameAs(x,W) \wedge hasProfession(W,teacher)\} \\
@@ -276,15 +277,15 @@ professions as follows:
 
 \subsection{Absence or Presence of a Property as a Category}
 
-Another possibility is to define categories for the presence or absence of supporting examples for properties. With
-this approach, one can also include non-categorical properties into the correlation lattice and have insight about how
+Another possibility is to define categories for the presence or absence of supporting facts of given property. With
+this approach, one can include non-categorical properties into the correlation lattice, and have insight about how
 the presence or absence of such property affects the distribution of a root's numerical attribute.
 
-In this case we must consider a property which does not have examples for all its domain. For example, the property
-\emph{isParentOf(x,y)} has as both domain and range type Person. If not all the Person instances of the knowledge base
-have supporting facts for the relation \emph{isParentOf}, then we can split the instances in two categories: the ones
-that are covered by the property and the ones that are not. For example, let \emph{hasIncome} be the root property and
-let's assume we have a knowledge base with the following facts:
+In this case we must consider a property which does not have examples for all its domain, such as the property
+\emph{isParentOf(x,y)}. If not all the person instances of the knowledge base have supporting facts for the relation
+\emph{isParentOf}, then we can split the instances in two categories: the ones that are covered by the property and the
+ones that are not. For example, let \emph{hasIncome} be the root property and let's assume we have a knowledge base with
+the following facts:
 
 \begin{table}[h!]
  \begin{center}
@@ -313,26 +314,27 @@ and its complement $\mathcal{X}_{parent}^{c} \subseteq \mathcal{X}$:
   &=\{mary,paul\} \\
 \end{align*}
 
-In this thesis we are under an open world assumption, meaning that by the absence of a given fact, we do
-not assume that its negation is true. Therefore, we do not consider negated literals in the hypothesis, we
-ignore the absence and just include the presence of properties in the lattice.
+In this thesis, we ignore the absence and just include the presence of properties in the lattice. We do it because we
+are under an open world assumption, meaning that by the absence of a given fact, we do not assume that its negation is
+true, and the datasets we use do not contain negated facts.
 
 \subsection{Notation Used}
 \label{sec:notation}
 
-As we will see in the next sections, in the correlation lattice all the relations are joined by the variable of
-a root's join argument $X$. So we will denote the presence of a property $a(X,Z)$ category as simply $a$, where the
-variable $Z$ is free and not set to any constant. If we have a categorical property $a(X,z_i)$ with $k$ different
-categories $z_i \in \mathcal{Z}=\{ z_1,z_2,\ldots,z_k\}$, we denote each of the $a(X,z_i)$ as $a_i$.
+As we discuss in the next sections, in the correlation lattice all the properties are joined by the root's
+non-numerical argument variable $X$. In order to facilitate the writing of long clauses, we define a conciser notation
+for literals. We denote the presence of a literal $a(X,Z)$ (where the variable $Z$ is free and not set to any constant)
+as simply $a$. If we have a categorical property $a(X,z_i)$ with $k$ different categories $z_i \in \mathcal{Z}=\{
+z_1,z_2,\ldots,z_k\}$, we denote each of the literals $a(X,z_i)$ as $a_i$.
 
-So, for example, if we set the root relation $r=hasIncome(X,Y)$ and categorical relations:
+For example, if we set the root relation $r=hasIncome(X,Y)$ and categorical relations:
 \begin{align*}
 a(X,Z)&=isMarriedTo(X,Z) \\
 b(X,W)&=hasSex(X,W), \quad W \in \mathcal{W} =\{male,female\} \\
 c(X,V)&=bornInMonth(X,V), \quad V \in \mathcal{V} =\{january,february,\ldots,december\}
 \end{align*}
 
-With such notation, we can write large clauses in a much more concise way, such as in the examples below:
+We can write large clauses in a much more concise way, such as in the examples below:
 \begin{align*}
 rab_1c_3 &\equiv hasIncome(X,Y),isMarriedTo(X,Z),hasSex(X,male),bornInMonth(march) \\
 rab_2c_{11} &\equiv hasIncome(X,Y),isMarriedTo(X,Z),hasSex(X,female),bornInMonth(november)
@@ -342,36 +344,34 @@ rab_2c_{11} &\equiv hasIncome(X,Y),isMarriedTo(X,Z),hasSex(X,female),bornInMonth
 
 As discussed before, we are interested in rules that have divergent positives and body support distributions, or in
 other words, adding the head to the body clause should result in a different distribution along the target numerical
-attribute $Y$. Therefore, we define the interestingness of adding a literal $l$ to a clause $c$ as the
-dissimilarity of $c \wedge l$ and $c$ support distribution along $Y$.
+attribute $Y$. Therefore, we define the interestingness of a literal $l$ with respect to a clause $c$ as the
+dissimilarity of the support distributions of $\{c \wedge l\}$ and $\{c\}$ along $Y$.
 
-It is possible to use any state-of-the-art dissimilarity measure, such as the ones presented
+It is possible to use any dissimilarity measure, such as the ones presented
 in Section~\ref{sec:rw-infotheoreticmeasures}. Kullback-Leibler or its metrified version Jensen-Shannon are good
 options, and can be directly applied on normalized frequency histograms. However, using a divergence
-measure alone as interestingness measure is maybe cause some problems.
+measure alone as interestingness measure may cause some problems.
 
 Firstly, it is important to take into account the sampling error. The lower the support of a clause, the higher the
-expected fluctuations of the observed distribution in relation to the sampling distribution. That means that if we
-draw two distributions from the same sampling distribution, one with more examples than the other, and measure the
-divergence between each of them and the sampling distribution, the smaller sample is expected to have a higher
-divergence.
+expected fluctuations of the observed distribution in relation to the sampling distribution, and therefore the greater
+the expectation of divergence between the sampled distribution and the original sampling distribution.
 
-Because of that, divergence measure alone tends to rank clauses with smaller support as more interesting. In order to
-compensate such effect, we can combine a divergence measure with the support, by simply multiplying their values.
-Moreover, including support into our interestingness measure is important because, after all, we are still interested
-in rules with high support.
+Because of that, using a divergence measure alone tends to rank clauses with smaller support as more interesting. In
+order to compensate such effect, we can combine a divergence measure with the support, by simply multiplying their
+values. Moreover, including support into our interestingness measure is important because, after all, we are still
+interested in rules with high support.
 
 \section{Preprocessing}
 
-In this section, we will present the preprocessing steps required by our proposed algorithm. It basically consists of
-first building a joinable relations map for each join pattern, according
-to relations domain and range types as well as support threshold. Afterwards, we search the available categorical
-properties for each numerical relation that will be used in the correlation lattice. At last we build the lattice
-itself, which belongs to the preprocessing step but will be discussed in the next section.
-
+In this section, we present the preprocessing steps required by our proposed algorithm. It basically consists of
+first building a joinable relations map for each join pattern, according to the relation's domain and range types, as
+well as support threshold. Afterwards, we search the available categorical properties for each numerical relation that
+will be used in the correlation lattice. At last, we build the lattice itself, which belongs to the preprocessing step,
+and will be discussed in the Section~\ref{sec:correlation-lattice}.                                              
+        
 \subsection{Relation Preprocessing}
 
-In this step, we focus on creating a map of joinable for each join pattern between two relations. As in this thesis we
+In this step, we focus on creating a map of joinable relations for every join pattern. As in this thesis we
 are working with RDF triples, we have four basic possible join patterns:
 
 \begin{itemize}
@@ -400,9 +400,10 @@ we can automatically prune any hypothesis containing invalid pairs of joining re
 \subsubsection{Exploiting RDF Schema Properties}
 
 A knowledge base is expected to have an ontology defining the structure of the stored data (the types of entities and
-their relationships). Additionally, every relation's range (type of \ord{1} argument) and domain (type of \ord{2}
-argument) should be defined. These information can help us identify the allowed joining relations for each join
-pattern.
+their relationships). This is normally done with RDF Schema properties, such as \emph{rdfs:range} (which
+defines the relation's domain, i.e., the type of the subject in a triple), and \emph{rdfs:range} (which defines the
+relation's range, i.e., the type of object in a triple). These information can help us identify the allowed joining
+relations for each join pattern.
 
 \begin{figure}[h!]
   \caption{Type hierarchy example}
@@ -430,18 +431,17 @@ pattern.
   \label{fig:hierarchy}
 \end{figure}
 
-Assuming that the knowledge base has its type hierarchy described with the relation \emph{rdfs:subClassOf}, such as
-the
-example shown in Figure~\ref{fig:hierarchy}, where each arrow means that the tail is a subclass of the head. Also,
-we assume that every property has both argument types declared with \emph{rdfs:domain} and \emph{rdfs:range}. With
-such information, it is a straightforward task to prune out the pairs of joining relations which are not allowed by
+We assume that the knowledge base has its type hierarchy described with the relation \emph{rdfs:subClassOf}, such as
+the example shown in Figure~\ref{fig:hierarchy}, where each arrow means that the tail is a subclass of the head (e.g.,
+Country is a subclass of Location). Also, we assume that every property has both argument types declared with
+\emph{rdfs:domain} and \emph{rdfs:range}. With this information, it is a straightforward task to prune out the pairs of
+joining relations which are not allowed by
 the type hierarchy.    
 
-For every possible pair of relations, we simply try to match the joining argument types from the 2 joining relations.
-We
-check whether they are equal or if one can be subsumed by the other, i.e., one is a subclass of the other. If so, then
-it is allowed to join the pair of relations on the given joining arguments, or in other words, the type hierarchy does
-not prevent them from joining. The pseudo-code for performing such task is shown in the Algorithm~\ref{alg1}:
+For every possible pair of relations, we simply try to match the argument types from the 2 joining arguments. We
+check whether the types are equal, or if one can be subsumed by the other, i.e., one is a subclass of the other. If so,
+then the pair of relations is allowed to be joined on the given arguments, or in other words, the type hierarchy
+does not prevent them from joining. The pseudo-code for performing such task is shown in the Algorithm~\ref{alg1}:
 
 \begin{algorithm}[h!]
   \caption{Function $checkTypes$ \newline Checks whether two relations are joinable for a given join pattern}
@@ -473,16 +473,16 @@ not prevent them from joining. The pseudo-code for performing such task is shown
  \label{alg1}
 \end{algorithm}
 
-Nevertheless, it might be that in the knowledge base, the cardinality of such join might be zero or simply not exceed
-the support threshold. Thus, it is worth to that beforehand, and that is what will be explained in the next section.
+Nevertheless, it might be that in the knowledge base, the cardinality of a join might be zero or simply not exceed
+the support threshold. Thus, it is worth testing it beforehand, as we show in the next section.
 
 \subsubsection{Exploiting Support Monotonicity}
 
-Support is a monotonically decreasing measure in top-down ILP. So we know that by adding any
+In top-down ILP, support is a monotonically decreasing measure. As a result, we know that by adding any
 literals to the hypothesis, we can only get a smaller or equal support. Therefore, for each pair of joinable relations
 in each of the join patterns, we can query the knowledge base and check whether they have enough supporting facts.
 
-Thus, if any pair of relations does not reach the minimum support for a given join pattern, we know that any clause
+If any pair of relations does not reach the minimum support for a given join pattern, we know that any clause
 containing such join will therefore fail the support test as well, so we do not need to test such a hypothesis in the
 core ILP algorithm.
 
@@ -524,11 +524,11 @@ Support threshold \\ }
 \end{algorithm}
 
 
-The preprocessing is done by Algorithm~\ref{alg3}, which applies~\ref{alg1} and~\ref{alg2} on all the possible join
-pair combinations and extracting the valid ones, we can build 4 joining maps, one for each join pattern. Each map has
-relations as keys and a set of joinable relations as value. In the refinement step at the ILP algorithm, these maps
-will
-be queried in order to obtain suggestions of literals to be
+The preprocessing is done by Algorithm~\ref{alg3}, which uses Algorithm~\ref{alg1} in order to check if
+the relation argument types match, and Algorithm~\ref{alg2} in order to test if the resulting join satisfies the
+support threshold. With them, we can extract all the valid join combinations, and build 6 joining maps, one for each
+join pattern. Each map has relations as keys, and a set of joinable relations as value. In the refinement step at the
+ILP algorithm, these maps will be queried in order to obtain suggestions of literals to be
 added.
 
 \begin{algorithm}[h!]
@@ -582,20 +582,18 @@ added.
   \label{alg3}
 \end{algorithm}
 
-\subsection{}
-
 \section{Correlation Lattice}
 \label{sec:correlation-lattice}
 
 The idea is to build, during the preprocessing step, a graph inspired in the itemset lattice that represents the
 correlations between various categories and a given numerical attribute. We call such graph a
 correlation lattice.
-Comparing to an itemset lattice, in a correlation lattice we have a set of categorical relations (that are joined with
+Comparing to an itemset lattice, in a correlation lattice we have a set of categorical properties (that are joined with
 root property) instead of items. In addition, each node in the graph has an associated histogram with the support
 distribution over the root's numerical attribute.
 
 To illustrate the idea, let's analyze a simple real-world example extracted from the U.S.
-Census\footnote{\url{http://www.rdfabout.com/demo/census/}} data, with the $hasIncome(X,Y)$ relation. Also, there are
+Census\footnote{\url{http://www.rdfabout.com/demo/census/}} data, with the $hasIncome(X,Y)$ property. We analyze are
 have two categorical relations, one strongly correlated to income, e.g. $hasEducation$, and one uncorrelated (or very
 weakly correlated), e.g. $quarterOfBirth$.
 
@@ -626,9 +624,9 @@ For the relation $hasEducation(X,W)$, we have 16 different levels as possible co
   \end{tabular}
 \end{center}
 
-It's expected that the income distribution will be roughly the same for people born in any four year quarters, whereas
-for different educational levels, e.g. Nursery school and Master's Degree, their income distribution are expected to
-be different from each other them and different from the overall income distribution. 
+It's expected that the income distribution will be roughly the same for people born in any of the four year quarters,
+whereas for different educational levels, e.g. Nursery school and Master's Degree, their income distribution are
+expected to be different from each other, and different from the overall income distribution. 
 
 \begin{figure}[h!]
 \caption{Discrete probability distributions of income by year quarter (left), and by educational level (right)}
@@ -641,10 +639,10 @@ be different from each other them and different from the overall income distribu
 Figure~\ref{fig:income-education} shows the discrete probability distributions of income from each category's
 sub-population. On the left, we have the four income distributions of people born in Q1, Q2, Q3 and Q4, and on the
 right, the 16 different income distributions of people having each educational level. As it is easily noticeable, for
-all the 4 year quarters, the income distribution is pretty much the same, while the educational level, which has great
-influence on the income, the distributions are very different.
+all the 4 year quarters, the income distribution is pretty much the same, while for the educational level, which has
+great influence on the income, the distributions are very different.
 
-Based on this idea, we basically check how different categorical relations affect a numerical distribution by using
+Based on this idea, we basically check how different categorical relations affect a distribution by using
 distribution divergence measures. This information, together with other measures such as support, provides valuable
 cues on what categorical attributes and what categorical constants might be the most interesting to be added to the
 hypothesis in the core ILP algorithm.
@@ -655,11 +653,10 @@ hypothesis in the core ILP algorithm.
 We first start with the chosen numerical property, for example $hasIncome(X,Y)$, which should have at least two
 arguments, one being a joining variable $X$ and the other the numerical attribute variable $Y$. Firstly, we query the
 examples distribution along the numerical attribute $Y$, arbitrarily choose a number of buckets $k$ and discretize
-its $Y$'s domain into buckets $b_1, b_2, \dots, b_k$ using any unsupervised discretization method. 
+$Y$'s domain into buckets $b_1, b_2, \dots, b_k$ using an unsupervised discretization method. 
 
-We then build a frequency histogram of the root node with the its overall population. We define the histogram of a
-node
-$n$ with numerical attribute variable $Y$ as a $k$-dimensional vector $h(n)$ where:
+We then build a frequency histogram of the root node with the overall population. We define the histogram of a
+node $n$ with numerical attribute variable $Y$ as a $k$-dimensional vector $h(n)$:
 
 \begin{equation}
  h(n)=<h_1(n),h_2(n),\ldots,h_k(n)>
@@ -671,15 +668,14 @@ where $h_i(n)=supp(n|Y \in b_i)$, and therefore:
   |h(n)|_1=\sum_{i=1}^{k}h_i(n)=supp(n)
 \end{equation}
 
-Every node in the lattice is composed by conjunctive clause of non-negated literals and contains a frequency histogram
-of its population. For the sake of comparison, all histograms are built on the same buckets defined in the
+Every node in the lattice is composed by a conjunctive clause of non-negated literals and contains a frequency histogram
+of its population. For the sake of comparison, all histograms are built on the same buckets boundaries defined in the
 root node. 
 
 Subsequently, for the chosen set of categorical relations, we do the same with each sub-population of examples from
-each
-category obtained by joining the root with its corresponding categorical literal. For every category a node in
-the lattice is created with the associated frequency histogram. In addition, the edges of the lattice are created by
-setting the root as parent node, and adding the new nodes as children from the root.
+every category obtained by joining the root with its corresponding categorical literal. For each category, a node in
+the lattice is created with the associated frequency histogram, and the new node is assigned as child of the root
+node.
 
 In a further step, we try to join every possible pair of categorical relations including the constants. For the
 given example, with the relations \emph{hasEducation} and \emph{quarterOfBirth}, we would then create the nodes:
@@ -728,7 +724,7 @@ given example, with the relations \emph{hasEducation} and \emph{quarterOfBirth},
   \label{fig:combiningLiterals}
 \end{figure}
 
-This process works just like in an itemset lattice until either a predetermined maximum level is reached or until all
+This process works just like in an itemset lattice until either a predetermined maximum level is reached, or until all
 the possible combinations are exhausted. Figure~\ref{fig:lattice} shows how a correlation lattice looks like.
 
 \begin{figure}[!h]
@@ -741,20 +737,34 @@ the possible combinations are exhausted. Figure~\ref{fig:lattice} shows how a co
   \label{fig:lattice}
 \end{figure}
 
-\subsection{Safe Pruning Opportunities}
+\subsection{Bucketing the Numerical Attribute}
 
-In this section we discuss about safe pruning opportunities that can be explored whilst building the correlation
+The root's numerical attribute domain should be discretized by dividing it into a finite set of buckets in
+order to build frequency histograms and compare distributions. In this section, we discuss about how to perform
+such discretization.
+
+The buckets boundaries used throughout the whole correlation lattice should be consistent, and the bucketing method as
+well as the boundaries are specified in the very beginning for the overall population defined by the root node. In
+addition they require as input an user-defined parameter $k$, which defines the number of buckets in all histograms.
+
+Since we do not consider any labels for the examples, we use one of the unsupervised discretization methods presented
+in Section~\ref{sec:rw-discretization}: equal frequencies or equal width. Equal frequencies is typically a safe choice
+since it is less vulnerable to outliers and skewed distributions. On the other hand, equal width is simpler and less
+expensive, being a good choice when the data is not noisy and the numerical domain is well known.
+
+\subsection{Pruning Opportunities}
+
+In this Section we discuss about safe pruning opportunities that can be exploited whilst building the correlation
 lattice: support and conditional independence. As these might not be sufficient to reduce the lattice size to a feasible
-level, later, in Section~\ref{sec:heuristics}, we will also discuss possible heuristic pruning techniques.
+level, later, in Section~\ref{sec:heuristics}, we also discuss possible heuristic pruning techniques.
 
 \subsubsection{Support}
 
-As described in~\cite{LavracDz94}, in top-down ILP, every refinement causes the support to decrease, therefore we
+As described in~\citet{LavracDz94}, in top-down ILP, every refinement causes the support to decrease, therefore we
 know that for every node in the correlation lattice, its support will be greater or equal than any of its children.
-Hence, support is a monotonically decreasing measure so we can safely prune a node that does not reach the
-minimum support threshold. Therefore, we can use the apriori-style pruning, just like in the core-ILP and in the
-association rule
-mining.
+Hence, since support is a monotonically decreasing measure, we can use apriori-style pruning, which is also used in
+ILP's refinement graph and association rule mining, and safely prune any node which does not satisfy the minimum
+support threshold.
 
 In this thesis, we define support as the absolute frequency of supporting facts. So the support of a node $n$ is
 defined as:
@@ -775,7 +785,7 @@ joinable if they share $l$ literals. Therefore, it is straightforward to calcula
 of the joining nodes given the common parent, and estimate the frequency distribution for the conditional independence
 case.
 
-Let's say we have the following join case:
+%Let's say we have the following join case:
  
 \begin{figure}[!h]
   \caption{Node join example for independence test}
@@ -807,7 +817,7 @@ $c_{nx}=\{c_n,x\}$ and $c_{ny}=\{c_n,y\}$. With the histogram from these three n
 probability $p_i(x|n)$ and $p_i(y|n)$, then calculate $\hat{h_i}(nxy)$, which is the estimation of
 $h_i(nxy)$ assuming that $x$ and $y$ are independent given common parent $n$.
 
-\begin{align}
+\begin{align*}
  p_i(x|ny) &= p_i(x|n) \\ 
  &= \cfrac{h_i(nx)}{h_i(n)} \\ 
  p_i(y|nx) &= p_i(y|p) \\ 
@@ -817,9 +827,9 @@ $h_i(nxy)$ assuming that $x$ and $y$ are independent given common parent $n$.
  \hat{h_i}(nxy) &= p_i(y|nx)p_i(x|n)h_i(n) \\ 
  &= p_i(y|n)h_i(xn)
 \label{eq:condindep}
-\end{align}
+\end{align*}
 
-After that, we query the actual frequency distribution on the knowledge base and do a Pearson's chi-squared
+After that, we query the actual frequency distribution on the knowledge base and perform a Pearson's chi-squared
 independence test. As null hypothesis and alternative hypothesis we have:
 
 \begin{itemize}
@@ -839,26 +849,25 @@ We calculate the critical value $\chi^2$:
  \chi^2=\sum_{i=1}^{k} \cfrac{(h_i - \hat{h_i})^2}{\hat{h_i}}
 \end{equation}
 
-Then it is possible to obtain the p-value and check whether there is enough confidence to reject the null hypothesis
+Then it is possible to obtain the p-value, and check whether there is enough confidence to reject the null hypothesis
 $H_0$. 
 
-
-In other words if we find out that $x$ and $y$ are conditionally independent given $p$, we could rewrite the
-Equation~\ref{eq:condindep} as the following rules being equivalents, with similar confidence distributions:
+In other words, if we find out that $x$ and $y$ are conditionally independent given $p$, we could infer the
+equivalences below, with equivalent rules having significantly similar confidence distributions:
 
 \begin{center}
   $x$:-$p,y \equiv x$:-$p \quad$ and  $\quad y$:-$p,x \equiv y$:-$p$
 \end{center}
 
-Therefore, we know that if we have $x$ fixed as the head of clauses in the core ILP, and we currently have $x$:-$p$
-joining the node $px$ with $py$ to obtain the rule $x$:-$p,y$ does not add any valuable information. The same
-applies for having $y$, and obtaining $y$:-$p,x$ from $y$:-$p$ by joining the same pair of nodes. This
-property plays an important role in the integration of the correlation lattice into the core ILP, as we will explain in
-more details later in Section~\ref{sec:incorporation}.
+Therefore, we know that if we have $x$ fixed as the head in the core ILP, and $x$:-$p$ as current
+clause, joining the node $px$ with $py$ to obtain the rule $x$:-$p,y$ does not add any valuable information. The same
+applies for having $y$ as head, and obtaining $y$:-$p,x$ from $y$:-$p$ by joining the same pair of nodes. This
+property plays an important role in the literal suggestion for clause refinements, as we explain in
+more details in Section~\ref{sec:incorporation}.
 
 This idea is very similar to the idea of the lift measure, presented in Section~\ref{sec:rw-arm}, of detecting
-dependency. However, as we also take into account the support distribution, and we use a more sophisticated technique
-that compares the observed and expected distribution assuming independence.
+attributes independence. However, as we also take into account the support distribution, we use a more sophisticated
+technique that compares the observed and expected distribution assuming independence.
 
 \begin{comment}
 In level 1 from \graphname, nodes can be directly pruned, on the other hand, for further levels, for a node to be
@@ -877,10 +886,12 @@ pruned. All the three possible join combinations should fail the independence te
 \end{comment}
 
 This applies to nodes at any level $l$, with $p \leq l$ parents and $C_{2}^{p}$ possible join pairs. If any of the
-join
-pairs has enough evidence of being dependent, then 2 edges are created connecting each of the joined
-nodes to the result of their join.
+join pairs has enough evidence of being dependent, then the resulting node is added as child of the two joining nodes.
+If a given node is independent from all possible join pairs of parent nodes, one could eventually prune the node,
+however, as we show later, it is not safe.
 
+\begin{comment}
+THIS IS REDUNDANT!!! (ALREADY DISCUSSED IN INTERESTINGNESS MEASURE)
 \subsection{Entropy Divergence Measures}
 
 As seen in the previous sections, we are interested in rules whose base-rule has accuracy below threshold, but
@@ -917,22 +928,15 @@ These divergence measures are important for identifying potential accuracy distr
 frequency distributions of a parent and child node is big, that means that if we have a rule with the parent node as
 body and the additional literal from the child as head, its accuracy distribution will not be uniform and therefore
 potentially be interesting for searching for refined-rules with numerical intervals.
-
+\end{comment}
 
 \subsection{Heuristics}
 \label{sec:heuristics}
 
 As seen before, the number of nodes in a correlation lattice grows exponentially with the number of categorical
 relations and its constants. For $n$ categorical relations, each with $m$ constants, the total number of nodes is
-$2^{nm}$. As we limit the number of levels in the lattice to $l$, the total number of nodes reduces to:
-
-\begin{center}
-  \begin{equation}
-    \sum_{i=1}^{l}\binom{nm}{i}
-  \end{equation}
-\end{center}
-
-if $l=nm$:
+$2^{nm}$. In this thesis, we limit the number of levels in the lattice to $l$, where $l$ is the maximum number of
+literals allowed in a clause by the core-ILP. With this reduction, the total number of nodes is reduced from:
 
 \begin{center}
   \begin{equation}
@@ -940,8 +944,15 @@ if $l=nm$:
   \end{equation}
 \end{center}
 
+to a much smaller number, since typically $l \ll $:
 
-Pruning by support is usually not sufficient to make an exhaustive search feasible, and it is necessary to apply
+\begin{center}
+  \begin{equation}
+    \sum_{i=1}^{l}\binom{nm}{i}
+  \end{equation}
+\end{center}
+
+Pruning by support is usually not sufficient to make an exhaustive search feasible, therefore, it is necessary to apply
 heuristics to prune it more aggressively.
 
 %%% Divergence
@@ -961,8 +972,8 @@ $h(rb_2)=<1,1>$
 \end{center}
 
 Although all of the nodes have the exact same probability distribution as $r$, which results in a divergence measure of
-zero, they could not be safely pruned, as it is possible to combine $r$ $a$ $b$ with totally different distributions
-that maximize the divergence measure:
+zero, they could not be safely pruned, since it is possible to have $r$, $a$, and $b$ combined with totally different
+distributions that maximize the divergence measure:
 
 \begin{center}
 $h(ra_1b_1)=<1,0>$ \\
@@ -971,17 +982,19 @@ $h(ra_2b_1)=<0,1>$ \\
 $h(ra_2b_2)=<1,0>$
 \end{center}
 
-As shown above, divergence is not a monotonically decreasing measure, thus it can only be used as heuristics.
+As shown above, divergence is not a monotonically decreasing measure, since, for instance, we have $D_{JS}(r || ra_1) <
+D_{JS}(ra_1 || ra_1b_1)$. Therefore, if we have an interesting measure composed by divergence and support, for example,
+we can only heuristically prune uninteresting nodes.
 
 % Draw example instead to explain better
-
+\begin{comment}
 Moreover, using a divergence measure alone might also be problematic. Histograms with low support are more likely to
 present a higher divergence than histograms with higher support, supposing that they were drawn from the same original
 distribution. That happens due to the sampling error, which says that smaller samples are more likely to have a
 distribution more different to the original distribution from which it was drawn. Consequently, the exclusive use of
 the divergence as heuristics would end up giving preference to nodes with lower support. Therefore, it is important to
 use divergence combined with support as pruning heuristics.
-
+\end{comment}
 %Moreover, we are interested not only in rules with high confidence, but also rules with high support so more facts can
 %be derived.
 
@@ -990,24 +1003,13 @@ use divergence combined with support as pruning heuristics.
 %%% Independence
 
 As seen in Section~\ref{sec:indepchecks}, checking for conditional independence of categories is very insightful
-and can detect equivalent rules like in Figure~\ref{fig:joinIndepExample} where we know that 
-$x$:-$p,y \equiv x$:-$p$ and $y$:-$p,x \equiv y$:-$p$. Nevertheless, we cannot prune the
-node $pxy$ from the lattice as $x$ and $y$ might not be independent given $pz$, and for instance, a rule $x$:-$p,y,z$
-might not be equivalent to $x$:-$p,y$.
+and can detect equivalent rules. Nevertheless, if for the example shown in Figure~\ref{fig:joinIndepExample} we find out
+that $x$ and $y$ are conditionally independent given $p$, we cannot prune the node $pxy$ from the lattice since $x$ and
+$y$ might not be independent given $p,z$, and and in such case, the rule $x$:-$p,y,z$ would not be equivalent to
+$x$:-$p,y$, and therefore eventually interesting.
 
-\section{Bucketing the Numerical Attributes}
-
-So far we have mentioned that the root's numerical attribute domain should be discretized by dividing it in buckets in
-order to build frequency histograms and compare distributions. In this section, we will discuss about how to perform
-such discretization.
-
-The buckets used throughout the whole correlation lattice should be consistent, and the bucketing method as well as
-the boundaries are specified in the very beginning with the root node. In addition they require as input an
-user-defined parameter $k$, which defines the number of buckets in all histograms.
-
-Since we do not consider any labels for the examples, we use one of the unsupervised discretization methods presented
-in Section~\ref{sec:rw-discretization}: equal frequencies or equal width. We choose the method according to the domain
-characteristics and define the bucket boundaries based on the overall population distribution.
+However, the obtained p-value is still a very insightful measure, which can be used as heuristics for reducing the
+number of nodes in the lattice.
 
 \section{Incorporating Correlation Lattice into the Core ILP Algorithm}
 \label{sec:incorporation}
@@ -1016,52 +1018,19 @@ The ILP core learning algorithm requires some modifications in order to support 
 before, we use top-down search, starting from the most general clauses then further refining them by introducing
 new substitutions or literals until a stopping criteria is reached.
 
-
-\subsection{Searching Rules in Correlation Lattice}
-\label{sec:searchRulesInCL}
-
-In the lattice itself, it is possible to extract valuable rules. Given its characteristic of all the relations being
-joined on the same root argument, these extracted rules represent how different categories are related along root's
-numerical constants.
-
-Every non-root node in the correlation lattice can be understood as the body of a rule, and the new literal from any of
-its children can be understood as the head. 
-
-Below, we show an example using the notation defined at~\ref{sec:notation}. For the node $r a_1 b_1$ with children $r
-a_1 b_1 c_1$, $r a_1 b_1 c_2$ and $r a_1 b_1 d_1$, we can easily evaluate three rules:
-
-\begin{align*}
-Rule_1: \quad &c_1\text{ :- }a_1,b_1,r \\ 
-&supp(Rule_1) = h(r a_1 b_1 c_1) \\
-&acc(Rule_1) = \frac{h(r a_1 b_1 c_1)}{h(a_1,b_1,r)} \\ \\
-Rule_2: \quad &c_2\text{ :- }a_1,b_1,r \\
- &supp(Rule_2) = h(r a_1 b_1 c_2) \\
- &acc(Rule_2) = \frac{h_i(r a_1 b_1 c_2)}{h(a_1,b_1,r)} \\ \\
-Rule_3: \quad &d_1\text{ :- }a_1,b_1,r \\
- &supp(Rule_3) = h(r a_1 b_1 d_1) \\
- &acc(Rule_3) = \frac{h(r a_1 b_1 d_1)}{h(a_1,b_1,r)} 
-\end{align*}
-
-Therefore, in order to search for rules in the correlation lattice, we can simply perform a breadth-first traversal in
-the lattice, and do such evaluation for every node. 
-
-Subsequently we can analyze the frequency and confidence distributions and determine whether any of the rules are
-interesting, using any of the techniques such as \citet{Brin99miningoptimized}, discussed
-in~\ref{sec:rw-miningOptimizedRules}, in order to search for optimal intervals.
-
-
 \subsection{Querying the Correlation Lattice}
 \label{sec:queryingTheLattice}
 
-In the ILP there is a fixed head literal and such literal can and should be included in the correlation lattice. In
-case it is present in the lattice, it plays a key role in the search. Once the root property is added in a clause that
-does not exceed the accuracy threshold.
+In the ILP refinement loop, the head literal is fixed. As the head literal plays fundamental role in the
+interestingness of a clause, this literal should be included in the correlation lattice. If so, once the root literal
+of a correlation lattice is added to a clause in the refinement loop, and this clause satisfies the support threshold,
+we can query this lattice in order to predict whether the clause is interesting or not, as well as get list of
+suggestions of literals to be added to the clause in the next refinement step.
 
-In such case we are interested in searching the most interesting literals to add. First step would be to search in the
-lattice the literals already present in both head and body of the clause that are joined with the root. Nevertheless,
-what we are not really interested in the benefit of adding a literal to the conjunction of rule's head and body, but
-in
-the benefit of adding the head to a body with a new literal.
+For getting the list of suggestions, the first step would be to search in the lattice the literals already present in
+both head and body that are joined with the root literal, and then search for the child nodes with
+highest interestingness. Nevertheless, we are not interested in the benefit of adding a literal to the conjunction
+of rule's head and body, but in the benefit of adding the head to the body refined with a new literal.
 
 For example, if we have the clause $a$:-$r$, where $r$ is the root of a correlation lattice and the head $a$ is included
 in it. After searching in the graph for the literals joined with root present in the clause we would come to node
@@ -1069,7 +1038,7 @@ $ra$. We are not searching for the most interesting child from $ra$, but for the
 the head literal that has the has the highest interestingness measure when adding the head.
 
 \begin{figure}[!h]
-  \caption{Interestingness of adding a literal to the body of a clause}
+  \caption{Interestingness of adding a literal to the body}
   \centering
   \begin{tikzpicture}
   [scale=1,auto=center,every node/.style={minimum size=1cm}]
@@ -1097,17 +1066,17 @@ the head literal that has the has the highest interestingness measure when addin
   \label{fig:latticeSuggestion}
 \end{figure}
 
-As shown in Figure~\ref{fig:latticeSuggestion}, if we can add $b$, $c$ or $d$ to $ra$, we are interested about the
-measures $m_{a,rb}$, $m_{a,rc}$ and $m_{a,rd}$ (shown in blue), instead of $m_{b,ra}$, $m_c,ra$ and $m_{d,ra}$ (shown in
-red). Nevertheless, searching for values of $m_{a,rb}$, $m_{a,rc}$ and $m_{a,rd}$ is a bit tricky. It is necessary to
-check for all children of $ra$, which ones have parents without head literal $a$, then gather all the measures and rank
-them.
+This example is illustrated in Figure~\ref{fig:latticeSuggestion}, if we can add $b$, $c$ or $d$ to $ra$, we are
+interested about the measures $m_{a,rb}$, $m_{a,rc}$ and $m_{a,rd}$ (shown in blue), instead of $m_{b,ra}$, $m_c,ra$ and
+$m_{d,ra}$ (shown in red). Nevertheless, searching for values of $m_{a,rb}$, $m_{a,rc}$ and $m_{a,rd}$ is a bit tricky.
+It is necessary to check for all children of $ra$, which ones have parents without head literal $a$, then gather all the
+measures and rank them.
 
-In order to make it simpler, we can create a suggestions map when lattice is built. This map would contain an entry for
-all node it is joined to, with head as key and literals to add sorted by measure as value. So for example when we are
-obtaining the node $rab$ by joining $ra$ and $rb$, we add to $ra$ an entry with $a$ as key, $b$ as new literal and
-associated measure $m_{a,rb}$ and we also add to $rb$ an entry with $b$ as key, $a$ as new literal and associated
-measure $m_{b,ra}$. This is shown more clearly in Algorithm~\ref{alg:buildmaps}.
+In order to avoid visiting multiple nodes, we can create suggestions maps when the lattice is built. These map
+contain an entry for all node it is joined to, with head as key, and a refinement suggestions list sorted by
+measure as value. So for example when we are creating the node $rab$ by joining $ra$ and $rb$, we add to $ra$ an entry
+with $a$ as key, $b$ as new literal and  associated measure $m_{a,rb}$ and we also add to $rb$ an entry with $b$ as key,
+$a$ as new literal and associated measure $m_{b,ra}$. This is shown more clearly in Algorithm~\ref{alg:buildmaps}.
 
 \begin{algorithm}[h!]
  \caption{Suggestion map build when joining nodes during lattice build}
@@ -1126,7 +1095,8 @@ measure $m_{b,ra}$. This is shown more clearly in Algorithm~\ref{alg:buildmaps}.
  \label{alg:buildmaps}
 \end{algorithm}
 
-In the example of Figure~\ref{fig:latticeSuggestion}, $ra$ would contain the following map:
+In the example of Figure~\ref{fig:latticeSuggestion}, $ra$ would contain the following map with a single entry for the
+only possible head literal $a$:
 
 \begin{center}
   \begin{tabular}{r | l}
@@ -1136,8 +1106,8 @@ In the example of Figure~\ref{fig:latticeSuggestion}, $ra$ would contain the fol
   \end{tabular}
 \end{center}
 
-As in this example the node $ra$ has only two literals, and the root $r$ cannot be the head, we use the node $ra_1b_1$
-in Figure~\ref{fig:lattice} to better illustrate it:
+Below, we have the map from the node $ra_1b_1$ from the example shown in Figure~\ref{fig:lattice}, in this case it has
+two entries for each possible head literal: $a_1$ and $b_1$: 
 
 \begin{center}
   \begin{tabular}{r | l}
@@ -1149,18 +1119,18 @@ in Figure~\ref{fig:lattice} to better illustrate it:
   \end{tabular}
 \end{center}
 
-In a node at level $l$ with $l+1$ literals (one being the root), we can have up to $l$ keys in the map. Therewith, we
-can much more easily find the best suggestions for any possible head literal without having to visit other nodes.
+More generally speaking, for a node at level $l$ with $l+1$ literals (one of them being the root), we can have up to $l$
+keys in the map. Therewith, we can much more easily find the best suggestions for any possible head literal without
+having to visit other nodes.
 
 First we need to introduce the search for numerical intervals as a possible refinement in the top-down ILP refinement
-step. Such a refinement would be possible only if the body contains a literal which is the root of a correlation
+step. This refinement would be possible only if the body contains a literal which is the root of a correlation
 lattice and whose numerical attribute variable is free, as shown in Algorithm~\ref{alg4}. If so, then we can try to
 predict whether the clause is interesting by calling the function \FuncSty{predictInterestingness}, which is shown
-in
-Algorithm~\ref{alg6}.
+in Algorithm~\ref{alg6}. This function simply queries the interestingness of adding the current clause's head to its
+body, and checks whether it satisfies the specified interestingness threshold.
 
-
-\begin{algorithm}[!h]
+\begin{algorithm}[h!]
  \caption{Extension to the refinement step}
  \SetKwFunction{checkNumericalRanges}
  \KwIn{\textbf{Input:} $clause$: Set of literals from the clause, $lattice(r_{root})$: Set of existent Correlation
@@ -1222,12 +1192,43 @@ $interestingnessThreshold$: Minimum interestingness value allowed }
  \label{alg6}
 \end{algorithm}
 
-Once we find out that that the clause is interesting, we can perform the numerical interval search refinement
-shown in Algorithm~\ref{alg4}. It basically queries the support and confidence distribution of the base-rule along the
+Once we find out that the clause is interesting, we can perform the numerical interval search refinement
+shown in Algorithm~\ref{alg5}. It basically queries the support and confidence distribution of the base-rule along the
 numerical attribute and searches for optimal intervals using techniques, such as \cite{Brin99miningoptimized}, presented
-in Section~\ref{sec:rw-miningOptimizedRules}, and which is represented by in \ref{alg4} by function
-\FuncSty{searchInterestingIntervals}. If any relevant interval is found, we add the required the arithmetic literals to
-restrict the numerical variable domain and add the clause to the ILP's refinement graph.
+in Section~\ref{sec:rw-miningOptimizedRules}, and which is represented in Algorithm~\ref{alg4} by the function
+\FuncSty{searchInterestingIntervals}. If any relevant interval is found, we add the required arithmetic literals to
+restrict the numerical variable domain and add the clause to the ILP's refinement graph. Subsequently, the
+algorithm also queries the correlation lattice for suggestion of new literals to be added to the clause
 
-After that, the algorithm also queries the correlation lattice for suggestion of new literals to be added to the clause
 
+\section{Searching Rules in Correlation Lattice}
+\label{sec:searchRulesInCL}
+
+In the lattice itself, it is possible to extract valuable rules. Given its characteristic of all the relations being
+joined on the same root argument, these extracted rules represent how different categories are related along root's
+numerical constants.
+
+Every non-root node in the correlation lattice can be the body of a rule, and the new literal from any of
+its children the head. 
+
+Below, we show an example using the notation defined at~\ref{sec:notation}. For the node $r a_1 b_1$ with children $r
+a_1 b_1 c_1$, $r a_1 b_1 c_2$ and $r a_1 b_1 d_1$, we can easily evaluate three rules:
+
+\begin{align*}
+Rule_1: \quad &c_1\text{ :- }a_1,b_1,r \\ 
+&supp(Rule_1) = h(r a_1 b_1 c_1) \\
+&acc(Rule_1) = \frac{h(r a_1 b_1 c_1)}{h(a_1,b_1,r)} \\ \\
+Rule_2: \quad &c_2\text{ :- }a_1,b_1,r \\
+ &supp(Rule_2) = h(r a_1 b_1 c_2) \\
+ &acc(Rule_2) = \frac{h_i(r a_1 b_1 c_2)}{h(a_1,b_1,r)} \\ \\
+Rule_3: \quad &d_1\text{ :- }a_1,b_1,r \\
+ &supp(Rule_3) = h(r a_1 b_1 d_1) \\
+ &acc(Rule_3) = \frac{h(r a_1 b_1 d_1)}{h(a_1,b_1,r)} 
+\end{align*}
+
+Therefore, in order to search for rules in the correlation lattice, we can simply perform a breadth-first traversal in
+the lattice, and this such evaluation for every node. 
+
+Subsequently we can analyze the frequency and confidence distributions and determine whether any of the rules are
+interesting, using any of the techniques such as \citet{Brin99miningoptimized}, discussed
+in Section~\ref{sec:rw-miningOptimizedRules}, in order to search for optimal intervals.
