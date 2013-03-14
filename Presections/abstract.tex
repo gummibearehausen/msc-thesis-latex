@@ -11,20 +11,19 @@ bases.
 Nevertheless, it's inherently expensive and the hypothesis search space grows combinatorially with the knowledge base
 size. 
 This problem is even more dramatic when literals with constants are considered. Therefore, it usually requires
-very aggressive pruning for making it feasible. 
-Moreover, searching for rules with numerical intervals requires very expensive queries, and frequently do not bring
+very aggressive pruning to make it feasible. 
+Moreover, searching for rules with numerical intervals requires very expensive queries, and frequently does not bring
 any significant confidence gain.
 We propose a preprocessing step and an extension to ILP top-down algorithm, with the objective of efficiently learning
 rules with interesting intervals for numerical attributes, i.e., rules which present a significant gain when restricting
-a numerical attribute variable to a specific interval, by trying to predict whether a rule has any interesting
-interval .
+a numerical attribute variable to a specific interval.
 In the preprocessing step, we build a lattice that expresses the correlations between a root numerical attribute and
 multiple categorical relations and their constants, while in the refinement step of ILP, we query this lattice in order
-to know whether it is interesting to search for numerical intervals, as well as obtain a list of refinement
-suggestions ordered by a defined an interestingness measure.
+to predict whether a rule has any interesting numerical interval, as well as obtain a list of refinement
+suggestions ordered by an interestingness measure.
 This thesis discusses how to efficiently build the correlation lattice, how to incorporate it in the core ILP learning
-algorithm, and compares different iterestingness measures. Also, we make experiments on large-scale linked data
-sources in order to evaluate the proposed approach.
+algorithm, and compares different iterestingness measures. Also, the approach we proposed was evaluated experimentally
+on large-scale Linked Data sources.
 
 
 }
