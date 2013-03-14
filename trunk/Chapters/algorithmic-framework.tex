@@ -1,11 +1,11 @@
-\chapter{Algorithmic Framework}
+\section{Algorithmic Framework}
 \label{af:intro}
 
-This thesis was implemented in Java, using the code from \citet{Teflioudi2011} as base for the core-ILP
+This thesis was implemented in Java, using the code from \citet{Teflioudi2011} as base for the top-down ILP
 algorithm, on which we added the changes in the refinement step mentioned at Section~\ref{sec:incorporation}. Also, we
 change the knowledge base back-end to RDF3X, in order to improve the SPARQL queries performance.
 
-\section{Knowledge Base Back-end}
+\subsection{Knowledge Base Back-end}
 
 For storing and retrieving RDF data we use RDF3X \citep{Neumann:2010:RES:1731351.1731354}. It has the advantage of being
 specialized and optimized for RDF triples, using a strong indexing approach with compressed B$^+$-Tree indices for all
@@ -13,13 +13,14 @@ the six permutations of \emph{subject (S)}, \emph{predicate (P)} and \emph{objec
 \emph{SPO},\emph{SOP},\emph{OSP},\emph{OPS},\emph{PSO} and \emph{POS}.
 
 All the facts are stored in a single triples table, with no schema, over which the indices are created. Other six
-additional aggregated indices for all the pairs of \emph{subject}, \emph{predicate} and \emph{object}
-(\emph{SP},\emph{SO},\emph{OS},\emph{OP},\emph{PS} and \emph{PO}). These indices store only two of the three
-columns of a triple and contain an aggregated count for the number of occurrences of this pair among all the triples.
+additional aggregated indices, for each of the the pairs of \emph{subject}, \emph{predicate} and \emph{object}
+(\emph{SP},\emph{SO},\emph{OS},\emph{OP},\emph{PS} and \emph{PO}), are also created. These indices store only two of the
+three columns of a triple and contain an aggregated count for the number of occurrences of the given pair of arguments
+among all the triples.
 
 Moreover, all the literals in the facts table are replaced by ids using a mapping dictionary. This brings two important
-benefits: the compression of the facts table; the simplification for the query processor, which only is required to
-compare ids instead of eventually long strings. Because of that, it requires two additional indices, one that maps
+benefits: the compression of the facts table; and the simplification for the query processor, which is required to
+compare ids instead of eventually long strings. Because of that, it also requires two additional indices, one that maps
 literals to ids, and another that maps ids to strings.
 
 The query processor explores the exhaustive indexation by relying mostly on merge-joins over the sorted index lists, and
@@ -28,30 +29,24 @@ RDF3X simply switches to hash-join.
 
 RDF3X supports SPARQL queries, nevertheless, in the version 0.3.7 which was used in this thesis, many features of the
 query language were not implement. For example, optional patterns are not supported, and sorting and filtering
-operators for numerical attributes is not implemented, therefore numbers are dealt as strings. The expression $31>4$,
-for example, is evaluated as the comparison of strings $``31''>``4''$, which returns false instead of true. As the
+operators for numerical attributes is not implemented, with numbers being dealt as strings. The expression $31>4$,
+for example, is evaluated as the comparison of strings ``31''$>$``4'', which returns false instead of true. As the
 evaluation of numerical expressions plays a key role in this thesis, we had to make changes to the original code
-for implementing this feature.
+to implement this feature.
 
-
-\section{Preprocessing}
 
 \subsection{Correlation Lattice Data Structure}
 
 We structure the correlation lattice data in two main classes: \emph{CorrelationLattice} and
 \emph{CorrelationLatticeNode}. 
 
-\subsubsection{The CorrelationLatticeNode class}
-
 Basically, in the \emph{CorrelationLattice} class, we store attributes related to the lattice as
 a whole, such as the root property, root node, maximum number of levels, as well as attributes consistent through all
 the lattice nodes, such as discretization boundaries, support and interestingness thresholds. Moreover, it maintains a
 hash set with all the lattice nodes in order to avoid duplicate nodes.
 
-\subsubsection{The CorrelationLatticeNode class}
-
-In a \emph{CorrelationLatticeNode} we simply store the histogram data obtained with the discretization on root's
-numerical attribute, the pointers to the child nodes, the suggestion maps (presented in
+In the \emph{CorrelationLatticeNode} class, we simply store the histogram data obtained with the discretization on
+root's numerical attribute, the pointers to the child nodes, the suggestion maps (presented in
 Section~\ref{sec:queryingTheLattice}). The UML Class diagram from Figure~\ref{fig:classDiagram} shows in more details
 how both classes are structured.
 
@@ -64,13 +59,14 @@ how both classes are structured.
 	maximumDepth : Integer \\
 	numberOfBuckets : Integer \\
 	discretizationBoundaries : Integer[numberOfBuckets-1] \\
-	minSupport : Integer \\
-	minConfidence : Float \\
-    }{}
+	minSupport : Integer \\\
+    }{
+	saerchRules(minConf, minSupport, minGain) : Set<Rule>\\
+    }
     \umlclass[x=2,y=0]{CorrelationLatticeNode} {
       children : CorrelationLatticeNode[] \\
       clause : Literal[] \\
-      suggestions : Map<Literal,SortedList<Literal>> \\
+      suggestions : Map<Literal,SortedList<Literal$>>$ \\
       histogram : Integer[] \\
       distribution : Float[] \\
     }{
@@ -84,7 +80,7 @@ how both classes are structured.
 \end{figure}
 
 
-\subsection{Building the Correlation Lattice}
+\subsection{Querying the Correlation Lattice Node Histograms}
 
 For building the correlation lattice, we start with the root node, which has a numerical property as literal and no
 constants assigned, e.g. \emph{hasIncome(X,Y)}. We use the query below in order to obtain the  distribution of 
@@ -100,26 +96,21 @@ node's frequencies histogram. We keep the discretization boundaries in the Corre
 consistently throughout the whole lattice.
 
 Afterwards, we select the the categorical properties that will be used in the lattice. For each of the selected
-properties, we join them with the root numerical property, then query the resulting distribution. In the first level,
-it's necessary to extract a histogram for each of the categorical constants in the selected properties. Therefore, it's
-a good strategy to group the results also by these categorical constants so If we select \emph{hasEducation} for
-example, we would then fire the following SPARQL query:
+properties, we join them with the root numerical property, then query the resulting distribution. We extract the node's
+histogram for each categorical constant of given property with a single SPARQL query, which is illustrated below for the
+categorical relation \emph{hasEducation}:
 
 \begin{center}
  \emph{SELECT COUNT ?Z ?Y WHERE \{ ?X <hasIncome> ?Y . ?X <hasEducation> ?Z \} GROUP BY (?Z,?Y)}
 \end{center}
 
-With such query, we can extract a histogram for the node \emph{hasIncome(X,Y)hasEducation(X,Z)} and for the
-nodes obtained for each constant of $Z$. 
-
-For the further levels, we simply add a pattern correspondent to each literal in the node, querying each combination of
+For the further levels, we simply add a pattern correspondent to each literal in the node, querying a combination of
 categories individually. For instance, if we combine the categories $hasEducation(X,phd)$ and $hasSex(X,female)$, the
 correspondent query would be:
 
 \begin{center}
  \emph{SELECT COUNT ?Y WHERE \{ ?X <hasIncome> ?Y . ?X <hasEducation> <phd> . ?X <hasSex> <female> \} GROUP BY (?Y)}
 \end{center}
-
 
 
 

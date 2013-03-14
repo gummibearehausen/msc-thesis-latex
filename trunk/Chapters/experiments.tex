@@ -6,19 +6,24 @@ perform a series of experiments on Linked Data.
 
 First of all, in all the experiments, we define as interesting rule a refined-rule $r_{ref}$ which satisfies the
 confidence threshold $minConf=0.75$ and support threshold $minSupp=10$, and has a confidence gain in relation to its
-base-rule $r_{base}$ of at least $1.25$ (with gain defined as $conf(r_{ref})/conf(r_{base})$).
+base-rule $r_{base}$ of at least $1.25$ (we define relative gain as the ratio
+$gain_{ref,base}=conf(r_{ref})/conf(r_{base})$).
+
+Also, we compare four different interestingness measures: support only (\emph{supp});
+Kullback-Leibler divergence only (\emph{kldiv}); Kullback-Leibler divergence multiplied by support (\emph{klsupp}); and
+Jensen-Shannon multiplied by support (\emph{jssupp}). 
 
 In the first experiment, we compare different measures by building same-sized correlation lattices on the
-$hasIncome(X,Y)$ relation from the USCensus, then searching for interesting rules with intervals for $Y$ inside the
-lattice itself as described in Section~\ref{sec:searchRulesInCL}. The lattices are build by greedily choosing the top-k
-most interesting nodes in each level according to the chosen measure, and pruning the rest so that all the lattices have
-the same quantity of nodes.
+$hasIncome(X,Y)$ property from the USCensus. Afterwards, we search for interesting rules with intervals for $Y$ inside
+the lattice itself as described in Section~\ref{sec:searchRulesInCL}. The lattices are built by greedily choosing the
+top-k most interesting nodes in each level according to the chosen measure, then joining the most interesting nodes
+with each other to form the next level, which shouldn't exceed a nodes per level threshold, so that all the lattices
+have the same number of nodes.
 
 Also, we measure the total time spent for the construction of each lattice, as well as the number of interesting rules
-found on them. As candidate categorical relations, we chose the 18 shown in Table~\ref{tab:uscensusRelations}. More
-details about the categories can be found at the PUMS
-Data
-Dictionary\footnote{\url{http://www.census.gov/acs/www/Downloads/data_documentation/pums/DataDict/PUMSDataDict05_07.pdf}
+produced. As candidate categorical relations, we chose the 16 relations shown in Table~\ref{tab:uscensusRelations}.
+More details about the categories can be found at the PUMS Data Dictionary\footnote{\url{
+http://www.census.gov/acs/www/Downloads/data_documentation/pums/DataDict/PUMSDataDict05_07.pdf}
 }
 
 \begin{table}[h!]
@@ -53,32 +58,39 @@ Dictionary\footnote{\url{http://www.census.gov/acs/www/Downloads/data_documentat
 \end{minipage}
 \end{table}
 
-We build the lattice on a training partition of USCensus of size 1.7GB containing $884365$ people entities, and test the
-learned rules on a test set of size 0.5GB with $369024$ people entities. Therewith, we can evaluate the accuracy of the
-learned rules. 
+We create a training and a testing partition of the original USCensus data, the first with 1.7GB and containing $884365$
+people entities, and the latter with 0.5GB containing $369024$ people entities. The correlation is built on the
+training partition, and rules extracted from it are tested on the testing partition, so that we can also evaluate the
+accuracy of the learned rules.
+
+The average accuracy obtained for the four measures were: 0.82 (\emph{supp}), 0.81 (\emph{klsupp}), 0.81
+(\emph{jssupp}), and 0.77 (\emph{kldiv}). The lower accuracy from \emph{kldiv} is due to the lower support of the
+learned rules. As with the other measures, the learned rules have a higher average support, the confidence values are
+therefore higher and more consistent.
 
 The plot from Figure~\ref{fig:uscensus:Nodes-GoodRules} shows the number of rules learned per lattice size (defined by
-number of nodes per level). The KL-divergence only has the worst performance, as expected, since clauses with lower
-support are more likely to have higher interestingness. The other three measures perform roughly similarly, however, for
-fewer nodes, it performs worse than others catching up later. This can be explained by the fact that it gives
-preference to very high support categories which cover the majority of the population, such as $hasDeficiency(X,no)$,
-which tend to have a distribution similar to overall population. 
+number of nodes per level). As expected, \emph{kldiv} has the worst performance, since it prefers clauses with lower
+support. The other three measures perform roughly similarly, however, for
+fewer nodes, \emph{supp} performs worse than the other two. This can be explained by the fact that it prefers
+clauses with very high support, which may cover the majority of the population, such as $hasDeficiency(X,no)$, and
+therefore tend to have a distribution similar to the overall population. 
 
-Analyzing the plot from Figure~\ref{fig:uscensus:Nodes-Runtime}, it is clear that using support only as interestingness
-measure has a high cost. As it concentrates on larger categories, the queries required for building the lattice are much
-more expensive. JS-divergence and KL-divergence combined with support are much more efficient than support only, as they
-can learn about the same amount of rules in significantly shorter runtime
+Analyzing the plot from Figure~\ref{fig:uscensus:Nodes-Runtime}, it is clear that \emph{supp} has a highest cost. As it
+concentrates on larger categories, the queries required for building the lattice are much
+more expensive. The measures \emph{klsupp} and \emph{jssupp} are much more efficient than \emph{supp},
+as they can learn about the same amount of rules in a significantly shorter time.
 
-An important effect of divergence in the interestingness measure can be clearly observed in
-Figure~\ref{fig:uscensus:Nodes-RulesPerRuntime}. 
-
+An important effect of divergence in the interestingness measure can be observed
+in Figure~\ref{fig:uscensus:Nodes-RulesPerRuntime}. For fewer nodes, \emph{kldiv} performs very well, however, its
+its efficiency drops drastically as the number of nodes grows. Both \emph{klsupp} and \emph{jssupp} clearly outperform
+the other measures, while \emph{supp} a more consistently inefficient performance.
 
 Since the USCensus data is completely joined on person entities, and all categorical relations have literals
-as constants (usually integer numbers mapped to a set of entities), therefore allowing only star-join patterns, we
-chose DBpedia and LinkedMDB in order to evaluate our ILP-extension.
+as constants (usually integer numbers mapped to a set of entities), for the next experiment, we chose DBpedia and
+LinkedMDB, as they have more complex structures, allowing different join patterns.
 
 \begin{figure}
-\caption{Comparison of number of interesting rules learned per lattice size}
+\caption{Number of interesting rules learned per lattice size}
 \begin{tikzpicture}[scale=1.0]
  \begin{axis}[
 	width=15cm, height=10cm,
@@ -105,7 +117,7 @@ chose DBpedia and LinkedMDB in order to evaluate our ILP-extension.
 \end{figure}
 
 \begin{figure}
-\caption{Comparison of Correlation Lattice build time per lattice size}
+\caption{Correlation lattice build time per size}
 \begin{tikzpicture}[scale=1.0]
  \begin{axis}[
 	width=15cm, height=10cm,
@@ -130,7 +142,7 @@ chose DBpedia and LinkedMDB in order to evaluate our ILP-extension.
 \end{figure}
 
 \begin{figure}
-\caption{Comparison of number of interesting rules per runtime per lattice size}
+\caption{Efficiency in learning rules (number of learned rules per millisecond) per lattice size}
 \begin{tikzpicture}[scale=1.0]
  \begin{axis}[
 	width=15cm, height=10cm,
@@ -164,51 +176,58 @@ chose DBpedia and LinkedMDB in order to evaluate our ILP-extension.
 
 
 
-In our second experiment, we test our proposed approach on LinkedMDB and DBpedia. We merge both datasets onto a single
-RDF3X database, create correlation lattices for the properties $budget$ and $runtime$ with categorical relations:
-$director$, $writer$, $producer$, $distributor$, $starring$, $country$, and $subject$. We build a pair lattices for each
-of the 4 interestingness measures we evaluate: Kullback-Leibler divergence only, Kullback-Leibler combined with support,
-Jensen-Shannon combined with support, and support only
+In the second experiment, we merge both datasets onto a single
+RDF3X database, create correlation lattices for the properties \emph{budget} and \emph{runtime} with categorical
+relations: \emph{director}, \emph{writer}, \emph{producer}, \emph{distributor}, \emph{starring}, \emph{country}, and
+\emph{subject}. We build a \emph{budget} and a \emph{runtime} lattice for each of the 4 interestingness measures we
+evaluate.
 
-Subsequently, we run the ILP with our proposed extension and learn rules with the relation $country$ as head. We
-measure the number of base-rules evaluated as interesting, the runtime spent with their search, and how many of the
-rules evaluated as interesting actually had an interesting refined-rule. It is important to point out that the
-core-ILP runtime, excluding the search for rules with numerical intervals, is the same for all of them measures and
+For experiment, we used equal frequencies as discretization technique, since the numerical properties are skewed and
+quite noisy, with the property \emph{budget}, for instance, containing significant outliers with order of magnitude up
+to $10^{14}$.
+
+Subsequently, we run the ILP with our proposed extension and learn rules with the relation \emph{country} as head and a
+numerical interval for \emph{budget}. We measure the number of base-rules evaluated as interesting, the runtime spent
+with the search, and how many of the rules predicted as interesting were accurate. It is important to point out that
+the core-ILP runtime, excluding the search for rules with numerical intervals, is the same for all of them measures and
 threshold values. 
 
-This is done for the 4 aforementioned measures and various different threshold values. With that we can obtain evaluate
-the accuracy and recall of our interestingness predictions, as well as evaluate their efficiency by comparing the amount
-of rules learned per runtime.
+We evaluate the performance of the 4 different interestingness measures by experimenting them with different threshold
+values (varying from 0 to the highest value encountered). With that we can obtain the precision and recall of our
+interestingness predictions, as well as evaluate their efficiency by comparing the amount of rules learned per runtime.
 
-In this experiment, we used equal frequencies as discretization technique, since the numerical properties are skewed and
-quite noisy, with the property $budget$, for instance, containing significant outliers with order of magnitude up to
-$10^{14}$.
+By running our algorithm with interestingness threshold 0, we predict all clauses as interesting and therefore we can
+find out the maximum number of interesting rules that can be learned in the experiment. We use this value to calculate
+the recall, and the number of right and wrong predictions to calculate the accuracy.
+
 
 In this experiment, we do not partition the data into training and test sets in order to evaluate the learned rules,
-since the data has a much more complex structure, making the partitioning much trickier than on USCensus, and unfeasible
-due to the limited time available. Instead, we simply check the precision of our interestingness predictions, by
-counting the number of chosen rules which 
+because the data has a complex structure, which makes it complicated to create partitions without significant loss of
+information. Instead, we simply check the precision of our interestingness predictions, by counting the number of chosen
+rules which 
 
-The results obtained in this experiment are not very significant, as the size of $budget$ relation is
-not very large (9565 facts). Because of that, it is very difficult to learn a significant amount of rules with fairly
-high confidence and support values, therefore many of the learned rules are result of noise.
+The results obtained in this experiment are not very significant, as the size of the \emph{budget} property is
+not very large (9565 facts). Because of that, it is very difficult to learn a significant amount of rules with the
+specified confidence and support thresholds. Lowering them is not a good option either, since it ends up learning
+noise, therefore the obtained plots are not very conclusive.
 
-Figure~\ref{fig:mdbpedia:budget:Precision-Recall} shows how a comparative precision-recall graph for the same 4
-interestingness measures. Again, the support only have a relatively good overall performance, however its precision is
-bad for low recall values, with all the other measures having better results. In graph from
+Figure~\ref{fig:mdbpedia:budget:Precision-Recall} shows a comparative precision-recall graph of the 4
+interestingness measures. The \emph{supp} measure has a relatively good overall performance, however its
+precision is bad for low recall values, with all the other measures having better results. In the graph from
 Figure~\ref{fig:mdbpedia:budget:Precision-Recall}, we notice that the number of rules learned per runtime is better
 than linear growth for all the measures with JS-divergence and KL-divergence combined with support outperforming the
-other measures, indicating their effectiveness as pruning heuristics.
+other measures.
 
-For the $runtime$ property, on the other hand, we can observe in the graph from
+For the \emph{runtime} property, on the other hand, we can observe in the graph from
 Figure~\ref{fig:mdbpedia:runtime:Runtime-LearnedRules} that this growth is much less steep, being much closer to
 linearity for all the measures. To some extent, this difference can be explained by the weaker correlation between the
-$runtime$ property and the candidate relations when compared to $budget$. 
-
+\emph{runtime} property and the candidate relations when compared to the \emph{budget}. In addition, because
+of the same reason, we observe in the precision-recall graph from Figure~\ref{fig:mdbpedia:runtime:Precision-Recall}
+that the \emph{klsupp} and \emph{jssupp} do not perform as well as in the \emph{budget} experiment.
 
 \begin{figure}
- \caption{Precision-Recall graph of our interestingness prediction for learning the relation $country$ with
-numerical interval for the property $budget$ on LinkedMDB and DBpedia}
+ \caption{Precision-Recall graph of the interestingness predictions for learning rules with numerical interval for the
+$budget$ property}
  \centering
  \begin{tikzpicture}[scale=1.0]
   \begin{axis}[
@@ -242,12 +261,12 @@ numerical interval for the property $budget$ on LinkedMDB and DBpedia}
 
 \begin{figure}
 %\begin{minipage}{1\linewidth}\centering
- \caption{Runtime-LearnedRules}
+ \caption{Number of rules learned per time, for learning rules with numerical interval for the $budget$ attribute}
  \centering
  \begin{tikzpicture}
   \begin{axis}[
 	width=15cm, height=10cm,
-	xlabel=\textsc{Runtime},
+	xlabel=\textsc{Runtime ($ms$)},
 	ylabel=\textsc{\#Learned Rules},
         legend entries={Support only, KL-divergence*Support, KL-divergence only, JS-divergence*Support},
 	legend style={legend pos=north west,font=\tiny}]
@@ -274,8 +293,8 @@ numerical interval for the property $budget$ on LinkedMDB and DBpedia}
 
 
 \begin{figure}
- \caption{Precision-Recall comparison of our interestingness prediction for learning the relation $country$ with
-numerical interval for the property $runtime$ on LinkedMDB and DBpedia}
+ \caption{Precision-Recall graph of the interestingness predictions for learning rules with numerical interval for
+the $runtime$ attribute} 
  \centering
  \begin{tikzpicture}[scale=1.0]
   \begin{axis}[
@@ -409,12 +428,12 @@ numerical interval for the property $runtime$ on LinkedMDB and DBpedia}
 
 \begin{figure}
 %\begin{minipage}{1\linewidth}\centering
- \caption{Runtime-LearnedRules}
+ \caption{Number of rules learned per time, for learning rules with numerical interval for the $runtime$ attribute}
  \centering
  \begin{tikzpicture}
   \begin{axis}[
 	width=15cm, height=10cm,
-	xlabel=\textsc{Runtime},
+	xlabel=\textsc{Runtime ($ms$)},
 	ylabel=\textsc{\#Learned Rules},
         legend entries={Support only, KL-divergence*Support, KL-divergence only, JS-divergence*Support},
 	legend style={legend pos=north west,font=\tiny}]
@@ -484,14 +503,11 @@ numerical interval for the property $runtime$ on LinkedMDB and DBpedia}
 \end{figure}
 
 
-
-
-
-
 \subsection{Example of Rules Learned}
 
-We selected a couple of interesting rules learned with our approach in order to illustrate the kind of results we
-obtain. On LinkedMDB, for example, we learned that films in English with Canadian director (first entry of
+We selected a couple of interesting rules learned with our approach in order to illustrate the results we
+obtained in the experiments. On LinkedMDB, for example, we learned that films in English with Canadian director (first
+entry of
 Table~\ref{tab:mdbRuleExamples}) and low budget are significantly more likely to be also Canadian than those with
 higher budget. The base rule shown below has confidence $0.36$, while for the refined rule, we find the
 interval $Y\leq 80000$ with confidence $0.83$, which represents a confidence gain of $2.31$.
@@ -523,7 +539,7 @@ $1.37$:
       subject(A,englishLanguageFilms), Y$\in [930K,25M]$&
       0.82	& 1.46 \\ \hline
       starring(X,Z) :-&writer(X,Z), country(X,uk), distributor(X,bbc), runtime(X,Y), Y$\leq 4080s$ &
-      0.9	& 1.70 \\ \hline
+      0.9	& 1.70 \\
 
     \bottomrule
   \end{tabular}
@@ -553,35 +569,33 @@ Table~\ref{tab:uscensusRuleExamples}.
 \end{table}
 
 
-\subsection{Conclusion}
+\chapter{Summary}
+\label{ch:intro}
 
-The results obtained in the first experiment indicate the proposed divergence combined with support measures have the
-potential to be used as heuristics in order to reduce the search space of rules with numerical and categorical
-constants, being much more efficient than support only or divergence only. 
+In this thesis we propose a method for learning rules with combinations of numerical and categorical
+attributes based on ILP. In order to do it efficiently we use a graph structure that measures the correlation
+between a given numerical property and different categorical relation, which we call correlation lattice. We discuss
+its properties, pruning opportunities, and heuristics. 
 
-In our last experiment, we apply it into the core-ILP and try to evaluate our proposed ILP extension on LinkedMDB and
-DBpedia. Results indicate that indeed, with the divergence measures, the precision of the interestingness predictions
-is higher for lower recall. Moreover, KL-divergence*support seems to perform slightly better than JS-divergence*support.
-However, since the data is not ideal, it is premature to draw any conclusions. 
-[Elaborate later]
+Also, we describe in details how to extend the classical top-down ILP algorithm, with modifications required in the
+refinement set. There, we introducing the clause interestingness prediction and refinement suggestions, which are
+queried from a correlation lattice.  
 
-[Separate section?]
+In the experiments section, we first evaluate the correlation lattice, how to efficiently build it, and compare
+different interestingness measures. As the results reveal, we learned that the proposed combination of divergence and
+support is a good interestingness measure. The combined measures are more consistent than divergence only,
+and more efficient than support only.
 
-- UScensus experiment shows the advantage of combining divergence with support
+The second part of our experiments, we evaluate the proposed ILP extension performance. The results confirm that our
+proposed extension can learn rules with combination of numerical and categorical attributes in an efficient way. Again,
+we have indications that the combination of divergence and support is a good interestingness measure. However, since the
+data used is not perfectly adequate for the purposes of this experiment, the results obtained are not very conclusive.
 
-- DBpedia LinkedMDB not very conclusive
+Undoubtedly, there is still plenty of work to be done in the future. Firstly, it is necessary to make experiments with
+more adequate data to evaluate our ILP extension. Finding such data is not an easy task, and in the given to do this
+thesis work, it was not possible to find any with the required characteristics. 
 
-- 
-
-\subsection{Future Work}
-
-[???]
-
-- Experiments with better data?
-
-- Extend the proposed technique to multidimensions
-
-
+Another point to be considered is the...
 
 
 
@@ -605,220 +619,6 @@ However, since the data is not ideal, it is premature to draw any conclusions.
 
 
 
-
-
-
-
-
-
-\begin{comment}
-\begin{figure}
- \caption{Precision - Recall }
- \centering
- \begin{tikzpicture}[scale=1.0]
-  \begin{axis}[
-	width=15cm, height=10cm,
-	xlabel=\textsc{Recall},
-	ylabel=\textsc{Precision},
-	legend entries={Support only, KL-divergence*Support, KL-divergence only, JS-divergence*Support},
-	legend style={legend pos=north east,font=\tiny}]
-      ]
-%  \addplot coordinates {(0,0.08527132) (0.03741496,0.08527132) (0.4591837,0.5212355) (0.4795918,0.3691100)
-%(0.4931973,0.3072034)
-%(0.5136054,0.2581197) (0.547619,0.2303290) (0.6360544,0.2379135) (0.6360544,0.2080089) (0.6768708,0.2090336)
-%(0.6972789,0.193032) (0.7517007,0.1957484) (0.7653061,0.1810137) (0.7653061,0.1781473) (0.7959183,0.1696882)
-%(0.8027211,0.1621993) (0.8027211,0.1587088) (0.9013606,0.1726384) (0.9421769,0.1716233) (0.9421769,0.1653731)
-%(1.0,0.1418234)};
-
-    \addplot coordinates {(0,0.8333333) (0.01234568,0.8333333) (0.02222222,0.9) (0.03209877,0.8666667)
-(0.04197531,0.8947368) (0.05185185,0.875) (0.05185185,0.7777778) (0.05679012,0.7666667) (0.05925926,0.7741935)
-(0.06419753,0.7647059) (0.0691358,0.7777778) (0.07654321,0.7948718) (0.08395062,0.8095238) (0.08888889,0.7826087)
-(0.08888889,0.7058824) (0.08888889,0.6923077) (0.09876543,0.7142857) (0.09876543,0.6666667) (0.1012346,0.640625)
-(0.1037037,0.6363636) (0.1234568,0.6756757) (0.1283951,0.6842105) (0.1481482,0.7142857) (0.1679012,0.7391304)
-(0.1876543,0.76) (0.2024691,0.7592593) (0.2123457,0.7678571) (0.2246914,0.7777778) (0.2345679,0.766129)
-(0.2370370,0.768) (0.2395062,0.7698413) (0.2419753,0.7716535) (0.2444444,0.7674419) (0.254321,0.757353) (0.2666667,0.75)
-(0.2864197,0.7631579) (0.2962963,0.7692308) (0.3061728,0.775) (0.308642,0.771605) (0.3135802,0.769697)
-(0.3209876,0.7692308) (0.3283951,0.7687861) (0.3308642,0.7657143) (0.3333333,0.75) (0.3358025,0.7472528)
-(0.3432099,0.7473118) (0.3481481,0.7460318) (0.3530864,0.7447917) (0.3530864,0.7409326) (0.3555556,0.742268)
-(0.3580247,0.7435898) (0.3679012,0.7412935) (0.3753086,0.7414634) (0.3827161,0.7451923) (0.3851852,0.7255814)
-(0.3925926,0.7098214) (0.4049383,0.7161572) (0.4049383,0.7099567) (0.4148148,0.7058824) (0.4246914,0.7020408)
-(0.4518518,0.7093023) (0.4691358,0.6959707) (0.4839506,0.7) (0.4839506,0.6925795) (0.5160494,0.6943521)
-(0.5604938,0.6920732) (0.562963,0.6909091) (0.5703704,0.6936937) (0.5753086,0.6934524) (0.5876543,0.6959065)
-(0.6074074,0.6852367) (0.619753,0.6553525) (0.6246914,0.642132) (0.6444445,0.6397059) (0.6493827,0.6368039)
-(0.6617284,0.6203704) (0.6691358,0.6103604) (0.7135803,0.6033403) (0.7432099,0.584466) (0.8345679,0.5878261)
-(0.8518519,0.5857385) (1,0.54)};
-
-%   \addplot coordinates { (0,0.9538462) (0.4290657,0.9538462) (0.467128,0.5212355) (0.4878893,0.3691100)
-%(0.4878893,0.2848485) (0.4878893,0.2508897) (0.4878893,0.2227488) (0.5086505,0.1970509) (0.5224913,0.180622)
-%(0.6124567,0.1917660) (0.6470588,0.1803279) (0.6885813,0.1825688) (0.7439446,0.1858254) (0.7647059,0.1744278)
-%(0.799308,0.1676343) (0.8408305,0.1667810) (0.8408305,0.1631968) (0.8408305,0.1583062) (0.9411765,0.1718256)
-%(0.9411765,0.1654501) (0.9411765,0.1634615) (1.0,0.1401552)};
-
-   \addplot coordinates {(0,0.8333333) (0.01243781,0.8333333) (0.02238806,0.8181818) (0.02736319,0.8461539)
-(0.02736319,0.6875) (0.03233831,0.6842105) (0.04228856,0.7391304) (0.04726368,0.7307692) (0.05721393,0.7666667)
-(0.05970149,0.7741935) (0.06218905,0.7575757) (0.07462686,0.7894737) (0.07462686,0.7692308) (0.07960199,0.744186)
-(0.08955224,0.75) (0.08955224,0.6923077) (0.08955224,0.6792453) (0.09701493,0.6964286) (0.09701493,0.65)
-(0.09950249,0.6349207) (0.1019900,0.6119403) (0.1019900,0.5942029) (0.1119403,0.6164383) (0.1169154,0.6103896)
-(0.1243781,0.625) (0.1318408,0.6309524) (0.1343284,0.6136364) (0.1368159,0.6111111) (0.1417911,0.6195652)
-(0.1442786,0.6236559) (0.1467662,0.6210526) (0.1517413,0.628866) (0.1542289,0.6262626) (0.1567164,0.6237624)
-(0.1567164,0.617647) (0.1616915,0.625) (0.1641791,0.6285715) (0.1716418,0.6272727) (0.1741293,0.625)
-(0.1766169,0.6283186) (0.1791045,0.626087) (0.1865672,0.6355932) (0.1940299,0.6393443) (0.1940299,0.6341463)
-(0.2014925,0.6377953) (0.2114428,0.648855) (0.2139303,0.6466165) (0.2164179,0.6492537) (0.2164179,0.6444445)
-(0.2164179,0.6350365) (0.2238806,0.6382979) (0.2238806,0.6293706) (0.2238806,0.6164383) (0.2238806,0.6040269)
-(0.2238806,0.5960265) (0.2313433,0.5923567) (0.2412935,0.6024845) (0.2412935,0.5878788) (0.2412935,0.5843373)
-(0.2412935,0.577381) (0.2512438,0.5872093) (0.2537313,0.5795454) (0.2587065,0.5842696) (0.2587065,0.5810056)
-(0.261194,0.5833333) (0.2661692,0.5815217) (0.2661692,0.5783784) (0.2661692,0.5721925) (0.2736318,0.5789474)
-(0.2736318,0.5729167) (0.2810945,0.573604) (0.2835821,0.5757576) (0.2835821,0.5728643) (0.2935323,0.5812808)
-(0.2985075,0.5797101) (0.300995,0.5817308) (0.300995,0.5789474) (0.3034826,0.5809524) (0.3059702,0.5829384)
-(0.3084577,0.5849057) (0.3084577,0.5821596) (0.3084577,0.5740741) (0.3109453,0.5760369) (0.3134328,0.5779817)
-(0.3159204,0.5799087) (0.3159204,0.5720721) (0.3184079,0.5739911) (0.3184079,0.5688889) (0.3208955,0.568282)
-(0.3258706,0.5670996) (0.3333333,0.5726496) (0.3333333,0.5654008) (0.3333333,0.5630252) (0.3383084,0.5666667)
-(0.340796,0.5684648) (0.3507463,0.5755102) (0.3532338,0.5772358) (0.3582090,0.5783132) (0.3582090,0.576)
-(0.3606965,0.5776892) (0.3706468,0.5843137) (0.3731343,0.5859375) (0.380597,0.5907336) (0.3880597,0.5954198)
-(0.3880597,0.5931559) (0.3905473,0.594697) (0.3905473,0.5924528) (0.3905473,0.5858209) (0.3930348,0.5873606)
-(0.3955224,0.5845588) (0.4004975,0.5875912) (0.4004975,0.5854545) (0.4029851,0.5869565) (0.4054726,0.586331)
-(0.4079602,0.5878136) (0.4129353,0.5907474) (0.4154229,0.5921986) (0.420398,0.5929825) (0.4228856,0.5923345)
-(0.4253731,0.59375) (0.4328358,0.5979381) (0.4328358,0.5958904) (0.4328358,0.5878378) (0.4328358,0.5858586)
-(0.4353234,0.5872483) (0.4402985,0.59) (0.4402985,0.5880399) (0.4452736,0.5907591) (0.4452736,0.5888158)
-(0.4502487,0.5915033) (0.4502487,0.5895765) (0.4552239,0.592233) (0.4577114,0.5916399) (0.4726368,0.5956113)
-(0.4726368,0.59375) (0.4751244,0.5950156) (0.4950249,0.6048632) (0.4975124,0.6060606) (0.4975124,0.6006006)
-(0.5,0.5964392) (0.5099502,0.601173) (0.5199005,0.5988539) (0.5298507,0.6033995) (0.5497512,0.6121883)
-(0.5696517,0.6205962) (0.5895522,0.6286472) (0.6094527,0.6363636) (0.6119403,0.6356589) (0.619403,0.6368287)
-(0.6393035,0.6441103) (0.6467662,0.6435643) (0.6492537,0.6428571) (0.6641791,0.6480582) (0.6716418,0.6506024)
-(0.7636816,0.6463158) (0.778607,0.6480331) (0.7860696,0.6502058) (0.7910448,0.6516393) (0.800995,0.6544715)
-(0.8084577,0.6552419) (0.8109453,0.6546185) (0.8109453,0.6481113) (0.8159204,0.6444008) (0.8159204,0.6418787)
-(0.8159204,0.6319846) (0.818408,0.631478) (0.8383084,0.6287314) (0.8383084,0.6240741) (0.8383084,0.6229205)
-(0.840796,0.6236162) (0.840796,0.6224678) (0.8457711,0.620438) (0.8656716,0.6159292) (0.9427861,0.5959119)
-(0.9950249,0.5641749) (0.9975125,0.5639943) (1,0.5638149) (1,0.5622377) (1,0.5614525) (1,0.5583333) (1,0.5552486)
-(1,0.5506849) (1,0.5476839) (1,0.526178)};
-
-  \addplot coordinates {(0,0) (0,0) (0,0) (0,0) (0.03508772,0.01530612) (0.1988304,0.0698152) 
-  (0.2222222,0.06495727) (0.2923977,0.07440476) (0.3508772,0.07556675) (0.4093567,0.07667032) (0.4561403,0.07617188)
-(0.4678363,0.07181329) (0.502924,0.06907631) (0.5204678,0.06711916) (0.625731,0.0764832) (0.7076023,0.0829904)
-(0.7076023,0.0810992) (0.7076023,0.07846952) (0.7076023,0.07520199) (0.9005848,0.09260373)
- (0.9005848,0.09139466) (1.0,0.08077468)};
-
- \addplot coordinates {(0,0.9565217) (0.44,0.9565217) (0.4766667,0.52) (0.4966667,0.3669951) 
-(0.4966667,0.2827325) (0.5166667,0.2391975) (0.53,0.2131367) (0.6233333,0.2223543) (0.6566667,0.2045691)
- (0.6566667,0.1894231) (0.6566667,0.1769991) (0.7166666,0.1812816) (0.7633333,0.1839358) (0.7833334,0.1724138)
- (0.7933334,0.1665500) (0.8333333,0.1649076) (0.8333333,0.1612903) (0.8333333,0.15625) (0.9433333,0.1711004) 
- (0.9433333,0.1644393) (0.9433333,0.1623637) (1.0,0.1379310)};
-
-
-  \end{axis}
-  \end{tikzpicture}
-\label{fig:mdbpedia:Precision-Recall}
-\end{figure}
-
-\begin{figure}
- \caption{Runtime-LearnedRules}
- \centering
- \begin{tikzpicture}[scale=1.0]
-  \begin{axis}[
-	width=15cm, height=10cm,
-	xlabel=\textsc{Runtime},
-	ylabel=\textsc{\#Learned Rules},
-        legend entries={Support only, KL-divergence*Support, KL-divergence only, JS-divergence*Support},
-	legend style={legend pos=north west,font=\tiny}]
-      ]
-  \addplot coordinates {(0.0,0.0) (55709,11) (91488,135) (144319,141) (183567,145) (235053,151) (288040,161)
-(331747,187)
-(380080,187) (394814,199)
-(424827,205) (442860,221) (473691,225) (482918,225) (535099,234) (573386,236) (588600,236) (612505,265) (652833,277)
-(682636,277) (792557,294)};
-
-  \addplot coordinates {(0.0,0.0) (33892,124) (87747,135) (139353,141) (186294,141) (217893,141) (235750,141)
-(285443,147)
-(323626,151) (366197,177) (417438,187) (430932,199) (447970,215) (476371,221) (504948,231) (544307,243) (558897,243)
-(578569,243) (601647,272) (630384,272) (639120,272) (742514,289)};
- 
-  \addplot coordinates {(0.0,0.0) (35466,0.0) (55421,0.0) (106586,0.0) (161302,6) (208629,34) (250863,38) (295212,50)
-(351300,60)
-(382899,70) (433423,78) (476677,80) (532442,86) (570818,89) (589925,107) (605518,121) (621333,121) (643190,121)
-(675208,121) (701631,154) (711515,154) (827520,171)};
-
- \addplot coordinates { (36343,132) (93944,143) (148944,149) (199223,149) (253104,155) (294678,159) (341024,187)
-(396459,197) (416000,197) (450504,197) (469231,215) (484591,229) (514785,235) (546069,238) (589417,250) (605128,250)
-(626821,250) (653140,283) (685085,283) (694687,283) (809238,300)};
-
-  \end{axis}
-  \end{tikzpicture}
-\label{fig:mdbpedia:Runtime-LearnedRules}
-\end{figure}
-
-
-
-
-
-
-
- \begin{figure}
-\caption{Lattices with 3 levels}
-\centering
-\begin{tikzpicture}[scale=1.0]
- \begin{axis}[
-	width=15cm, height=10cm,
-        xlabel=\textsc{\#Nodes per lattice level},
-        ylabel=\textsc{Time to build lattice ($ms$)}
-    ]
-\addplot coordinates {(5,2165) (10,4337) (15,6723) (20,8860) (30,11969) (40,14626) (50,21288) (60,22329) (70,24577)
-(80,25387) (90,27539) (100,30210)};
-\addplot coordinates {(5, 235) (10,748) (15, 1317) (20, 1590) (30, 1890) (40, 2482) (50, 3182) (60, 3474) (70, 4020)
-(80, 4911) (90,5982) (100,6684)};
-\end{axis}
-\end{tikzpicture}
-\end{figure}
-
-\begin{figure}
-\begin{tikzpicture}[scale=1.0]
- \begin{axis}[
-	width=15cm, height=10cm,
-        xlabel=\textsc{\#Nodes per Lattice level},
-        ylabel=\textsc{\#Interesting Rules}
-    ]
-\addplot coordinates {(5,0.0) (10,0.0) (15,0.0) (20, 0) (30, 9) (40,16) (50,24) (60,36) (70,44) (80,48) (90,52)
-(100,54)};
-\addplot coordinates {(5,1.0) (10,5) (15,8) (20,10) (30,10) (40,11) (50,13) (60,15) (70,16) (80,18) (90,25) (100,33)};
-\end{axis}
-\end{tikzpicture}
-\end{figure}
-
-
-\begin{figure}
- \caption{Lattice with 4 levels}
- \centering
- \begin{tikzpicture}[scale=1.0]
-  \begin{axis}[
-	  width=15cm, height=10cm,
-	  xlabel=\textsc{\#Nodes per Lattice level},
-	  ylabel=\textsc{\#Interesting Rules}
-      ]
-  \addplot coordinates {(5,0.0) (10,0.0) (15, 0) (20, 0) (30, 9) (40,19) (50,29) (60,43) (70,57) (80,62) (90,67)
-(100,72)};
-  %(110,75) (120,79) (130,84) (140,88) (150,94) (200,122) (250,159) (300,178) (350,200) (400,214) (450,231) (500,242)};
-  \addplot coordinates {(5,1.0) (10,6) (15,12) (20,13) (30,15) (40,19) (50,23) (60,26) (70,27) (80,40) (90,47)
-(100,49)};
-  %(110,) (120,) (130,) (140,) (150,) (200,) (250,) (300,) (350,) (400,) (450,) (500,)};
-  \end{axis}
-  \end{tikzpicture}
-\end{figure}
-
-\begin{figure}
-  \begin{tikzpicture}[scale=1.0]
-  \begin{axis}[
-	  xlabel=\textsc{\#Nodes per lattice level},
-	  ylabel=\textsc{Time to build lattice ($ms$)}
-      ]
-  \addplot coordinates {(5,3905) (10,8496) (15,13097) (20,16601) (30,24348) (40,31322) (50,38189) (60,44724) (70,51869)
-  (80,55981) (90,60382) (100,65622)};
-% (110,75) (120,79) (130,84) (140,88) (150,94) (200,122) (250,159) (300,178)  (350,200) (400,214) (450,231) (500,242)};
-  \addplot coordinates {(5, 330) (10,1161) (15, 2128) (20, 2722) (30, 3130) (40, 4060) (50, 5571) (60, 6613) (70, 6976)
-  (80, 9483) (90,11534) (100,12795)};
-% (110,) (120,) (130,) (140,) (150,) (200,) (250,) (300,) (350,) (400,) (450,) (500,)};
-  \end{axis}
-  \end{tikzpicture}
-\end{figure}
-\end{comment}
 
 
 
