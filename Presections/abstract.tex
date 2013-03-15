@@ -12,7 +12,7 @@ Nevertheless, it's inherently expensive and the hypothesis search space grows co
 size. 
 This problem is even more dramatic when literals with constants are considered. Therefore, it usually requires
 very aggressive pruning to make it feasible. 
-Moreover, searching for rules with numerical intervals requires very expensive queries, and frequently does not bring
+Moreover, searching for rules with numerical intervals requires expensive queries, and frequently does not bring
 any significant confidence gain.
 We propose a preprocessing step and an extension to ILP top-down algorithm, with the objective of efficiently learning
 rules with interesting intervals for numerical attributes, i.e., rules which present a significant gain when restricting
