@@ -13,7 +13,7 @@ the six permutations of \emph{subject (S)}, \emph{predicate (P)} and \emph{objec
 \emph{SPO},\emph{SOP},\emph{OSP},\emph{OPS},\emph{PSO} and \emph{POS}.
 
 All the facts are stored in a single triples table, with no schema, over which the indices are created. Other six
-additional aggregated indices, for each of the the pairs of \emph{subject}, \emph{predicate} and \emph{object}
+additional aggregated indices, for each of the pairs of \emph{subject}, \emph{predicate} and \emph{object}
 (\emph{SP},\emph{SO},\emph{OS},\emph{OP},\emph{PS} and \emph{PO}), are also created. These indices store only two of the
 three columns of a triple and contain an aggregated count for the number of occurrences of the given pair of arguments
 among all the triples.
@@ -80,10 +80,10 @@ how both classes are structured.
 \end{figure}
 
 
-\subsection{Querying the Correlation Lattice Node Histograms}
+\subsection{Querying the Correlation Lattice Histograms}
 
 For building the correlation lattice, we start with the root node, which has a numerical property as literal and no
-constants assigned, e.g. \emph{hasIncome(X,Y)}. We use the query below in order to obtain the  distribution of 
+constants assigned, e.g. \emph{hasIncome(X,Y)}. We use the SPARQL query below in order to obtain the  distribution of 
 examples along the numerical attribute $Y$ in the whole Knowledge Base.
 
 \begin{center}
@@ -92,10 +92,10 @@ examples along the numerical attribute $Y$ in the whole Knowledge Base.
 
 We also use the result of this query in order to obtain the minimum and maximum values from $Y$, and set the
 discretization boundaries for the specified discretization technique. As a result, we can extract the root
-node's frequencies histogram. We keep the discretization boundaries in the CorrelationLattice class, as it will be used
+node's frequency histogram. We keep the discretization boundaries in the CorrelationLattice class, as it will be used
 consistently throughout the whole lattice.
 
-Afterwards, we select the the categorical properties that will be used in the lattice. For each of the selected
+Afterwards, we select the categorical properties that will be used in the lattice. For each of the selected
 properties, we join them with the root numerical property, then query the resulting distribution. We extract the node's
 histogram for each categorical constant of given property with a single SPARQL query, which is illustrated below for the
 categorical relation \emph{hasEducation}:
@@ -111,6 +111,9 @@ correspondent query would be:
 \begin{center}
  \emph{SELECT COUNT ?Y WHERE \{ ?X <hasIncome> ?Y . ?X <hasEducation> <phd> . ?X <hasSex> <female> \} GROUP BY (?Y)}
 \end{center}
+
+With these three types of queries and a numerical, we can extract the data required for the frequency histogram of any
+node in the lattice.
 
 
 
