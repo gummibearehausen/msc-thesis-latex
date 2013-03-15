@@ -1,30 +1,28 @@
 \chapter{Experiments}
 \label{ch:intro}
 
-In order to evaluate our extension of ILP, the correlation and lattice, and the different interestingness measures, we
-perform a series of experiments on Linked Data.
+In order to evaluate our extension of ILP, the correlation lattice, and the different interestingness measures,
+we perform a series of experiments on Linked Data.
 
-First of all, in all the experiments, we define as interesting rule a refined-rule $r_{ref}$ which satisfies the
-confidence threshold $minConf=0.75$ and support threshold $minSupp=10$, and has a confidence gain in relation to its
+For all the experiments, we define an interesting rule as a refined-rule $r_{ref}$ which satisfies the
+confidence threshold $minConf=0.75$, support threshold $minSupp=10$, and has a confidence gain in relation to its
 base-rule $r_{base}$ of at least $1.25$ (we define relative gain as the ratio
 $gain_{ref,base}=conf(r_{ref})/conf(r_{base})$).
 
 Also, we compare four different interestingness measures: support only (\emph{supp});
 Kullback-Leibler divergence only (\emph{kldiv}); Kullback-Leibler divergence multiplied by support (\emph{klsupp}); and
-Jensen-Shannon multiplied by support (\emph{jssupp}). 
+Jensen-Shannon multiplied by support (\emph{jssupp}).
 
-In the first experiment, we compare different measures by building same-sized correlation lattices on the
-$hasIncome(X,Y)$ property from the USCensus. Afterwards, we search for interesting rules with intervals for $Y$ inside
-the lattice itself as described in Section~\ref{sec:searchRulesInCL}. The lattices are built by greedily choosing the
-top-k most interesting nodes in each level according to the chosen measure, then joining the most interesting nodes
-with each other to form the next level, which shouldn't exceed a nodes per level threshold, so that all the lattices
-have the same number of nodes.
+\section{Experiment 1}
 
-Also, we measure the total time spent for the construction of each lattice, as well as the number of interesting rules
-produced. As candidate categorical relations, we chose the 16 relations shown in Table~\ref{tab:uscensusRelations}.
+In the first experiment, which is done on USCensus data, we evaluate the correlation lattice, analyzing the
+time required for its construction, and number of interesting rules
+extracted from the lattice itself (by the method described in Section~\ref{sec:searchRulesInCL}).
+
+The lattices evaluated in this experiment have as root the property $hasIncome(X,Y)$, and as categorical relations, the
+16 relations shown in Table~\ref{tab:uscensusRelations}.
 More details about the categories can be found at the PUMS Data Dictionary\footnote{\url{
-http://www.census.gov/acs/www/Downloads/data_documentation/pums/DataDict/PUMSDataDict05_07.pdf}
-}
+http://www.census.gov/acs/www/Downloads/data_documentation/pums/DataDict/PUMSDataDict05_07.pdf}}.
 
 \begin{table}[h!]
 \begin{minipage}{\textwidth}
@@ -58,12 +56,20 @@ http://www.census.gov/acs/www/Downloads/data_documentation/pums/DataDict/PUMSDat
 \end{minipage}
 \end{table}
 
-We create a training and a testing partition of the original USCensus data, the first with 1.7GB and containing $884365$
-people entities, and the latter with 0.5GB containing $369024$ people entities. The correlation is built on the
-training partition, and rules extracted from it are tested on the testing partition, so that we can also evaluate the
-accuracy of the learned rules.
+We set the maximum number of levels in all the lattices to $4$, and limit the number of nodes per level to $k$. For
+each lattice size (defined by $k$), and for each interestingness measure, we measure the time spent with the
+construction and count the number of interesting rules extracted.
 
-The average accuracy obtained for the four measures were: 0.82 (\emph{supp}), 0.81 (\emph{klsupp}), 0.81
+The lattices are built by greedily choosing the top-$k$ most interesting nodes in each level according to the chosen
+measure, then joining the most interesting nodes with each other to form the subsequent level, so that we are able
+compare lattices with same size and built on different interestingness mesaures.
+
+In order to better evaluate the learned rules, we create a training and a testing partition of the original
+USCensus data, the first with 1.7GB and containing $884365$ people entities, and the latter with 0.5GB containing
+$369024$ people entities. The correlation is built on the training partition, and rules extracted from it are tested on
+the testing partition, so that we can also evaluate the accuracy of the learned rules.
+
+The average accuracy obtained for the four measures were: 0.81 (\emph{supp}), 0.81 (\emph{klsupp}), 0.81
 (\emph{jssupp}), and 0.77 (\emph{kldiv}). The lower accuracy from \emph{kldiv} is due to the lower support of the
 learned rules. As with the other measures, the learned rules have a higher average support, the confidence values are
 therefore higher and more consistent.
@@ -75,8 +81,8 @@ fewer nodes, \emph{supp} performs worse than the other two. This can be explaine
 clauses with very high support, which may cover the majority of the population, such as $hasDeficiency(X,no)$, and
 therefore tend to have a distribution similar to the overall population. 
 
-Analyzing the plot from Figure~\ref{fig:uscensus:Nodes-Runtime}, it is clear that \emph{supp} has a highest cost. As it
-concentrates on larger categories, the queries required for building the lattice are much
+Analyzing the plot from Figure~\ref{fig:uscensus:Nodes-Runtime}, it is clear that \emph{supp} has the highest cost. As
+it concentrates on larger categories, the queries required for building the lattice are much
 more expensive. The measures \emph{klsupp} and \emph{jssupp} are much more efficient than \emph{supp},
 as they can learn about the same amount of rules in a significantly shorter time.
 
@@ -174,7 +180,7 @@ LinkedMDB, as they have more complex structures, allowing different join pattern
 
 
 
-
+\section{Experiment 2}
 
 In the second experiment, we merge both datasets onto a single
 RDF3X database, create correlation lattices for the properties \emph{budget} and \emph{runtime} with categorical
@@ -197,7 +203,8 @@ values (varying from 0 to the highest value encountered). With that we can obtai
 interestingness predictions, as well as evaluate their efficiency by comparing the amount of rules learned per runtime.
 
 By running our algorithm with interestingness threshold 0, we predict all clauses as interesting and therefore we can
-find out the maximum number of interesting rules that can be learned in the experiment. We use this value to calculate
+find out the maximum number of interesting rules that can be learned for our given experiment settings. We use this
+value to calculate
 the recall, and the number of right and wrong predictions to calculate the accuracy.
 
 
@@ -217,7 +224,7 @@ precision is bad for low recall values, with all the other measures having bette
 Figure~\ref{fig:mdbpedia:budget:Precision-Recall}, we notice that the number of rules learned per runtime is better
 than linear growth for all the measures with JS-divergence and KL-divergence combined with support outperforming the
 other measures.
-
+%\section{Evaluation of the Proposed ILP Extension}
 For the \emph{runtime} property, on the other hand, we can observe in the graph from
 Figure~\ref{fig:mdbpedia:runtime:Runtime-LearnedRules} that this growth is much less steep, being much closer to
 linearity for all the measures. To some extent, this difference can be explained by the weaker correlation between the
@@ -393,7 +400,8 @@ the $runtime$ attribute}
 (0.1858407,0.328125) (0.1858407,0.3088235) (0.1858407,0.2916667) (0.1946903,0.2972973) (0.2035398,0.3066667)
 (0.2123894,0.3157895) (0.2212389,0.3125) (0.2212389,0.308642) (0.2212389,0.3048781) (0.2300885,0.313253)
 (0.2389381,0.3214286) (0.2477876,0.3294118) (0.2566372,0.3372093) (0.2654867,0.3448276) (0.2654867,0.3409091)
-(0.2743363,0.3483146) (0.2831858,0.3555556) (0.2831858,0.344086) (0.3008850,0.3578947) (0.3008850,0.3505155)
+(0.2743363%\section{Evaluation of the Proposed ILP Extension},0.3483146) (0.2831858,0.3555556) (0.2831858,0.344086)
+(0.3008850,0.3578947) (0.3008850,0.3505155)
 (0.3008850,0.3434343) (0.3097345,0.3398058) (0.3097345,0.3333333) (0.3097345,0.3301887) (0.3097345,0.3271028)
 (0.3274336,0.3363636) (0.3274336,0.3217391) (0.3274336,0.3109244) (0.3274336,0.3032787) (0.3274336,0.296)
 (0.3274336,0.2936508) (0.3274336,0.2913386) (0.3274336,0.2890625) (0.3274336,0.2868217) (0.3274336,0.2846154)
@@ -503,7 +511,7 @@ the $runtime$ attribute}
 \end{figure}
 
 
-\subsection{Example of Rules Learned}
+\subsection{Example of Interesting Rules Learned}
 
 We selected a couple of interesting rules learned with our approach in order to illustrate the results we
 obtained in the experiments. On LinkedMDB, for example, we learned that films in English with Canadian director (first
@@ -547,8 +555,10 @@ $1.37$:
  \end{center}
 \end{table}
 
-Other examples of interesting rules learned from the USCensus experiment are shown in
-Table~\ref{tab:uscensusRuleExamples}.
+Table~\ref{tab:uscensusRuleExamples} shows a few examples of rules learned in the USCensus experiment. The first two
+entries in the table reveal the discrepancy in the income of men and women. Although most of the people
+with a Master's degree are women (52\%), among people with income greater than \$32000, men are majority (with 79\%),
+and among people with income lower than \$3700, women are the majority (also 70\%).
 
 \begin{table}[h!]
  \begin{center}
@@ -557,11 +567,16 @@ Table~\ref{tab:uscensusRuleExamples}.
     \toprule
       & Refined Rule				& Conf 	& Gain \\
     \midrule
-      sex(X,male) :-&employmentStatus(X,employed), hasEducation(X,master), hasIncome(X,Y), Y>32000 &
+      sex(X,male) :-&employmentStatus(X,employed), hasEducation(X,master), hasIncome(X,Y), Y$>32000$ &
       0.79 & 0.52 \\ \hline
-      sex(X,female) :-&employmentStatus(X,employed), hasEducation(X,master), hasIncome(X.Y), Y<3700 &
+      sex(X,female) :-&employmentStatus(X,employed), hasEducation(X,master), hasIncome(X.Y), Y$<3700$ &
       0.79 & 0.48\\ \hline
-      [more to be added] & & & \\
+      maritalStatus(X,married) :-&hasEducation(X,master), hasIncome(X,Y), Y$\leq 0$& 
+      0.85 & 1.28 \\ \hline
+      employmentStatus(X,employed) :-&maritalStatus(X,single), hasIncome(X,Y), Y$> 11000$& 
+      0.85 & 1.61 \\ \hline
+      employmentStatus(X,employed) :-&languageSpokenAtHome(X,spanish), hasIncome(X,Y), Y$> 13000$& 
+      0.84 & 1.50
     \bottomrule
   \end{tabular}
   \label{tab:uscensusRuleExamples}
@@ -592,10 +607,15 @@ we have indications that the combination of divergence and support is a good int
 data used is not perfectly adequate for the purposes of this experiment, the results obtained are not very conclusive.
 
 Undoubtedly, there is still plenty of work to be done in the future. Firstly, it is necessary to make experiments with
-more adequate data to evaluate our ILP extension. Finding such data is not an easy task, and in the given to do this
-thesis work, it was not possible to find any with the required characteristics. 
+more adequate data to evaluate our ILP extension. 
 
-Another point to be considered is the...
+It is also necessary to conduct experiments in order to evaluate the trade-off between preprocessing time, i.e.,
+correlation lattice construction, and the time it can save in the rule learning process. This is relevant,
+since bigger lattices are more expensive to construct, however, they are able to make better interestingness
+predictions and refinement suggestions.
+
+
+
 
 
 
