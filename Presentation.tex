@@ -86,6 +86,9 @@
 \usepackage{graphicx} % Allows including images
 \usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
 \usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{pifont}
+\usepackage{wasysym}
 
 %\pgfpagesuselayout{16 on 1}[a4paper,landscape,border shrink=0mm]
 
@@ -152,14 +155,17 @@ Semantic Web''
 \end{frame}
 %------------------------------------------------
 \begin{frame}
+  \only<1>{
   \begin{figure}
   \includegraphics[width=1\linewidth]{./Figures/lod-datasets_2011-09-19}
   \end{figure}
-\end{frame}
-\begin{frame}
+  }
+  \pause
+  \only<2>{
   \begin{figure}
   \includegraphics[width=1\linewidth]{./Figures/lod-zoomed2}
   \end{figure}
+  }
 \end{frame}
 %-----------------------------------------------------------------------------------------------------------------------
 \section{Motivation}
@@ -274,38 +280,32 @@ livesIn(X,sd),age(X,Y)} and...
 \end{frame}
 %-----------------------------------------------------------------------------------------------------------------------
 \begin{frame}
- How can we obtain high confidence gain?
+ What base-rules have refined-rules with significant confidence gain?
  \begin{itemize}
   \item Satisfy support threshold
   \item Do not necessarily satisfy confidence threshold
-  \item Potentially has a refined-rule with an interval that satisfies both thresholds \\
-    \quad i.e., has non-uniform confidence distribution along the numerical attribute\\
-    \quad i.e., has body support and positives (body$\wedge$head) support distributions are different
+  \item Divergent body and positives (body$\wedge$head) probability distributions
+  %\item Potentially has a refined-rule with an interval that satisfies both thresholds \\
+  %  \quad i.e., has non-uniform confidence distribution over the numerical attribute\\
+  %  \quad i.e., has body support and positives (body$\wedge$head) support distributions are different
  \end{itemize}
-\end{frame}
-%-----------------------------------------------------------------------------------------------------------------------
-\begin{frame}
-\frametitle{Motivation}
- Example for a rule with positives support 117 and body support 700:
-\begin{columns}[c]
-  \column{0.45\textwidth}
-    \begin{figure}
-    \includegraphics[height=0.3\textheight]{./Figures/supportDistribution}
-    \end{figure}
-    \begin{figure}
-    \includegraphics[height=0.3\textheight]{./Figures/probabilityDistribution}
-    \end{figure}
-  \column{0.1\textwidth}
-    %\begin{centerline}
-      %\begin{fontsize}{20}{24}$\rightarrow$\end{fontsize}
-      $\rightarrow$
-    %\end{centerline}
-  \column{0.45\textwidth}
-    \begin{figure}
-    \includegraphics[width=1\linewidth]{./Figures/confidenceDistribution}
-    \end{figure}
-\end{columns}
-
+ \begin{figure}
+  \begin{tikzpicture}
+    \onslide<1,2>{
+    \node (txt1) at (0,3) {Frequency histograms};
+    \node (img1) at (0,1) {\includegraphics[width=5cm]{./Figures/supportDistribution}};
+    }
+    \onslide<2,3>{
+    \node (img2) at (3,1) {$\Rightarrow$};
+    \node (txt1) at (6,3) {Confidence distribution};
+    \node (img3) at (6,1) {\includegraphics[height=3cm]{./Figures/confidenceDistribution}};
+    }
+    \onslide<3>{
+    \node (txt1) at (0,3) {Body and Positives distributions};
+    \node (img1) at (0,1) {\includegraphics[width=5cm]{./Figures/probabilityDistribution}};
+    }
+  \end{tikzpicture}
+ \end{figure}
 \end{frame}
 %-----------------------------------------------------------------------------------------------------------------------
 \begin{frame}
@@ -319,21 +319,39 @@ livesIn(X,sd),age(X,Y)} and...
  \begin{itemize}
     \item Analyze combinations of numerical and categorical properties
     \item Measure their level of interestingness
-    \item Use core-ILP algorithm
-    \item Extend it to focus on most interesting combinations
+    \item Extend top-down ILP to detect and suggest interesting combinations
  \end{itemize}
 \end{frame}
 %-----------------------------------------------------------------------------------------------------------------------
-\section{Inductive Logic Programming}
+\section{Inductive Logic Programming}                                
 %-----------------------------------------------------------------------------------------------------------------------
 \begin{frame}
-\frametitle{ILP}
+\frametitle{Logic Programming Concepts}
+  \begin{itemize}
+   \item Literal: predicate symbol with bracketed n-tuple, e.g: \\ 
+      \quad $L=livesIn(X,Y)$
+   \item Clause: a disjunction of literals (negated or not), e.g: \\ 
+      \quad $c=(L_1 \vee L_2 \vee \ldots \vee \neg L_{m-1} \vee \neg L_{m})$
+   %\item Horn Clause: a clause with at most one positive literal \\
+   %   \quad $(L_1 \vee \neg L_2 \vee \ldots \vee \neg L_{m}) \equiv L_1$ :- $L_2,\ldots,L_m$
+   \item Safe Datalog Rule: every variable in the head appear in a non-negated literal in the body, negated
+literal variables in the body should appear in some positive literal in the body, e.g.: \\ 
+    \quad $speaks(X,Y)$ :- $wasBornIn(X,Z),hasOfficialLanguage(Z,Y)$
+   \item Hypothesis: a set of clauses $\mathcal{H}$
+     \begin{itemize}
+	\item Completeness: $\mathcal{H}$ covers all positive examples
+	\item Consistency: $\mathcal{H}$ covers no negative examples
+     \end{itemize}
+  \end{itemize}
+\end{frame}
+%-----------------------------------------------------------------------------------------------------------------------
+\begin{frame}
+\frametitle{Inductive Logic Programming (ILP)}
  Inductive Logic Programming: Finds a hypothesis $\mathcal{H}$ that covers all positive, and no negative examples
   \begin{fontsize}{10}{10}
     \begin{center}
     $positiveExamples + negativeExamples + background Knowledge \rightarrow hypothesis$
     \end{center}
-
     \begin{table}
       \begin{tabular}{ l  l }
       \toprule
@@ -352,31 +370,11 @@ livesIn(X,sd),age(X,Y)} and...
     \begin{center}
       $\mathcal{H} = daughter(X,Y)$ :- $female(X),parent(Y,X)$ 
     \end{center}
-
-
-  \end{fontsize}
+ \end{fontsize}
 \end{frame}
 %-----------------------------------------------------------------------------------------------------------------------
 \begin{frame}
-\frametitle{Logic Programming Concepts}
-  \begin{itemize}
-   \item Literal: predicate symbol with bracketed n-tuple, e.g: \\ 
-      \quad $L=livesIn(X,Y)$
-   \item Clause: a disjunction of literals (negated or not), e.g: \\ 
-      \quad $c=(L_1 \vee L_2 \vee \ldots \vee \neg L_{m-1} \vee \neg L_{m})$
-   \item Safe Datalog Rules: Every variable in the head appear in a non-negated literal in the body, negated literal
-variables in the body should appear in some positive literal in the body, e.g.: \\ 
-    \quad $speaks(X,Y)$ :- $wasBornIn(X,Z),hasOfficialLanguage(Z,Y)$
-   \item Hypothesis: a set of clauses $\mathcal{H}$
-     \begin{itemize}
-	\item Completeness: $\mathcal{H}$ covers all positive examples
-	\item Consistency: $\mathcal{H}$ covers no negative examples
-     \end{itemize}
-  \end{itemize}
-\end{frame}
-%-----------------------------------------------------------------------------------------------------------------------
-\begin{frame}
-\frametitle{ILP}
+\frametitle{Inductive Logic Programming (ILP)}
 Approaches
   \begin{itemize}
    \item Bottom-up: Start with least general $\mathcal{H}$ then perform generalizations
@@ -387,7 +385,7 @@ Approaches
     \item Apriori-style pruning
    \end{itemize}
   \end{itemize}
-What about large, noisy and incomplete LOD datasets such as YAGO and DBpedia?:
+What about large, noisy, and incomplete LOD datasets such as YAGO and DBpedia?:
 \begin{itemize}
    \item Sample data to reduce size
    \item Restrict the number of literals in a clause
@@ -454,19 +452,13 @@ Refine by $quarterOfBirth$ or $hasEducation$?
   \end{columns}
 \end{frame}
 %-----------------------------------------------------------------------------------------------------------------------
-%\begin{frame}
-%\frametitle{Correlation between Literals}
-%  \begin{figure}
-%  \includegraphics[width=1\linewidth]{./Figures/income-education.png}
-% \end{figure}
-%\end{frame}
-%-----------------------------------------------------------------------------------------------------------------------
 \begin{frame}
 \frametitle{Interestingness Measure}
-  How to measure of the interestingness of adding a literal $l$ to a clause $c$?
+  How to measure the interestingness of adding a literal $l$ to a clause $c$?
   \begin{itemize}
-   \item Extract the probability distribution of $\{c\}$ and $\{c \wedge l\}$ along $Y$
-   \item Normalize both support distributions and measure their divergence (e.g., with Kullback-Leibler)
+   \item Extract the frequency histograms of $\{c\}$ and $\{c \wedge l\}$ over a numerical attribute $Y$
+   \item Normalize the histograms to obtain their probability distributions, and measure their divergence (e.g., with
+Kullback-Leibler)
   \end{itemize}
   But, divergence alone isn't a good idea because:
   \begin{itemize}
@@ -477,12 +469,32 @@ Refine by $quarterOfBirth$ or $hasEducation$?
 \end{frame}
 %-----------------------------------------------------------------------------------------------------------------------
 \begin{frame}
+\frametitle{Interestingness Measure}
+    \begin{center}
+      $\underbrace{maritalStatus(X,married)}_{l=head}$ :- $\underbrace{livesIn(X,sd),age(X,Y)}_{c=body}$
+    \end{center}
+    
+     \begin{columns}[c]
+	\column{0.4\textwidth}
+	  \center \tiny \emph{age(X,Y),livesIn(X,sd)}
+	  \begin{figure}
+	    \includegraphics[width=1\linewidth]{./Figures/age-dist-southdakota.png}
+	  \end{figure}
+	\column{0.4\textwidth}
+	  \center \tiny \emph{age(X,Y),livesIn(X,sd),marriedStatus(X,married)}
+	  \begin{figure}
+	    \includegraphics[width=1\linewidth]{./Figures/age-dist-southdakota-married.png}
+	  \end{figure}  
+     \end{columns}
+\end{frame}
+%-----------------------------------------------------------------------------------------------------------------------
+\begin{frame}
 \frametitle{Correlation Lattice}
   \begin{itemize}
-   \item Build a lattice similar to an itemset lattice 
-   \item Numerical property $r$ as root 
+   \item Build a lattice similar to an \emph{itemset lattice}
+   \item Numerical property $r(X,Y)$ as root 
    \item The ``items'' are literals that can be joined with the root's non-numerical variable $X$
-   \item Root's numerical attribute domain is discretized in $k$ buckets $b_1,\dots,b_k$
+   \item Root's numerical attribute $Y$ is discretized in $k$ buckets $\{b_1,\dots,b_k\}$
    \item Each node $x$ has a frequency histogram $h(x)=<h_1(x),\ldots,h_k(x)>$ from its clause support distribution \\
       \quad where $h_i(x)=supp(x|Y \in b_i)$ \quad and \quad $|h(x)|_1=supp(x)$
    %\item Then we can use it to suggest the most interesting literals to be added in the refinement step from core-ILP
@@ -547,41 +559,44 @@ Refine by $quarterOfBirth$ or $hasEducation$?
       \end{equation}
       \item Too expensive, we need to reduce size 
       \begin{itemize}
-	\item prune by support (safe)
+	\item Prune by support (safe)
+	\item Restrict $\ell$ to the maximum clause size allowed in the core-ILP
+	\item Restrict the literals added to the lattice in order to reduce $n$ and $m$
+	\item Prune by interestingness or independence (heuristics)
       \end{itemize}
-      \item If not sufficient, we can restrict the literals to be added in the lattice in order to reduce $n$ and $m$
-      \item As pruning heuristics, we can greedily prune it by interestingness, as well as independence checks
-(will be discussed later)
   \end{itemize}
 \end{frame}
 %-----------------------------------------------------------------------------------------------------------------------
-\begin{frame}
-\frametitle{Correlation Lattice}
-  Literal Restrictions
-  \begin{itemize}
-    \item Lattice literals should directly join with root's join variable $X$. For example if root is $hasIncome(X,Y)$
-we could have: \\ \quad
-	  $livesIn(X,Z)$\\ \quad
-	  $hasChild(X,no)$
-    \item Literals that don't directly join with root should be combined with a linking property, e.g.: \\ \quad
-	  $wasBornIn(X,W),hasOfficialLanguage(W,Z)$  \\ \quad
-	  $votedFor(X,W),isAffiliatedTo(W,labourParty)$  \\ \quad
-	  $isFatherOf(W,X),diedIn(W,Z)$
-    \item This can be used to enable integration with different datasets, e.g.:  \\ \quad
-	  $owl$:$sameAs(X,W),directed(W,Z)$
-  \end{itemize}
-\end{frame}
+%\begin{frame}
+%\frametitle{Correlation Lattice}
+%  Literal Restrictions
+%  \begin{itemize}
+%    \item Lattice literals should directly join with root's join variable $X$. For example if root is $hasIncome(X,Y)$
+%we could have: \\ \quad
+%	  $livesIn(X,Z)$\\ \quad
+%	  $hasChild(X,no)$
+%    \item Literals that don't directly join with root should be combined with a linking property, e.g.: \\ \quad
+%	  $wasBornIn(X,W),hasOfficialLanguage(W,Z)$  \\ \quad
+%	  $votedFor(X,W),isAffiliatedTo(W,labourParty)$  \\ \quad
+%	  $isFatherOf(W,X),diedIn(W,Z)$
+%    \item This can be used to enable integration with different datasets, e.g.:  \\ \quad
+%	  $owl$:$sameAs(X,W),directed(W,Z)$
+%  \end{itemize}
+%\end{frame}
 %-----------------------------------------------------------------------------------------------------------------------
 \begin{frame}
 \frametitle{Independence checks}
-  Checks if a pair of nodes joining nodes are independent given their common parent
-  \begin{figure}
-  \includegraphics[height=0.4\textheight]{./Figures/indep}
-  \end{figure}
-  $p$ is a clause containing the root literal and $(l-1)$ other literals \\
-  $x$ and $y$ are literals, s.t. $x \neq y$ and $x,y \not \in p$
   \begin{itemize}
-    \item Estimate $\hat{h}(pxy)$ assuming that $x$ and $y$ are independent given $p$
+   \item Checks if a pair of nodes joining nodes are independent given their common parent
+      \begin{figure}
+      \includegraphics[height=0.35\textheight]{./Figures/indep}
+      \end{figure}
+      \begin{center}
+        \small (where $p$ is a clause, $x$ and $y$ are literals, s.t. $x \neq y$ and $x,y \not \in p$)
+
+      \end{center}
+    \normalsize  
+    \item Estimate $\hat{h}(pxy)$ assuming independence of $x$ and $y$ given $p$
     \item Query actual $h(pxy)$ and perform a Pearson's chi-squared test \\ \quad
 	  $H_0$ = $x$ and $y$ are independent given $p$ \\ \quad
 	  $H_1$ = $x$ and $y$ are dependent given $p$
@@ -603,7 +618,7 @@ we could have: \\ \quad
       \node (pd)[font=\tiny]   at (1,7.7)  	 {$h=<4,5,4,3,1,0>$};
       \node (pn2)[font=\tiny]  at (7,7.7)  	 {$h=<3,6,6,4,2,1>$};
       \node (pn12)[font=\tiny] at (4,5.7)  	 {$h=<2,4,2,4,1,0>$};
-      \node (en12)[font=\tiny] at (4,5.4)  {$\hat{h}=<2,3,3,3,1,0>$};
+      \node (en12)[font=\tiny] at (4,5.4)  	 {$\hat{h}=<2,3,3,3,1,0>$};
   
 
 
@@ -620,7 +635,7 @@ we could have: \\ \quad
   \end{figure}
 
  \begin{center}
-    $\chi^2=\sum_{i=1}^{k} \cfrac{(h_i - \hat{h_i})^2}{\hat{h_i}}=1 \quad \Rightarrow \quad $p-value$=0.96$
+    $\chi^2=\sum_{i=1}^{k} \cfrac{(h_i - \hat{h_i})^2}{\hat{h_i}}=1 \quad \Rightarrow \quad $\emph{p-value}$=0.96$
  \end{center}
 
  
@@ -632,30 +647,56 @@ we could have: \\ \quad
    \item  If there's not enough evidence of dependence, we assume independence, then: \\ \quad
       $x$ :- $p,y \equiv x$ :- $p$ \\ \quad
       $y$ :- $p,x \equiv y$ :- $p$
-   \item The greater the $\chi^2$ value, the greater the evidence that $x$ and $y$ are dependent given $p$, therefore
-the more interesting it is to join both $py$ and $px$
-   \item As heuristics, we can prune a node when it's independent for all possible pairs of joining parents. That means
-its not interesting to any of its parents.
+   \item The lower the p-value (greater $\chi^2$), the greater the evidence that $x$ and $y$ are dependent given
+$p$, therefore the more interesting it is to join the nodes $py$ and $px$
+   \item As heuristics, we can set a maximum \emph{p-value} threshold to prune independent nodes
   \end{itemize}
 \end{frame}
 %-----------------------------------------------------------------------------------------------------------------------
 \begin{frame}
-\frametitle{Search in the Lattice}
-  In the refinement loop from the core-ILP, the clauses have a fixed head and literals are added to the body.
-  In the following example, we would have $a$ as head literal, $r$ as root and $b$, $c$, $d$ as possible new
-literals
+\frametitle{Refinement Suggestions}
+  In the ILP refinement loop, the clauses have a fixed head while the body is refined.
+  Assuming we have $a$ as head literal, $r$ as root and $b$, $c$, $d$ as possible new
+literals:
  \begin{columns}[c]
   \column{0.75\textwidth}
-    \begin{figure}
-    \includegraphics[height=0.5\textheight]{./Figures/headmap}
+    \begin{figure}[!h]
+      \centering
+      \begin{tikzpicture}
+      [scale=0.7,auto=center,every node/.style={minimum size=0.6cm,font=\small}]
+	\node (r)  [circle,fill=black!20] at (4,10) {$r$};
+	\node (ra) [circle,fill=black!40] at (1,8)  {\textbf{\emph{ra}}};
+	\node (rb) [circle,fill=black!20] at (3,8)  {$rb$};
+	\node (rc) [circle,fill=black!20] at (5,8)  {$rc$};
+	\node (rd) [circle,fill=black!20] at (7,8)  {$rd$};
+	\node (rab)[circle,fill=black!20] at (3,5)  {$rab$};
+	\node (rac)[circle,fill=black!20] at (5,5)  {$rac$};
+	\node (rad)[circle,fill=black!20] at (7,5)  {$rad$};
+	\node (rad)[circle,fill=black!20] at (7,5)  {$rad$};
+
+	\foreach \from/\to in {r/ra,r/rb,r/rc,r/rd,ra/rab,ra/rac,ra/rad,rb/rab,rc/rac,rd/rad}
+	  \draw[black!70] (\from) -- (\to);
+
+	\node (m1)[blue] at (3,7)  {\textbf{$m_{a,rb}$}};
+	\node (m2)[blue] at (5,7)  {$m_{a,rc}$};
+	\node (m3)[blue] at (7,7)  {$m_{a,rd}$};
+	\node (m4)[red] at (2.3,6)  {$m_{b,ra}$};
+	\node (m5)[red] at (3.6,6)  {$m_{c,ra}$};
+	\node (m6)[red] at (5.0,6)  {$m_{d,ra}$};
+
+	%\draw (ra) -- (rab) -|  \node [below,pos=0.25] {$m_1$}(l1);
+      \end{tikzpicture}
     \end{figure}
   \column{0.25\textwidth}
       \begin{tabular}{r | l}
-	a & b=$m_{a,rb}$ \\
-	  & c=$m_{a,rc}$ \\
-	  & d=$m_{a,rd}$
+	a & b [$m_{a,rb}$] \\
+	  & c [$m_{a,rc}$] \\
+	  & d [$m_{a,rd}$]
       \end{tabular}
  \end{columns} 
+  What literal is more interesting to add to the clause $a$:-$r$? \\
+  \pause
+  \large \color{blue} \center $argmax_{i\in \{\ b,c,d\}} m_{a,ri}$
 \end{frame}
 %-----------------------------------------------------------------------------------------------------------------------
 \begin{frame} 
@@ -670,18 +711,94 @@ interestingness value of adding the head
   Alternative?
   \begin{itemize}
    \item Create mapping in every node with the possible head literals as key and sorted literals to be added to body as
-value, e.g. for the node $r a_1 b_1$ in the lattice example:
-   \begin{center}
-    \begin{tabular}{r | l}
-      $a_1$ 	& $c_1$ [$m_{a_1 , r b_1 c_1}$] \\
-		& $c_2$ [$m_{a_1 , r b_1 c_2}$] \\
-      \hline
-      $b_1$	& $c_1$ [$m_{b_1 , r a_1 c_1}$] \\
-		& $c_2$ [$m_{b_1 , r a_1 c_2}$]
-    \end{tabular}
-   \end{center}
+value
    \item Only add entry if head and new literal not independent given body
   \end{itemize}
+\end{frame}
+%-----------------------------------------------------------------------------------------------------------------------
+\begin{frame}
+ \frametitle{Refinement Suggestions}
+  \begin{columns}[c]
+  \column{0.75\textwidth}
+    \begin{figure}[!h]
+      \centering
+      \begin{tikzpicture}
+      [scale=0.7,auto=center,every node/.style={minimum size=0.8cm,font=\small}]
+	\node (r)  [circle,fill=black!20] at (4,10) {$r$};
+	\node (ra) [circle,fill=black!20] at (1,8)  {$ra$};
+	\node (rb) [circle,fill=black!20] at (3,8)  {$rb$};
+	\node (rc) [circle,fill=black!20] at (5,8)  {$rc$};
+	\node (rd) [circle,fill=black!20] at (7,8)  {$rd$};
+	\node (rab)[circle,fill=black!40] at (0.8,5)  {\textbf{\emph{rab}}};
+	\node (rac)[circle,fill=black!20] at (2.6,5)  {$rac$};
+	\node (rad)[circle,fill=black!20] at (4.2,5)  {$rad$};
+	\node (rbc)[circle,fill=black!20] at (5.8,5)  {$rbc$};
+	\node (rbd)[circle,fill=black!20] at (7.4,5)  {$rbd$};
+
+
+	\foreach \from/\to in {r/ra,r/rb,r/rc,r/rd}
+	  \draw[black!70] (\from) -- (\to);
+
+	\foreach \from/\to in {ra/rab,ra/rac,ra/rad,rb/rab,rb/rbc,rb/rbd,rc/rac,rc/rbc,rd/rad,rd/rbd}
+	  \draw[black!70] (\from) -- (\to);
+
+	\pause
+
+	\node (rabc) [circle,fill=black!20] at (2,2)  {$rabc$};
+	\foreach \from/\to in {rabc/rab,rabc/rac}
+	  \draw[black!70] (\from) -- (\to);
+
+	\node (m3)[blue] at (2.4,4)  {$m_{b,rac}$};
+	\node (m5)[red] at (1.4,3)  {$m_{c,rab}$};
+	\pause
+
+	\node (rabd) [circle,fill=black!20] at (5,2)  {$rabd$};
+	\foreach \from/\to in {rabd/rab,rabd/rad}
+	  \draw[black!70] (\from) -- (\to);
+	\node (m4)[blue] at (3.9,4)  {$m_{b,rad}$};
+	\node (m6)[red] at (3.2,3)  {$m_{d,rab}$};
+	\pause
+
+	\node (m1)[blue] at (5.2,4)  {$m_{a,rbc}$};
+	\foreach \from/\to in {rabc/rbc}
+	  \draw[black!70] (\from) -- (\to);
+	\pause
+
+	\node (m2)[blue] at (6.6,4)  {$m_{a,rbd}$};
+	\foreach \from/\to in {rabd/rbd}
+	  \draw[black!70] (\from) -- (\to);
+
+	%\draw (ra) -- (rab) -|  \node [below,pos=0.25] {$m_1$}(l1);
+      \end{tikzpicture}
+      \label{fig:latticeSuggestion}
+    \end{figure}
+  \column{0.25\textwidth}
+      Suggestions Map
+      \begin{table}
+	\begin{tabular}{p{0.5cm} | p{2cm}}
+	\only<2>{
+	  $b$ & $c$ [$m_{b,rac}$] \\
+	}
+	\only<3>{
+	  $b$ & $c$ [$m_{b,rac}$] \\
+	      & $d$ [$m_{b,rad}$] \\
+	}
+	\only<4>{
+	  $b$ & $c$ [$m_{b,rac}$] \\
+	      & $d$ [$m_{b,rad}$] \\
+	\midrule
+	  $a$ & $c$ [$m_{a,rbc}$] \\
+	}
+	\only<5>{
+	  $b$ & $c$ [$m_{b,rac}$] \\
+	      & $d$ [$m_{b,rad}$] \\
+	\midrule
+	  $a$ & $c$ [$m_{a,rbc}$] \\
+	      & $d$ [$m_{a,rbd}$] \\
+	}
+	\end{tabular}
+      \end{table}
+ \end{columns} 
 \end{frame}
 %-----------------------------------------------------------------------------------------------------------------------
 \begin{frame}
@@ -703,10 +820,10 @@ value, e.g. for the node $r a_1 b_1$ in the lattice example:
   \begin{itemize}
    \item We compare 4 interestingness measures:
    \begin{enumerate}
-    \item $supp$: Support Only
-    \item $klsupp$: KL-divergence*Support
-    \item $kldiv$: KL-divergence Only
-    \item $jsdiv$: JS-divergence*Support
+    \item \color{blue}\ding{108} $supp$\color{black}: Support Only
+    \item \color{red}\ding{110} $klsupp$\color{black}: KL-divergence*Support
+    \item \color{brown}\ding{108} $kldiv$\color{black}: KL-divergence Only
+    \item \color{black}\textbf{\APLstar} $jssupp$\color{black}: JS-divergence*Support
    \end{enumerate}
    \item Thresholds:
    \begin{itemize}
@@ -714,8 +831,6 @@ value, e.g. for the node $r a_1 b_1$ in the lattice example:
     \item $minSupp=25$
     \item $minGain=1.25$
    \end{itemize}
-
-
   \end{itemize}
 
   $1^{st}$ Experiment: evaluation of the Correlation Lattice
@@ -733,14 +848,341 @@ value, e.g. for the node $r a_1 b_1$ in the lattice example:
 \end{frame}
 %-----------------------------------------------------------------------------------------------------------------------
 \begin{frame}
-\frametitle{Experiments}
- Compare interestingness measures:
- \begin{itemize}
-  \item \begin{color}{red}divergence*support\end{color} vs. \begin{color}{blue}support only\end{color}
- \end{itemize}
- \begin{figure}
-  \includegraphics[height=0.5\textheight]{./Figures/plots}
- \end{figure}
+\frametitle{$1^{st}$ Experiment}
+
+ \begin{columns}[c]
+    \column{0.5\textwidth}
+	\begin{figure}
+	\caption{Build time per lattice size}
+	  \begin{tikzpicture}[scale=0.4]
+	  \begin{axis}[
+		  width=15cm, height=10cm,
+		  xlabel=\textsc{\#Nodes per lattice level},
+		  ylabel=\textsc{Time to build lattice ($ms$)}]
+
+	  \addplot coordinates {(0,0) (5,4471) (10,11113) (15,19383) (20,26432) (25,32374) (30,39228) (35,44439)
+  (40,49974) (45,54391) (50,63178) (55,65673) (60,73782) (65,77245) (70,80542) (75,88055) (80,91386) (85,94183)
+(90,97424) (95,106279) (100,106336)};
+	  \addplot coordinates {(0,0)  (5,321) (10,1463) (15,2390) (20,3253) (25,4184) (30,4529) (35,5137) (40,5231)
+  (45,5774) (50,6786) (55,6864) (60,7347) (65,8813) (70,9567) (75,11844) (80,12372) (85,13119) (90,13659)
+(95,13859) (100,14353)};
+	  \addplot coordinates {(0,0)  (5,207) (10,329) (15,549) (20,825) (25,1065) (30,1420) (35,1652) (40,1695)
+(45,2343) (50,2402) (55,2782) (60,3273) (65,4031) (70,4299) (75,5448) (80,5035) (85,5847) (90,6145) (95,6146)
+(100,6208)};
+	  \addplot coordinates {(0,0)  (5,466) (10,1011) (15,1746) (20,2253) (25,3220) (30,3717) (35,4042) (40,4904)
+(45,5390) (50,6436) (55,7280) (60,7371) (65,8412) (70,8535) (75,9025) (80,9624) (85,9845) (90,11027) (95,11772)   
+(100,11050)};
+	  \end{axis}
+	  \end{tikzpicture}
+	\end{figure}
+
+    \column{0.5\textwidth}
+      \begin{figure}
+      	\caption{Interesting rules per lattice size}
+	\begin{tikzpicture}[scale=0.4]
+	\begin{axis}[
+		width=15cm, height=10cm,
+		xlabel=\textsc{\#Nodes per Lattice level},
+		ylabel=\textsc{\#Interesting Rules}]
+	% Support
+	\addplot coordinates {(0,0) (5,2) (10,2) (15,2) (20,2) (25,3) (30,4) (35,6) (40,14) (45,25) (50,28) (55,30)
+  (60,38) (65,46) (70,51) (75,60) (80,64) (85,69) (90,71) (95,75) (100,77)};
+	% KLDiv*Support
+	\addplot coordinates {(0,0) (5,2) (10,8) (15,13) (20,18) (25,18) (30,20) (35,24) (40,26) (45,33) (50,37)
+(55,36) (60,41) (65,46) (70,52) (75,46) (80,49) (85,52) (90,53) (95,59) (100,60)};
+	% KLDiv Only
+	\addplot coordinates {(0,0)  (5,2) (10,2) (15,2) (20,2) (25,2) (30,3) (35,4) (40,4) (45,4) (50,6) (55,6)
+(60,7) (65,8) (70,9) (75,9) (80,9) (85,9) (90,11) (95,16) (100,21)};
+	% JS*Support
+	\addplot coordinates {(0,0)  (5,2) (10,4) (15,4) (20,9) (25,12) (30,13) (35,15) (40,21) (45,26) (50,31)
+(55,35) (60,36)	(65,42) (70,49) (75,52) (80,56) (85,60) (90,64) (95,66) (100,69)};
+	\end{axis}
+	\end{tikzpicture}
+      \end{figure}
+  \end{columns}
+
+  \begin{center}
+    \center \tiny Legend: [\color{blue}\ding{108}$supp$  \color{red}\ding{110} $klsupp$ \color{brown}\ding{108} $kldiv$ 
+    \color{black}\textbf{\APLstar} $jssupp$ \color{black}]
+  \end{center}
+\end{frame}
+%-----------------------------------------------------------------------------------------------------------------------
+\begin{frame}
+\frametitle{$2^{nd}$ Experiment}
+
+ \begin{columns}[c]
+    \column{0.5\textwidth}
+	\begin{figure}
+	  \caption{\tiny Precision-Recall graph from interestingness predictions (rules with $runtime$ attribute)}
+	  \begin{tikzpicture}[scale=0.4]
+	    \begin{axis}[
+		  width=15cm, height=10cm,
+		  xlabel=\textsc{Recall},
+		  ylabel=\textsc{Precision}]
+		]
+    \addplot coordinates {(0,0.75) (0.02702703,0.75) (0.03603604,0.5) (0.06306306,0.5833333) (0.06306306,0.4375)
+  (0.09009009,0.5) (0.09009009,0.4347826) (0.1081081,0.4615385) (0.1081081,0.4137931) (0.1261261,0.4516129)
+  (0.1351351,0.4411765) (0.1621622,0.4864865) (0.1621622,0.4390244) (0.1621622,0.4) (0.1621622,0.3913043)
+(0.1621622,0.36)
+  (0.1621622,0.3333333) (0.1621622,0.3103448) (0.1711712,0.3220339) (0.2252252,0.3731343) (0.2342342,0.3768116)
+  (0.2702703,0.3896104) (0.3063063,0.3953488) (0.3783784,0.4468085) (0.4144144,0.4509804) (0.4234234,0.4433962)
+  (0.4414415,0.4454545) (0.4414415,0.4298246) (0.4504505,0.4347826) (0.4504505,0.4310345) (0.4594594,0.4358974)
+  (0.4684685,0.4369748) (0.4864865,0.432) (0.5405405,0.4511278) (0.5405405,0.4477612) (0.5405405,0.4411765)
+  (0.5495495,0.4452555) (0.5585586,0.4492754) (0.5675676,0.443662) (0.5675676,0.4344827) (0.5765766,0.4383562)
+  (0.5765766,0.4353741) (0.5855856,0.4391892) (0.6036036,0.4466667) (0.6126126,0.4415584) (0.6126126,0.4387097)
+  (0.6126126,0.433121) (0.6126126,0.4276729) (0.6306306,0.4320988) (0.6306306,0.4294479) (0.6306306,0.4117647)
+  (0.6306306,0.4069767) (0.6306306,0.4046243) (0.6306306,0.3954802) (0.6306306,0.3846154) (0.6666667,0.3894737)
+  (0.6756757,0.3658537) (0.7027027,0.364486) (0.7027027,0.3561644) (0.7117117,0.3449781) (0.7567568,0.3307086)
+  (0.7657658,0.3320312) (0.7657658,0.3269231) (0.7747748,0.3257576) (0.7747748,0.3245283) (0.7747748,0.3185185)
+  (0.7927928,0.3087719) (0.8018018,0.3047945) (0.8018018,0.2986577) (0.8018018,0.2966666) (0.8018018,0.2825397)
+  (0.8018018,0.2772586) (0.8198198,0.2637681) (0.8198198,0.2486339) (0.9279279,0.2530713) (0.9459459,0.2560976)
+  (1,0.2472160)};
+
+    \addplot coordinates {(0,0.75) (0.02654867,0.75) (0.05309734,0.75) (0.07079646,0.8) (0.07079646,0.6153846)
+  (0.08849558,0.625) (0.09734514,0.55) (0.09734514,0.4782609) (0.09734514,0.4074074) (0.1061947,0.4285714)
+  (0.1238938,0.4375) (0.1238938,0.4242424) (0.1238938,0.4117647) (0.1238938,0.3684211) (0.1504425,0.4047619)
+  (0.1504425,0.3695652) (0.1769912,0.4081633) (0.1769912,0.3773585) (0.1769912,0.3703704) (0.1769912,0.3448276)
+  (0.1769912,0.3225806) (0.1769912,0.3030303) (0.1858407,0.3043478) (0.1946903,0.3013699) (0.1946903,0.2857143)
+  (0.2035398,0.2948718) (0.2123894,0.3) (0.2212389,0.308642) (0.2300885,0.3170732) (0.2389381,0.3253012)
+  (0.2477876,0.3333333) (0.2566372,0.3411765) (0.2654867,0.3488372) (0.2654867,0.3409091) (0.2743363,0.3483146)
+  (0.2743363,0.3444445) (0.2831858,0.3516484) (0.2831858,0.3478261) (0.2831858,0.3368421) (0.2831858,0.3333333)
+  (0.2831858,0.3265306) (0.2920354,0.3235294) (0.3097345,0.3365385) (0.3097345,0.3333333) (0.3097345,0.3181818)
+  (0.3097345,0.3153153) (0.3097345,0.3125) (0.3097345,0.3070175) (0.3097345,0.3017241) (0.3097345,0.2991453)
+  (0.3097345,0.2966102) (0.3097345,0.2916667) (0.3097345,0.2845528) (0.3097345,0.2755905) (0.3097345,0.2734375)
+  (0.3097345,0.2713178) (0.3097345,0.2671756) (0.3097345,0.2651515) (0.3097345,0.2631579) (0.3274336,0.2720588)
+  (0.3274336,0.270073) (0.3274336,0.2642857) (0.3274336,0.2624114) (0.3274336,0.2569444) (0.3539823,0.2721089)
+  (0.3539823,0.2666667) (0.3628319,0.2697369) (0.3716814,0.2745098) (0.380531,0.2792208) (0.380531,0.275641)
+  (0.380531,0.2704402) (0.380531,0.26875) (0.380531,0.2670807) (0.380531,0.2654321) (0.380531,0.2638037)
+  (0.380531,0.2606060) (0.380531,0.2590362) (0.380531,0.2574850) (0.3893805,0.2573099) (0.3982301,0.2571429)
+  (0.4159292,0.2655367) (0.4247788,0.2696629) (0.4247788,0.2681564) (0.4336283,0.2722222) (0.4336283,0.2707182)
+  (0.4424779,0.2747253) (0.4424779,0.2732241) (0.4424779,0.2717391) (0.4424779,0.2673797) (0.4424779,0.2631579)
+  (0.4424779,0.2617801) (0.4424779,0.2604167) (0.4424779,0.2590674) (0.4424779,0.2577319) (0.4424779,0.2564103)
+  (0.4424779,0.2551020) (0.4424779,0.2525252) (0.4424779,0.25) (0.4513274,0.2537313) (0.4513274,0.2524753)
+  (0.4513274,0.2512315) (0.4513274,0.25) (0.4513274,0.2487805) (0.4513274,0.2475728) (0.4513274,0.2463768)
+  (0.4513274,0.2451923) (0.4513274,0.2428571) (0.4513274,0.2417062) (0.460177,0.245283) (0.4955752,0.2545455)
+  (0.4955752,0.2522523) (0.5132743,0.25217[scale=0.4]39) (0.5132743,0.2510822) (0.5132743,0.25) (0.5132743,0.2489270)
+  (0.5132743,0.2468085) (0.5132743,0.2457627) (0.5221239,0.2478992) (0.5221239,0.2418033) (0.5486726,0.25)
+  (0.5840708,0.2578125) (0.6371682,0.2727273) (0.6548672,0.2781955) (0.6902655,0.2846715) (0.699115,0.2872727)
+  (0.699115,0.2851986) (0.7699115,0.3052632) (0.7964602,0.3103448) (0.7964602,0.3092783) (0.7964602,0.3082192)
+  (0.7964602,0.3040541) (0.9026549,0.3026706) (0.9026549,0.3008850) (0.9026549,0.2982456) (0.9026549,0.2965116)
+  (0.9115045,0.2968300) (0.9115045,0.2959770) (0.920354,0.2979943) (0.9292035,0.3) (0.9292035,0.2991453)
+  (0.9292035,0.2957746) (0.9292035,0.2924791) (0.9292035,0.2916667) (0.9469026,0.2947658) (0.9469026,0.2931507)
+  (0.9469026,0.2915531) (0.9469026,0.2907609) (0.9469026,0.2899729) (0.9469026,0.2891892) (0.9469026,0.2853333)
+  (0.9557522,0.2834646) (1,0.2736078) (1,0.2729469) (1,0.2722892) (1,0.2703349) (1,0.2696897) (1,0.2677725)
+(1,0.2671395)
+  (1,0.2665094) (1,0.264637) (1,0.2634033) (1,0.262181) (1,0.2603687) (1,0.2591743) (1,0.2456522)};
+
+    \addplot coordinates {(0,1) (0.02247191,1) (0.02247191,0.6666667) (0.04494382,0.5714286) (0.04494382,0.5)
+  (0.04494382,0.3636364) (0.05617978,0.3333333) (0.06741573,0.375) (0.08988764,0.4210526) (0.1235955,0.4782609)
+  (0.1235955,0.4230769) (0.1235955,0.3928571) (0.1235955,0.3793103) (0.1348315,0.4) (0.1348315,0.3870968)
+  (0.1348315,0.375) (0.1348315,0.3636364) (0.1460674,0.3823530) (0.1573034,0.4) (0.1573034,0.3888889)
+  (0.1573034,0.3684211) (0.1573034,0.35) (0.1573034,0.3333333) (0.1685393,0.3488372) (0.1685393,0.3409091)
+  (0.1685393,0.3191489) (0.1797753,0.3333333) (0.1910112,0.3469388) (0.2022472,0.36) (0.2022472,0.3529412)
+  (0.2134831,0.3653846) (0.2134831,0.3392857) (0.2134831,0.3333333) (0.2134831,0.3275862) (0.2134831,0.3015873)
+  (0.2134831,0.296875) (0.2134831,0.2794118) (0.2134831,0.2638889) (0.2134831,0.25) (0.2134831,0.2375)
+  (0.2247191,0.2439024) (0.2247191,0.2409639) (0.2247191,0.2325581) (0.2359551,0.2333333) (0.2359551,0.2307692)
+  (0.2359551,0.2210526) (0.2359551,0.2142857) (0.2359551,0.2058824) (0.2696629,0.2285714) (0.2696629,0.2222222)
+  (0.2696629,0.2162162) (0.2696629,0.2142857) (0.2696629,0.2123894) (0.2696629,0.2105263) (0.2808989,0.2155172)
+  (0.2808989,0.2136752) (0.2921348,0.220339) (0.3146068,0.2314050) (0.3146068,0.2258064) (0.3146068,0.224)
+  (0.3146068,0.2222222) (0.3483146,0.2403101) (0.3595506,0.2461539) (0.3595506,0.2442748) (0.3595506,0.2424243)
+  (0.3707865,0.2481203) (0.3707865,0.2426471) (0.3707865,0.2357143) (0.3820225,0.2361111) (0.3820225,0.2328767)
+  (0.3820225,0.2281879) (0.3932584,0.2302632) (0.3932584,0.2287582) (0.4157303,0.2387097) (0.4157303,0.2356688)
+  (0.4382023,0.245283) (0.4382023,0.24375) (0.4382023,0.2407408) (0.4494382,0.2409639) (0.4606742,0.2411765)
+  (0.4606742,0.2397661) (0.4719101,0.2441860) (0.505618,0.2556818) (0.505618,0.2513967) (0.505618,0.25)
+  (0.5168539,0.2541437) (0.5168539,0.2527473) (0.5168539,0.2513661) (0.5168539,0.2486486) (0.5168539,0.2473118)
+  (0.5168539,0.2446809) (0.5168539,0.2433862) (0.5280899,0.2473684) (0.5280899,0.2460733) (0.5280899,0.2447917)
+  (0.5280899,0.2435233) (0.5280899,0.2397959) (0.5280899,0.2385787) (0.5280899,0.2373737) (0.5280899,0.2361809)
+  (0.5280899,0.235) (0.5280899,0.2338308) (0.5280899,0.2326733) (0.5393258,0.2364532) (0.5393258,0.2341463)
+  (0.5393258,0.2318841) (0.5393258,0.2307692) (0.5505618,0.2344498) (0.5505618,0.2322275) (0.5505618,0.2311321)
+  (0.5505618,0.2300469) (0.5505618,0.2289720) (0.5505618,0.2268518) (0.5505618,0.2207207) (0.5505618,0.2197309)
+  (0.5617977,0.2232143) (0.5842696,0.2280702) (0.5955056,0.2284483) (0.6292135,0.2372881) (0.764045,0.2454874)
+  (0.764045,0.2437276) (0.7977528,0.25) (0.7977528,0.2491228) (0.7977528,0.2465278) (0.7977528,0.2431507)
+  (0.8202247,0.2466216) (0.8202247,0.2457912) (0.8202247,0.2433333) (0.8539326,0.25) (0.8539326,0.248366)
+  (0.8651685,0.2491909) (0.8876405,0.2523962) (0.9101124,0.2563291) (0.9213483,0.2586751) (0.9213483,0.2570533)
+  (0.9213483,0.25625) (0.9325843,0.258567) (0.9325843,0.2553846) (0.9438202,0.2537764) (1,0.2445055) (1,0.2438356)
+  (1,0.2425068) (1,0.2398922) (1,0.2392473) (1,0.2379679) (1,0.2348285) (1,0.2342105) (1,0.2335958) (1,0.2317708)
+  (1,0.2311688) (1,0.2305699) (1,0.2299742) (1,0.2282051) (1,0.2276215) (1,0.2258883) (1,0.2253165) (1,0.2241814)
+  (1,0.2230576) (1,0.2213930) (1,0.220297) (1,0.2079439) };
+
+    \addplot coordinates {(0,0.75) (0.02654867,0.75) (0.05309734,0.75) (0.0619469,0.5833333) (0.0619469,0.4666667)
+  (0.07964602,0.5) (0.09734514,0.55) (0.09734514,0.4782609) (0.09734514,0.4074074) (0.1238938,0.4516129)
+  (0.1327434,0.46875) (0.1327434,0.4166667) (0.1327434,0.375) (0.1592920,0.4186046) (0.1592920,0.4090909)
+  (0.1592920,0.375) (0.1681416,0.372549) (0.1681416,0.3454545) (0.1681416,0.3220339) (0.1858407,0.3333333)
+  (0.1858407,0.328125) (0.1858407,0.3088235) (0.1858407,0.2916667) (0.1946903,0.2972973) (0.2035398,0.3066667)
+  (0.2123894,0.3157895) (0.2212389,0.3125) (0.2212389,0.308642) (0.2212389,0.3048781) (0.2300885,0.313253)
+  (0.2389381,0.3214286) (0.2477876,0.3294118) (0.2566372,0.3372093) (0.2654867,0.3448276) (0.2654867,0.3409091)
+  (0.2743363,0.3483146) (0.2831858,0.3555556) (0.2831858,0.344086)
+  (0.3008850,0.3578947) (0.3008850,0.3505155)
+  (0.3008850,0.3434343) (0.3097345,0.3398058) (0.3097345,0.3333333) (0.3097345,0.3301887) (0.3097345,0.3271028)
+  (0.3274336,0.3363636) (0.3274336,0.3217391) (0.3274336,0.3109244) (0.3274336,0.3032787) (0.3274336,0.296)
+  (0.3274336,0.2936508) (0.3274336,0.2913386) (0.3274336,0.2890625) (0.3274336,0.2868217) (0.3274336,0.2846154)
+  (0.3274336,0.2781955) (0.3274336,0.2740741) (0.3539823,0.2898551) (0.3539823,0.2877698) (0.3539823,0.2836880)
+  (0.3539823,0.2816901) (0.3539823,0.2797203) (0.3539823,0.2739726) (0.3539823,0.2721089) (0.3539823,0.2666667)
+  (0.3628319,0.2715232) (0.3716814,0.2763158) (0.3716814,0.2745098) (0.3716814,0.2709678) (0.3716814,0.2675159)
+  (0.3716814,0.2641509) (0.3716814,0.2625) (0.3716814,0.2608696) (0.3716814,0.2592592) (0.380531,0.2590362)
+  (0.3893805,0.2634731) (0.3893805,0.2619048) (0.3982301,0.2647059) (0.4070796,0.2643678) (0.4070796,0.2628571)
+  (0.4159292,0.2670455) (0.4159292,0.2655367) (0.4159292,0.2611111) (0.4336283,0.2692308) (0.4336283,0.2677596)
+  (0.4424779,0.2717391) (0.4424779,0.2702703) (0.4424779,0.2688172) (0.4424779,0.2673797) (0.4424779,0.2659574)
+  (0.4424779,0.2645503) (0.4513274,0.2684210) (0.4513274,0.265625) (0.4513274,0.2615385) (0.4513274,0.2602041)
+  (0.4513274,0.2588832) (0.4513274,0.2575757) (0.4513274,0.2562814) (0.4513274,0.2537313) (0.4513274,0.2524753)
+  (0.4513274,0.25) (0.4513274,0.2487805) (0.4513274,0.2475728) (0.4513274,0.2463768) (0.4867257,0.2558140)
+  (0.4867257,0.2546296) (0.5044247,0.2544643) (0.5044247,0.2522124) (0.5044247,0.25) (0.5044247,0.2489083)
+  (0.5132743,0.2521739) (0.5132743,0.2510822) (0.5132743,0.25) (0.5132743,0.2489270) (0.5132743,0.2478633)
+  (0.5221239,0.25) (0.5221239,0.2478992) (0.5221239,0.2418033) (0.5486726,0.25) (0.5840708,0.2578125)
+  (0.6371682,0.2727273) (0.6548672,0.2781955) (0.6902655,0.2846715) (0.699115,0.2872727) (0.699115,0.2851986)
+  (0.7699115,0.3052632) (0.8761062,0.303681) (0.9026549,0.3081571) (0.9026549,0.3072289) (0.9026549,0.3063063)
+  (0.9026549,0.3026706) (0.9026549,0.3008850) (0.9026549,0.2982456) (0.9026549,0.2965116) (0.9026549,0.2956522)
+  (0.9115045,0.2959770) (0.920354,0.2979943) (0.9380531,0.3011364) (0.9469026,0.3031161) (0.9469026,0.3022599)
+  (0.9469026,0.2988827) (0.9469026,0.2955801) (0.9557522,0.2934782) (1,0.2825) (1,0.2817955) (1,0.2803970) (1,0.2790124)
+  (1,0.2783251) (1,0.2776413) (1,0.2769608) (1,0.2736078) (1,0.2729469) (1,0.2722892) (1,0.2703349) (1,0.2696897)
+  (1,0.2677725) (1,0.2671395) (1,0.2665094) (1,0.264637) (1,0.2634033) (1,0.262181) (1,0.2603687) (1,0.2591743)
+  (1,0.2456522) };
+	  \end{axis}
+	  \end{tikzpicture}
+	\end{figure}
+
+    \column{0.5\textwidth}
+      \begin{figure}
+	\caption{\tiny Interesting rules per runtime (rules with attribute $runtime$)}
+	\centering
+	\begin{tikzpicture}[scale=0.4]
+	  \begin{axis}[
+		width=15cm, height=10cm,
+		xlabel=\textsc{Runtime ($ms$)},
+		ylabel=\textsc{\#Learned Rules}]
+	      ]
+  \addplot coordinates {(0,0) (1072,3) (2125,4) (3132,7) (4186,7) (5242,10) (6002,10) (6770,12) (7511,12) (8024,14)
+(8763,15) (9507,18) (10503,18) (11520,18) (11785,18) (12783,18) (13803,18) (14842,18) (14886,19) (16886,25) (17380,26)
+(19432,30) (21500,34) (23554,42) (25604,46) (26597,47) (27616,49) (28611,49) (28874,50) (29133,50) (29176,51) (29493,52)
+(31003,54) (33035,60) (33284,60) (33802,60) (33845,61) (33889,62) (34956,63) (35695,63) (35741,64) (35782,64) (35830,65)
+(35926,67) (36173,68) (36421,68) (36731,68) (37224,68) (38002,70) (38064,70) (38970,70) (39461,70) (39508,70) (40078,70)
+(40913,70) (42280,74) (43891,75) (44239,78) (44545,78) (46452,79) (48579,84) (48678,85) (48899,85) (49250,86) (49295,86)
+(50152,86) (52201,88) (53357,89) (53993,89) (54128,89) (54902,89) (55816,89) (58799,91) (60443,91) (71937,103)
+(71971,105) (74526,111)};
+
+  \addplot coordinates {(0,0) (1117,3) (2130,6) (2690,8) (3507,8) (4281,10) (5360,11) (6107,11) (7169,11) (7213,12)
+(8212,14) (8476,14) (8503,14) (9518,14) (10552,17) (11565,17) (12334,20) (13338,20) (13381,20) (14411,20) (15450,20)
+(16473,20) (17256,21) (18250,22) (19291,22) (19335,23) (19845,24) (19888,25) (19932,26) (19978,27) (20022,28) (20066,29)
+(20331,30) (20861,30) (20905,31) (21166,31) (21208,32) (21483,32) (22230,32) (22257,32) (22788,32) (23042,33) (23580,35)
+(23844,35) (24158,35) (24423,35) (24435,35) (24944,35) (25446,35) (25705,35) (25969,35) (26467,35) (27220,35) (27472,35)
+(27515,35) (27541,35) (28048,35) (28135,35) (28398,35) (29148,37) (29413,37) (30169,37) (30195,37) (30270,37) (31034,40)
+(31794,40) (31850,41) (31888,42) (31927,43) (31999,43) (32139,43) (32165,43) (32203,43) (32231,43) (32272,43) (32330,43)
+(32612,43) (32699,43) (32868,44) (33162,45) (33707,47) (33733,48) (33758,48) (34013,49) (34100,49) (34138,50) (34416,50)
+(34462,50) (35255,50) (35364,50) (35395,50) (35433,50) (35472,50) (35514,50) (35603,50) (35651,50) (35767,50) (35869,50)
+(35909,51) (35936,51) (35963,51) (35990,51) (36030,51) (36291,51) (36319,51) (36348,51) (36429,51) (36456,51) (36717,52)
+(38770,56) (38828,56) (40827,58) (40854,58) (40895,58) (40922,58) (41030,58) (41072,58) (41603,59) (43194,59) (44262,62)
+(46267,66) (48275,72) (48789,74) (50807,78) (50850,79) (51350,79) (53359,87) (53598,90) (53624,90) (53662,90) (54680,90)
+(66388,102) (66927,102) (67192,102) (67272,102) (68055,103) (68307,103) (68335,104) (68363,105) (68450,105) (69508,105)
+(70510,105) (70551,105) (70586,107) (70681,107) (70737,107) (70802,107) (70831,107) (70872,107) (71291,107) (71555,108)
+(73709,113) (73755,113) (73842,113) (73954,113) (74041,113) (74129,113) (74158,113) (74196,113) (74283,113) (74811,113)
+(75329,113) (76096,113) (76622,113) (78365,113)};
+
+  \addplot coordinates {(0,0) (558,2) (621,2) (1678,4) (1707,4) (2508,4) (3602,5) (3649,6) (4516,8) (5677,11) (6482,11)
+(7023,11) (7315,11) (7389,12) (7664,12) (7947,12) (8242,12) (8343,13) (8393,14) (8710,14) (9261,14) (9793,14) (10325,14)
+(10369,15) (10380,15) (11190,15) (11234,16) (11308,17) (11353,18) (11379,18) (11439,19) (12458,19) (12753,19) (13027,19)
+(13383,19) (13409,19) (14448,19) (15546,19) (15793,19) (16860,19) (16925,20) (17013,20) (17820,20) (18099,21) (18354,21)
+(19473,21) (20287,21) (21341,21) (22160,24) (22940,24) (23737,24) (23763,24) (23991,24) (24029,24) (24544,25) (24585,25)
+(24624,26) (25425,28) (25501,28) (25607,28) (25857,28) (26640,31) (26911,32) (26961,32) (26987,32) (27026,33) (27835,33)
+(28933,33) (30067,34) (30124,34) (30238,34) (31005,35) (31043,35) (31633,37) (32174,37) (32702,39) (32814,39) (32867,39)
+(33142,40) (33314,41) (33341,41) (33367,42) (34498,45) (35326,45) (35352,45) (35617,46) (35865,46) (35906,46) (35980,46)
+(36007,46) (36131,46) (36172,46) (36210,47) (36235,47) (36260,47) (36349,47) (36432,47) (36753,47) (36793,47) (36833,47)
+(37123,47) (37149,47) (37182,47) (37225,48) (37306,48) (37386,48) (37411,48) (37683,49) (37740,49) (37767,49) (37809,49)
+(37840,49) (37920,49) (39556,49) (39623,49) (39701,50) (40743,52) (41786,53) (42801,56) (54930,68) (55488,68) (55728,71)
+(55766,71) (56577,71) (57688,71) (58728,73) (58754,73) (59064,73) (60120,76) (60200,76) (60993,77) (62028,79) (62066,81)
+(62094,82) (62622,82) (62715,82) (62744,83) (63840,83) (64129,84) (66640,89) (66681,89) (66763,89) (67898,89) (67928,89)
+(68021,89) (68488,89) (68543,89) (68584,89) (68669,89) (68757,89) (68783,89) (68907,89) (68986,89) (69017,89) (69103,89)
+(69142,89) (69731,89) (70276,89) (71110,89) (71688,89) (73459,89)};
+
+  \addplot coordinates {(0,0) (1112,3) (2136,6) (3249,7) (4009,7) (4862,9) (5375,11) (6130,11) (7246,11) (8274,14)
+(8319,15) (9366,15) (10401,15) (11210,18) (11478,18) (12532,18) (13288,19) (14306,19) (15364,19) (16375,21) (16402,21)
+(17457,21) (18491,21) (18999,22) (19042,23) (19085,24) (20093,25) (20134,25) (20379,25) (20643,26) (20686,27) (20730,28)
+(20775,29) (20818,30) (21115,30) (21157,31) (21202,32) (22005,32) (22529,34) (23039,34) (23554,34) (23832,35) (24356,35)
+(24382,35) (24420,35) (25182,37) (25566,37) (25793,37) (26560,37) (26634,37) (26663,37) (26690,37) (26778,37) (26791,37)
+(27050,37) (27845,37) (28363,37) (29116,40) (29380,40) (29884,40) (30132,40) (30397,40) (30511,40) (30775,40) (31537,40)
+(31575,41) (31614,42) (31878,42) (31931,42) (32443,42) (32499,42) (32537,42) (32800,42) (32831,42) (32992,43) (33020,44)
+(33071,44) (33135,45) (33396,46) (33670,46) (33713,47) (33750,47) (33842,47) (34403,49) (34444,49) (34702,50) (34795,50)
+(34882,50) (34908,50) (34947,50) (34974,50) (35014,51) (35094,51) (35902,51) (35991,51) (36032,51) (36070,51) (36103,51)
+(36239,51) (36265,51) (36319,51) (36359,51) (36386,51) (36649,51) (38742,55) (38770,55) (40797,57) (40883,57) (40940,57)
+(40984,57) (41245,58) (41276,58) (41318,58) (41377,58) (41404,58) (41916,59) (42031,59) (43579,59) (44614,62) (46672,66)
+(48713,72) (49211,74) (51247,78) (51288,79) (51837,79) (54011,87) (65906,99) (66130,102) (66159,102) (66198,102)
+(67254,102) (67758,102) (68021,102) (68101,102) (68351,102) (69150,103) (69180,104) (69215,106) (69244,107) (69330,107)
+(70383,107) (71438,107) (71756,108) (73972,113) (74013,113) (74130,113) (74186,113) (74240,113) (74278,113) (74317,113)
+(74792,113) (74819,113) (74907,113) (75017,113) (75104,113) (75186,113) (75215,113) (75254,113) (75341,113) (75869,113)
+(76380,113) (77139,113) (77666,113) (79392,113)};
+	\end{axis}
+	\end{tikzpicture}
+      \end{figure}
+  \end{columns}
+
+  \begin{center}
+    \center \tiny Legend: [\color{blue}\ding{108}$supp$  \color{red}\ding{110} $klsupp$ \color{brown}\ding{108} $kldiv$ 
+    \color{black}\textbf{\APLstar} $jssupp$ \color{black}]
+  \end{center}
+\end{frame}
+%-----------------------------------------------------------------------------------------------------------------------
+\begin{frame}
+\frametitle{$1^{st}$ Experiment}
+
+ \begin{columns}[c]
+    \column{0.5\textwidth}
+	\begin{figure}
+	\caption{\tiny Precision-Recall graph from interestingness predictions (rules with $budget$ attribute)}
+	    \begin{tikzpicture}[scale=0.4]
+	      \begin{axis}[
+		    width=15cm, height=10cm,
+		    xlabel=\textsc{Recall},
+		    ylabel=\textsc{Precision}]
+		  ]
+	      \addplot coordinates {(0.0,0.6) (0.05769231,0.6) (0.05769231,0.5) (0.05769231,0.24) (0.2980769 ,
+	    0.5961539) (0.2980769,0.4428571) (0.5384616,0.5773196) (0.6442308,0.5630252) (0.75,0.5909091) (1 ,
+	    0.4521739)};
+
+	      \addplot coordinates { (0.0,0.9230769) (0.2307692,0.9230769) (0.2884615,0.8333333) (0.5192308,0.8709678)
+	    (0.5192308,0.72) (0.5192308,0.6428571) (0.5192308,0.627907) (0.5192308,0.5744681) (0.625,0.6074766)
+	    (0.625,0.5555556) (0.7307692,0.5846154) (0.9807692,0.4573991) (0.9903846,0.4598214) (1.0,0.4622222)};
+
+	    \addplot coordinates {(0.0,0.9230769) (0.2307692,0.9230769) (0.4615385,0.9230769) (0.5192308,0.8709678)
+	    (0.5192308,0.7605634) (0.5192308,0.6428571) (0.625,0.6701031) (0.625,0.6190476) (0.625,0.5652174) (
+	    0.7307692,0.59375) (0.7307692,0.5846154) (0.9807692,0.4636364) (0.9903846,0.4660633) (1.0,0.4684685)};
+
+	      \addplot coordinates {(0.0,0.6) (0.05769231,0.6) (0.2884615,0.8333333) (0.4038461,0.8571429) (0.5192308
+	    , 0.8709678) (0.5192308,0.84375) (0.5192308,0.7012987) (0.5192308,0.627907) (0.5192308,0.5744681) (
+	    0.5192308,0.5192308) (0.625,0.5555556) (0.7307692,0.5846154) (0.9807692,0.4573991) (0.9903846 ,
+	    0.4598214) (1.0,0.4622222)};
+	      \end{axis}
+	      \end{tikzpicture}
+	\end{figure}
+
+    \column{0.5\textwidth}
+      \begin{figure}
+      	\caption{\tiny Interesting rules per runtime (rules with $budget$ attribute)}
+	  \begin{tikzpicture}[scale=0.4]
+	    \begin{axis}[
+		  width=15cm, height=10cm,
+		  xlabel=\textsc{Runtime ($ms$)},
+		  ylabel=\textsc{\#Learned Rules}]
+		]
+	    \addplot coordinates { (0.0,0.0) (1762,6) (1976,6) (4413,6) (7488,31) (10319,31) (14620,56) (
+	  19691,67) (21995,78) (32452,104)};
+
+	    \addplot coordinates {(0.0,0.0) (2877,24) (4672,30) (8934,54) (11447,54) (12813,54) (13033,54)
+	  (14057,54) (17836,65) (19703,65) (21991,76) (32064,102) (32173,103) (32449,104)};
+
+	    \addplot coordinates {(0.0,0.0) (2772,24) (6923,48) (8690,54) (9977,54) (12400,54) (16145,65)
+	  (17187,65) (18979,65) (21270,76) (21483,76) (31215,102) (31324,103) (31637,104)};
+
+	    \addplot coordinates {(0.0,0.0) (1877,6) (4795,30) (6962,42) (9116,54) (9337,54) (11852,54) (
+	  13187,54) (14225,54) (16052,54) (20014,65) (22411,76) (32833,102) (32949,103) (33251,104
+	  )};
+	    \end{axis}
+	    \end{tikzpicture}
+      \end{figure}
+  \end{columns}
+
+  \begin{center}
+    \center \tiny Legend: [\color{blue}\ding{108}$supp$  \color{red}\ding{110} $klsupp$ \color{brown}\ding{108} $kldiv$ 
+    \color{black}\textbf{\APLstar} $jssupp$ \color{black}]
+  \end{center}
 \end{frame}
 %-----------------------------------------------------------------------------------------------------------------------
 \begin{frame}
